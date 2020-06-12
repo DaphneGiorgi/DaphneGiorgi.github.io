@@ -116,7 +116,14 @@
 <p>The arguments <code>intensity_code</code>, <code>interaction_code</code> and <code>kernel_code</code> of the events functions must contain some C++ code given by the user. You don’t need to be a C++ guru to write the few instructions needed. These functions should use very little C++ syntax. They are essentially arithmetic or logical operations, tests and calls to predefined functions.</p>
 <p>For code efficiency, you should not allocate memory in these functions (no <code>new</code>) or use type containers (<code>std::vector</code>, <code>std::list</code>, …). If you think you need to allocate memory, consider as parameter an R vector that will be mapped via <code>arma::vector</code> (see below), or declare the variable as <code>static</code>.
 Also, it should not be necessary to make a loop. Keep in mind that these functions should be fast.</p>
-<p>There are no C++ language restrictions so you can use all the functions of the standard C++11 library. However we detail in this section some functions that should be sufficient.</p>
+<p>There are no C++ language restrictions so you can use all the functions of the standard C++11 library. However we detail in this section some functions that should be sufficient. For more details on C++ and Rcpp we recommend:</p>
+<ul>
+<li><a href="https://www.cplusplus.com/doc/tutorial/">C++ tutorial</a></li>
+<li>
+<a href="http://dirk.eddelbuettel.com/code/rcpp.html">Rcpp</a> and <a href="http://dirk.eddelbuettel.com/code/rcpp.armadillo.html">RcppArmadillo</a>
+</li>
+<li><a href="https://teuder.github.io/rcpp4everyone_en/">Rcpp for everyone</a></li>
+</ul>
 <div id="c-syntax" class="section level2">
 <h2 class="hasAnchor">
 <a href="#c-syntax" class="anchor"></a>C++ syntax</h2>
@@ -187,8 +194,10 @@ The conditional operator evaluates an expression, returning one value if that ex
   default:
      default-group-of-statements
 }</code></pre>
-<p>It works in the following way: switch evaluates expression and checks if it is equivalent to <code>constant1</code>; if it is, it executes <code>group-of-statements-1</code> until it finds the <code>break</code> statement. When it finds this break statement, the program jumps to the end of the entire switch statement (the closing brace).
-- When you know exactly how many times you want to loop through a block of code, use the <code>for</code> loop.</p>
+<p>It works in the following way: switch evaluates expression and checks if it is equivalent to <code>constant1</code>; if it is, it executes <code>group-of-statements-1</code> until it finds the <code>break</code> statement. When it finds this break statement, the program jumps to the end of the entire switch statement (the closing brace).</p>
+<ul>
+<li>When you know exactly how many times you want to loop through a block of code, use the <code>for</code> loop.</li>
+</ul>
 <pre><code>for (statement 1; statement 2; statement 3) {
   // code block to be executed
 }</code></pre>
@@ -208,69 +217,92 @@ The conditional operator evaluates an expression, returning one value if that ex
 <div id="usual-numeric-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usual-numeric-functions" class="anchor"></a>Usual numeric functions</h2>
-<p>The most popular functions of the <code>cmath</code> library, which is included in the package, are listed in the table below. If the user wants to call some other functions of <code>cmath</code> not listed in the table, this is possible by adding the prefix <code>std::</code> to the name of the function (scope resolution operator <code>::</code> to access to functions declared in namespace standard <code>std</code>).</p>
-<p>Note that these functions are not vectorial. In the following table, the variables <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(x\)</span> are scalar.</p>
-<center>
-<table class="table">
-<thead><tr class="header">
-<th align="left">Function call</th>
-<th align="left">Meaning</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">max(a,b)</td>
-<td align="left"><span class="math inline">\(\max(a,b)\)</span></td>
-</tr>
-<tr class="even">
-<td align="left">min(a,b)</td>
-<td align="left"><span class="math inline">\(\min(a,b)\)</span></td>
-</tr>
-<tr class="odd">
-<td align="left">log(x)</td>
-<td align="left"><span class="math inline">\(\ln(x)\)</span></td>
-</tr>
-<tr class="even">
-<td align="left">exp(x)</td>
-<td align="left"><span class="math inline">\(e^x\)</span></td>
-</tr>
-<tr class="odd">
-<td align="left">sin(x)</td>
-<td align="left"><span class="math inline">\(\sin(x)\)</span></td>
-</tr>
-<tr class="even">
-<td align="left">cos(x)</td>
-<td align="left"><span class="math inline">\(\cos(x)\)</span></td>
-</tr>
-<tr class="odd">
-<td align="left">pow(x,a)</td>
-<td align="left"><span class="math inline">\(x^a\)</span></td>
-</tr>
-<tr class="even">
-<td align="left">sqrt(x)</td>
-<td align="left"><span class="math inline">\(\sqrt{x}\)</span></td>
-</tr>
-<tr class="odd">
-<td align="left">abs(x)</td>
-<td align="left"><span class="math inline">\(|x|\)</span></td>
-</tr>
-<tr class="even">
-<td align="left">ceil(x)</td>
-<td align="left"><span class="math inline">\(\lceil x \rceil\)</span></td>
-</tr>
-<tr class="odd">
-<td align="left">floor(x)</td>
-<td align="left"><span class="math inline">\(\lfloor x \rfloor\)</span></td>
-</tr>
-</tbody>
-</table>
-</center>
+<p>The most popular functions of the <code>cmath</code> library, which is included in the package, are the following:</p>
+<ul>
+<li>Exponential and logarithm functions: <code><a href="https://rdrr.io/r/base/Log.html">exp(x)</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log(x)</a></code> (natural logarithm)</li>
+<li>Trigonometric functions: <code><a href="https://rdrr.io/r/base/Trig.html">cos(x)</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html">sin(x)</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html">tan(x)</a></code>
+</li>
+<li>Power functions: <code>pow(x, a)</code> meaning <span class="math inline">\(x^a\)</span> and <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(x)</a></code> meaning <span class="math inline">\(\sqrt{x}\)</span>
+</li>
+<li>Absolute value: <code><a href="https://rdrr.io/r/base/MathFun.html">abs(x)</a></code>
+</li>
+<li>Truncation functions: <code>ceil(x)</code> meaning <span class="math inline">\(\lceil x \rceil\)</span> and <code><a href="https://rdrr.io/r/base/Round.html">floor(x)</a></code> meaning <span class="math inline">\(\lfloor x \rfloor\)</span>
+</li>
+<li>Bivariate functions: <code><a href="https://rdrr.io/r/base/Extremes.html">max(x, y)</a></code> and <code><a href="https://rdrr.io/r/base/Extremes.html">min(x,y)</a></code>
+</li>
+</ul>
+<p>Note that these functions are not vectorial, the arguments <code>x</code> and <code>y</code> must be scalar. If the user wants to call some other functions of <code>cmath</code> not listed in the table, this is possible by adding the prefix <code>std::</code> to the name of the function (scope resolution operator <code>::</code> to access to functions declared in namespace standard <code>std</code>).</p>
 </div>
 <div id="link-between-r-and-c-characteristics-and-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#link-between-r-and-c-characteristics-and-parameters" class="anchor"></a>Link between R and C++ (characteristics and parameters)</h2>
-<div id="scalar-types-characteristics-and-parameters" class="section level3">
+<p>The data shared between the R environment and the C++ code are:</p>
+<ul>
+<li>the characteristics of the individuals which must be atomic (boolean, scalar, character)</li>
+<li>the model parameters: a list of variables of type:
+<ul>
+<li>atomic, vector or matrice</li>
+<li>real function of one variable, or list of real function of one variable</li>
+<li>piecewise real function of one variable, of list of that</li>
+</ul>
+</li>
+</ul>
+<div id="atomic-types-characteristics-and-parameters" class="section level3">
 <h3 class="hasAnchor">
-<a href="#scalar-types-characteristics-and-parameters" class="anchor"></a>Scalar types (characteristics and parameters)</h3>
+<a href="#atomic-types-characteristics-and-parameters" class="anchor"></a>Atomic types (characteristics and parameters)</h3>
+<p>Here is the conversion table used between the atomic types of R and C++.</p>
+<center>
+<table class="table">
+<thead><tr class="header">
+<th align="left">C++ type</th>
+<th align="left">Type type</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">bool</td>
+<td align="left"><code>logical</code></td>
+</tr>
+<tr class="even">
+<td align="left">int</td>
+<td align="left"><code>integer</code></td>
+</tr>
+<tr class="odd">
+<td align="left">double</td>
+<td align="left"><code>double</code></td>
+</tr>
+<tr class="even">
+<td align="left">char</td>
+<td align="left"><code>character</code></td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>To declare the characteristics of an individual, you must define a named character vector containing the name of the characteristic and the associated C++ type. The function <code>get_characteristics</code> provide a way to extract the characteristics from a population data frame.</p>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">IBMPopSim</span>)
+<span class="no">pop</span> <span class="kw">&lt;-</span> <span class="kw pkg">IBMPopSim</span><span class="kw ns">::</span><span class="no"><a href="../reference/EW_popIMD_14.html">EW_popIMD_14</a></span>$<span class="no">sample</span>
+<span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop</span>)
+<span class="co">##   male    IMD </span>
+<span class="co">## "bool"  "int"</span></pre></body></html></div>
+<p>The requires <code>birth</code> and <code>death</code> characteristics are of type <code>double</code>.</p>
+<p>The parameters are given by a named list. Each element of the list is a R object and the type is determined using the <code>typeof</code> function. The variable <code>code</code> contains simple C++ instructions depending on the parameters defined in <code>params</code>. You can directly use the name of parameter inside the C++ code. The <code>summary</code> of the model <code>mod</code> gives useful information on the types of characteristics and parameters used in C++ code.</p>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"lambda"</span> <span class="kw">=</span> <span class="fl">0.02</span>, <span class="st">"alpha"</span> <span class="kw">=</span> <span class="fl">0.4</span>, <span class="st">"mu"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="fl">2</span>))
+<span class="no">code</span> <span class="kw">&lt;-</span> <span class="st">'result = lambda + alpha * (age(I, t) + mu);'</span>
+<span class="no">event_birth</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span>(<span class="st">'birth'</span>, <span class="kw">intensity_code</span> <span class="kw">=</span> <span class="no">code</span>)
+<span class="no">mod</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span>(<span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop</span>), <span class="kw">events</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">'birth'</span> <span class="kw">=</span> <span class="no">event_birth</span>),
+                <span class="kw">parameters</span> <span class="kw">=</span> <span class="no">params</span>, <span class="kw">with_compilation</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod</span>)
+<span class="co">## Events:</span>
+<span class="co">## #1: individual event of type birth</span>
+<span class="co">## --------------------------------------- </span>
+<span class="co">## Individual description:</span>
+<span class="co">## names:  birth death male IMD </span>
+<span class="co">## R types:  double double logical integer </span>
+<span class="co">## C types:  double double bool int</span>
+<span class="co">## --------------------------------------- </span>
+<span class="co">## R parameters available in C++ code:</span>
+<span class="co">## names:  lambda alpha mu </span>
+<span class="co">## R types:  double double integer </span>
+<span class="co">## C types:  double double int</span></pre></body></html></div>
 </div>
 <div id="vectors-and-matrices-parameters" class="section level3">
 <h3 class="hasAnchor">
@@ -284,7 +316,7 @@ The conditional operator evaluates an expression, returning one value if that ex
 <code>(i,j)</code> for <code>arma::matrix</code>, access the element stored at the <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column.</li>
 </ul>
 <p><strong>Warning:</strong> The first element of the array is indexed by subscript of 0 (in each dimension).</p>
-<p>Another standard way (in C++) to access elements is to used iterators. An iterator is an object that, pointing to some element in a range of elements, has the ability to iterate through the elements of that range using a set of operators.</p>
+<p>Another standard way (in C++) to access elements is to used iterators. An iterator is an object that, pointing to some element in a range of elements, has the ability to iterate through the elements of that range using a set of operators (see <a href="https://teuder.github.io/rcpp4everyone_en/290_iterator.html">more details on iterators</a>).</p>
 <p>Let <code>v</code> be a an object of type <code>arma::vec</code> and A be a an object of type <code>arma::matrix</code>. Here we show how to get the begin and the end iterators of these objects.</p>
 <ul>
 <li>
@@ -314,10 +346,17 @@ The conditional operator evaluates an expression, returning one value if that ex
 <div id="real-functions-of-one-variable" class="section level4">
 <h4 class="hasAnchor">
 <a href="#real-functions-of-one-variable" class="anchor"></a>Real functions of one variable</h4>
+<p>In the C++ code these functions are identified as <code>function_x</code>.</p>
+<p>-stepfun
+-linfun
+-piecewise_x
+-gompertz
+-weibull</p>
 </div>
 <div id="piecewise-real-functions-of-two-variables" class="section level4">
 <h4 class="hasAnchor">
 <a href="#piecewise-real-functions-of-two-variables" class="anchor"></a>Piecewise real functions of two variables</h4>
+<p>-piecewise_xy</p>
 </div>
 <div id="list-of-functions" class="section level4">
 <h4 class="hasAnchor">

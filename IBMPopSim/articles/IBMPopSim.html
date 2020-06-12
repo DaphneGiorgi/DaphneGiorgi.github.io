@@ -224,7 +224,7 @@ Otherwise, the intensity function is said to be the class of <strong>interaction
 <span class="no">num_deaths</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>$<span class="no">death</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"births"</span> <span class="kw">=</span> <span class="no">num_births</span>, <span class="st">"deaths"</span> <span class="kw">=</span> <span class="no">num_deaths</span>))
 <span class="co">## births deaths </span>
-<span class="co">##    981    972</span></pre></body></html></div>
+<span class="co">##   1020   1033</span></pre></body></html></div>
 </div>
 </div>
 <div id="quick-model-creation-and-simulation" class="section level2" number="1.4">
@@ -245,7 +245,7 @@ In order to define a model, the user must specify three building blocks:</p>
 <ul>
 <li>The second step is to define the model parameters’ list:</li>
 </ul>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"alpha"</span> <span class="kw">=</span>  <span class="fl">0.008</span>, <span class="st">"beta"</span> <span class="kw">=</span><span class="fl">0.02</span>, <span class="st">"p_male"</span><span class="kw">=</span> <span class="fl">0.51</span>,
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"alpha"</span> <span class="kw">=</span> <span class="fl">0.008</span>, <span class="st">"beta"</span> <span class="kw">=</span> <span class="fl">0.02</span>, <span class="st">"p_male"</span> <span class="kw">=</span> <span class="fl">0.51</span>,
                <span class="st">"birth_rate"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/stepfun.html">stepfun</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">15</span>,<span class="fl">40</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span>)))</pre></body></html></div>
 <ul>
 <li>The last step is to defined the events that can occur in the population, here birth and death events:</li>
@@ -280,11 +280,11 @@ In order to define a model, the user must specify three building blocks:</p>
 <span class="no">female_pop</span> <span class="kw">&lt;-</span> <span class="no">pop_out</span>[<span class="no">pop_out</span>$<span class="no">male</span><span class="kw">==</span><span class="fl">FALSE</span>, ]
 <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>)
 <span class="co">##       age  male value</span>
-<span class="co">## 1 85 - 86 FALSE   231</span>
-<span class="co">## 2 86 - 87 FALSE   256</span>
-<span class="co">## 3 87 - 88 FALSE   230</span>
-<span class="co">## 4 88 - 89 FALSE   181</span>
-<span class="co">## 5 89 - 90 FALSE   192</span>
+<span class="co">## 1 85 - 86 FALSE   249</span>
+<span class="co">## 2 86 - 87 FALSE   250</span>
+<span class="co">## 3 87 - 88 FALSE   216</span>
+<span class="co">## 4 88 - 89 FALSE   186</span>
+<span class="co">## 5 89 - 90 FALSE   173</span>
 <span class="no">Dxt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">times</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)
 <span class="no">Ext</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">times</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)</pre></body></html></div>
 <ul>
@@ -788,10 +788,10 @@ In our example, the event of type death has been named <code>"my_death_event"</c
 <p>When there are no swap events (individuals don’t change of characteristics), the evolution of the population over the period <span class="math inline">\([0,30]\)</span> is recorded in a single dataframe <code>sim_out$population</code> containing the information of all individuals who lived in the population during the period.<br>
 Each line of <code>sim_out$population</code> contains the information of an individual who lived in the population over the period <span class="math inline">\([0,30]\)</span>. This includes individuals who were initially in <code>pop</code>, as well as individuals who were born or entered the population.</p>
 <div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>)
-<span class="co">## 'data.frame':    118032 obs. of  3 variables:</span>
-<span class="co">##  $ birth: num  -89.9 -89.9 -89.9 -89.9 -89.9 ...</span>
+<span class="co">## 'data.frame':    118069 obs. of  3 variables:</span>
+<span class="co">##  $ birth: num  -89.9 -89.9 -89.9 -89.8 -89.8 ...</span>
 <span class="co">##  $ death: num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">##  $ male : logi  TRUE TRUE FALSE FALSE FALSE TRUE ...</span></pre></body></html></div>
+<span class="co">##  $ male : logi  FALSE TRUE FALSE TRUE FALSE FALSE ...</span></pre></body></html></div>
 <p>Table <a href="#tab:logs">2.8</a> describes the elements of the vector <code>sim_out$logs</code>containing information on simulation algorithm:</p>
 <table class="table">
 <caption>
@@ -822,11 +822,11 @@ Each line of <code>sim_out$population</code> contains the information of an indi
 <p>For instance, the acceptance rate in the toy model is</p>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">'effective_events'</span>]/<span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">'proposed_events'</span>]
 <span class="co">## effective_events </span>
-<span class="co">##        0.2181205</span></pre></body></html></div>
+<span class="co">##        0.2172095</span></pre></body></html></div>
 <p>and the simulation time is</p>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">'duration_main_algorithm'</span>]
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##                0.046378</span></pre></body></html></div>
+<span class="co">##                0.063295</span></pre></body></html></div>
 <p><strong>Parameters modification and event removal</strong></p>
 <p>As explained in Section <a href="#Modelcreation">2.4</a> the structure of the compiled model allows the parameters’ values to be changed without recompiling the model. For instance, the parameter of the Gompertz death function can be modified to study the impact of an increase in mortality.<br>
 Before running the simulation, the events bounds should be updated accordingly accordingly.</p>
@@ -859,7 +859,7 @@ Before running the simulation, the events bounds should be updated accordingly a
 <div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="no">sim_out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="no">model</span>, <span class="no">pop</span>, <span class="no">events_bounds</span>, <span class="no">params</span>,
                   <span class="kw">age_max</span> <span class="kw">=</span> <span class="no">a_max</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>, <span class="kw">multithreading</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>## duration_main_algorithm 
-##                0.020009</code></pre>
+##                0.025998</code></pre>
 <p>By default, the number of threads is the number of concurrent threads supported by the available hardware implementation.<br>
 The number of thread can be set manually with the optional argument <code>num_threads</code> of <code>popsim</code>.</p>
 </div>
@@ -924,21 +924,21 @@ Figure 2.1: Evolution of probability to be in subgroup 1
 <span class="co">##   id birth death sub_grp</span>
 <span class="co">## 1  1     0    NA       1</span>
 <span class="co">## 2  5     0    NA       2</span>
-<span class="co">## 3  9     0    NA       2</span>
-<span class="co">## 4 13     0    NA       2</span>
-<span class="co">## 5 17     0    NA       2</span>
+<span class="co">## 3  9     0    NA       1</span>
+<span class="co">## 4 13     0    NA       1</span>
+<span class="co">## 5 17     0    NA       1</span>
 <span class="co">## 6 21     0    NA       1</span></pre></body></html></div>
 <p>These dataframes can be merged into a single dataframe summarizing the life course of each individual, by calling the function <code>merge_pop_withid</code>.</p>
 <div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="no">pop_list</span> <span class="kw">&lt;-</span> <span class="no">sim_out_id</span>$<span class="no">population</span>
 <span class="no">pop_merge</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/merge_pop_withid.html">merge_pop_withid</a></span>(<span class="no">pop_list</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pop_merge</span>)
 <span class="co">##   id birth death sub_grp_1 sub_grp_2 sub_grp_3 sub_grp_4 sub_grp_5</span>
-<span class="co">## 1  1     0    NA         1         1         1         1         1</span>
-<span class="co">## 2  5     0    NA         2         1         1         1         1</span>
-<span class="co">## 3  9     0    NA         2         2         1         2         2</span>
-<span class="co">## 4 13     0    NA         2         2         2         1         1</span>
-<span class="co">## 5 17     0    NA         2         1         1         1         1</span>
-<span class="co">## 6 21     0    NA         1         2         1         1         1</span></pre></body></html></div>
+<span class="co">## 1  1     0    NA         1         1         1         2         1</span>
+<span class="co">## 2  5     0    NA         2         2         2         2         2</span>
+<span class="co">## 3  9     0    NA         1         2         2         2         1</span>
+<span class="co">## 4 13     0    NA         1         1         1         1         1</span>
+<span class="co">## 5 17     0    NA         1         1         1         1         1</span>
+<span class="co">## 6 21     0    NA         1         2         2         2         1</span></pre></body></html></div>
 <p>For instance, a transition from subgroup 1 to subgroup 2 is observed for the individual with <code>id</code> number 5, between time 2 and 3.</p>
 </div>
 </div>
@@ -948,7 +948,14 @@ Figure 2.1: Evolution of probability to be in subgroup 1
 <p>The arguments <code>intensity_code</code>, <code>interaction_code</code> and <code>kernel_code</code> of the events functions must contain some C++ code given by the user. You don’t need to be a C++ guru to write the few instructions needed. These functions should use very little C++ syntax. They are essentially arithmetic or logical operations, tests and calls to predefined functions.</p>
 <p>For code efficiency, you should not allocate memory in these functions (no <code>new</code>) or use type containers (<code>std::vector</code>, <code>std::list</code>, …). If you think you need to allocate memory, consider as parameter an R vector that will be mapped via <code>arma::vector</code> (see below), or declare the variable as <code>static</code>.
 Also, it should not be necessary to make a loop. Keep in mind that these functions should be fast.</p>
-<p>There are no C++ language restrictions so you can use all the functions of the standard C++11 library. However we detail in this section some functions that should be sufficient.</p>
+<p>There are no C++ language restrictions so you can use all the functions of the standard C++11 library. However we detail in this section some functions that should be sufficient. For more details on C++ and Rcpp we recommend:</p>
+<ul>
+<li><a href="https://www.cplusplus.com/doc/tutorial/">C++ tutorial</a></li>
+<li>
+<a href="http://dirk.eddelbuettel.com/code/rcpp.html">Rcpp</a> and <a href="http://dirk.eddelbuettel.com/code/rcpp.armadillo.html">RcppArmadillo</a>
+</li>
+<li><a href="https://teuder.github.io/rcpp4everyone_en/">Rcpp for everyone</a></li>
+</ul>
 <div id="c-syntax" class="section level2" number="3.1">
 <h2 class="hasAnchor">
 <a href="#c-syntax" class="anchor"></a><span class="header-section-number">3.1</span> C++ syntax</h2>
@@ -1019,8 +1026,10 @@ The conditional operator evaluates an expression, returning one value if that ex
   default:
      default-group-of-statements
 }</code></pre>
-<p>It works in the following way: switch evaluates expression and checks if it is equivalent to <code>constant1</code>; if it is, it executes <code>group-of-statements-1</code> until it finds the <code>break</code> statement. When it finds this break statement, the program jumps to the end of the entire switch statement (the closing brace).
-- When you know exactly how many times you want to loop through a block of code, use the <code>for</code> loop.</p>
+<p>It works in the following way: switch evaluates expression and checks if it is equivalent to <code>constant1</code>; if it is, it executes <code>group-of-statements-1</code> until it finds the <code>break</code> statement. When it finds this break statement, the program jumps to the end of the entire switch statement (the closing brace).</p>
+<ul>
+<li>When you know exactly how many times you want to loop through a block of code, use the <code>for</code> loop.</li>
+</ul>
 <pre><code>for (statement 1; statement 2; statement 3) {
   // code block to be executed
 }</code></pre>
@@ -1040,69 +1049,92 @@ The conditional operator evaluates an expression, returning one value if that ex
 <div id="usual-numeric-functions" class="section level2" number="3.2">
 <h2 class="hasAnchor">
 <a href="#usual-numeric-functions" class="anchor"></a><span class="header-section-number">3.2</span> Usual numeric functions</h2>
-<p>The most popular functions of the <code>cmath</code> library, which is included in the package, are listed in the table below. If the user wants to call some other functions of <code>cmath</code> not listed in the table, this is possible by adding the prefix <code>std::</code> to the name of the function (scope resolution operator <code>::</code> to access to functions declared in namespace standard <code>std</code>).</p>
-<p>Note that these functions are not vectorial. In the following table, the variables <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(x\)</span> are scalar.</p>
-<center>
-<table class="table">
-<thead><tr class="header">
-<th>Function call</th>
-<th>Meaning</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>max(a,b)</td>
-<td><span class="math inline">\(\max(a,b)\)</span></td>
-</tr>
-<tr class="even">
-<td>min(a,b)</td>
-<td><span class="math inline">\(\min(a,b)\)</span></td>
-</tr>
-<tr class="odd">
-<td>log(x)</td>
-<td><span class="math inline">\(\ln(x)\)</span></td>
-</tr>
-<tr class="even">
-<td>exp(x)</td>
-<td><span class="math inline">\(e^x\)</span></td>
-</tr>
-<tr class="odd">
-<td>sin(x)</td>
-<td><span class="math inline">\(\sin(x)\)</span></td>
-</tr>
-<tr class="even">
-<td>cos(x)</td>
-<td><span class="math inline">\(\cos(x)\)</span></td>
-</tr>
-<tr class="odd">
-<td>pow(x,a)</td>
-<td><span class="math inline">\(x^a\)</span></td>
-</tr>
-<tr class="even">
-<td>sqrt(x)</td>
-<td><span class="math inline">\(\sqrt{x}\)</span></td>
-</tr>
-<tr class="odd">
-<td>abs(x)</td>
-<td><span class="math inline">\(|x|\)</span></td>
-</tr>
-<tr class="even">
-<td>ceil(x)</td>
-<td><span class="math inline">\(\lceil x \rceil\)</span></td>
-</tr>
-<tr class="odd">
-<td>floor(x)</td>
-<td><span class="math inline">\(\lfloor x \rfloor\)</span></td>
-</tr>
-</tbody>
-</table>
-</center>
+<p>The most popular functions of the <code>cmath</code> library, which is included in the package, are the following:</p>
+<ul>
+<li>Exponential and logarithm functions: <code><a href="https://rdrr.io/r/base/Log.html">exp(x)</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log(x)</a></code> (natural logarithm)</li>
+<li>Trigonometric functions: <code><a href="https://rdrr.io/r/base/Trig.html">cos(x)</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html">sin(x)</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html">tan(x)</a></code>
+</li>
+<li>Power functions: <code>pow(x, a)</code> meaning <span class="math inline">\(x^a\)</span> and <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(x)</a></code> meaning <span class="math inline">\(\sqrt{x}\)</span>
+</li>
+<li>Absolute value: <code><a href="https://rdrr.io/r/base/MathFun.html">abs(x)</a></code>
+</li>
+<li>Truncation functions: <code>ceil(x)</code> meaning <span class="math inline">\(\lceil x \rceil\)</span> and <code><a href="https://rdrr.io/r/base/Round.html">floor(x)</a></code> meaning <span class="math inline">\(\lfloor x \rfloor\)</span>
+</li>
+<li>Bivariate functions: <code><a href="https://rdrr.io/r/base/Extremes.html">max(x, y)</a></code> and <code><a href="https://rdrr.io/r/base/Extremes.html">min(x,y)</a></code>
+</li>
+</ul>
+<p>Note that these functions are not vectorial, the arguments <code>x</code> and <code>y</code> must be scalar. If the user wants to call some other functions of <code>cmath</code> not listed in the table, this is possible by adding the prefix <code>std::</code> to the name of the function (scope resolution operator <code>::</code> to access to functions declared in namespace standard <code>std</code>).</p>
 </div>
 <div id="link-between-r-and-c-characteristics-and-parameters" class="section level2" number="3.3">
 <h2 class="hasAnchor">
 <a href="#link-between-r-and-c-characteristics-and-parameters" class="anchor"></a><span class="header-section-number">3.3</span> Link between R and C++ (characteristics and parameters)</h2>
-<div id="scalar-types-characteristics-and-parameters" class="section level3" number="3.3.1">
+<p>The data shared between the R environment and the C++ code are:</p>
+<ul>
+<li>the characteristics of the individuals which must be atomic (boolean, scalar, character)</li>
+<li>the model parameters: a list of variables of type:
+<ul>
+<li>atomic, vector or matrice</li>
+<li>real function of one variable, or list of real function of one variable</li>
+<li>piecewise real function of one variable, of list of that</li>
+</ul>
+</li>
+</ul>
+<div id="atomic-types-characteristics-and-parameters" class="section level3" number="3.3.1">
 <h3 class="hasAnchor">
-<a href="#scalar-types-characteristics-and-parameters" class="anchor"></a><span class="header-section-number">3.3.1</span> Scalar types (characteristics and parameters)</h3>
+<a href="#atomic-types-characteristics-and-parameters" class="anchor"></a><span class="header-section-number">3.3.1</span> Atomic types (characteristics and parameters)</h3>
+<p>Here is the conversion table used between the atomic types of R and C++.</p>
+<center>
+<table class="table">
+<thead><tr class="header">
+<th align="left">C++ type</th>
+<th align="left">Type type</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">bool</td>
+<td align="left"><code>logical</code></td>
+</tr>
+<tr class="even">
+<td align="left">int</td>
+<td align="left"><code>integer</code></td>
+</tr>
+<tr class="odd">
+<td align="left">double</td>
+<td align="left"><code>double</code></td>
+</tr>
+<tr class="even">
+<td align="left">char</td>
+<td align="left"><code>character</code></td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>To declare the characteristics of an individual, you must define a named character vector containing the name of the characteristic and the associated C++ type. The function <code>get_characteristics</code> provide a way to extract the characteristics from a population data frame.</p>
+<div class="sourceCode" id="cb55"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">IBMPopSim</span>)
+<span class="no">pop</span> <span class="kw">&lt;-</span> <span class="kw pkg">IBMPopSim</span><span class="kw ns">::</span><span class="no"><a href="../reference/EW_popIMD_14.html">EW_popIMD_14</a></span>$<span class="no">sample</span>
+<span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop</span>)
+<span class="co">##   male    IMD </span>
+<span class="co">## "bool"  "int"</span></pre></body></html></div>
+<p>The requires <code>birth</code> and <code>death</code> characteristics are of type <code>double</code>.</p>
+<p>The parameters are given by a named list. Each element of the list is a R object and the type is determined using the <code>typeof</code> function. The variable <code>code</code> contains simple C++ instructions depending on the parameters defined in <code>params</code>. You can directly use the name of parameter inside the C++ code. The <code>summary</code> of the model <code>mod</code> gives useful information on the types of characteristics and parameters used in C++ code.</p>
+<div class="sourceCode" id="cb56"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"lambda"</span> <span class="kw">=</span> <span class="fl">0.02</span>, <span class="st">"alpha"</span> <span class="kw">=</span> <span class="fl">0.4</span>, <span class="st">"mu"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="fl">2</span>))
+<span class="no">code</span> <span class="kw">&lt;-</span> <span class="st">'result = lambda + alpha * (age(I, t) + mu);'</span>
+<span class="no">event_birth</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span>(<span class="st">'birth'</span>, <span class="kw">intensity_code</span> <span class="kw">=</span> <span class="no">code</span>)
+<span class="no">mod</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span>(<span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop</span>), <span class="kw">events</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">'birth'</span> <span class="kw">=</span> <span class="no">event_birth</span>),
+                <span class="kw">parameters</span> <span class="kw">=</span> <span class="no">params</span>, <span class="kw">with_compilation</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod</span>)
+<span class="co">## Events:</span>
+<span class="co">## #1: individual event of type birth</span>
+<span class="co">## --------------------------------------- </span>
+<span class="co">## Individual description:</span>
+<span class="co">## names:  birth death male IMD </span>
+<span class="co">## R types:  double double logical integer </span>
+<span class="co">## C types:  double double bool int</span>
+<span class="co">## --------------------------------------- </span>
+<span class="co">## R parameters available in C++ code:</span>
+<span class="co">## names:  lambda alpha mu </span>
+<span class="co">## R types:  double double integer </span>
+<span class="co">## C types:  double double int</span></pre></body></html></div>
 </div>
 <div id="vectors-and-matrices-parameters" class="section level3" number="3.3.2">
 <h3 class="hasAnchor">
@@ -1116,7 +1148,7 @@ The conditional operator evaluates an expression, returning one value if that ex
 <code>(i,j)</code> for <code>arma::matrix</code>, access the element stored at the <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column.</li>
 </ul>
 <p><strong>Warning:</strong> The first element of the array is indexed by subscript of 0 (in each dimension).</p>
-<p>Another standard way (in C++) to access elements is to used iterators. An iterator is an object that, pointing to some element in a range of elements, has the ability to iterate through the elements of that range using a set of operators.</p>
+<p>Another standard way (in C++) to access elements is to used iterators. An iterator is an object that, pointing to some element in a range of elements, has the ability to iterate through the elements of that range using a set of operators (see <a href="https://teuder.github.io/rcpp4everyone_en/290_iterator.html">more details on iterators</a>).</p>
 <p>Let <code>v</code> be a an object of type <code>arma::vec</code> and A be a an object of type <code>arma::matrix</code>. Here we show how to get the begin and the end iterators of these objects.</p>
 <ul>
 <li>
@@ -1146,10 +1178,17 @@ The conditional operator evaluates an expression, returning one value if that ex
 <div id="real-functions-of-one-variable" class="section level4" number="3.3.3.1">
 <h4 class="hasAnchor">
 <a href="#real-functions-of-one-variable" class="anchor"></a><span class="header-section-number">3.3.3.1</span> Real functions of one variable</h4>
+<p>In the C++ code these functions are identified as <code>function_x</code>.</p>
+<p>-stepfun
+-linfun
+-piecewise_x
+-gompertz
+-weibull</p>
 </div>
 <div id="piecewise-real-functions-of-two-variables" class="section level4" number="3.3.3.2">
 <h4 class="hasAnchor">
 <a href="#piecewise-real-functions-of-two-variables" class="anchor"></a><span class="header-section-number">3.3.3.2</span> Piecewise real functions of two variables</h4>
+<p>-piecewise_xy</p>
 </div>
 <div id="list-of-functions" class="section level4" number="3.3.3.3">
 <h4 class="hasAnchor">
@@ -1177,60 +1216,60 @@ The conditional operator evaluates an expression, returning one value if that ex
 <center>
 <table class="table">
 <thead><tr class="header">
-<th>Function call</th>
-<th>Meaning</th>
-<th>C++ <a href="http://www.cplusplus.com/reference/random/"><code>random</code></a> internal function</th>
+<th align="left">Function call</th>
+<th align="left">Meaning</th>
+<th align="left">C++ <a href="http://www.cplusplus.com/reference/random/"><code>random</code></a> internal function</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>CUnif(<span class="math inline">\(a=0, b=1\)</span>)</td>
-<td><span class="math inline">\(\mathcal{U}(a,b)\)</span></td>
-<td><a href="http://www.cplusplus.com/reference/random/uniform_real_distribution/"><code>uniform_real_distribution&lt;double&gt;</code></a></td>
+<td align="left">CUnif(<span class="math inline">\(a=0, b=1\)</span>)</td>
+<td align="left"><span class="math inline">\(\mathcal{U}(a,b)\)</span></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/uniform_real_distribution/"><code>uniform_real_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="even">
-<td>CExp(<span class="math inline">\(\lambda=1\)</span>)</td>
-<td><span class="math inline">\(\mathcal{E}(\lambda)\)</span></td>
-<td><a href="http://www.cplusplus.com/reference/random/exponential_distribution/"><code>exponential_distribution&lt;double&gt;</code></a></td>
+<td align="left">CExp(<span class="math inline">\(\lambda=1\)</span>)</td>
+<td align="left"><span class="math inline">\(\mathcal{E}(\lambda)\)</span></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/exponential_distribution/"><code>exponential_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="odd">
-<td>CNorm(<span class="math inline">\(\mu=0, \sigma=1\)</span>)</td>
-<td><span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span></td>
-<td><a href="http://www.cplusplus.com/reference/random/normal_distribution/"><code>normal_distribution&lt;double&gt;</code></a></td>
+<td align="left">CNorm(<span class="math inline">\(\mu=0, \sigma=1\)</span>)</td>
+<td align="left"><span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/normal_distribution/"><code>normal_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="even">
-<td>CPoisson(<span class="math inline">\(\lambda=1\)</span>)</td>
-<td><span class="math inline">\(\mathrm{Pois}(\lambda)\)</span></td>
-<td><a href="http://www.cplusplus.com/reference/random/poisson_distribution/"><code>poisson_distribution&lt;double&gt;</code></a></td>
+<td align="left">CPoisson(<span class="math inline">\(\lambda=1\)</span>)</td>
+<td align="left"><span class="math inline">\(\mathrm{Pois}(\lambda)\)</span></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/poisson_distribution/"><code>poisson_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="odd">
-<td>CGamma(<span class="math inline">\(\alpha=1, \beta=1\)</span>)</td>
-<td><span class="math inline">\(\Gamma(\alpha,\beta)\)</span></td>
-<td><a href="http://www.cplusplus.com/reference/random/gamma_distribution/"><code>gamma_distribution&lt;double&gt;</code></a></td>
+<td align="left">CGamma(<span class="math inline">\(\alpha=1, \beta=1\)</span>)</td>
+<td align="left"><span class="math inline">\(\Gamma(\alpha,\beta)\)</span></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/gamma_distribution/"><code>gamma_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="even">
-<td>CWeibull(<span class="math inline">\(a=1\)</span>, <span class="math inline">\(b=1\)</span>)</td>
-<td><span class="math inline">\(\mathrm{Weib}(a,b)\)</span></td>
-<td><a href="http://www.cplusplus.com/reference/random/weibull_distribution/"><code>weibull_distribution&lt;double&gt;</code></a></td>
+<td align="left">CWeibull(<span class="math inline">\(a=1\)</span>, <span class="math inline">\(b=1\)</span>)</td>
+<td align="left"><span class="math inline">\(\mathrm{Weib}(a,b)\)</span></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/weibull_distribution/"><code>weibull_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="odd">
-<td>CUnifInt(<span class="math inline">\(a=0, b=2^{31}-1\)</span>)</td>
-<td><span class="math inline">\(\mathcal{U}\{a,b\}\)</span></td>
-<td><a href="http://www.cplusplus.com/reference/random/uniform_int_distribution/"><code>uniform_int_distribution&lt;int&gt;</code></a></td>
+<td align="left">CUnifInt(<span class="math inline">\(a=0, b=2^{31}-1\)</span>)</td>
+<td align="left"><span class="math inline">\(\mathcal{U}\{a,b\}\)</span></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/uniform_int_distribution/"><code>uniform_int_distribution&lt;int&gt;</code></a></td>
 </tr>
 <tr class="even">
-<td>CBern(<span class="math inline">\(p=0.5\)</span>)</td>
-<td><span class="math inline">\(\mathcal{B}(p)\)</span></td>
-<td><a href="http://www.cplusplus.com/reference/random/bernoulli_distribution/"><code>bernoulli_distribution</code></a></td>
+<td align="left">CBern(<span class="math inline">\(p=0.5\)</span>)</td>
+<td align="left"><span class="math inline">\(\mathcal{B}(p)\)</span></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/bernoulli_distribution/"><code>bernoulli_distribution</code></a></td>
 </tr>
 <tr class="odd">
-<td>CBinom(<span class="math inline">\(n=1, p=0.5\)</span>)</td>
-<td><span class="math inline">\(\mathcal{B}(n,p)\)</span></td>
-<td><a href="http://www.cplusplus.com/reference/random/binomial_distribution/"><code>binomial_distribution&lt;int&gt;</code></a></td>
+<td align="left">CBinom(<span class="math inline">\(n=1, p=0.5\)</span>)</td>
+<td align="left"><span class="math inline">\(\mathcal{B}(n,p)\)</span></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/binomial_distribution/"><code>binomial_distribution&lt;int&gt;</code></a></td>
 </tr>
 <tr class="even">
-<td>CDiscrete(<code>p_begin</code>, <code>p_end</code>)</td>
-<td><span class="math inline">\(\mathcal{D}_n\)</span></td>
-<td><a href="http://www.cplusplus.com/reference/random/discrete_distribution/"><code>discrete_distribution&lt;int&gt;</code></a></td>
+<td align="left">CDiscrete(<code>p_begin</code>, <code>p_end</code>)</td>
+<td align="left"><span class="math inline">\(\mathcal{D}_n\)</span></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/discrete_distribution/"><code>discrete_distribution&lt;int&gt;</code></a></td>
 </tr>
 </tbody>
 </table>
