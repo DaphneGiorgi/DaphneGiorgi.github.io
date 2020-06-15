@@ -224,7 +224,7 @@ Otherwise, the intensity function is said to be the class of <strong>interaction
 <span class="no">num_deaths</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>$<span class="no">death</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"births"</span> <span class="kw">=</span> <span class="no">num_births</span>, <span class="st">"deaths"</span> <span class="kw">=</span> <span class="no">num_deaths</span>))
 <span class="co">## births deaths </span>
-<span class="co">##   1020   1033</span></pre></body></html></div>
+<span class="co">##    997   1114</span></pre></body></html></div>
 </div>
 </div>
 <div id="quick-model-creation-and-simulation" class="section level2" number="1.4">
@@ -246,7 +246,7 @@ In order to define a model, the user must specify three building blocks:</p>
 <li>The second step is to define the model parameters’ list:</li>
 </ul>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"alpha"</span> <span class="kw">=</span> <span class="fl">0.008</span>, <span class="st">"beta"</span> <span class="kw">=</span> <span class="fl">0.02</span>, <span class="st">"p_male"</span> <span class="kw">=</span> <span class="fl">0.51</span>,
-               <span class="st">"birth_rate"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/stepfun.html">stepfun</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">15</span>,<span class="fl">40</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span>)))</pre></body></html></div>
+               <span class="st">"birth_rate"</span> <span class="kw">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">15</span>,<span class="fl">40</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span>)))</pre></body></html></div>
 <ul>
 <li>The last step is to defined the events that can occur in the population, here birth and death events:</li>
 </ul>
@@ -280,11 +280,11 @@ In order to define a model, the user must specify three building blocks:</p>
 <span class="no">female_pop</span> <span class="kw">&lt;-</span> <span class="no">pop_out</span>[<span class="no">pop_out</span>$<span class="no">male</span><span class="kw">==</span><span class="fl">FALSE</span>, ]
 <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>)
 <span class="co">##       age  male value</span>
-<span class="co">## 1 85 - 86 FALSE   249</span>
-<span class="co">## 2 86 - 87 FALSE   250</span>
-<span class="co">## 3 87 - 88 FALSE   216</span>
-<span class="co">## 4 88 - 89 FALSE   186</span>
-<span class="co">## 5 89 - 90 FALSE   173</span>
+<span class="co">## 1 85 - 86 FALSE   236</span>
+<span class="co">## 2 86 - 87 FALSE   239</span>
+<span class="co">## 3 87 - 88 FALSE   193</span>
+<span class="co">## 4 88 - 89 FALSE   195</span>
+<span class="co">## 5 89 - 90 FALSE   185</span>
 <span class="no">Dxt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">times</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)
 <span class="no">Ext</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">times</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)</pre></body></html></div>
 <ul>
@@ -684,7 +684,7 @@ One of the advantages of the model structure in IBMPopSim is that only the model
 <p>This means that once the model has been created, various simulations can be done with various initial populations and different parameters values. Thus, only one model has to be created to simulation a class of IBMs with varying parameters (see Section <a href="#Simulation1">2.5.2</a> for an example).</p>
 <p>Here is an example of model with a gender characteristic and two events (birth and death):</p>
 <div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"p_male"</span><span class="kw">=</span> <span class="fl">0.51</span>,
-               <span class="st">"birth_rate"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/stepfun.html">stepfun</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">15</span>,<span class="fl">40</span>),<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span>)),<span class="st">"death_rate"</span><span class="kw">=</span><span class="fu"><a href="../reference/gompertz.html">gompertz</a></span>(<span class="fl">0.008</span>,<span class="fl">0.02</span>))
+               <span class="st">"birth_rate"</span> <span class="kw">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">15</span>,<span class="fl">40</span>),<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span>)),<span class="st">"death_rate"</span><span class="kw">=</span><span class="fu"><a href="../reference/gompertz.html">gompertz</a></span>(<span class="fl">0.008</span>,<span class="fl">0.02</span>))
 
 
 <span class="no">death_event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"death"</span>, <span class="kw">name</span><span class="kw">=</span> <span class="st">"my_death_event"</span>,
@@ -788,10 +788,10 @@ In our example, the event of type death has been named <code>"my_death_event"</c
 <p>When there are no swap events (individuals don’t change of characteristics), the evolution of the population over the period <span class="math inline">\([0,30]\)</span> is recorded in a single dataframe <code>sim_out$population</code> containing the information of all individuals who lived in the population during the period.<br>
 Each line of <code>sim_out$population</code> contains the information of an individual who lived in the population over the period <span class="math inline">\([0,30]\)</span>. This includes individuals who were initially in <code>pop</code>, as well as individuals who were born or entered the population.</p>
 <div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>)
-<span class="co">## 'data.frame':    118069 obs. of  3 variables:</span>
-<span class="co">##  $ birth: num  -89.9 -89.9 -89.9 -89.8 -89.8 ...</span>
+<span class="co">## 'data.frame':    117999 obs. of  3 variables:</span>
+<span class="co">##  $ birth: num  -90 -89.9 -89.9 -89.9 -89.8 ...</span>
 <span class="co">##  $ death: num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">##  $ male : logi  FALSE TRUE FALSE TRUE FALSE FALSE ...</span></pre></body></html></div>
+<span class="co">##  $ male : logi  FALSE TRUE FALSE TRUE TRUE TRUE ...</span></pre></body></html></div>
 <p>Table <a href="#tab:logs">2.8</a> describes the elements of the vector <code>sim_out$logs</code>containing information on simulation algorithm:</p>
 <table class="table">
 <caption>
@@ -822,11 +822,11 @@ Each line of <code>sim_out$population</code> contains the information of an indi
 <p>For instance, the acceptance rate in the toy model is</p>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">'effective_events'</span>]/<span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">'proposed_events'</span>]
 <span class="co">## effective_events </span>
-<span class="co">##        0.2172095</span></pre></body></html></div>
+<span class="co">##        0.2186689</span></pre></body></html></div>
 <p>and the simulation time is</p>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">'duration_main_algorithm'</span>]
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##                0.063295</span></pre></body></html></div>
+<span class="co">##                0.049332</span></pre></body></html></div>
 <p><strong>Parameters modification and event removal</strong></p>
 <p>As explained in Section <a href="#Modelcreation">2.4</a> the structure of the compiled model allows the parameters’ values to be changed without recompiling the model. For instance, the parameter of the Gompertz death function can be modified to study the impact of an increase in mortality.<br>
 Before running the simulation, the events bounds should be updated accordingly accordingly.</p>
@@ -859,7 +859,7 @@ Before running the simulation, the events bounds should be updated accordingly a
 <div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="no">sim_out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="no">model</span>, <span class="no">pop</span>, <span class="no">events_bounds</span>, <span class="no">params</span>,
                   <span class="kw">age_max</span> <span class="kw">=</span> <span class="no">a_max</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>, <span class="kw">multithreading</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>## duration_main_algorithm 
-##                0.025998</code></pre>
+##                0.020394</code></pre>
 <p>By default, the number of threads is the number of concurrent threads supported by the available hardware implementation.<br>
 The number of thread can be set manually with the optional argument <code>num_threads</code> of <code>popsim</code>.</p>
 </div>
@@ -922,23 +922,23 @@ Figure 2.1: Evolution of probability to be in subgroup 1
 <span class="co">## Simulation on  [0, 1]  [1, 2]  [2, 3]  [3, 4]  [4, 5]</span></pre></body></html></div>
 <div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">sim_out_id</span>$<span class="no">population</span><span class="kw">[[</span><span class="fl">1</span>]])
 <span class="co">##   id birth death sub_grp</span>
-<span class="co">## 1  1     0    NA       1</span>
-<span class="co">## 2  5     0    NA       2</span>
-<span class="co">## 3  9     0    NA       1</span>
+<span class="co">## 1  1     0    NA       2</span>
+<span class="co">## 2  5     0    NA       1</span>
+<span class="co">## 3  9     0    NA       2</span>
 <span class="co">## 4 13     0    NA       1</span>
 <span class="co">## 5 17     0    NA       1</span>
-<span class="co">## 6 21     0    NA       1</span></pre></body></html></div>
+<span class="co">## 6 21     0    NA       2</span></pre></body></html></div>
 <p>These dataframes can be merged into a single dataframe summarizing the life course of each individual, by calling the function <code>merge_pop_withid</code>.</p>
 <div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="no">pop_list</span> <span class="kw">&lt;-</span> <span class="no">sim_out_id</span>$<span class="no">population</span>
 <span class="no">pop_merge</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/merge_pop_withid.html">merge_pop_withid</a></span>(<span class="no">pop_list</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pop_merge</span>)
 <span class="co">##   id birth death sub_grp_1 sub_grp_2 sub_grp_3 sub_grp_4 sub_grp_5</span>
-<span class="co">## 1  1     0    NA         1         1         1         2         1</span>
-<span class="co">## 2  5     0    NA         2         2         2         2         2</span>
-<span class="co">## 3  9     0    NA         1         2         2         2         1</span>
-<span class="co">## 4 13     0    NA         1         1         1         1         1</span>
+<span class="co">## 1  1     0    NA         2         2         2         2         2</span>
+<span class="co">## 2  5     0    NA         1         1         1         1         1</span>
+<span class="co">## 3  9     0    NA         2         2         1         1         1</span>
+<span class="co">## 4 13     0    NA         1         2         1         1         1</span>
 <span class="co">## 5 17     0    NA         1         1         1         1         1</span>
-<span class="co">## 6 21     0    NA         1         2         2         2         1</span></pre></body></html></div>
+<span class="co">## 6 21     0    NA         2         2         2         2         2</span></pre></body></html></div>
 <p>For instance, a transition from subgroup 1 to subgroup 2 is observed for the individual with <code>id</code> number 5, between time 2 and 3.</p>
 </div>
 </div>
@@ -1179,16 +1179,21 @@ The conditional operator evaluates an expression, returning one value if that ex
 <h4 class="hasAnchor">
 <a href="#real-functions-of-one-variable" class="anchor"></a><span class="header-section-number">3.3.3.1</span> Real functions of one variable</h4>
 <p>In the C++ code these functions are identified as <code>function_x</code>.</p>
-<p>-stepfun
--linfun
--piecewise_x
--gompertz
--weibull</p>
+<ul>
+<li><code>stepfun</code></li>
+<li><code>linfun</code></li>
+<li><code>gompertz</code></li>
+<li><code>weibull</code></li>
+<li><code>piecewise_x</code></li>
+</ul>
 </div>
 <div id="piecewise-real-functions-of-two-variables" class="section level4" number="3.3.3.2">
 <h4 class="hasAnchor">
 <a href="#piecewise-real-functions-of-two-variables" class="anchor"></a><span class="header-section-number">3.3.3.2</span> Piecewise real functions of two variables</h4>
-<p>-piecewise_xy</p>
+<p>In the C++ code this function is identified as <code>function_xy</code>.</p>
+<ul>
+<li><code>piecewise_xy</code></li>
+</ul>
 </div>
 <div id="list-of-functions" class="section level4" number="3.3.3.3">
 <h4 class="hasAnchor">

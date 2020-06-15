@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gompertz function. — gompertz • IBMPopSim</title>
+<title>Step Function — stepfun • IBMPopSim</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,9 @@
 
 
 
-<meta property="og:title" content="Gompertz function. — gompertz" />
-<meta property="og:description" content="Gompertz function." />
+<meta property="og:title" content="Step Function — stepfun" />
+<meta property="og:description" content="Given the vectors (x[1],...,x[n]) and (y[0],y[1],...,y[n]) (one value more!), stepfun(x, y) returns an interpolating step function, say f_n. This is the cadlag version (right = FALSE) of the stepfun function from package stats. The step function value f_n(t) equals to the constant y[k-1] for t in [x[k-1], x[k]) so that
+$$f_n(t) = \sum_{k=1}^n y_{k-1} \mathbb{1}_{[x_{k-1}, x_{k})}(t)$$" />
 
 
 
@@ -142,36 +143,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Gompertz function.</h1>
+    <h1>Step Function</h1>
     <small class="dont-index">Source: <a href='https://github.com/DaphneGiorgi/IBMPopSim/blob/master/R/functions.R'><code>R/functions.R</code></a></small>
-    <div class="hidden name"><code>gompertz.Rd</code></div>
+    <div class="hidden name"><code>stepfun.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Gompertz function.</p>
+    <p>Given the vectors <code>(x[1],...,x[n])</code> and <code>(y[0],y[1],...,y[n])</code> (one value more!), <code>stepfun(x, y)</code> returns an interpolating step function, say <code>f_n</code>. This is the cadlag version (<code>right = FALSE</code>) of the <code>stepfun</code> function from package <code>stats</code>. The step function value <code>f_n(t)</code> equals to the constant <code>y[k-1]</code> for <code>t</code> in <code>[x[k-1], x[k])</code> so that
+$$f_n(t) = \sum_{k=1}^n y_{k-1} \mathbb{1}_{[x_{k-1}, x_{k})}(t)$$</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gompertz</span>(<span class='no'>alpha</span>, <span class='no'>beta</span>)</pre>
+    <pre class="usage"><span class='fu'>stepfun</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>alpha</th>
-      <td><p>Real parameter.</p></td>
+      <th>x</th>
+      <td><p>Numeric vector giving the knots or jump locations of the step function.</p></td>
     </tr>
     <tr>
-      <th>beta</th>
-      <td><p>Real parameter.</p></td>
+      <th>y</th>
+      <td><p>Numeric vector one longer than x, giving the heights of the function values between the x values.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Function which associes <code>x</code> to \(\alpha exp(\beta x)\)</p>
+    <p>Objet of class <code><a href='https://rdrr.io/r/stats/stepfun.html'>stepfun</a></code> with option <code>right = FALSE</code> (cadlag function).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A C++ version of this cadlag function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
+    <p>This function is defined for documentation purposes only. See <code><a href='https://rdrr.io/r/stats/stepfun.html'>stepfun</a></code> and <code><a href='https://rdrr.io/r/stats/approxfun.html'>approxfun</a></code>.</p>
+<p>A C++ version of this cadlag function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/plot.stepfun.html'>plot.stepfun</a></code> and <code><a href='max.stepfun.html'>max.stepfun</a></code>.</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

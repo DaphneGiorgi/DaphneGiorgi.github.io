@@ -153,9 +153,9 @@
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">EW_pop_14</span>$<span class="no">rates</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
         <span class="st">"p_male"</span> <span class="kw">=</span> <span class="fl">0.512</span>, <span class="co"># probability to give birth to a male. </span>
-        <span class="st">"birth_rate"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">birth</span>[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="no">birth</span>[,<span class="st">"value"</span>])),
-        <span class="st">"death_male"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">death_male</span>[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="no">death_male</span>[,<span class="st">"value"</span>])),
-        <span class="st">"death_female"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">death_female</span>[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="no">death_female</span>[,<span class="st">"value"</span>]))
+        <span class="st">"birth_rate"</span> <span class="kw">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">birth</span>[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="no">birth</span>[,<span class="st">"value"</span>])),
+        <span class="st">"death_male"</span> <span class="kw">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">death_male</span>[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="no">death_male</span>[,<span class="st">"value"</span>])),
+        <span class="st">"death_female"</span> <span class="kw">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">death_female</span>[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="no">death_female</span>[,<span class="st">"value"</span>]))
     )
 )</pre></body></html></div>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">lbl</span> <span class="kw">=</span> <span class="fu">labs</span>(<span class="kw">x</span><span class="kw">=</span><span class="st">"Age"</span>, <span class="kw">y</span><span class="kw">=</span><span class="st">"Intensity"</span>)
@@ -233,12 +233,12 @@
 <p><strong>Simulation logs</strong></p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>
 <span class="co">##         proposed_events        effective_events        cleanall_counter </span>
-<span class="co">##            1.684485e+06            1.134130e+05            6.000000e+00 </span>
+<span class="co">##            1.684904e+06            1.135860e+05            6.000000e+00 </span>
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##            1.630980e-01</span></pre></body></html></div>
+<span class="co">##            8.818500e-02</span></pre></body></html></div>
 <p>The ratio of accepted events is</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span><span class="kw">[[</span><span class="st">"effective_events"</span>]] / <span class="no">sim_out</span>$<span class="no">logs</span><span class="kw">[[</span><span class="st">"proposed_events"</span>]]
-<span class="co">## [1] 0.067328</span></pre></body></html></div>
+<span class="co">## [1] 0.06741393</span></pre></body></html></div>
 <p><strong>Outputs</strong></p>
 <p><code>sim_out$population</code> is a data frame composed of all individuals who lived in the population over the period [0,50] (individuals in the initial population and born during the simulation period).<br>
 Each line corresponds to an individual, with his date of birth, date of death (<code>NA</code> if still alive at the end of the simulation) and gender.</p>
@@ -278,9 +278,9 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <span class="co">## Simulation on  [0, 50]</span></pre></body></html></div>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>
 <span class="co">##         proposed_events        effective_events        cleanall_counter </span>
-<span class="co">##            1.679428e+07            1.134595e+06            6.000000e+00 </span>
+<span class="co">##            1.680765e+07            1.134544e+06            6.000000e+00 </span>
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##            1.301276e+00</span></pre></body></html></div>
+<span class="co">##            1.385112e+00</span></pre></body></html></div>
 </div>
 <div id="modify-an-intensity" class="section level2" number="6.2">
 <h2 class="hasAnchor">
@@ -309,7 +309,7 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">pop_size_90plus_const</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="fu"><a href="../reference/population_alive.html">population_alive</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>,<span class="kw">t</span> <span class="kw">=</span> <span class="fl">50</span>,<span class="kw">a1</span><span class="kw">=</span><span class="fl">90</span>))
 <span class="no">pop_size_90plus_lin</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="fu"><a href="../reference/population_alive.html">population_alive</a></span>(<span class="no">sim_out_lin</span>$<span class="no">population</span>,<span class="kw">t</span> <span class="kw">=</span> <span class="fl">50</span>,<span class="kw">a1</span><span class="kw">=</span><span class="fl">90</span>))
 (<span class="no">pop_size_90plus_const</span>-<span class="no">pop_size_90plus_lin</span>)/<span class="no">pop_size_90plus_const</span>*<span class="fl">100</span>
-<span class="co">## [1] 7.189365</span></pre></body></html></div>
+<span class="co">## [1] 7.624142</span></pre></body></html></div>
 </div>
 <div id="deactivate-an-event" class="section level2" number="6.3">
 <h2 class="hasAnchor">
@@ -330,10 +330,10 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <p><img src="IBMPopSim_human_pop_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">70</span>,<span class="fl">90</span>,<span class="fl">10</span>), <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>)
 <span class="co">##       age  male value</span>
-<span class="co">## 1 70 - 80 FALSE  5798</span>
-<span class="co">## 2 70 - 80  TRUE  5089</span>
-<span class="co">## 3 80 - 90 FALSE  3632</span>
-<span class="co">## 4 80 - 90  TRUE  2754</span></pre></body></html></div>
+<span class="co">## 1 70 - 80 FALSE  5856</span>
+<span class="co">## 2 70 - 80  TRUE  5183</span>
+<span class="co">## 3 80 - 90 FALSE  3634</span>
+<span class="co">## 4 80 - 90  TRUE  2777</span></pre></body></html></div>
 </div>
 </div>
 <div id="addition-of-number-of-children-characteristic" class="section level1" number="7">
@@ -392,13 +392,13 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="co"># Females of age over 50 alive at time 100:</span>
 <span class="no">pop_female_time</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/population_alive.html">population_alive</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>, <span class="no">male</span> <span class="kw">==</span> <span class="no">F</span>), <span class="kw">t</span><span class="kw">=</span> <span class="fl">100</span>, <span class="kw">a1</span><span class="kw">=</span> <span class="fl">50</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">pop_female_time</span>)[<span class="fl">1</span>]<span class="co"># Number of females over 100</span>
-<span class="co">## [1] 16960</span></pre></body></html></div>
+<span class="co">## [1] 17108</span></pre></body></html></div>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">pop_female_time</span>, <span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">children</span>)))+
 <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="kw">y</span> <span class="kw">=</span> (<span class="no">..count..</span>)/<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">..count..</span>)))+
 <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span><span class="kw">=</span><span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span>) +
 <span class="fu">labs</span>(<span class="kw">title</span><span class="kw">=</span><span class="st">"Distribution of the number of children for women aged over 50 at time 100"</span>,<span class="kw">x</span><span class="kw">=</span><span class="st">"Number of children"</span>, <span class="kw">y</span><span class="kw">=</span><span class="st">""</span>)</pre></body></html></div>
 <div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">pop_female_time</span>$<span class="no">children</span>) <span class="co">#Mean number of children </span>
-<span class="co">## [1] 1.829245</span></pre></body></html></div>
+<span class="co">## [1] 1.822948</span></pre></body></html></div>
 </div>
 <div id="addition-of-cause-of-death-characteristics" class="section level1" number="8">
 <h1 class="hasAnchor">
@@ -467,8 +467,8 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <span class="co">##  $ sourceCpp       :List of 4</span>
 <span class="co">##   ..$ functions     : chr "popsim_cpp"</span>
 <span class="co">##   ..$ modules       : chr(0) </span>
-<span class="co">##   ..$ cppSourcePath : chr "/private/var/folders/mb/3wx92xxx253492xvw_zv8x680000gn/T/Rtmp0zhbJI/sourceCpp-x86_64-apple-darwin19.4.0-1.0.4.6"| __truncated__</span>
-<span class="co">##   ..$ buildDirectory: chr "/private/var/folders/mb/3wx92xxx253492xvw_zv8x680000gn/T/Rtmp0zhbJI/sourceCpp-x86_64-apple-darwin19.4.0-1.0.4.6"| __truncated__</span>
+<span class="co">##   ..$ cppSourcePath : chr "/private/var/folders/mb/3wx92xxx253492xvw_zv8x680000gn/T/RtmpugGZTg/sourceCpp-x86_64-apple-darwin19.4.0-1.0.4.6"| __truncated__</span>
+<span class="co">##   ..$ buildDirectory: chr "/private/var/folders/mb/3wx92xxx253492xvw_zv8x680000gn/T/RtmpugGZTg/sourceCpp-x86_64-apple-darwin19.4.0-1.0.4.6"| __truncated__</span>
 <span class="co">##  $ popsim_cpp      :function (pop_df, events_bounds, parameters, age_max, T0, T, clean_step, </span>
 <span class="co">##     clean_ratio, seed, multithreading, num_threads = NA_integer_, verbose = FALSE)  </span>
 <span class="co">##  - attr(*, "class")= chr "model"</span></pre></body></html></div>

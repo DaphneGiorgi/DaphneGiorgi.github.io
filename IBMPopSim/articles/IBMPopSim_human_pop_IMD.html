@@ -192,8 +192,8 @@
 <p>These parameters will be transformed in C++ in a vector of functions (starting from index 0).</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">params_death</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">EW_popIMD_14</span>$<span class="no">death_rates</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-        <span class="st">"death_male"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">5</span>, <span class="kw">function</span>(<span class="no">i</span>) <span class="fu"><a href="https://rdrr.io/r/stats/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">male</span>, <span class="no">IMD</span><span class="kw">==</span><span class="no">i</span>)[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">male</span>, <span class="no">IMD</span><span class="kw">==</span><span class="no">i</span>)[,<span class="st">"value"</span>]))),
-        <span class="st">"death_female"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">5</span>, <span class="kw">function</span>(<span class="no">i</span>) <span class="fu"><a href="https://rdrr.io/r/stats/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">female</span>, <span class="no">IMD</span><span class="kw">==</span><span class="no">i</span>)[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">female</span>, <span class="no">IMD</span><span class="kw">==</span><span class="no">i</span>)[,<span class="st">"value"</span>])))
+        <span class="st">"death_male"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">5</span>, <span class="kw">function</span>(<span class="no">i</span>) <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">male</span>, <span class="no">IMD</span><span class="kw">==</span><span class="no">i</span>)[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">male</span>, <span class="no">IMD</span><span class="kw">==</span><span class="no">i</span>)[,<span class="st">"value"</span>]))),
+        <span class="st">"death_female"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">5</span>, <span class="kw">function</span>(<span class="no">i</span>) <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">female</span>, <span class="no">IMD</span><span class="kw">==</span><span class="no">i</span>)[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">female</span>, <span class="no">IMD</span><span class="kw">==</span><span class="no">i</span>)[,<span class="st">"value"</span>])))
 
     )
 )</pre></body></html></div>
@@ -285,9 +285,9 @@ The vectors of discrete probabilities determining the action of the event when a
 <p>Note that data frame are not accepted as model parameters.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">params_swap</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">toy_params</span>$<span class="no">swap</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-        <span class="st">"swap_intensities"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">intensities</span>, <span class="fl">2</span>, <span class="kw">function</span>(<span class="no">rates</span>) <span class="fu"><a href="https://rdrr.io/r/stats/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">ages</span>, <span class="kw">y</span><span class="kw">=</span><span class="no">rates</span>)),
+        <span class="st">"swap_intensities"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">intensities</span>, <span class="fl">2</span>, <span class="kw">function</span>(<span class="no">rates</span>) <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">ages</span>, <span class="kw">y</span><span class="kw">=</span><span class="no">rates</span>)),
         <span class="st">"swap_distribution"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="no">distribution</span>),
-        <span class="st">"swap_age_to_idx"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/stepfun.html">stepfun</a></span>(<span class="no">ages</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>,<span class="fl">3</span>))
+        <span class="st">"swap_age_to_idx"</span> <span class="kw">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="no">ages</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>,<span class="fl">3</span>))
     )
 )</pre></body></html></div>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"> <span class="no">df_intensities</span> <span class="kw">&lt;-</span> <span class="fu">melt</span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"age"</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">15</span>,<span class="fl">30</span>,<span class="fl">45</span>),<span class="no">toy_params</span>$<span class="no">swap</span>$<span class="no">intensities</span>),<span class="kw">id.vars</span><span class="kw">=</span><span class="st">"age"</span>)</pre></body></html></div>
@@ -503,28 +503,28 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 <span class="co">## 2     3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">## 3     5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 4     4      4      4      4      4      4      4      4      4      4      4</span>
-<span class="co">## 5     4      4      4      1      1      1      1      1      1      1      1</span>
+<span class="co">## 5     4      4      4      4      4      4      4      4      4      4      4</span>
 <span class="co">## 6     3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">##   IMD_20 IMD_21 IMD_22 IMD_23 IMD_24 IMD_25 IMD_26 IMD_27 IMD_28 IMD_29 IMD_30</span>
 <span class="co">## 1      5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 2      3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">## 3      5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 4      4      4      4      4      4      4      4      4      4      4      4</span>
-<span class="co">## 5      1      1      1      1      1      1      1      1      1      1      1</span>
+<span class="co">## 5      4      4      4      4      4      4      4      4      4      4      4</span>
 <span class="co">## 6      3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">##   IMD_31 IMD_32 IMD_33 IMD_34 IMD_35 IMD_36 IMD_37 IMD_38 IMD_39 IMD_40 IMD_41</span>
 <span class="co">## 1      5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 2      3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">## 3      5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 4      4      4      4      4      4      4      4      4      4      4      4</span>
-<span class="co">## 5      1      1      1      1      1      1      1      1     NA     NA     NA</span>
+<span class="co">## 5      4      4      4      4      4      4      4      4      4      4      4</span>
 <span class="co">## 6      3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">##   IMD_42 IMD_43 IMD_44 IMD_45 IMD_46 IMD_47 IMD_48 IMD_49 IMD_50</span>
 <span class="co">## 1      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 2      3      3      3      3      3      3      3      3      3</span>
 <span class="co">## 3      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 4      4      4      4      4      4      4      4      4      4</span>
-<span class="co">## 5     NA     NA     NA     NA     NA     NA     NA     NA     NA</span>
+<span class="co">## 5      4      4      4      4      4      4      4      4      4</span>
 <span class="co">## 6      3      3      3      3      3      3      3      3      3</span></pre></body></html></div>
 </div>
 </div>
