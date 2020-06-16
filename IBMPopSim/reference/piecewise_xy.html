@@ -158,17 +158,17 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>breaks</th>
-      <td><p>Intervals</p></td>
+      <td><p>Numeric vector giving the breaks of functions given in <code>funs</code>. Must be sorted with unique values.</p></td>
     </tr>
     <tr>
       <th>funs</th>
-      <td><p>List of functions</p></td>
+      <td><p>List of functions.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Piecewise time function built with the given interval and functions</p>
+    <p>Piecewise time function built with the given interval and functions.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>A C++ version of this cadlag function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
@@ -176,7 +176,6 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>time_dep_function</span> <span class='kw'>&lt;-</span> <span class='fu'>piecewise_xy</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='gompertz.html'>gompertz</a></span>(<span class='fl'>0.1</span>,<span class='fl'>0.005</span>), <span class='fu'><a href='gompertz.html'>gompertz</a></span>(<span class='fl'>0.08</span>,<span class='fl'>0.005</span>)))
 <span class='fu'>time_dep_function</span>(<span class='fl'>0</span>, <span class='fl'>65</span>)  <span class='co'># death intensity at time 0 and age 65.</span></div><div class='output co'>#&gt; [1] 0.1384031</div><div class='input'>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

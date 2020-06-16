@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gompertz function. — gompertz • IBMPopSim</title>
+<title>Gompertz–Makeham intensity function. — gompertz • IBMPopSim</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,10 @@
 
 
 
-<meta property="og:title" content="Gompertz function. — gompertz" />
-<meta property="og:description" content="Gompertz function." />
+<meta property="og:title" content="Gompertz–Makeham intensity function. — gompertz" />
+<meta property="og:description" content="The intensity function (or hazard function) for the Gompertz-Makeham law of mortality distribution is defined as
+$$h(x) = \alpha e^{\beta x} + \lambda$$
+with \(\alpha, \beta, \lambda \in \mathbb{R}_+\)." />
 
 
 
@@ -142,36 +144,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Gompertz function.</h1>
+    <h1>Gompertz–Makeham intensity function.</h1>
     <small class="dont-index">Source: <a href='https://github.com/DaphneGiorgi/IBMPopSim/blob/master/R/functions.R'><code>R/functions.R</code></a></small>
     <div class="hidden name"><code>gompertz.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Gompertz function.</p>
+    <p>The intensity function (or hazard function) for the Gompertz-Makeham law of mortality distribution is defined as
+$$h(x) = \alpha e^{\beta x} + \lambda$$
+with \(\alpha, \beta, \lambda \in \mathbb{R}_+\).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gompertz</span>(<span class='no'>alpha</span>, <span class='no'>beta</span>)</pre>
+    <pre class="usage"><span class='fu'>gompertz</span>(<span class='no'>alpha</span>, <span class='no'>beta</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>alpha</th>
-      <td><p>Real parameter.</p></td>
+      <td><p>Non-negative real parameter.</p></td>
     </tr>
     <tr>
       <th>beta</th>
-      <td><p>Real parameter.</p></td>
+      <td><p>Non-negative real parameter.</p></td>
+    </tr>
+    <tr>
+      <th>lambda</th>
+      <td><p>Non-negative real parameter.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Function which associes <code>x</code> to \(\alpha exp(\beta x)\)</p>
+    <p>Function which associes <code>x</code> to \(\alpha exp(\beta x) + \lambda\)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>A C++ version of this cadlag function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='https://en.wikipedia.org/wiki/Gompertz%E2%80%93Makeham_law_of_mortality'>https://en.wikipedia.org/wiki/Gompertz%E2%80%93Makeham_law_of_mortality</a></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -153,7 +153,7 @@
 <span class="no">num_deaths</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>$<span class="no">death</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"births"</span> <span class="kw">=</span> <span class="no">num_births</span>, <span class="st">"deaths"</span> <span class="kw">=</span> <span class="no">num_deaths</span>))
 <span class="co">## births deaths </span>
-<span class="co">##   1033    964</span></pre></div>
+<span class="co">##    967    929</span></pre></div>
 </div>
 </div>
 <div id="quick-model-creation" class="section level2">
@@ -166,7 +166,7 @@
 <ul>
 <li>The second step is to define the model parameters’ list:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb6"><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"alpha"</span> <span class="kw">=</span>  <span class="fl">0.008</span>, <span class="st">"beta"</span> <span class="kw">=</span><span class="fl">0.02</span>, <span class="st">"p_male"</span><span class="kw">=</span> <span class="fl">0.51</span>,
+<!-- end list --><div class="sourceCode" id="cb6"><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"alpha"</span> <span class="kw">=</span> <span class="fl">0.008</span>, <span class="st">"beta"</span> <span class="kw">=</span> <span class="fl">0.02</span>, <span class="st">"p_male"</span> <span class="kw">=</span> <span class="fl">0.51</span>,
                <span class="st">"birth_rate"</span> <span class="kw">=</span> <span class="fu"><a href="reference/stepfun.html">stepfun</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">15</span>,<span class="fl">40</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span>)))</pre></div>
 <ul>
 <li>The last step is to defined the events that can occur in the population, here birth and death events:</li>
@@ -201,11 +201,11 @@
 <span class="no">female_pop</span> <span class="kw">&lt;-</span> <span class="no">pop_out</span>[<span class="no">pop_out</span>$<span class="no">male</span><span class="kw">==</span><span class="fl">FALSE</span>, ]
 <span class="fu"><a href="reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>)
 <span class="co">##       age  male value</span>
-<span class="co">## 1 85 - 86 FALSE   221</span>
-<span class="co">## 2 86 - 87 FALSE   262</span>
-<span class="co">## 3 87 - 88 FALSE   228</span>
-<span class="co">## 4 88 - 89 FALSE   215</span>
-<span class="co">## 5 89 - 90 FALSE   198</span>
+<span class="co">## 1 85 - 86 FALSE   249</span>
+<span class="co">## 2 86 - 87 FALSE   246</span>
+<span class="co">## 3 87 - 88 FALSE   207</span>
+<span class="co">## 4 88 - 89 FALSE   184</span>
+<span class="co">## 5 89 - 90 FALSE   199</span>
 <span class="no">Dxt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/death_table.html">death_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">times</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)
 <span class="no">Ext</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/exposure_table.html">exposure_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">times</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)</pre></div>
 <ul>

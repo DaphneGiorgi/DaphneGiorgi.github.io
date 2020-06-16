@@ -47,7 +47,9 @@
 
 
 <meta property="og:title" content="Weibull function. — weibull" />
-<meta property="og:description" content="Weibull function." />
+<meta property="og:description" content="The Weibull (density) function is defined as
+$$h(x) = \bigl(\frac{k}{\lambda}\bigr) {\bigl( \frac{x}{\lambda} \bigr)}^{k-1} e^{-(x/\lambda)^k}$$
+with \(k, \lambda \in (0, +\infty)\)." />
 
 
 
@@ -148,30 +150,35 @@
     </div>
 
     <div class="ref-description">
-    <p>Weibull function.</p>
+    <p>The Weibull (density) function is defined as
+$$h(x) = \bigl(\frac{k}{\lambda}\bigr) {\bigl( \frac{x}{\lambda} \bigr)}^{k-1} e^{-(x/\lambda)^k}$$
+with \(k, \lambda \in (0, +\infty)\).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>weibull</span>(<span class='no'>shape</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>weibull</span>(<span class='no'>k</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>shape</th>
-      <td><p>Real parameter.</p></td>
+      <th>k</th>
+      <td><p>Shape parameter, a positive real number.</p></td>
     </tr>
     <tr>
-      <th>scale</th>
-      <td><p>Real parameter, defaults to 1.</p></td>
+      <th>lambda</th>
+      <td><p>Scale parameter, a positive real number, defaults to 1.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Function which associes <code>x</code> to <code><a href='https://rdrr.io/r/stats/Weibull.html'>dweibull(x, shape, scale)</a></code>.</p>
+    <p>The Weibull density function. See <code><a href='https://rdrr.io/r/stats/Weibull.html'>dweibull</a></code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>A C++ version of this cadlag function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='https://en.wikipedia.org/wiki/Weibull_distribution'>https://en.wikipedia.org/wiki/Weibull_distribution</a></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

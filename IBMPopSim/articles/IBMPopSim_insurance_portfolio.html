@@ -146,7 +146,7 @@
 <span class="co">## StMoMo: Start fitting with gnm</span>
 <span class="co">## Initialising</span>
 <span class="co">## Running start-up iterations..</span>
-<span class="co">## Running main iterations.........</span>
+<span class="co">## Running main iterations..........</span>
 <span class="co">## Done</span>
 <span class="co">## StMoMo: Finish fitting with gnm</span></pre></body></html></div>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">t</span> <span class="kw">&lt;-</span> <span class="fl">30</span></pre></body></html></div>
@@ -156,7 +156,7 @@
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">list_death_male</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">LCforecastMale</span>$<span class="no">rates</span>, <span class="fl">2</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="fl">1</span>:<span class="fl">100</span>, <span class="no">x</span>))
 <span class="no">breaks</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>:<span class="fl">29</span>)
 <span class="no">death_male</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/piecewise_xy.html">piecewise_xy</a></span>(<span class="no">breaks</span>,<span class="no">list_death_male</span>)
-<span class="no">death_female</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/piecewise_xy.html">piecewise_xy</a></span>(<span class="no">breaks</span>,<span class="no">list_death_female</span>)</pre></body></html></div>
+<span class="co">#death_female &lt;- piecewise_xy(breaks,list_death_female)            </span></pre></body></html></div>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu">death_male</span>(<span class="fl">5</span>,<span class="fl">60</span>) <span class="co"># temps en premier age en deuxième</span>
 <span class="co">## [1] 0.006457236</span></pre></body></html></div>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"death_male"</span><span class="kw">=</span> <span class="no">death_male</span>, <span class="st">"alpha"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1.2</span>,<span class="fl">0.8</span>))</pre></body></html></div>
@@ -257,7 +257,7 @@ When an individual leave the population, his characteristics <code>out</code>is 
 <span class="co">## Simulation on  [0, 30]</span></pre></body></html></div>
 <p><strong>Ratio of accepted events</strong></p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span><span class="kw">[[</span><span class="st">"effective_events"</span>]] / <span class="no">sim_out</span>$<span class="no">logs</span><span class="kw">[[</span><span class="st">"proposed_events"</span>]]
-<span class="co">## [1] 0.2452332</span></pre></body></html></div>
+<span class="co">## [1] 0.245721</span></pre></body></html></div>
 </div>
 </div>
 <div id="outputs" class="section level1" number="7">
@@ -266,7 +266,7 @@ When an individual leave the population, his characteristics <code>out</code>is 
 <p><code>sim_out$population</code> is a data frame composed of all individuals present in the portfolio over the period [0,t] (individuals in the initial population and who entered the portofolio). Each line corresponds to an individual, with his date of birth, date of death (<code>NA</code> if still alive at the end of the simulation), risk class, and the characteristic <code>out</code>.<br>
 The characteristics <code>out</code> is set to <code>TRUE</code> for individuals who left the portfolio due to an exit event.</p>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>)
-<span class="co">## 'data.frame':    179861 obs. of  4 variables:</span>
+<span class="co">## 'data.frame':    180288 obs. of  4 variables:</span>
 <span class="co">##  $ birth   : num  -65 -65 -65 -65 -65 -65 -65 -65 -65 -65 ...</span>
 <span class="co">##  $ death   : num  NA NA NA NA NA NA NA NA NA NA ...</span>
 <span class="co">##  $ risk_cls: int  1 1 1 1 1 1 1 1 1 1 ...</span>
