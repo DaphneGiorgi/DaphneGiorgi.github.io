@@ -153,7 +153,7 @@ The central Exposure-to-risk is computed as the sum of the time spent by individ
 The central Exposure-to-risk is computed as the sum of the time spent by individuals in a given age group over a given period, where age is the age at last birthday.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>exposure_table</span>(<span class='no'>population</span>, <span class='no'>ages</span>, <span class='no'>times</span>)</pre>
+    <pre class="usage"><span class='fu'>exposure_table</span>(<span class='no'>population</span>, <span class='no'>ages</span>, <span class='no'>period</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,7 +168,7 @@ The central Exposure-to-risk is computed as the sum of the time spent by individ
 The function computes the number of death  in each age group <code>[ages[i],ages[i+1])</code>, for <code>i=1..N-1</code>.</p></td>
     </tr>
     <tr>
-      <th>times</th>
+      <th>period</th>
       <td><p>A vector of size <code>M</code> composed of time intervals.</p></td>
     </tr>
     </table>

@@ -114,16 +114,15 @@
     
     
 <!-- #region -->
-<p>This vignette provides an example of usage of the package IBMPopSim, for simulating an heterogeneous “human population” in which individuals can change of characteristics over their life course.</p>
-<p>The population is based on data from England and Wales (EW) population, and individuals are characterized by the so-called Index of Multiple Deprivation (IMD), a deprivation index based on the place of living <span style="color:red"> mettre des références</span>.</p>
-<p>A toy model is simulated, where the individuals’ demographic rates depend on their IMD. Due to internal migrations, individuals can change of IMD over their life course (swap events), and the model also include external migrations (entry events).</p>
-<p>As this a more advance example of IBM simulation with <code>IBMPopSim</code>, it is recommanded to start by reading the <span style="color:red"> vignettes descriptions + human pop</span>.</p>
+<p>This vignette provides an example of usage of the package IBMPopSim, for simulating an heterogeneous “human population” in which individuals can change of characteristics over their life course. As this a more advance example of IBM simulation with <code>IBMPopSim</code>, it is recommanded to start by reading the package vignette <a href="IBMPopSim_human_pop.html">human_pop</a> <span style="color:red"> vignettes descriptions + human pop</span>.</p>
+<p>The population is based on data from England and Wales (EW) population, and individuals are characterized by the so-called Index of Multiple Deprivation (IMD), a deprivation index based on the place of living ( see <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/464430/English_Index_of_Multiple_Deprivation_2015_-_Guidance.pdf">here</a> for more details).</p>
+<p>A toy model is simulated, where the individuals’ demographic rates depend on their IMD. Due to internal migrations, individuals can change of IMD over their life course (swap events).</p>
 <div id="example-description" class="section level1" number="1">
 <h1 class="hasAnchor">
 <a href="#example-description" class="anchor"></a><span class="header-section-number">1</span> Example description</h1>
 <p>The population is structured by age, gender and IMD. The population is distributed into five IMD quintiles. Group 1 corresponds to the least deprived subpopulation, and group 5 to the most deprived subpopulation.</p>
-<p>Death and birth intensity are constant over time, but depend on the individuals age, gender and IMD. For instance, individuals in group 5 have a higher death intensity than individuals in group 1.</p>
-<p>Individuals inherit the same IMD than their parent at birth, but can change of IMD over time, due to internal migration. In this toy model, we assume than younger individuals around 20 are more likely to move to more a deprived neighbourhood, while individivals in the age class 30-45 are more likely to move to a less deprived neighbourhood (<span style="color:red"> ref </span>).</p>
+<p>Death and birth intensities are constant over time, but depend on the individuals age, gender and IMD. For instance, individuals in group 5 have a higher death intensity than individuals in group 1.</p>
+<p>Individuals inherit the same IMD than their parent at birth, but can change of IMD over time, due to internal migration. In this toy model, we assume than younger individuals around 20 are more likely to move to more a deprived neighbourhood, while individivals in the age class 30-45 are more likely to move to a less deprived neighbourhood.</p>
 </div>
 <div id="population-creation" class="section level1" number="2">
 <h1 class="hasAnchor">
@@ -176,20 +175,20 @@
 <div id="death-events" class="section level2" number="3.1">
 <h2 class="hasAnchor">
 <a href="#death-events" class="anchor"></a><span class="header-section-number">3.1</span> Death events</h2>
-<p>Individuals can die with an intensity depending on their age, gender and IMD subgroup (they are no interactions). For each gender <span class="math inline">\(\epsilon\)</span> and IMD subgroup <span class="math inline">\(i=1..5\)</span>, we introduce a step function</p>
+<p>For each gender <span class="math inline">\(\epsilon\)</span> and IMD subgroup <span class="math inline">\(i=1..5\)</span>, we define a step function</p>
 <p><span class="math display">\[d_i^\epsilon (a), \quad a=0,..a_{max}\]</span></p>
 <p>defining the death intensity of an individual of age <span class="math inline">\(a\)</span>, gender <span class="math inline">\(\epsilon\)</span> and subgroup <span class="math inline">\(i\)</span>.</p>
 <div id="parameters" class="section level3" number="3.1.1">
 <h3 class="hasAnchor">
 <a href="#parameters" class="anchor"></a><span class="header-section-number">3.1.1</span> Parameters</h3>
-<p>Death intensity are based on EW 2014 age specific death rates by gender and IMD (source: Office for National Statistics).</p>
+<p>Death intensities are based on EW 2014 age specific death rates by gender and IMD (source: Office for National Statistics).</p>
 <p>Death rates are lower in less deprived quintiles.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">EW_popIMD_14</span>$<span class="no">death_rates</span>$<span class="no">male</span>, <span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span><span class="no">age</span>,<span class="kw">y</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">value</span>),<span class="kw">color</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">IMD</span>)))+<span class="fu">geom_step</span>()+
 <span class="fu">scale_color_discrete</span>(<span class="kw">name</span><span class="kw">=</span><span class="st">"IMD quintile"</span>)+<span class="fu">ylab</span>(<span class="st">"Males log death rates"</span>)</pre></body></html></div>
 <p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;"></p>
 <p><strong>Step functions creation</strong></p>
 <p>The death intensity functions for each IMD and gender are defined as parameters of the model, as two list of R step functions.</p>
-<p>These parameters will be transformed in C++ in a vector of functions (starting from index 0).</p>
+<p>These parameters will be transformed during the model creation into a vector of C++ step functions (starting from index 0).</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">params_death</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">EW_popIMD_14</span>$<span class="no">death_rates</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
         <span class="st">"death_male"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">5</span>, <span class="kw">function</span>(<span class="no">i</span>) <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="kw">x</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">male</span>, <span class="no">IMD</span><span class="kw">==</span><span class="no">i</span>)[,<span class="st">"age"</span>], <span class="kw">y</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">male</span>, <span class="no">IMD</span><span class="kw">==</span><span class="no">i</span>)[,<span class="st">"value"</span>]))),
@@ -215,9 +214,9 @@
 <div id="birth-events" class="section level2" number="3.2">
 <h2 class="hasAnchor">
 <a href="#birth-events" class="anchor"></a><span class="header-section-number">3.2</span> Birth events</h2>
-<p>In this toy model, only women give birth, with and Weibull shaped intensity <span class="math inline">\(b_i(a)\)</span> depending on their age <span class="math inline">\(a\)</span> and IMD subgroup <span class="math inline">\(i\)</span>,</p>
+<p>In this toy model, only women give birth, at a Weibull shaped intensity <span class="math inline">\(b_i(a)\)</span> depending on their age <span class="math inline">\(a\)</span> and IMD subgroup <span class="math inline">\(i\)</span>,</p>
 <p><span class="math display">\[b_i(a)=TFR_i\frac{\beta_i}{\alpha_i}(\frac{(a-\bar{a})}{\alpha_i})^{\beta_i-1}\exp((−\frac{a-\bar{a}}{\alpha_i})^{\beta_i}).\]</span></p>
-<p>These functions can be implemented by using the <code>IBMPopSim</code> function <code><a href="../reference/weibull.html">weibull(k,c)</a></code>, which creates an R function corresponding the Weibull density function with parameters <span class="math inline">\((k,c)\)</span>, and which is translated as a C++ function during the model creation.</p>
+<p>These functions can be implemented by using the <code>IBMPopSim</code> function <code><a href="../reference/weibull.html">weibull(k,c)</a></code>, which creates an R function corresponding the Weibull density function with parameters <span class="math inline">\((k,c)\)</span>, and which is translated into a C++ function during the model creation.</p>
 <p>By default, the newborn inherit the IMD of his parent.</p>
 <div id="parameters-1" class="section level3" number="3.2.1">
 <h3 class="hasAnchor">
@@ -230,7 +229,7 @@
 <li>
 <span class="math inline">\(TFR = (TFR_1,TFR_2, TFR_3)\)</span>.</li>
 </ul>
-<p>Parameters values are available in <code>toy_params$birth</code>.</p>
+<p>Example of parameters values are available in <code>toy_params$birth</code>.</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># birth_sex_ratio = 1.05</span>
 <span class="no">params_birth</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">toy_params</span>$<span class="no">birth</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
@@ -252,7 +251,7 @@
 <div id="event-creation" class="section level3" number="3.2.2">
 <h3 class="hasAnchor">
 <a href="#event-creation" class="anchor"></a><span class="header-section-number">3.2.2</span> Event creation</h3>
-<p>C++ code implementing the intensity of a birth event. The lists <code>params_birth$birth</code> and <code>TFR_weights</code> are then tranformed into C++ vectors (index starting at 0).</p>
+<p>C++ code implementing the intensity of a birth event. The lists <code>params_birth$birth</code> and <code>params_birth$TFR_weights</code> are then tranformed into C++ vectors (index starting at 0).</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">birth_intensity_code</span> <span class="kw">&lt;-</span> <span class="st">'
     if (I.male) result = 0.;
     else {
@@ -274,13 +273,13 @@
 <a href="#swap-event" class="anchor"></a><span class="header-section-number">3.3</span> Swap event</h2>
 <p>Individuals can move during their lifetime, and thus change of IMD subgroup (swap events).</p>
 <p>We assume that an individual can change of IMD subgroup with an intensity depending on his age and IMD subgroup.</p>
-<p>Young individuals in the age class <span class="math inline">\([15,30]\)</span> and in the less deprived IMD quintiles (1 and 2) can move too more deprived areas, for instance for studying. On the other hand, older individuals in the age class <span class="math inline">\([30,45]\)</span> and <span class="math inline">\([0,15]\)</span>, and in deprived areas can move to a less deprived area, modelling for instance family formation, moving out to less deprived areas.</p>
+<p>Young individuals in the age class <span class="math inline">\([15,30]\)</span> and in the less deprived IMD quintiles (1 and 2) can move to more deprived areas, for instance for studying. On the other hand, older individuals in the age class <span class="math inline">\([30,45]\)</span> and <span class="math inline">\([0,15]\)</span>, and in deprived areas can move to a less deprived area, modelling for instance family formation, moving out to less deprived areas.</p>
 <p>Age-specific swap intensities are given by 5 step functions, one for each IMD subgroup. When a swap event occur, the new IMD subgroup of the individual is determined by a discrete random variable depending on his age.</p>
 <div id="parameters-2" class="section level3" number="3.3.1">
 <h3 class="hasAnchor">
 <a href="#parameters-2" class="anchor"></a><span class="header-section-number">3.3.1</span> Parameters</h3>
 <p>Example parameters values are given in <code>toy_params$swap</code>.</p>
-<p>Swap intensity are saved as model parameters as a list of step functions, which will be transformed into a C++ vector of functions when the model is created.
+<p>Swap intensity functions are saved as model parameters as a list of step functions, which will be transformed into a C++ vector of functions when the model is created.
 The vectors of discrete probabilities determining the action of the event when a swap occur is saved in a matrix, which will be transformed into a Rcpp Armadillo matrix.</p>
 <p>Note that data frame are not accepted as model parameters.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">params_swap</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">toy_params</span>$<span class="no">swap</span>,
@@ -300,7 +299,7 @@ The vectors of discrete probabilities determining the action of the event when a
 '</span></pre></body></html></div>
 <p>C++ <strong>kernel code</strong> of a swap event</p>
 <p>If a swap event occurs, the new IMD subgroup of the individual is determined by a discrete random variables, with probability distribution given by a row a <code>params_swap$swap_distribution</code>, depending on his age.</p>
-<p>For instance, an individual of age in <span class="math inline">\([0,15]\)</span> has a probability of 0.66 to move on IMD subgroup 1 and 0.34 to move to IMD subgroup 2.</p>
+<p>For instance, an individual of age in <span class="math inline">\([0,15]\)</span> has a probability of 0.6 to move on IMD subgroup 1 and 0.4 to move to IMD subgroup 2.</p>
 <p>Discrete random variables can be drawn in <code>IBMPopSim</code> by calling the function <code>Cdiscrete</code> in the kernel code, with an <code>Armadillo</code> vector or matrix (<span style="color:red"> see vignette description</span>).</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">params_swap</span>$<span class="no">swap_distribution</span>
 <span class="co">##      IMD1 IMD2 IMD3 IMD4 IMD5</span>
@@ -377,7 +376,7 @@ The vectors of discrete probabilities determining the action of the event when a
 <div id="simulation-1" class="section level2" number="5.2">
 <h2 class="hasAnchor">
 <a href="#simulation-1" class="anchor"></a><span class="header-section-number">5.2</span> Simulation</h2>
-<p>Recording all swap events is computationnaly expensive. To overcome this difficulty, the simulation in the presence of swap events returns a list of data frame, composed of a “picture” of the population at all times in the vector argument <code>time</code> of <code>popsim</code> (see <span style="color:red"> vignette description for more details</span>)</p>
+<p>Recording all swap events is computationnally expensive. To overcome this difficulty, the simulation in the presence of swap events returns a list of data frame, composed of a “picture” of the population at all times in the vector argument <code>time</code> of <code>popsim</code> (see <span style="color:red"> vignette description for more details</span>)</p>
 <p>The first component of the variable <code>t_sim</code> below is the initial time. The simulation returns <code>n-1</code> data frame representing the population at <span class="math inline">\(t\_sim[1],..,t\_sim[n]\)</span>. The data frame corresponding to time <span class="math inline">\(t\_sim[i]\)</span> is composed of all individuals who lived in the population before <span class="math inline">\(t\_sim[i]\)</span>, with their characteristics at time <span class="math inline">\(t\_sim[i]\)</span>.</p>
 <div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">t_sim</span> <span class="kw">&lt;-</span> <span class="fl">0</span>:<span class="fl">50</span>
 <span class="no">n</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">t_sim</span>)</pre></body></html></div>
@@ -389,7 +388,6 @@ The vectors of discrete probabilities determining the action of the event when a
     <span class="kw">multithreading</span><span class="kw">=</span><span class="fl">TRUE</span><span class="co"># Set to T since there are no interactions</span>
                 )
 <span class="co">## Simulation on  [0, 1]  [1, 2]  [2, 3]  [3, 4]  [4, 5]  [5, 6]  [6, 7]  [7, 8]  [8, 9]  [9, 10]  [10, 11]  [11, 12]  [12, 13]  [13, 14]  [14, 15]  [15, 16]  [16, 17]  [17, 18]  [18, 19]  [19, 20]  [20, 21]  [21, 22]  [22, 23]  [23, 24]  [24, 25]  [25, 26]  [26, 27]  [27, 28]  [28, 29]  [29, 30]  [30, 31]  [31, 32]  [32, 33]  [33, 34]  [34, 35]  [35, 36]  [36, 37]  [37, 38]  [38, 39]  [39, 40]  [40, 41]  [41, 42]  [42, 43]  [43, 44]  [44, 45]  [45, 46]  [46, 47]  [47, 48]  [48, 49]  [49, 50]</span></pre></body></html></div>
-<div class="sourceCode" id="cb25"><html><body><pre class="r">#str(sim_out)</pre></body></html></div>
 </div>
 </div>
 <div id="outputs" class="section level1" number="6">
@@ -399,20 +397,20 @@ The vectors of discrete probabilities determining the action of the event when a
 <div id="initial-and-final-age-pyramids-with-different-imd-subgroups" class="section level2" number="6.1">
 <h2 class="hasAnchor">
 <a href="#initial-and-final-age-pyramids-with-different-imd-subgroups" class="anchor"></a><span class="header-section-number">6.1</span> Initial and final age pyramids with different IMD subgroups</h2>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">pyr_init</span><span class="kw">&lt;-</span> <span class="fu"><a href="../reference/age_pyramids.html">age_pyramids</a></span>(<span class="no">EW_popIMD_14</span>$<span class="no">sample</span>,<span class="kw">time</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>:<span class="fl">100</span>,<span class="fl">130</span>))
+<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">pyr_init</span><span class="kw">&lt;-</span> <span class="fu"><a href="../reference/age_pyramids.html">age_pyramids</a></span>(<span class="no">EW_popIMD_14</span>$<span class="no">sample</span>,<span class="kw">time</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>:<span class="fl">100</span>,<span class="fl">130</span>))
 <span class="no">pyr_init</span>$<span class="no">group_name</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">pyr_init</span>, <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="no">male</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">'Males - IMD'</span>, <span class="no">IMD</span>), <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">'Females - IMD'</span>, <span class="no">IMD</span>)))</pre></body></html></div>
 <p>Final age pyramid</p>
-<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="no">pops_out</span> <span class="kw">&lt;-</span> <span class="no">sim_out</span>$<span class="no">population</span></pre></body></html></div>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">pyr_IMD</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">pops_out</span><span class="kw">[[</span><span class="fl">50</span>]], <span class="kw">time</span> <span class="kw">=</span> <span class="fl">50</span>,<span class="kw">ages</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>:<span class="fl">100</span>,<span class="fl">130</span>))
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">pops_out</span> <span class="kw">&lt;-</span> <span class="no">sim_out</span>$<span class="no">population</span></pre></body></html></div>
+<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="no">pyr_IMD</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">pops_out</span><span class="kw">[[</span><span class="fl">50</span>]], <span class="kw">time</span> <span class="kw">=</span> <span class="fl">50</span>,<span class="kw">ages</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>:<span class="fl">100</span>,<span class="fl">130</span>))
 <span class="no">pyr_IMD</span>$<span class="no">group_name</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">pyr_IMD</span>, <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="no">male</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">'Males - IMD'</span>, <span class="no">IMD</span>), <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">'Females - IMD'</span>, <span class="no">IMD</span>)))</pre></body></html></div>
-<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">colors</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu">sequential_hcl</span>(<span class="kw">n</span><span class="kw">=</span><span class="fl">5</span>, <span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Magenta"</span>),
+<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">colors</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu">sequential_hcl</span>(<span class="kw">n</span><span class="kw">=</span><span class="fl">5</span>, <span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Magenta"</span>),
             <span class="fu">sequential_hcl</span>(<span class="kw">n</span><span class="kw">=</span><span class="fl">5</span>, <span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Teal"</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">colors</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">'Females - IMD'</span>, <span class="fl">1</span>:<span class="fl">5</span>),
                    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">'Males - IMD'</span>, <span class="fl">1</span>:<span class="fl">5</span>))</pre></body></html></div>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span>(<span class="no">pyr_init</span>,<span class="no">colors</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span>(<span class="no">pyr_IMD</span>,<span class="no">colors</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-30-2.png" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span>(<span class="no">pyr_init</span>,<span class="no">colors</span>)</pre></body></html></div>
+<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-29-1.png" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span>(<span class="no">pyr_IMD</span>,<span class="no">colors</span>)</pre></body></html></div>
+<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-29-2.png" width="672" style="display: block; margin: auto;"></p>
 <p><span style="color:red">Remarque</span>
 The high number of individuals aged over 100 is due to the fact that mortality rates are assumed to be constant at ages over 90, which is of course not realistic for human populations (see <span style="color:red">Vignette human pop</span>) for another choice of moratlity rates.</p>
 </div>
@@ -420,26 +418,26 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 <h2 class="hasAnchor">
 <a href="#evolution-of-population-composition-by-age-group" class="anchor"></a><span class="header-section-number">6.2</span> Evolution of population composition by age group</h2>
 <p>The plots below illustrates the evolution of the female population composition for different age groups over time.</p>
-<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="no">age_grp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">30</span>,<span class="fl">95</span>,<span class="fl">15</span>)
+<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="no">age_grp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">30</span>,<span class="fl">95</span>,<span class="fl">15</span>)
 <span class="no">age_pyrs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:(<span class="no">n</span>-<span class="fl">1</span>), <span class="kw">function</span> (<span class="no">i</span>)(<span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">pops_out</span><span class="kw">[[</span><span class="no">i</span>]],<span class="no">t_sim</span>[<span class="no">i</span>+<span class="fl">1</span>],<span class="no">age_grp</span>)))
 <span class="no">age_pyr_fem</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="fu">bind_rows</span>(<span class="no">age_pyrs</span>,<span class="kw">.id</span><span class="kw">=</span><span class="st">"time"</span>), <span class="no">male</span><span class="kw">==</span><span class="fl">FALSE</span>)
 <span class="no">compo_pop_fem</span> <span class="kw">&lt;-</span> <span class="no">age_pyr_fem</span><span class="kw">%&gt;%</span> <span class="fu">group_by</span>(<span class="no">age</span>,<span class="no">time</span>)<span class="kw">%&gt;%</span> <span class="fu">mutate</span>(<span class="kw">composition</span> <span class="kw">=</span> <span class="no">value</span>/<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">value</span>))</pre></body></html></div>
-<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">compo_pop_fem</span>, <span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">time</span>),<span class="kw">y</span><span class="kw">=</span><span class="no">composition</span>,<span class="kw">colour</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">IMD</span>)))+
+<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">compo_pop_fem</span>, <span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">time</span>),<span class="kw">y</span><span class="kw">=</span><span class="no">composition</span>,<span class="kw">colour</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">IMD</span>)))+
 <span class="fu">geom_line</span>()+
 <span class="fu">facet_wrap</span>(<span class="st">"Age group"</span>~<span class="no">age</span>)+
 <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span>)+ <span class="fu">xlab</span>(<span class="st">"Time"</span>)+<span class="fu">ylab</span>(<span class="st">"Proportion of females in IMD subgroup"</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="different-simulations-with-the-same-model" class="section level1" number="7">
 <h1 class="hasAnchor">
 <a href="#different-simulations-with-the-same-model" class="anchor"></a><span class="header-section-number">7</span> Different simulations with the same model</h1>
-<p>The model parameters and initial population can be modify without having to recompile the model.</p>
+<p>The model parameters and initial population can be modified without having to recompile the model.</p>
 <p>In particular, events can be deactivated by setting the event bound to 0.</p>
 <div id="simulation-without-swap-events" class="section level2" number="7.1">
 <h2 class="hasAnchor">
 <a href="#simulation-without-swap-events" class="anchor"></a><span class="header-section-number">7.1</span> Simulation without swap events</h2>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="no">sim_out_noswp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="no">model</span>,
+<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="no">sim_out_noswp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="no">model</span>,
     <span class="kw">population</span> <span class="kw">=</span> <span class="no">EW_popIMD_14</span>$<span class="no">sample</span>,
     <span class="kw">events_bounds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'birth'</span> <span class="kw">=</span> <span class="no">birth_max</span>, <span class="st">'swap'</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="st">'death'</span> <span class="kw">=</span> <span class="no">death_max</span>), <span class="co">#Swap events deactivated</span>
     <span class="kw">parameters</span> <span class="kw">=</span> <span class="no">params</span>,
@@ -448,16 +446,16 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 <span class="co">## [1] "event swap is deactivated"</span>
 <span class="co">## Simulation on  [0, 1]  [1, 2]  [2, 3]  [3, 4]  [4, 5]  [5, 6]  [6, 7]  [7, 8]  [8, 9]  [9, 10]  [10, 11]  [11, 12]  [12, 13]  [13, 14]  [14, 15]  [15, 16]  [16, 17]  [17, 18]  [18, 19]  [19, 20]  [20, 21]  [21, 22]  [22, 23]  [23, 24]  [24, 25]  [25, 26]  [26, 27]  [27, 28]  [28, 29]  [29, 30]  [30, 31]  [31, 32]  [32, 33]  [33, 34]  [34, 35]  [35, 36]  [36, 37]  [37, 38]  [38, 39]  [39, 40]  [40, 41]  [41, 42]  [42, 43]  [43, 44]  [44, 45]  [45, 46]  [46, 47]  [47, 48]  [48, 49]  [49, 50]</span></pre></body></html></div>
 <p><strong>Comparison of population evolution with and without swap events</strong></p>
-<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">age_pyrs_nosw</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:(<span class="no">n</span>-<span class="fl">1</span>), <span class="kw">function</span> (<span class="no">i</span>)(<span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">sim_out_noswp</span>$<span class="no">population</span><span class="kw">[[</span><span class="no">i</span>]],<span class="no">t_sim</span>[<span class="no">i</span>+<span class="fl">1</span>],<span class="no">age_grp</span>)))
+<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="no">age_pyrs_nosw</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:(<span class="no">n</span>-<span class="fl">1</span>), <span class="kw">function</span> (<span class="no">i</span>)(<span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">sim_out_noswp</span>$<span class="no">population</span><span class="kw">[[</span><span class="no">i</span>]],<span class="no">t_sim</span>[<span class="no">i</span>+<span class="fl">1</span>],<span class="no">age_grp</span>)))
 <span class="no">compo_pop_fem_nosw</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="fu">bind_rows</span>(<span class="no">age_pyrs_nosw</span>,<span class="kw">.id</span><span class="kw">=</span><span class="st">"time"</span>), <span class="no">male</span><span class="kw">==</span><span class="fl">FALSE</span>) <span class="kw">%&gt;%</span> <span class="fu">group_by</span>(<span class="no">age</span>,<span class="no">time</span>)<span class="kw">%&gt;%</span> <span class="fu">mutate</span>(<span class="kw">perc</span> <span class="kw">=</span> <span class="no">value</span>/<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">value</span>))</pre></body></html></div>
-<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="co">#  Without swap events </span>
+<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="co">#  Without swap events </span>
 <span class="fu">ggplot</span>(<span class="no">compo_pop_fem_nosw</span>, <span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">time</span>),<span class="kw">y</span><span class="kw">=</span><span class="no">perc</span>,<span class="kw">colour</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">IMD</span>)))+
 <span class="fu">geom_line</span>()+
 <span class="fu">facet_wrap</span>(~<span class="no">age</span>)+
 <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span>, <span class="kw">limits</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.12</span>,<span class="fl">0.3</span>))+ <span class="fu">xlab</span>(<span class="st">"Time"</span>)+<span class="fu">ylab</span>(<span class="st">"Proportion of females in IMD subgroup"</span>)+
 <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Population without swap events"</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-35-1.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb37"><html><body><pre class="r">
+<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb36"><html><body><pre class="r">
 
 <span class="co">## With swap events</span>
 <span class="fu">ggplot</span>(<span class="no">compo_pop_fem</span>, <span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">time</span>),<span class="kw">y</span><span class="kw">=</span><span class="no">composition</span>,<span class="kw">colour</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">IMD</span>)))+
@@ -465,20 +463,20 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 <span class="fu">facet_wrap</span>(<span class="st">"Age group"</span>~<span class="no">age</span>)+
 <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span>,<span class="kw">limits</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.12</span>,<span class="fl">0.3</span>))+ <span class="fu">xlab</span>(<span class="st">"Time"</span>)+<span class="fu">ylab</span>(<span class="st">"Proportion of females in IMD subgroup"</span>)+
 <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Population with swap events"</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-35-2.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-34-2.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="simulation-of-individual-life-courses" class="section level2" number="7.2">
 <h2 class="hasAnchor">
 <a href="#simulation-of-individual-life-courses" class="anchor"></a><span class="header-section-number">7.2</span> Simulation of individual life courses</h2>
 <p>In the presence of swap events, individual trajectories can be isolated by attributing a unique id to each individuals in the population. This is done during the model creation step by setting the optional argument <code>with_id</code> to <code>TRUE</code>.</p>
-<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="no">model_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span>(
+<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">model_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span>(
     <span class="kw">characteristics</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">EW_popIMD_14</span>$<span class="no">sample</span>),
     <span class="kw">events</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">birth_event</span>, <span class="no">death_event</span>, <span class="no">swap_event</span>),
     <span class="kw">parameters</span> <span class="kw">=</span> <span class="no">params</span>,
     <span class="kw">with_id</span> <span class="kw">=</span><span class="fl">TRUE</span> <span class="co"># Adds a characteristic called id, unique for each individuals. </span>
                  )
 <span class="co">## [1] "add 'id' as individual attributes"</span></pre></body></html></div>
-<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="no">sim_out_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="no">model_id</span>,
+<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="no">sim_out_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="no">model_id</span>,
     <span class="kw">population</span> <span class="kw">=</span> <span class="no">EW_popIMD_14</span>$<span class="no">sample</span>,
     <span class="kw">events_bounds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'birth'</span> <span class="kw">=</span> <span class="no">birth_max</span>, <span class="st">'swap'</span> <span class="kw">=</span> <span class="no">swap_max</span>, <span class="st">'death'</span> <span class="kw">=</span> <span class="no">death_max</span>),
     <span class="kw">parameters</span> <span class="kw">=</span> <span class="no">params</span>,
@@ -488,39 +486,39 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 <span class="co">## Simulation on  [0, 1]  [1, 2]  [2, 3]  [3, 4]  [4, 5]  [5, 6]  [6, 7]  [7, 8]  [8, 9]  [9, 10]  [10, 11]  [11, 12]  [12, 13]  [13, 14]  [14, 15]  [15, 16]  [16, 17]  [17, 18]  [18, 19]  [19, 20]  [20, 21]  [21, 22]  [22, 23]  [23, 24]  [24, 25]  [25, 26]  [26, 27]  [27, 28]  [28, 29]  [29, 30]  [30, 31]  [31, 32]  [32, 33]  [33, 34]  [34, 35]  [35, 36]  [36, 37]  [37, 38]  [38, 39]  [39, 40]  [40, 41]  [41, 42]  [42, 43]  [43, 44]  [44, 45]  [45, 46]  [46, 47]  [47, 48]  [48, 49]  [49, 50]</span></pre></body></html></div>
 <p>When each individual has been attributed a unique id, a data frame summarizing each life course can be obtained from the simulation output <code>sim_out_id$population</code>(list of data frames) by calling the function <code>merge_pop_withid</code>.</p>
 <p>Characteristics such as gender which don’t change over time can be specifed in the argument <code>char_ignored</code>.</p>
-<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="no">pop_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/merge_pop_withid.html">merge_pop_withid</a></span>(<span class="no">sim_out_id</span>$<span class="no">population</span>,<span class="kw">char_ignored</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"male"</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="no">pop_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/merge_pop_withid.html">merge_pop_withid</a></span>(<span class="no">sim_out_id</span>$<span class="no">population</span>,<span class="kw">char_ignored</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"male"</span>))</pre></body></html></div>
 <p><code>pop_id</code> is data frame in which each line correpond to an individual and include his id, birth date, death date, gender and IMD subgroupe at each discretization time (components of <span class="math inline">\(t_{sim}\)</span>).</p>
-<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pop_id</span>)
+<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pop_id</span>)
 <span class="co">##   id       birth death  male IMD_1 IMD_2 IMD_3 IMD_4 IMD_5 IMD_6 IMD_7 IMD_8</span>
-<span class="co">## 1  1 -0.09170591    NA FALSE     5     5     5     5     2     2     2     2</span>
+<span class="co">## 1  1 -0.09170591    NA FALSE     5     5     5     5     5     5     5     5</span>
 <span class="co">## 2  5 -0.69782311    NA  TRUE     3     3     3     3     3     3     3     3</span>
 <span class="co">## 3  9 -0.75010045    NA  TRUE     5     5     5     5     5     5     5     5</span>
 <span class="co">## 4 13 -0.98247884    NA  TRUE     4     4     4     4     4     4     4     4</span>
 <span class="co">## 5 17 -0.26214821    NA  TRUE     4     4     4     4     4     4     4     4</span>
 <span class="co">## 6 21 -0.19542639    NA FALSE     3     3     3     3     3     3     3     3</span>
 <span class="co">##   IMD_9 IMD_10 IMD_11 IMD_12 IMD_13 IMD_14 IMD_15 IMD_16 IMD_17 IMD_18 IMD_19</span>
-<span class="co">## 1     2      2      2      2      2      2      2      2      2      2      2</span>
+<span class="co">## 1     5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 2     3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">## 3     5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 4     4      4      4      4      4      4      4      4      4      4      4</span>
 <span class="co">## 5     4      4      4      4      4      4      4      4      4      4      4</span>
 <span class="co">## 6     3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">##   IMD_20 IMD_21 IMD_22 IMD_23 IMD_24 IMD_25 IMD_26 IMD_27 IMD_28 IMD_29 IMD_30</span>
-<span class="co">## 1      2      2      2      2      2      2      2      2      2      2      2</span>
+<span class="co">## 1      5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 2      3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">## 3      5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 4      4      4      4      4      4      4      4      4      4      4      4</span>
 <span class="co">## 5      4      4      4      4      4      4      4      4      4      4      4</span>
 <span class="co">## 6      3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">##   IMD_31 IMD_32 IMD_33 IMD_34 IMD_35 IMD_36 IMD_37 IMD_38 IMD_39 IMD_40 IMD_41</span>
-<span class="co">## 1      2      2      2      2      2      2      2      2      2      2      2</span>
+<span class="co">## 1      5      5      5      5      5      5      5      5      5      1      1</span>
 <span class="co">## 2      3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">## 3      5      5      5      5      5      5      5      5      5      5      5</span>
-<span class="co">## 4      4      4      4      4      4      1      1      1      1      1      1</span>
+<span class="co">## 4      4      4      4      1      1      1      1      1      1      1      1</span>
 <span class="co">## 5      4      4      4      4      4      4      4      4      4      4      4</span>
 <span class="co">## 6      3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">##   IMD_42 IMD_43 IMD_44 IMD_45 IMD_46 IMD_47 IMD_48 IMD_49 IMD_50</span>
-<span class="co">## 1      2      2      2      2      2      2      2      2      2</span>
+<span class="co">## 1      1      1      1      1      1      1      1      1      1</span>
 <span class="co">## 2      3      3      3      3      3      3      3      3      3</span>
 <span class="co">## 3      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 4      1      1      1      1      1      1      1      1      1</span>

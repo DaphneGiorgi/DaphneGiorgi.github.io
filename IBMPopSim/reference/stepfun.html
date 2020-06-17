@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Step Function — stepfun • IBMPopSim</title>
+<title>Step Function. — stepfun • IBMPopSim</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +46,10 @@
 
 
 
-<meta property="og:title" content="Step Function — stepfun" />
+<meta property="og:title" content="Step Function. — stepfun" />
 <meta property="og:description" content="Given the vectors (x[1],...,x[n]) and (y[0],y[1],...,y[n]) (one value more!), stepfun(x, y) returns an interpolating step function, say f_n. This is the cadlag version (right = FALSE) of the stepfun function from package stats. The step function value f_n(t) equals to the constant y[k-1] for t in [x[k-1], x[k]) so that
-$$f_n(t) = \sum_{k=1}^n y_{k-1} \mathbb{1}_{[x_{k-1}, x_{k})}(t)$$" />
+$$f_n(t) = \sum_{k=1}^{n+1} y_{k-1} \mathbb{1}_{[x_{k-1}, x_{k})}(t),$$
+with\(x_0=-\infty\) and \(x_{n+1}=+\infty\)." />
 
 
 
@@ -143,14 +144,15 @@ $$f_n(t) = \sum_{k=1}^n y_{k-1} \mathbb{1}_{[x_{k-1}, x_{k})}(t)$$" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Step Function</h1>
+    <h1>Step Function.</h1>
     <small class="dont-index">Source: <a href='https://github.com/DaphneGiorgi/IBMPopSim/blob/master/R/functions.R'><code>R/functions.R</code></a></small>
     <div class="hidden name"><code>stepfun.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Given the vectors <code>(x[1],...,x[n])</code> and <code>(y[0],y[1],...,y[n])</code> (one value more!), <code>stepfun(x, y)</code> returns an interpolating step function, say <code>f_n</code>. This is the cadlag version (<code>right = FALSE</code>) of the <code>stepfun</code> function from package <code>stats</code>. The step function value <code>f_n(t)</code> equals to the constant <code>y[k-1]</code> for <code>t</code> in <code>[x[k-1], x[k])</code> so that
-$$f_n(t) = \sum_{k=1}^n y_{k-1} \mathbb{1}_{[x_{k-1}, x_{k})}(t)$$</p>
+$$f_n(t) = \sum_{k=1}^{n+1} y_{k-1} \mathbb{1}_{[x_{k-1}, x_{k})}(t),$$
+with\(x_0=-\infty\) and \(x_{n+1}=+\infty\).</p>
     </div>
 
     <pre class="usage"><span class='fu'>stepfun</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
@@ -174,7 +176,7 @@ $$f_n(t) = \sum_{k=1}^n y_{k-1} \mathbb{1}_{[x_{k-1}, x_{k})}(t)$$</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function is defined for documentation purposes only. See <code><a href='https://rdrr.io/r/stats/stepfun.html'>stepfun</a></code> and <code><a href='https://rdrr.io/r/stats/approxfun.html'>approxfun</a></code>.</p>
-<p>A C++ version of this cadlag function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
+<p>A C++ version of this function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/plot.stepfun.html'>plot.stepfun</a></code> and <code><a href='max.stepfun.html'>max.stepfun</a></code>.</p></div>

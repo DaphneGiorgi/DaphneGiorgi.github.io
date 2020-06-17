@@ -47,7 +47,10 @@
 
 
 <meta property="og:title" content="Piecewise real function of two variables. — piecewise_xy" />
-<meta property="og:description" content="Piecewise real function of two variables." />
+<meta property="og:description" content="Given the vectors (breaks[1],...,breaks[n]) and the list of IBMPopSim compatible
+functions funs = (f[0],f[1],...,f[n]) (one value more!), piecewise_xy(breaks, funs) returns
+the function
+$$f(x,y) = f_0(x) \mathbb{1}_{y\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[breaks_{k}, breaks_{k+1})}(y) + f_n(x)\mathbb{1}_{y \ge breaks[n]}$$" />
 
 
 
@@ -148,7 +151,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Piecewise real function of two variables.</p>
+    <p>Given the vectors <code>(breaks[1],...,breaks[n])</code> and the list of <code>IBMPopSim</code> compatible
+functions <code>funs = (f[0],f[1],...,f[n])</code> (one value more!), <code>piecewise_xy(breaks, funs)</code> returns
+the function
+$$f(x,y) = f_0(x) \mathbb{1}_{y\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[breaks_{k}, breaks_{k+1})}(y) + f_n(x)\mathbb{1}_{y \ge breaks[n]}$$</p>
     </div>
 
     <pre class="usage"><span class='fu'>piecewise_xy</span>(<span class='no'>breaks</span>, <span class='no'>funs</span>)</pre>
@@ -168,13 +174,14 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Piecewise time function built with the given interval and functions.</p>
+    <p>Piecewise bivariate function built with the given intervals and functions.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A C++ version of this cadlag function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
+    <p>A C++ version of this function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>time_dep_function</span> <span class='kw'>&lt;-</span> <span class='fu'>piecewise_xy</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='gompertz.html'>gompertz</a></span>(<span class='fl'>0.1</span>,<span class='fl'>0.005</span>), <span class='fu'><a href='gompertz.html'>gompertz</a></span>(<span class='fl'>0.08</span>,<span class='fl'>0.005</span>)))
+    <pre class="examples"><div class='input'><span class='no'>time_dep_function</span> <span class='kw'>&lt;-</span> <span class='fu'>piecewise_xy</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>),
+                                  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='gompertz.html'>gompertz</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.005</span>), <span class='fu'><a href='gompertz.html'>gompertz</a></span>(<span class='fl'>0.08</span>, <span class='fl'>0.005</span>)))
 <span class='fu'>time_dep_function</span>(<span class='fl'>0</span>, <span class='fl'>65</span>)  <span class='co'># death intensity at time 0 and age 65.</span></div><div class='output co'>#&gt; [1] 0.1384031</div><div class='input'>
 </div></pre>
   </div>

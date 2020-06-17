@@ -47,7 +47,10 @@
 
 
 <meta property="og:title" content="Piecewise real function. — piecewise_x" />
-<meta property="og:description" content="Piecewise real function." />
+<meta property="og:description" content="Given the vectors (breaks[1],...,breaks[n]) and the list of IBMPopSim compatible
+functions funs = (f[0],f[1],...,f[n]) (one value more!), piecewise_x(breaks, funs) returns
+the function
+$$f(x) = f_0(x)\mathbb{1}_{x\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[breaks_{k}, breaks_{k+1})}(x) + f_n(x)\mathbb{1}_{x \ge breaks[n]}$$" />
 
 
 
@@ -148,7 +151,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Piecewise real function.</p>
+    <p>Given the vectors <code>(breaks[1],...,breaks[n])</code> and the list of <code>IBMPopSim</code> compatible
+functions <code>funs = (f[0],f[1],...,f[n])</code> (one value more!), <code>piecewise_x(breaks, funs)</code> returns
+the function
+$$f(x) = f_0(x)\mathbb{1}_{x\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[breaks_{k}, breaks_{k+1})}(x) + f_n(x)\mathbb{1}_{x \ge breaks[n]}$$</p>
     </div>
 
     <pre class="usage"><span class='fu'>piecewise_x</span>(<span class='no'>breaks</span>, <span class='no'>funs</span>)</pre>
@@ -168,11 +174,19 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Piecewise function built with the given interval and functions.</p>
+    <p>Piecewise function built with the given intervals and functions.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A C++ version of this cadlag function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
+    <p>A C++ version of this function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>dr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>EW_pop_14</span>$<span class='no'>rates</span>,
+           <span class='fu'><a href='stepfun.html'>stepfun</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>death_male</span>[,<span class='st'>"age"</span>], <span class='kw'>y</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='no'>death_male</span>[,<span class='st'>"value"</span>])))
+<span class='co'># before age 80 the stepfun and after age 80 the gompertz function</span>
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>piecewise_x</span>(<span class='fl'>80</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>dr</span>, <span class='fu'><a href='gompertz.html'>gompertz</a></span>(<span class='fl'>0.00006</span>, <span class='fl'>0.085</span>)))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>40</span>:<span class='fl'>120</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>x</span>, <span class='no'>f</span>))</div><div class='img'><img src='piecewise_x-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

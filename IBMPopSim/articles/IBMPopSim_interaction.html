@@ -156,9 +156,9 @@ The body size is an increasing function of age, and the size of an individual of
 <span class="co">## birth_size </span>
 <span class="co">##   "double"</span></pre></body></html></div>
 </div>
-<div id="events-creation" class="section level1" number="3">
+<div id="events-and-model-creation" class="section level1" number="3">
 <h1 class="hasAnchor">
-<a href="#events-creation" class="anchor"></a><span class="header-section-number">3</span> Events creation</h1>
+<a href="#events-and-model-creation" class="anchor"></a><span class="header-section-number">3</span> Events and model creation</h1>
 <p>There are 2 possible events :</p>
 <ul>
 <li>Birth (with or without mutation)</li>
@@ -168,22 +168,30 @@ The body size is an increasing function of age, and the size of an individual of
 <div id="birth-event-with-individual-intensity" class="section level2" number="3.1">
 <h2 class="hasAnchor">
 <a href="#birth-event-with-individual-intensity" class="anchor"></a><span class="header-section-number">3.1</span> Birth event with individual intensity</h2>
-<p>An individual of size <span class="math inline">\(x_0 \in [0,4]\)</span> gives birth at the age independent rate :
+<p>An individual of size <span class="math inline">\(x_0 \in [0,4]\)</span> gives birth at the age independent rate given by
 <span class="math display">\[b(x_0) = \alpha (4 - x_0)\]</span>
 Since the intensity only depends on the individual’s characteristics, the event is of type <code>individual</code>.</p>
 <p>With probability <span class="math inline">\(p = 0.03\)</span> a mutation occurs, and with probability <span class="math inline">\(1 - p\)</span>, the offspring inherits its parent’s trait, <span class="math inline">\(x_0\)</span>.<br>
 In the case of a mutation, the new trait is <span class="math inline">\(x_0' = \min(\max(0, x_0 + G), 4)\)</span>, where <span class="math inline">\(G\)</span> is a Gaussian r.v. with expectation 0 and variance <span class="math inline">\(\sigma^2=0.01\)</span>.</p>
 <p>The birth event is then an individual event of type birth, created as follows:</p>
+<div id="parameters" class="section level3" number="3.1.1">
+<h3 class="hasAnchor">
+<a href="#parameters" class="anchor"></a><span class="header-section-number">3.1.1</span> Parameters</h3>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">params_birth</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>( <span class="co"># parameters for birth event.</span>
     <span class="st">"p"</span> <span class="kw">=</span> <span class="fl">0.03</span>,
     <span class="st">"sigma"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fl">0.01</span>),
     <span class="st">"alpha"</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+</div>
+<div id="event-creation" class="section level3" number="3.1.2">
+<h3 class="hasAnchor">
+<a href="#event-creation" class="anchor"></a><span class="header-section-number">3.1.2</span> Event creation</h3>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">birth_event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span>( <span class="kw">type</span> <span class="kw">=</span> <span class="st">"birth"</span>,
     <span class="kw">intensity_code</span> <span class="kw">=</span> <span class="st">'result = alpha*(4 - I.birth_size);'</span>,
     <span class="kw">kernel_code</span> <span class="kw">=</span> <span class="st">'if (CUnif() &lt; p) 
         newI.birth_size = min(max(0., CNorm(I.birth_size, sigma)), 4.);
                    else newI.birth_size = I.birth_size;'</span>
 )</pre></body></html></div>
+</div>
 </div>
 <div id="death-event-with-interaction" class="section level2" number="3.2">
 <h2 class="hasAnchor">
@@ -193,11 +201,18 @@ In the case of a mutation, the new trait is <span class="math inline">\(x_0' = \
 <p>where</p>
 <p><span class="math display">\[U(x,y) = \beta \left( 1- \frac{1}{1+c\exp(-4(x-y))}\right) \in \left[ 0, \beta\right] \]</span></p>
 <p>This event intensity depends on the interaction kernel <span class="math inline">\(U\)</span>, and is of type <code>interaction</code>.</p>
+<div id="parameters-1" class="section level3" number="3.2.1">
+<h3 class="hasAnchor">
+<a href="#parameters-1" class="anchor"></a><span class="header-section-number">3.2.1</span> Parameters</h3>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">params_death</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
     <span class="st">"g"</span> <span class="kw">=</span> <span class="fl">1</span>,
     <span class="st">"beta"</span> <span class="kw">=</span> <span class="fl">2.</span>/<span class="fl">300.</span>,
     <span class="st">"c"</span> <span class="kw">=</span> <span class="fl">1.2</span>
 )</pre></body></html></div>
+</div>
+<div id="event-creation-1" class="section level3" number="3.2.2">
+<h3 class="hasAnchor">
+<a href="#event-creation-1" class="anchor"></a><span class="header-section-number">3.2.2</span> Event creation</h3>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">death_event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_interaction.html">mk_event_interaction</a></span>( <span class="co"># Event with intensity of type interaction </span>
     <span class="kw">type</span> <span class="kw">=</span> <span class="st">"death"</span>,
     <span class="kw">interaction_code</span> <span class="kw">=</span> <span class="st">"double x_I = I.birth_size + g * age(I,t); // In C++ variables are typed 
@@ -206,9 +221,9 @@ In the case of a mutation, the new trait is <span class="math inline">\(x_0' = \
 )</pre></body></html></div>
 </div>
 </div>
-<div id="build-model" class="section level1" number="4">
-<h1 class="hasAnchor">
-<a href="#build-model" class="anchor"></a><span class="header-section-number">4</span> Build model</h1>
+<div id="model-creation" class="section level2" number="3.3">
+<h2 class="hasAnchor">
+<a href="#model-creation" class="anchor"></a><span class="header-section-number">3.3</span> Model creation</h2>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span>(
     <span class="kw">characteristics</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop_init</span>),
     <span class="kw">events</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">birth_event</span>, <span class="no">death_event</span>),
@@ -230,9 +245,10 @@ In the case of a mutation, the new trait is <span class="math inline">\(x_0' = \
 <span class="co">## R types:  double double double double double double </span>
 <span class="co">## C types:  double double double double double double</span></pre></body></html></div>
 </div>
-<div id="run-simulation" class="section level1" number="5">
+</div>
+<div id="simulation" class="section level1" number="4">
 <h1 class="hasAnchor">
-<a href="#run-simulation" class="anchor"></a><span class="header-section-number">5</span> Run simulation</h1>
+<a href="#simulation" class="anchor"></a><span class="header-section-number">4</span> Simulation</h1>
 <p><strong>Event bounds</strong></p>
 <p>Bounds for the birth intensity and the death interaction function <span class="math inline">\(U\)</span> have to be computed.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">birth_intensity_max</span> <span class="kw">&lt;-</span> <span class="fl">4</span>*<span class="no">params_birth</span>$<span class="no">alpha</span>
@@ -250,21 +266,22 @@ In the case of a mutation, the new trait is <span class="math inline">\(x_0' = \
 <span class="co">## Simulation on  [0, 500]</span></pre></body></html></div>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">"duration_main_algorithm"</span>]
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##                0.184372</span></pre></body></html></div>
+<span class="co">##                0.187811</span></pre></body></html></div>
 </div>
-<div id="output" class="section level1" number="6">
+<div id="outputs" class="section level1" number="5">
 <h1 class="hasAnchor">
-<a href="#output" class="anchor"></a><span class="header-section-number">6</span> Output</h1>
-<p><code>sim_out$population</code> is a data frame containing the date of birth, death, and characteristics of all individuals who lived in the population over the period [0,100].</p>
+<a href="#outputs" class="anchor"></a><span class="header-section-number">5</span> Outputs</h1>
+<p><code>sim_out$population</code> is a data frame containing the date of birth, death, and characteristics of all individuals who lived in the population over the period [0,500].</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>)
-<span class="co">## 'data.frame':    314564 obs. of  3 variables:</span>
+<span class="co">## 'data.frame':    313082 obs. of  3 variables:</span>
 <span class="co">##  $ birth     : num  498 498 498 498 498 ...</span>
 <span class="co">##  $ death     : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">##  $ birth_size: num  2.93 2.5 2.93 2.52 3 ...</span>
+<span class="co">##  $ birth_size: num  2.66 2.61 2.52 2.34 2.66 ...</span>
 <span class="no">pop_out</span> <span class="kw">&lt;-</span> <span class="no">sim_out</span>$<span class="no">population</span></pre></body></html></div>
+<p>Population size at <span class="math inline">\(t=500\)</span>.</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">pop_size</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="fu"><a href="../reference/population_alive.html">population_alive</a></span>(<span class="no">pop_out</span>,<span class="kw">t</span> <span class="kw">=</span> <span class="fl">500</span>))
 <span class="no">pop_size</span>
-<span class="co">## [1] 375</span></pre></body></html></div>
+<span class="co">## [1] 346</span></pre></body></html></div>
 <p>Result from <span class="citation">[@MR2562651]</span> can be reproduce from the simulation.<br>
 For each individual in the population, we draw below a line representing its birth size during its life time.</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">pop_out</span>)+
@@ -272,13 +289,13 @@ For each individual in the population, we draw below a line representing its bir
 <span class="fu">xlab</span>(<span class="st">"Time"</span>) + <span class="fu">ylab</span>(<span class="st">"Birth size"</span>)</pre></body></html></div>
 <p><img src="IBMPopSim_interaction_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
-<div id="simulation-with-different-parameters" class="section level1" number="7">
+<div id="simulation-with-different-parameters" class="section level1" number="6">
 <h1 class="hasAnchor">
-<a href="#simulation-with-different-parameters" class="anchor"></a><span class="header-section-number">7</span> Simulation with different parameters</h1>
+<a href="#simulation-with-different-parameters" class="anchor"></a><span class="header-section-number">6</span> Simulation with different parameters</h1>
 <p>The model can be simulated with different parameters without being recompiled.</p>
-<div id="impact-of-aging-velocity" class="section level2" number="7.1">
+<div id="impact-of-aging-velocity" class="section level2" number="6.1">
 <h2 class="hasAnchor">
-<a href="#impact-of-aging-velocity" class="anchor"></a><span class="header-section-number">7.1</span> Impact of aging velocity</h2>
+<a href="#impact-of-aging-velocity" class="anchor"></a><span class="header-section-number">6.1</span> Impact of aging velocity</h2>
 <p>The ageing velocity has an impact on the distibution of birth sizes of over time.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">params_death</span>$<span class="no">g</span> <span class="kw">&lt;-</span> <span class="fl">0.3</span></pre></body></html></div>
 <p>Events bounds are not modified since they do not depend on <span class="math inline">\(g\)</span>.</p>
@@ -300,22 +317,22 @@ We can see in the example below that several individuals have the same size, at 
 <div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">pyr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">pop_out</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>,<span class="fl">2</span>,<span class="kw">by</span><span class="kw">=</span><span class="fl">0.2</span>), <span class="kw">time</span> <span class="kw">=</span> <span class="fl">500</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pyr</span>)
 <span class="co">##       age birth_size value</span>
-<span class="co">## 1 0 - 0.2   2.584935     2</span>
-<span class="co">## 2 0 - 0.2   2.726811     1</span>
-<span class="co">## 3 0 - 0.2   2.777286     5</span>
-<span class="co">## 4 0 - 0.2   2.786465     6</span>
-<span class="co">## 5 0 - 0.2   2.803402     1</span>
-<span class="co">## 6 0 - 0.2   2.869787     0</span></pre></body></html></div>
+<span class="co">## 1 0 - 0.2   2.748365     0</span>
+<span class="co">## 2 0 - 0.2   2.769760     0</span>
+<span class="co">## 3 0 - 0.2   2.792118     0</span>
+<span class="co">## 4 0 - 0.2   2.864267     5</span>
+<span class="co">## 5 0 - 0.2   2.871409     0</span>
+<span class="co">## 6 0 - 0.2   2.871854     1</span></pre></body></html></div>
 <p>The age pyramid can be plotted, with a visualization of the individuals birth size. We start by defining discrete birth sizes subgroups, and by assigning a color to each subgroup.</p>
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">pyr</span>$<span class="no">group_name</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span>(<span class="no">pyr</span>$<span class="no">birth_size</span>+<span class="fl">1e-6</span>, <span class="kw">breaks</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>,<span class="fl">4</span>,<span class="kw">by</span><span class="kw">=</span><span class="fl">0.25</span>)))
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pyr</span>)
 <span class="co">##       age birth_size value group_name</span>
-<span class="co">## 1 0 - 0.2   2.584935     2 (2.5,2.75]</span>
-<span class="co">## 2 0 - 0.2   2.726811     1 (2.5,2.75]</span>
-<span class="co">## 3 0 - 0.2   2.777286     5   (2.75,3]</span>
-<span class="co">## 4 0 - 0.2   2.786465     6   (2.75,3]</span>
-<span class="co">## 5 0 - 0.2   2.803402     1   (2.75,3]</span>
-<span class="co">## 6 0 - 0.2   2.869787     0   (2.75,3]</span></pre></body></html></div>
+<span class="co">## 1 0 - 0.2   2.748365     0 (2.5,2.75]</span>
+<span class="co">## 2 0 - 0.2   2.769760     0   (2.75,3]</span>
+<span class="co">## 3 0 - 0.2   2.792118     0   (2.75,3]</span>
+<span class="co">## 4 0 - 0.2   2.864267     5   (2.75,3]</span>
+<span class="co">## 5 0 - 0.2   2.871409     0   (2.75,3]</span>
+<span class="co">## 6 0 - 0.2   2.871854     1   (2.75,3]</span></pre></body></html></div>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">colorspace</span>)</pre></body></html></div>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">lbls</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">pyr</span>$<span class="no">group_name</span>))
 <span class="no">colors</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="http://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html">diverging_hcl</a></span>(<span class="kw">n</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">lbls</span>), <span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Red-Green"</span>)) <span class="co"># attributes a color to each subgroup</span>
@@ -330,15 +347,15 @@ We can see in the example below that several individuals have the same size, at 
 <div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">lbls</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">pyrs</span>$<span class="no">group_name</span>))
 <span class="no">colors</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="http://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html">diverging_hcl</a></span>(<span class="kw">n</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">lbls</span>), <span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Red-Green"</span>)) <span class="co"># attributes a color to each group</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">colors</span>) <span class="kw">&lt;-</span> <span class="no">lbls</span></pre></body></html></div>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">gganimate</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="no">anim</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span>(<span class="no">pyrs</span>, <span class="kw">group_colors</span> <span class="kw">=</span> <span class="no">colors</span>,
-                     <span class="kw">group_legend</span> <span class="kw">=</span> <span class="st">'Birth size'</span>) +
-        <span class="fu"><a href="https://gganimate.com/reference/transition_time.html">transition_time</a></span>(<span class="no">time</span>) + <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Time: {frame_time}"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb26"><html><body><pre class="r">#library(gganimate)</pre></body></html></div>
+<div class="sourceCode" id="cb27"><html><body><pre class="r">#anim &lt;- plot_pyramid(pyrs, group_colors = colors, 
+                    #group_legend = 'Birth size') + 
+        #transition_time(time) + labs(title = "Time: {frame_time}")</pre></body></html></div>
 <div class="sourceCode" id="cb28"><html><body><pre class="r">#animate(anim, nframes = 450, fps = 10)</pre></body></html></div>
 </div>
-<div id="increase-in-initial-population-size" class="section level2" number="7.2">
+<div id="increase-in-initial-population-size" class="section level2" number="6.2">
 <h2 class="hasAnchor">
-<a href="#increase-in-initial-population-size" class="anchor"></a><span class="header-section-number">7.2</span> Increase in initial population size</h2>
+<a href="#increase-in-initial-population-size" class="anchor"></a><span class="header-section-number">6.2</span> Increase in initial population size</h2>
 <p>We can do the same simulation with a bigger initial population. In order for the population size to stay approximately constant, the birth (resp. death) intensity in increased (resp. decreased).</p>
 <div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">N</span> <span class="kw">&lt;-</span> <span class="fl">2000</span>
 <span class="no">pop_init_big</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
@@ -362,16 +379,16 @@ We can see in the example below that several individuals have the same size, at 
 <span class="co">## Simulation on  [0, 500]</span></pre></body></html></div>
 <div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="no">pop_size</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="fu"><a href="../reference/population_alive.html">population_alive</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>,<span class="kw">t</span> <span class="kw">=</span> <span class="fl">500</span>))
 <span class="no">pop_size</span>
-<span class="co">## [1] 1050</span></pre></body></html></div>
+<span class="co">## [1] 567</span></pre></body></html></div>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">sim_out</span>$<span class="no">population</span>)+
 <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span> <span class="no">birth</span>,<span class="kw">xend</span><span class="kw">=</span><span class="no">death</span>,<span class="kw">y</span><span class="kw">=</span> <span class="no">birth_size</span>,<span class="kw">yend</span><span class="kw">=</span><span class="no">birth_size</span>), <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">colour</span><span class="kw">=</span><span class="st">"blue"</span>, <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.1</span>)+
 <span class="fu">xlab</span>(<span class="st">"Time"</span>) + <span class="fu">ylab</span>(<span class="st">"Birth size"</span>)</pre></body></html></div>
 <p><img src="IBMPopSim_interaction_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="model-with-full-simulation" class="section level1" number="8">
+<div id="model-with-full-simulation-algorithm" class="section level1" number="7">
 <h1 class="hasAnchor">
-<a href="#model-with-full-simulation" class="anchor"></a><span class="header-section-number">8</span> Model with “full” simulation</h1>
+<a href="#model-with-full-simulation-algorithm" class="anchor"></a><span class="header-section-number">7</span> Model with “full” simulation algorithm</h1>
 <p>In the presence of interactions, the randomized algorithm (activated by default in <code>mk_event_interaction</code>) is much faster than the standard algorithm (named <code>full</code>) which requires to iterate through the population vector at each candidate event time.</p>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="co"># Comparison full vs random </span>
 <span class="no">death_event_full</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_interaction.html">mk_event_interaction</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"death"</span>,
@@ -392,11 +409,7 @@ We can see in the example below that several individuals have the same size, at 
 <span class="co">## Simulation on  [0, 500]</span></pre></body></html></div>
 <div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">sim_out_full</span>$<span class="no">logs</span>[<span class="st">"duration_main_algorithm"</span>]/<span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">"duration_main_algorithm"</span>]
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##                21.97667</span></pre></body></html></div>
-</div>
-<div id="model-with-lineages-recording" class="section level1" number="9">
-<h1 class="hasAnchor">
-<a href="#model-with-lineages-recording" class="anchor"></a><span class="header-section-number">9</span> Model with lineages recording</h1>
+<span class="co">##                34.78827</span></pre></body></html></div>
 </div>
   </div>
 
