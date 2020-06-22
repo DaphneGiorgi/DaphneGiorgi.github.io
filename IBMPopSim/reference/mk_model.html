@@ -187,17 +187,18 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>model List containing the built model :</p><ul>
-<li><p>individual_type: Names and types (R and C++) of characteristics.</p></li>
-<li><p>parameters_types: Names and types (R and C++) of model parameters.</p></li>
-<li><p>parameters: Parameters, if there is a swap event in the list of events, it adds a column <code>id</code>.</p></li>
-<li><p>events: List of events.</p></li>
-<li><p>cpp: Output of C++ compilation.</p></li>
-<li><p>popsim_cpp: Function for simulating the population, resulting from the build process, which is called inside the R function <code><a href='popsim.html'>popsim</a></code>.</p></li>
+<li><p><code>individual_type</code>: Names and types (R and C++) of characteristics.</p></li>
+<li><p><code>parameters_types</code>: Names and types (R and C++) of model parameters.</p></li>
+<li><p><code>events</code>: List of events.</p></li>
+<li><p><code>cpp_code</code>: Output of C++ compilation.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>It builds the C++ model code and produces the function <code>popsim_cpp</code> which will be used for simulating the model. The function used to simulate a population from a model is <code><a href='popsim.html'>popsim</a></code>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='popsim.html'>popsim</a></code>, <code><a href='mk_event_poisson.html'>mk_event_poisson</a></code>, <code><a href='mk_event_individual.html'>mk_event_individual</a></code>, <code><a href='mk_event_interaction.html'>mk_event_interaction</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -230,7 +231,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kakaai, Vincent Lemaire.</p>
+  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">

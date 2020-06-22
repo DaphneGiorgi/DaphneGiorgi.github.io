@@ -97,13 +97,11 @@
 
       
 
-      </header><script src="IBMPopSim_human_pop_IMD_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="IBMPopSim_human_pop_IMD_files/header-attrs-2.3/header-attrs.js"></script><script src="IBMPopSim_human_pop_IMD_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Human population with swap</h1>
-                        <h4 class="author">Daphné Giorgi</h4>
-                        <h4 class="author">Sarah Kaakaï</h4>
-                        <h4 class="author">Vincent Lemaire</h4>
+                        <h4 class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/master/vignettes/IBMPopSim_human_pop_IMD.Rmd"><code>vignettes/IBMPopSim_human_pop_IMD.Rmd</code></a></small>
@@ -114,7 +112,7 @@
     
     
 <!-- #region -->
-<p>This vignette provides an example of usage of the package IBMPopSim, for simulating an heterogeneous “human population” in which individuals can change of characteristics over their life course. As this a more advance example of IBM simulation with <code>IBMPopSim</code>, it is recommanded to start by reading the package vignette <a href="IBMPopSim_human_pop.html">human_pop</a> <span style="color:red"> vignettes descriptions + human pop</span>.</p>
+<p>This vignette provides an example of usage of the package IBMPopSim, for simulating an heterogeneous “human population” in which individuals can change of characteristics over their life course. As this a more advance example of IBM simulation with <code>IBMPopSim</code>, it is recommended to start by reading the package vignettes <code><a href="../articles/IBMPopSim.html">vignette('IBMPopSim')</a></code> and <code><a href="../articles/IBMPopSim_human_pop.html">vignette('IBMPopSim_human_pop')</a></code>.</p>
 <p>The population is based on data from England and Wales (EW) population, and individuals are characterized by the so-called Index of Multiple Deprivation (IMD), a deprivation index based on the place of living ( see <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/464430/English_Index_of_Multiple_Deprivation_2015_-_Guidance.pdf">here</a> for more details).</p>
 <p>A toy model is simulated, where the individuals’ demographic rates depend on their IMD. Due to internal migrations, individuals can change of IMD over their life course (swap events).</p>
 <div id="example-description" class="section level1" number="1">
@@ -122,12 +120,12 @@
 <a href="#example-description" class="anchor"></a><span class="header-section-number">1</span> Example description</h1>
 <p>The population is structured by age, gender and IMD. The population is distributed into five IMD quintiles. Group 1 corresponds to the least deprived subpopulation, and group 5 to the most deprived subpopulation.</p>
 <p>Death and birth intensities are constant over time, but depend on the individuals age, gender and IMD. For instance, individuals in group 5 have a higher death intensity than individuals in group 1.</p>
-<p>Individuals inherit the same IMD than their parent at birth, but can change of IMD over time, due to internal migration. In this toy model, we assume than younger individuals around 20 are more likely to move to more a deprived neighbourhood, while individivals in the age class 30-45 are more likely to move to a less deprived neighbourhood.</p>
+<p>Individuals inherit the same IMD than their parent at birth, but can change of IMD over time, due to internal migration. In this toy model, we assume than younger individuals around 20 are more likely to move to more a deprived neighborhood, while individuals in the age class 30-45 are more likely to move to a less deprived neighborhood.</p>
 </div>
 <div id="population-creation" class="section level1" number="2">
 <h1 class="hasAnchor">
 <a href="#population-creation" class="anchor"></a><span class="header-section-number">2</span> Population creation</h1>
-<p>The inital population is a 100 000 individuals population sampled from England and Wales’ 2014 age pyramid, structured by single year of age, gender and IMD quintile (source: Office for National Statistics).
+<p>The initial population is a 100 000 individuals population sampled from England and Wales’ 2014 age pyramid, structured by single year of age, gender and IMD quintile (source: Office for National Statistics).
 <!-- #endregion --></p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">EW_popIMD_14</span>)
 <span class="co">## List of 3</span>
@@ -158,7 +156,6 @@
 <span class="co">## 4 -0.45684987    NA FALSE   4</span>
 <span class="co">## 5 -0.69782311    NA  TRUE   3</span>
 <span class="co">## 6 -0.04470658    NA FALSE   4</span></pre></body></html></div>
-<p>The <code>population_from_population</code> function creates a population of size <code>pop_size</code> based on an starting population.</p>
 <!-- #region -->
 </div>
 <div id="events-description" class="section level1" number="3">
@@ -170,7 +167,7 @@
 <li>Death</li>
 <li>Swap (internal migrations)</li>
 </ul>
-<p>Each event is caracterised by its intensity and its kernel, as follows.
+<p>Each event is characterized by its intensity and its kernel, as follows.
 <!-- #endregion --></p>
 <div id="death-events" class="section level2" number="3.1">
 <h2 class="hasAnchor">
@@ -251,7 +248,7 @@
 <div id="event-creation" class="section level3" number="3.2.2">
 <h3 class="hasAnchor">
 <a href="#event-creation" class="anchor"></a><span class="header-section-number">3.2.2</span> Event creation</h3>
-<p>C++ code implementing the intensity of a birth event. The lists <code>params_birth$birth</code> and <code>params_birth$TFR_weights</code> are then tranformed into C++ vectors (index starting at 0).</p>
+<p>C++ code implementing the intensity of a birth event. The lists <code>params_birth$birth</code> and <code>params_birth$TFR_weights</code> are then transformed into C++ vectors (index starting at 0).</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">birth_intensity_code</span> <span class="kw">&lt;-</span> <span class="st">'
     if (I.male) result = 0.;
     else {
@@ -300,7 +297,7 @@ The vectors of discrete probabilities determining the action of the event when a
 <p>C++ <strong>kernel code</strong> of a swap event</p>
 <p>If a swap event occurs, the new IMD subgroup of the individual is determined by a discrete random variables, with probability distribution given by a row a <code>params_swap$swap_distribution</code>, depending on his age.</p>
 <p>For instance, an individual of age in <span class="math inline">\([0,15]\)</span> has a probability of 0.6 to move on IMD subgroup 1 and 0.4 to move to IMD subgroup 2.</p>
-<p>Discrete random variables can be drawn in <code>IBMPopSim</code> by calling the function <code>Cdiscrete</code> in the kernel code, with an <code>Armadillo</code> vector or matrix (<span style="color:red"> see vignette description</span>).</p>
+<p>Discrete random variables can be drawn in <code>IBMPopSim</code> by calling the function <code>Cdiscrete</code> in the kernel code, with an <code>Armadillo</code> vector or matrix (see Section 3 of <code><a href="../articles/IBMPopSim.html">vignette('IBMPopSim')</a></code>.</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">params_swap</span>$<span class="no">swap_distribution</span>
 <span class="co">##      IMD1 IMD2 IMD3 IMD4 IMD5</span>
 <span class="co">## [1,]  0.6  0.4  0.0  0.0  0.0</span>
@@ -323,7 +320,7 @@ The vectors of discrete probabilities determining the action of the event when a
 <div id="model-creation-without-id" class="section level1" number="4">
 <h1 class="hasAnchor">
 <a href="#model-creation-without-id" class="anchor"></a><span class="header-section-number">4</span> Model creation (without id)</h1>
-<p>The model is created by calling the function <code>mk_model</code> with as arguments:</p>
+<p>The model is created by calling the function <code><a href="../reference/mk_model.html">?mk_model</a></code> with as arguments:</p>
 <ul>
 <li>The individuals’ characteristics.</li>
 <li>The events list.</li>
@@ -367,7 +364,7 @@ The vectors of discrete probabilities determining the action of the event when a
                       <span class="no">TFR_weights</span>[<span class="no">i</span>]* <span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimize</a></span>(<span class="kw">f</span><span class="kw">=</span> <span class="no">birth</span><span class="kw">[[</span><span class="no">i</span>]], <span class="kw">interval</span> <span class="kw">=</span><span class="no">E</span> , <span class="kw">maximum</span><span class="kw">=</span><span class="fl">TRUE</span>)$<span class="no">objective</span>)))
                   )</pre></body></html></div>
 <p><strong>Death intensity bound</strong></p>
-<p>The operator <code>max</code> has been overloaded in <code>IBMPopSim</code> and can be applied to step functions.</p>
+<p>The operator <code><a href="https://rdrr.io/r/base/Extremes.html">?max</a></code> has been overloaded in <code>IBMPopSim</code> and can be applied to step functions.</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">death_max</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">params</span>$<span class="no">death_male</span>, <span class="no">max</span>),
                  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">params</span>$<span class="no">death_female</span>, <span class="no">max</span>))</pre></body></html></div>
 <p><strong>Swap intensity bound</strong></p>
@@ -376,7 +373,7 @@ The vectors of discrete probabilities determining the action of the event when a
 <div id="simulation-1" class="section level2" number="5.2">
 <h2 class="hasAnchor">
 <a href="#simulation-1" class="anchor"></a><span class="header-section-number">5.2</span> Simulation</h2>
-<p>Recording all swap events is computationnally expensive. To overcome this difficulty, the simulation in the presence of swap events returns a list of data frame, composed of a “picture” of the population at all times in the vector argument <code>time</code> of <code>popsim</code> (see <span style="color:red"> vignette description for more details</span>)</p>
+<p>Recording all swap events is computationally expensive. To overcome this difficulty, the simulation in the presence of swap events returns a list of data frame, composed of a “picture” of the population at all times in the vector argument <code>time</code> of <code>popsim</code> (see <code><a href="../articles/IBMPopSim.html">vignette('IBMPopSim')</a></code> for more details).</p>
 <p>The first component of the variable <code>t_sim</code> below is the initial time. The simulation returns <code>n-1</code> data frame representing the population at <span class="math inline">\(t\_sim[1],..,t\_sim[n]\)</span>. The data frame corresponding to time <span class="math inline">\(t\_sim[i]\)</span> is composed of all individuals who lived in the population before <span class="math inline">\(t\_sim[i]\)</span>, with their characteristics at time <span class="math inline">\(t\_sim[i]\)</span>.</p>
 <div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">t_sim</span> <span class="kw">&lt;-</span> <span class="fl">0</span>:<span class="fl">50</span>
 <span class="no">n</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">t_sim</span>)</pre></body></html></div>
@@ -411,8 +408,10 @@ The vectors of discrete probabilities determining the action of the event when a
 <p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-29-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span>(<span class="no">pyr_IMD</span>,<span class="no">colors</span>)</pre></body></html></div>
 <p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-29-2.png" width="672" style="display: block; margin: auto;"></p>
-<p><span style="color:red">Remarque</span>
-The high number of individuals aged over 100 is due to the fact that mortality rates are assumed to be constant at ages over 90, which is of course not realistic for human populations (see <span style="color:red">Vignette human pop</span>) for another choice of moratlity rates.</p>
+
+<div class="remark">
+ <span class="remark"><em>Remark. </em></span>  The high number of individuals aged over 100 is due to the fact that mortality rates are assumed to be constant at ages over 90, which is of course not realistic for human populations (see <code><a href="../articles/IBMPopSim_human_pop.html">vignette('IBMPopSim_human_pop')</a></code>) for another choice of moratlity rates.
+</div>
 </div>
 <div id="evolution-of-population-composition-by-age-group" class="section level2" number="6.2">
 <h2 class="hasAnchor">
@@ -426,7 +425,7 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 <span class="fu">geom_line</span>()+
 <span class="fu">facet_wrap</span>(<span class="st">"Age group"</span>~<span class="no">age</span>)+
 <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span>)+ <span class="fu">xlab</span>(<span class="st">"Time"</span>)+<span class="fu">ylab</span>(<span class="st">"Proportion of females in IMD subgroup"</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="different-simulations-with-the-same-model" class="section level1" number="7">
@@ -454,7 +453,7 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 <span class="fu">facet_wrap</span>(~<span class="no">age</span>)+
 <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span>, <span class="kw">limits</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.12</span>,<span class="fl">0.3</span>))+ <span class="fu">xlab</span>(<span class="st">"Time"</span>)+<span class="fu">ylab</span>(<span class="st">"Proportion of females in IMD subgroup"</span>)+
 <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Population without swap events"</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-35-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb36"><html><body><pre class="r">
 
 <span class="co">## With swap events</span>
@@ -463,7 +462,7 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 <span class="fu">facet_wrap</span>(<span class="st">"Age group"</span>~<span class="no">age</span>)+
 <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span>,<span class="kw">limits</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.12</span>,<span class="fl">0.3</span>))+ <span class="fu">xlab</span>(<span class="st">"Time"</span>)+<span class="fu">ylab</span>(<span class="st">"Proportion of females in IMD subgroup"</span>)+
 <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Population with swap events"</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-34-2.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="IBMPopSim_human_pop_IMD_files/figure-html/unnamed-chunk-35-2.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="simulation-of-individual-life-courses" class="section level2" number="7.2">
 <h2 class="hasAnchor">
@@ -485,9 +484,9 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 <span class="co">## [1] "Add 'id' attributes to the population."</span>
 <span class="co">## Simulation on  [0, 1]  [1, 2]  [2, 3]  [3, 4]  [4, 5]  [5, 6]  [6, 7]  [7, 8]  [8, 9]  [9, 10]  [10, 11]  [11, 12]  [12, 13]  [13, 14]  [14, 15]  [15, 16]  [16, 17]  [17, 18]  [18, 19]  [19, 20]  [20, 21]  [21, 22]  [22, 23]  [23, 24]  [24, 25]  [25, 26]  [26, 27]  [27, 28]  [28, 29]  [29, 30]  [30, 31]  [31, 32]  [32, 33]  [33, 34]  [34, 35]  [35, 36]  [36, 37]  [37, 38]  [38, 39]  [39, 40]  [40, 41]  [41, 42]  [42, 43]  [43, 44]  [44, 45]  [45, 46]  [46, 47]  [47, 48]  [48, 49]  [49, 50]</span></pre></body></html></div>
 <p>When each individual has been attributed a unique id, a data frame summarizing each life course can be obtained from the simulation output <code>sim_out_id$population</code>(list of data frames) by calling the function <code>merge_pop_withid</code>.</p>
-<p>Characteristics such as gender which don’t change over time can be specifed in the argument <code>char_ignored</code>.</p>
+<p>Characteristics such as gender which don’t change over time can be specified in the argument <code>char_ignored</code>.</p>
 <div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="no">pop_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/merge_pop_withid.html">merge_pop_withid</a></span>(<span class="no">sim_out_id</span>$<span class="no">population</span>,<span class="kw">char_ignored</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"male"</span>))</pre></body></html></div>
-<p><code>pop_id</code> is data frame in which each line correpond to an individual and include his id, birth date, death date, gender and IMD subgroupe at each discretization time (components of <span class="math inline">\(t_{sim}\)</span>).</p>
+<p><code>pop_id</code> is data frame in which each line corresponds to an individual and include his id, birth date, death date, gender and IMD subgroup at each discretization time (components of <span class="math inline">\(t_{sim}\)</span>).</p>
 <div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pop_id</span>)
 <span class="co">##   id       birth death  male IMD_1 IMD_2 IMD_3 IMD_4 IMD_5 IMD_6 IMD_7 IMD_8</span>
 <span class="co">## 1  1 -0.09170591    NA FALSE     5     5     5     5     5     5     5     5</span>
@@ -501,28 +500,28 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 <span class="co">## 2     3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">## 3     5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 4     4      4      4      4      4      4      4      4      4      4      4</span>
-<span class="co">## 5     4      4      4      4      4      4      4      4      4      4      4</span>
+<span class="co">## 5     4      1      1      1      1      1      1      1      1      1      1</span>
 <span class="co">## 6     3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">##   IMD_20 IMD_21 IMD_22 IMD_23 IMD_24 IMD_25 IMD_26 IMD_27 IMD_28 IMD_29 IMD_30</span>
 <span class="co">## 1      5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 2      3      3      3      3      3      3      3      3      3      3      3</span>
-<span class="co">## 3      5      5      5      5      5      5      5      5      5      5      5</span>
+<span class="co">## 3      5      5      5      5      5      5      5      5      5     NA     NA</span>
 <span class="co">## 4      4      4      4      4      4      4      4      4      4      4      4</span>
-<span class="co">## 5      4      4      4      4      4      4      4      4      4      4      4</span>
+<span class="co">## 5      1      1      1      1      1      1      1      1      1      1      1</span>
 <span class="co">## 6      3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">##   IMD_31 IMD_32 IMD_33 IMD_34 IMD_35 IMD_36 IMD_37 IMD_38 IMD_39 IMD_40 IMD_41</span>
-<span class="co">## 1      5      5      5      5      5      5      5      5      5      1      1</span>
+<span class="co">## 1      5      5      5      5      5      5      5      5      5      5      5</span>
 <span class="co">## 2      3      3      3      3      3      3      3      3      3      3      3</span>
-<span class="co">## 3      5      5      5      5      5      5      5      5      5      5      5</span>
-<span class="co">## 4      4      4      4      1      1      1      1      1      1      1      1</span>
-<span class="co">## 5      4      4      4      4      4      4      4      4      4      4      4</span>
+<span class="co">## 3     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA</span>
+<span class="co">## 4      4      4      4      4      4      4      4      4      4      4      4</span>
+<span class="co">## 5      1      1      1      1      1      1      1      1      1      1      1</span>
 <span class="co">## 6      3      3      3      3      3      3      3      3      3      3      3</span>
 <span class="co">##   IMD_42 IMD_43 IMD_44 IMD_45 IMD_46 IMD_47 IMD_48 IMD_49 IMD_50</span>
 <span class="co">## 1      1      1      1      1      1      1      1      1      1</span>
 <span class="co">## 2      3      3      3      3      3      3      3      3      3</span>
-<span class="co">## 3      5      5      5      5      5      5      5      5      5</span>
-<span class="co">## 4      1      1      1      1      1      1      1      1      1</span>
-<span class="co">## 5      4      4      4      4      4      4      4      4      4</span>
+<span class="co">## 3     NA     NA     NA     NA     NA     NA     NA     NA     NA</span>
+<span class="co">## 4      4      4      4      4      4      4      4      4      4</span>
+<span class="co">## 5      1      1      1      1      1      1      1      1      1</span>
 <span class="co">## 6      3      3      3      3      3      3      3      3      3</span></pre></body></html></div>
 </div>
 </div>
@@ -539,7 +538,7 @@ The high number of individuals aged over 100 is due to the fact that mortality r
 
 
       <footer><div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kakaai, Vincent Lemaire.</p>
+  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">

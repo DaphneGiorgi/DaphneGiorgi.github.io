@@ -128,7 +128,7 @@
 <div id="first-example-to-check-installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#first-example-to-check-installation" class="anchor"></a>First example to check installation</h3>
-<p>To illustrate the use of the package and to check the installation, a simple birth and death model is implemented.</p>
+<p>To illustrate the use of the package and to check the installation, a simple model with Poisson arrivals and exits is implemented.</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">IBMPopSim</span>)
 
 <span class="no">init_size</span> <span class="kw">&lt;-</span> <span class="fl">100000</span>
@@ -141,7 +141,7 @@
 <span class="co"># mk_model compiles C++ code using sourceCpp from Rcpp</span>
 <span class="no">birth_death</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/mk_model.html">mk_model</a></span>(<span class="kw">events</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">birth</span>, <span class="no">death</span>),
                         <span class="kw">parameters</span> <span class="kw">=</span> <span class="no">params</span>)</pre></div>
-<p>If there are no errors then the C++ build environment is compatible with the package. The model is created and a C++ code has been compiled. The simulation is done using the <code>popsim</code> function.</p>
+<p>If there are no errors then the C++ built environment is compatible with the package. The model is created and a C++ code has been compiled. The simulation is done using the <code>popsim</code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="no">sim_out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/popsim.html">popsim</a></span>(<span class="kw">model</span> <span class="kw">=</span> <span class="no">birth_death</span>,
                   <span class="kw">population</span> <span class="kw">=</span> <span class="no">pop</span>,
                   <span class="kw">events_bounds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'birth'</span> <span class="kw">=</span> <span class="no">params</span>$<span class="no">lambda</span>, <span class="st">'death'</span> <span class="kw">=</span> <span class="no">params</span>$<span class="no">mu</span>),
@@ -153,7 +153,7 @@
 <span class="no">num_deaths</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>$<span class="no">death</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"births"</span> <span class="kw">=</span> <span class="no">num_births</span>, <span class="st">"deaths"</span> <span class="kw">=</span> <span class="no">num_deaths</span>))
 <span class="co">## births deaths </span>
-<span class="co">##    967    929</span></pre></div>
+<span class="co">##    945   1004</span></pre></div>
 </div>
 </div>
 <div id="quick-model-creation" class="section level2">
@@ -162,16 +162,17 @@
 <ul>
 <li>We take here an initial population, stored in a data frame, composed of <span class="math inline">100 000</span> individuals marked by their gender (encoded by a Boolean characteristic):</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb5"><pre class="r"><span class="no">pop</span> <span class="kw">&lt;-</span> <span class="no">EW_pop_14</span>$<span class="no">sample</span></pre></div>
+<!-- end list --><div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"IBMPopSim"</span>)</pre></div>
+<div class="sourceCode" id="cb6"><pre class="r"><span class="no">pop</span> <span class="kw">&lt;-</span> <span class="no">EW_pop_14</span>$<span class="no">sample</span></pre></div>
 <ul>
 <li>The second step is to define the model parameters’ list:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb6"><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"alpha"</span> <span class="kw">=</span> <span class="fl">0.008</span>, <span class="st">"beta"</span> <span class="kw">=</span> <span class="fl">0.02</span>, <span class="st">"p_male"</span> <span class="kw">=</span> <span class="fl">0.51</span>,
+<!-- end list --><div class="sourceCode" id="cb7"><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"alpha"</span> <span class="kw">=</span> <span class="fl">0.008</span>, <span class="st">"beta"</span> <span class="kw">=</span> <span class="fl">0.02</span>, <span class="st">"p_male"</span> <span class="kw">=</span> <span class="fl">0.51</span>,
                <span class="st">"birth_rate"</span> <span class="kw">=</span> <span class="fu"><a href="reference/stepfun.html">stepfun</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">15</span>,<span class="fl">40</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span>)))</pre></div>
 <ul>
 <li>The last step is to defined the events that can occur in the population, here birth and death events:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb7"><pre class="r"><span class="no">death_event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/mk_event_individual.html">mk_event_individual</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"death"</span>,
+<!-- end list --><div class="sourceCode" id="cb8"><pre class="r"><span class="no">death_event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/mk_event_individual.html">mk_event_individual</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"death"</span>,
                   <span class="kw">intensity_code</span> <span class="kw">=</span> <span class="st">"result = alpha * exp(beta * age(I, t));"</span>)
 
 <span class="no">birth_event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/mk_event_individual.html">mk_event_individual</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"birth"</span>,
@@ -181,37 +182,45 @@
 <ul>
 <li>Finally, the model is created by calling the function <code>mk_model</code>. A C++ source code is obtained from the events and parameters, then compiled using the <code>sourceCpp</code> function of the <code>Rcpp</code> package.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb8"><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/mk_model.html">mk_model</a></span>(<span class="kw">characteristics</span> <span class="kw">=</span> <span class="fu"><a href="reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop</span>),
+<!-- end list --><div class="sourceCode" id="cb9"><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/mk_model.html">mk_model</a></span>(<span class="kw">characteristics</span> <span class="kw">=</span> <span class="fu"><a href="reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop</span>),
                   <span class="kw">events</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">death_event</span>, <span class="no">birth_event</span>),
                   <span class="kw">parameters</span> <span class="kw">=</span> <span class="no">params</span>)</pre></div>
 <ul>
 <li>In order to simulate a random trajectory of the population until a given time <code>T</code> bounds on the events intensities have to be specified:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb9"><pre class="r"><span class="no">a_max</span> <span class="kw">&lt;-</span> <span class="fl">115</span>
+<!-- end list --><div class="sourceCode" id="cb10"><pre class="r"><span class="no">a_max</span> <span class="kw">&lt;-</span> <span class="fl">115</span>
 <span class="no">events_bounds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"death"</span> <span class="kw">=</span> <span class="no">params</span>$<span class="no">alpha</span> * <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="no">params</span>$<span class="no">beta</span> * <span class="no">a_max</span>),
                   <span class="st">"birth"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">params</span>$<span class="no">birth_rate</span>))</pre></div>
 <p>Then, the function <code>popsim</code> can be called:</p>
-<div class="sourceCode" id="cb10"><pre class="r"><span class="no">sim_out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/popsim.html">popsim</a></span>(<span class="no">model</span>, <span class="no">pop</span>, <span class="no">events_bounds</span>, <span class="no">params</span>,
+<div class="sourceCode" id="cb11"><pre class="r"><span class="no">sim_out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/popsim.html">popsim</a></span>(<span class="no">model</span>, <span class="no">pop</span>, <span class="no">events_bounds</span>, <span class="no">params</span>,
                   <span class="kw">age_max</span> <span class="kw">=</span> <span class="no">a_max</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>)
 <span class="co">## Simulation on  [0, 30]</span></pre></div>
 <ul>
 <li>The data frame <code>sim_out$population</code> contains the information (date of birth, date of death, gender) on individuals who lived in the population over the period <span class="math inline">[0, 30]</span>. Functions of the package allows to provide aggregated information on the population.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb11"><pre class="r"><span class="no">pop_out</span> <span class="kw">&lt;-</span> <span class="no">sim_out</span>$<span class="no">population</span>
+<!-- end list --><div class="sourceCode" id="cb12"><pre class="r"><span class="no">pop_out</span> <span class="kw">&lt;-</span> <span class="no">sim_out</span>$<span class="no">population</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pop_out</span>)
+<span class="co">##       birth death  male</span>
+<span class="co">## 1 -84.99749    NA FALSE</span>
+<span class="co">## 2 -84.97524    NA FALSE</span>
+<span class="co">## 3 -84.94174    NA FALSE</span>
+<span class="co">## 4 -84.91351    NA  TRUE</span>
+<span class="co">## 5 -84.89490    NA FALSE</span>
+<span class="co">## 6 -84.86230    NA FALSE</span>
 <span class="no">female_pop</span> <span class="kw">&lt;-</span> <span class="no">pop_out</span>[<span class="no">pop_out</span>$<span class="no">male</span><span class="kw">==</span><span class="fl">FALSE</span>, ]
 <span class="fu"><a href="reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>)
 <span class="co">##       age  male value</span>
-<span class="co">## 1 85 - 86 FALSE   249</span>
-<span class="co">## 2 86 - 87 FALSE   246</span>
-<span class="co">## 3 87 - 88 FALSE   207</span>
-<span class="co">## 4 88 - 89 FALSE   184</span>
-<span class="co">## 5 89 - 90 FALSE   199</span>
-<span class="no">Dxt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/death_table.html">death_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">times</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)
-<span class="no">Ext</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/exposure_table.html">exposure_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">times</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)</pre></div>
+<span class="co">## 1 85 - 86 FALSE   235</span>
+<span class="co">## 2 86 - 87 FALSE   243</span>
+<span class="co">## 3 87 - 88 FALSE   221</span>
+<span class="co">## 4 88 - 89 FALSE   183</span>
+<span class="co">## 5 89 - 90 FALSE   198</span>
+<span class="no">Dxt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/death_table.html">death_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">period</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)
+<span class="no">Ext</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/exposure_table.html">exposure_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">period</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)</pre></div>
 <ul>
 <li>Note that parameters of the model can be changed without recompiling the model.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb12"><pre class="r"><span class="no">params</span>$<span class="no">beta</span> <span class="kw">&lt;-</span> <span class="fl">0.01</span>
+<!-- end list --><div class="sourceCode" id="cb13"><pre class="r"><span class="no">params</span>$<span class="no">beta</span> <span class="kw">&lt;-</span> <span class="fl">0.01</span>
 
 <span class="co"># Update death event bound:</span>
 <span class="no">events_bounds</span>[<span class="st">"death"</span>] <span class="kw">&lt;-</span> <span class="no">params</span>$<span class="no">alpha</span> * <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="no">params</span>$<span class="no">beta</span> * <span class="no">a_max</span>)
@@ -243,7 +252,7 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Daphné Giorgi <br><small class="roles"> Author, maintainer </small>  </li>
-<li>Sarah Kakaai <br><small class="roles"> Author </small>  </li>
+<li>Sarah Kaakai <br><small class="roles"> Author </small>  </li>
 <li>Vincent Lemaire <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
@@ -253,7 +262,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kakaai, Vincent Lemaire.</p>
+  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">

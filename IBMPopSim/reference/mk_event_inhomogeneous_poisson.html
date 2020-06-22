@@ -49,7 +49,7 @@
 <meta property="og:title" content="Creates inhomogeneous Poisson class event. — mk_event_inhomogeneous_poisson" />
 <meta property="og:description" content="The function mk_event_inhomogeneous_poisson is used to create an event with intensity type inhomogeneous Poisson (time dependent intensity which does not depend on population).
 When the event occurs, something happens in the population.
-The created event must be used with mk_model. See also mk_event_poisson, mk_event_individual and mk_event_interaction." />
+The created event must be used with mk_model." />
 
 
 
@@ -152,7 +152,7 @@ The created event must be used with mk_model. See also mk_event_poisson, mk_even
     <div class="ref-description">
     <p>The function <code>mk_event_inhomogeneous_poisson</code> is used to create an event with intensity type inhomogeneous Poisson (time dependent intensity which does not depend on population).
 When the event occurs, something happens in the population.
-The created event must be used with <code><a href='mk_model.html'>mk_model</a></code>. See also <code><a href='mk_event_poisson.html'>mk_event_poisson</a></code>, <code><a href='mk_event_individual.html'>mk_event_individual</a></code> and <code><a href='mk_event_interaction.html'>mk_event_interaction</a></code>.</p>
+The created event must be used with <code><a href='mk_model.html'>mk_model</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mk_event_inhomogeneous_poisson</span>(<span class='no'>type</span>, <span class='no'>name</span>, <span class='no'>intensity_code</span>, <span class='kw'>kernel_code</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
@@ -198,6 +198,9 @@ Some of available variables in the C++ code are: <code>t</code> (the current tim
 See <code>vignette('IBMPopSim_Cpp')</code> for more details.</p>
 <p>The <code>kernel_code</code> argument is a string containing some C++ code which describing the action of the event. Some of available variables in the C++ code are: <code>t</code> (the current time), <code>pop</code> (the current population), <code>I</code> (the current individual selected for the event), <code>newI</code> (the new indivudal if <code>'birth'</code> or <code>'entry'</code> event), the name of the model parameters (some variables, or functions, see <code><a href='mk_model.html'>mk_model</a></code>).
 See <code><a href='../articles/IBMPopSim.html'>vignette('IBMPopSim')</a></code> for more details.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='mk_model.html'>mk_model</a></code>, <code><a href='mk_event_poisson.html'>mk_event_poisson</a></code>, <code><a href='mk_event_individual.html'>mk_event_individual</a></code>, <code><a href='mk_event_interaction.html'>mk_event_interaction</a></code>.</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -210,7 +213,7 @@ See <code><a href='../articles/IBMPopSim.html'>vignette('IBMPopSim')</a></code> 
 
       <footer>
       <div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kakaai, Vincent Lemaire.</p>
+  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">

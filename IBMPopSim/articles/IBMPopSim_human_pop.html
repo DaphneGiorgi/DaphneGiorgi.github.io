@@ -97,13 +97,11 @@
 
       
 
-      </header><script src="IBMPopSim_human_pop_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="IBMPopSim_human_pop_files/header-attrs-2.3/header-attrs.js"></script><script src="IBMPopSim_human_pop_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Human population</h1>
-                        <h4 class="author">Daphné Giorgi</h4>
-                        <h4 class="author">Sarah Kaakaï</h4>
-                        <h4 class="author">Vincent Lemaire</h4>
+                        <h4 class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/master/vignettes/IBMPopSim_human_pop.Rmd"><code>vignettes/IBMPopSim_human_pop.Rmd</code></a></small>
@@ -113,7 +111,7 @@
 
     
     
-<p>This document provides a first simple example of usage of the package IBMPopSim, for simulating a human population with birth and death events.</p>
+<p>This document provides a first simple example of usage of the package IBMPopSim, for simulating a human population with birth and death events. See <code><a href="../articles/IBMPopSim.html">vignette('IBMPopSim')</a></code> for a detailed presentation of the package.</p>
 <div id="example-description" class="section level1" number="1">
 <h1 class="hasAnchor">
 <a href="#example-description" class="anchor"></a><span class="header-section-number">1</span> Example description</h1>
@@ -123,7 +121,7 @@
 <div id="population-creation" class="section level1" number="2">
 <h1 class="hasAnchor">
 <a href="#population-creation" class="anchor"></a><span class="header-section-number">2</span> Population creation</h1>
-<p>The inital population is a 100 000 individuals population sampled from England and Wales’ 2014 age pyramid distribution (source: Office for National Statistics).</p>
+<p>The initial population is a 100 000 individuals population sampled from England and Wales’ 2014 age pyramid distribution (source: Office for National Statistics).</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">EW_pop_14</span>)
 <span class="co">## List of 3</span>
 <span class="co">##  $ age_pyramid:'data.frame': 232 obs. of  3 variables:</span>
@@ -233,16 +231,16 @@
 <p><strong>Simulation logs</strong></p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>
 <span class="co">##         proposed_events        effective_events        cleanall_counter </span>
-<span class="co">##            1.680304e+06            1.128350e+05            6.000000e+00 </span>
+<span class="co">##            1.682649e+06            1.136140e+05            6.000000e+00 </span>
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##            1.302370e-01</span></pre></body></html></div>
+<span class="co">##            8.599400e-02</span></pre></body></html></div>
 <p>The ratio of accepted events is</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span><span class="kw">[[</span><span class="st">"effective_events"</span>]] / <span class="no">sim_out</span>$<span class="no">logs</span><span class="kw">[[</span><span class="st">"proposed_events"</span>]]
-<span class="co">## [1] 0.06715154</span></pre></body></html></div>
+<span class="co">## [1] 0.06752091</span></pre></body></html></div>
 <p><strong>Outputs</strong></p>
 <p><code>sim_out$population</code> is a data frame composed of all individuals who lived in the population over the period [0,50] (individuals in the initial population and born during the simulation period).<br>
 Each line corresponds to an individual, with his date of birth, date of death (<code>NA</code> if still alive at the end of the simulation) and gender.</p>
-<p>The function <code>age_pyramid</code>computes the age pyramid of a population data frame at a given time.</p>
+<p>The function <code><a href="../reference/age_pyramid.html">?age_pyramid</a></code>computes the age pyramid of a population data frame at a given time.</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">pyr_init</span> <span class="kw">=</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">0</span>,<span class="kw">ages</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>:<span class="fl">100</span>,<span class="fl">Inf</span>))
 <span class="no">pyr</span> <span class="kw">=</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">50</span>, <span class="kw">ages</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>:<span class="fl">100</span>,<span class="fl">Inf</span>))
 <span class="fu">grid.arrange</span>(<span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span>(<span class="no">pyr_init</span>),
@@ -251,7 +249,7 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <p>Female age pyramid at t=50</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span>(<span class="no">pyr</span>[<span class="no">pyr</span>$<span class="no">male</span><span class="kw">==</span><span class="fl">FALSE</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"age"</span>,<span class="st">"value"</span>)], <span class="kw">age_breaks</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>,<span class="fl">101</span>,<span class="fl">5</span>)))</pre></body></html></div>
 <p><img src="IBMPopSim_human_pop_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;"></p>
-<p><code>age_pyramids</code> returns a data frame representing the population age pyramids at different times.</p>
+<p><code><a href="../reference/age_pyramids.html">?age_pyramids</a></code> returns a data frame representing the population age pyramids at different times.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r">#pyrs = age_pyramids(sim_out$population, time = 1:50)</pre></body></html></div>
 <div class="sourceCode" id="cb15"><html><body><pre class="r">#library(gganimate)</pre></body></html></div>
 <div class="sourceCode" id="cb16"><html><body><pre class="r">#plot_pyramid(pyrs) + transition_time(time) + labs(title = "Time: {frame_time}")</pre></body></html></div>
@@ -278,16 +276,16 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <span class="co">## Simulation on  [0, 50]</span></pre></body></html></div>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>
 <span class="co">##         proposed_events        effective_events        cleanall_counter </span>
-<span class="co">##            1.674206e+07            1.129948e+06            6.000000e+00 </span>
+<span class="co">##            1.678269e+07            1.133182e+06            6.000000e+00 </span>
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##            2.213534e+00</span></pre></body></html></div>
+<span class="co">##            1.213234e+00</span></pre></body></html></div>
 </div>
 <div id="modify-an-intensity" class="section level2" number="6.2">
 <h2 class="hasAnchor">
 <a href="#modify-an-intensity" class="anchor"></a><span class="header-section-number">6.2</span> Modify an intensity</h2>
 <p>Events intensities and/or kernels can be modified without recompiling the model, simply by changing the parameters value.</p>
 <p>In the first toy model, mortality rates are assumed to be constant after age 90, with a maximum age of 120 in the population. This leads to a significant increase in the number of individuals of age over 100, even though mortality rates don’t change over time in this model.</p>
-<p>A more realistic assumption is to assume that mortality rates increase after age 90, by changing the model parameters <code>death_male</code> and <code>death_female</code>. The two step functions are replaced by functions of type <code>piecewise_x</code> (see documentation), composed of a step function before age 90 and a linear function after for older ages.</p>
+<p>A more realistic assumption is to assume that mortality rates increase after age 90, by changing the model parameters <code>death_male</code> and <code>death_female</code>. The two step functions are replaced by functions of type <code><a href="../reference/piecewise_x.html">?piecewise_x</a></code> (see documentation), composed of a step function before age 90 and a linear function after for older ages.</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">death_male_90</span> <span class="kw">&lt;-</span> <span class="no">params</span>$<span class="no">death_male</span>
 <span class="no">old_death_male</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/linfun.html">linfun</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">89</span>,<span class="fl">120</span>), <span class="kw">y</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu">death_male_90</span>(<span class="fl">89</span>), <span class="fl">0.7</span>)) <span class="co">#?linfun</span>
 <span class="no">params</span>$<span class="no">death_male</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/piecewise_x.html">piecewise_x</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">89</span>), <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">death_male_90</span>,<span class="no">old_death_male</span>))
@@ -309,7 +307,7 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">pop_size_90plus_const</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="fu"><a href="../reference/population_alive.html">population_alive</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>,<span class="kw">t</span> <span class="kw">=</span> <span class="fl">50</span>,<span class="kw">a1</span><span class="kw">=</span><span class="fl">90</span>))
 <span class="no">pop_size_90plus_lin</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="fu"><a href="../reference/population_alive.html">population_alive</a></span>(<span class="no">sim_out_lin</span>$<span class="no">population</span>,<span class="kw">t</span> <span class="kw">=</span> <span class="fl">50</span>,<span class="kw">a1</span><span class="kw">=</span><span class="fl">90</span>))
 (<span class="no">pop_size_90plus_const</span>-<span class="no">pop_size_90plus_lin</span>)/<span class="no">pop_size_90plus_const</span>*<span class="fl">100</span>
-<span class="co">## [1] 5.904455</span></pre></body></html></div>
+<span class="co">## [1] 5.258588</span></pre></body></html></div>
 </div>
 <div id="deactivate-an-event" class="section level2" number="6.3">
 <h2 class="hasAnchor">
@@ -323,7 +321,7 @@ Each line corresponds to an individual, with his date of birth, date of death (<
        <span class="kw">time</span> <span class="kw">=</span> <span class="fl">50</span>)
 <span class="co">## [1] "event birth is deactivated"</span>
 <span class="co">## Simulation on  [0, 50]</span></pre></body></html></div>
-<p>The age pyramid can be directly plotted from the population data frame with <code>plot_population</code></p>
+<p>The age pyramid can be directly plotted from the population data frame with <code><a href="../reference/plot_population.html">?plot_population</a></code></p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu">grid.arrange</span>(
     <span class="fu"><a href="../reference/plot_population.html">plot_population</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>, <span class="kw">time</span><span class="kw">=</span><span class="fl">0</span>, <span class="kw">ages</span><span class="kw">=</span> <span class="fl">0</span>:<span class="fl">105</span>),
     <span class="fu"><a href="../reference/plot_population.html">plot_population</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>, <span class="kw">time</span><span class="kw">=</span><span class="fl">20</span>, <span class="kw">ages</span><span class="kw">=</span> <span class="fl">0</span>:<span class="fl">105</span>)
@@ -331,10 +329,10 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <p><img src="IBMPopSim_human_pop_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">70</span>,<span class="fl">90</span>,<span class="fl">10</span>), <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>)
 <span class="co">##       age  male value</span>
-<span class="co">## 1 70 - 80 FALSE  5819</span>
-<span class="co">## 2 70 - 80  TRUE  5085</span>
-<span class="co">## 3 80 - 90 FALSE  3645</span>
-<span class="co">## 4 80 - 90  TRUE  2736</span></pre></body></html></div>
+<span class="co">## 1 70 - 80 FALSE  5857</span>
+<span class="co">## 2 70 - 80  TRUE  5120</span>
+<span class="co">## 3 80 - 90 FALSE  3617</span>
+<span class="co">## 4 80 - 90  TRUE  2797</span></pre></body></html></div>
 </div>
 </div>
 <div id="addition-of-number-of-children-characteristic" class="section level1" number="7">
@@ -394,13 +392,13 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="co"># Females of age over 50 alive at time 100:</span>
 <span class="no">pop_female_time</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/population_alive.html">population_alive</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>, <span class="no">male</span> <span class="kw">==</span> <span class="no">F</span>), <span class="kw">t</span><span class="kw">=</span> <span class="fl">100</span>, <span class="kw">a1</span><span class="kw">=</span> <span class="fl">50</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">pop_female_time</span>)[<span class="fl">1</span>]<span class="co"># Number of females over 100</span>
-<span class="co">## [1] 17075</span></pre></body></html></div>
+<span class="co">## [1] 17142</span></pre></body></html></div>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">pop_female_time</span>, <span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">children</span>)))+
 <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="kw">y</span> <span class="kw">=</span> (<span class="no">..count..</span>)/<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">..count..</span>)))+
 <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span><span class="kw">=</span><span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span>) +
 <span class="fu">labs</span>(<span class="kw">title</span><span class="kw">=</span><span class="st">"Distribution of the number of children for women aged over 50 at time 100"</span>,<span class="kw">x</span><span class="kw">=</span><span class="st">"Number of children"</span>, <span class="kw">y</span><span class="kw">=</span><span class="st">""</span>)</pre></body></html></div>
 <div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">pop_female_time</span>$<span class="no">children</span>) <span class="co">#Mean number of children </span>
-<span class="co">## [1] 1.811186</span></pre></body></html></div>
+<span class="co">## [1] 1.845117</span></pre></body></html></div>
 </div>
 <div id="addition-of-cause-of-death-characteristics" class="section level1" number="8">
 <h1 class="hasAnchor">
@@ -445,7 +443,7 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <div id="death-and-exposure-table" class="section level2" number="8.2">
 <h2 class="hasAnchor">
 <a href="#death-and-exposure-table" class="anchor"></a><span class="header-section-number">8.2</span> Death and exposure table</h2>
-<p>The number of death for given age groups, time periods and for each cause of death can be computed with <code>death_table</code>.<br>
+<p>The number of death for given age groups, time periods and for each cause of death can be computed with <code><a href="../reference/death_table.html">?death_table</a></code>.<br>
 Example below: number of males death of age between [70,90] (single year of age groups) over the 5-year period [15,20], for each cause.</p>
 <div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">Dx_1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">sim_out_CoD</span>$<span class="no">population</span>, <span class="no">CoD</span><span class="kw">==</span><span class="fl">1</span> <span class="kw">&amp;</span> <span class="no">male</span><span class="kw">==</span><span class="no">T</span>),<span class="kw">ages</span> <span class="kw">=</span> <span class="fl">70</span>:<span class="fl">90</span>, <span class="kw">period</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">15</span>,<span class="fl">20</span>))
 <span class="no">Dx_2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">sim_out_CoD</span>$<span class="no">population</span>, <span class="no">CoD</span><span class="kw">==</span><span class="fl">2</span> <span class="kw">&amp;</span> <span class="no">male</span><span class="kw">==</span><span class="no">T</span>),<span class="kw">ages</span> <span class="kw">=</span> <span class="fl">70</span>:<span class="fl">90</span>, <span class="kw">period</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">15</span>,<span class="fl">20</span>))</pre></body></html></div>
@@ -470,7 +468,7 @@ Example below: number of males death of age between [70,90] (single year of age 
 
 
       <footer><div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kakaai, Vincent Lemaire.</p>
+  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">

@@ -97,13 +97,11 @@
 
       
 
-      </header><script src="IBMPopSim_cpp_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="IBMPopSim_cpp_files/header-attrs-2.3/header-attrs.js"></script><script src="IBMPopSim_cpp_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>IBMPopSim C++ essentials</h1>
-                        <h4 class="author">Daphné Giorgi</h4>
-                        <h4 class="author">Sarah Kaakaï</h4>
-                        <h4 class="author">Vincent Lemaire</h4>
+                        <h4 class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/master/vignettes/IBMPopSim_cpp.Rmd"><code>vignettes/IBMPopSim_cpp.Rmd</code></a></small>
@@ -113,7 +111,7 @@
 
     
     
-<p>The arguments <code>intensity_code</code>, <code>interaction_code</code> and <code>kernel_code</code> of the events functions must contain some C++ code given by the user. You don’t need to be a C++ guru to write the few instructions needed. These functions should use very little C++ syntax. They are essentially arithmetic or logical operations, tests and calls to predefined functions.</p>
+<p>The arguments <code>intensity_code</code>, <code>interaction_code</code> and <code>kernel_code</code> of the events functions must contain some C++ code given by the user. You don’t need to be a C++ guru to write the few instructions needed. These functions should use very little C++ syntax. They are essentially arithmetic or logical operations, tests and calls to predefined functions, which we give an overview below.</p>
 <p>For code efficiency, you should not allocate memory in these functions (no <code>new</code>) or use type containers (<code>std::vector</code>, <code>std::list</code>, …). If you think you need to allocate memory, consider as parameter an R vector that will be mapped via <code>arma::vector</code> (see below), or declare the variable as <code>static</code>.
 Also, it should not be necessary to make a loop. Keep in mind that these functions should be fast.</p>
 <p>There are no C++ language restrictions so you can use all the functions of the standard C++11 library. However we detail in this section some functions that should be sufficient. For more details on C++ and Rcpp we recommend:</p>
@@ -166,7 +164,7 @@ bool myBoolean = true;       // Boolean (true or false)</code></pre>
 <li>Conditional ternary operator: <code>? :</code>
 The conditional operator evaluates an expression, returning one value if that expression evaluates to <code>true</code>, and a different one if the expression evaluates as <code>false</code>. Its syntax is:</li>
 </ul>
-<pre><code>condition ? result1 : result2</code></pre>
+<pre><code>condition ? result1; : result2;</code></pre>
 <ul>
 <li>Use the <code>if</code>, <code>else if</code>, <code>else</code> statements to specify a block of C++ code to be executed if one or more conditions are or not <code>true</code>.</li>
 </ul>
@@ -233,17 +231,18 @@ The conditional operator evaluates an expression, returning one value if that ex
 </ul>
 <p>Note that these functions are not vectorial, the arguments <code>x</code> and <code>y</code> must be scalar. If the user wants to call some other functions of <code>cmath</code> not listed in the table, this is possible by adding the prefix <code>std::</code> to the name of the function (scope resolution operator <code>::</code> to access to functions declared in namespace standard <code>std</code>).</p>
 </div>
-<div id="link-between-r-and-c-characteristics-and-parameters" class="section level2">
+<div id="cppcharacteristics" class="section level2">
 <h2 class="hasAnchor">
-<a href="#link-between-r-and-c-characteristics-and-parameters" class="anchor"></a>Link between R and C++ (characteristics and parameters)</h2>
+<a href="#cppcharacteristics" class="anchor"></a>Individuals characteristics and model parameters: link between R and C++</h2>
+<p>To facilitate the model creation, the individuals’ characteristics and a list model parameters can be declared in the R environment and used in the C++ code.</p>
 <p>The data shared between the R environment and the C++ code are:</p>
 <ul>
-<li>the characteristics of the individuals which must be atomic (boolean, scalar, character)</li>
-<li>the model parameters: a list of variables of type:
+<li>The characteristics of the individuals which must be atomic (Boolean, scalar or character).</li>
+<li>The model parameters: a list of variables of type:
 <ul>
-<li>atomic, vector or matrice</li>
-<li>real function of one variable, or list of real function of one variable</li>
-<li>piecewise real function of one variable, of list of that</li>
+<li>Atomic, vector or matrix.</li>
+<li>Predefined real functions of one variable, or list of such functions.</li>
+<li>Piecewise real function of two variables, of list of such.</li>
 </ul>
 </li>
 </ul>
@@ -255,7 +254,7 @@ The conditional operator evaluates an expression, returning one value if that ex
 <table class="table">
 <thead><tr class="header">
 <th align="left">C++ type</th>
-<th align="left">Type type</th>
+<th align="left">R type</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -277,14 +276,17 @@ The conditional operator evaluates an expression, returning one value if that ex
 </tbody>
 </table>
 </center>
-<p>To declare the characteristics of an individual, you must define a named character vector containing the name of the characteristic and the associated C++ type. The function <code>get_characteristics</code> provide a way to extract the characteristics from a population data frame.</p>
+<p><strong>Individuals characteristics</strong></p>
+<p>The characteristics of an individual are defined by a named character vector containing the name of the characteristic and the associated C++ type. The function <code><a href="../reference/get_characteristics.html">?get_characteristics</a></code> provides a way to extract the characteristics from a population data frame.</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">IBMPopSim</span>)
 <span class="no">pop</span> <span class="kw">&lt;-</span> <span class="kw pkg">IBMPopSim</span><span class="kw ns">::</span><span class="no"><a href="../reference/EW_popIMD_14.html">EW_popIMD_14</a></span>$<span class="no">sample</span>
 <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop</span>)
 <span class="co">##   male    IMD </span>
 <span class="co">## "bool"  "int"</span></pre></body></html></div>
 <p>The requires <code>birth</code> and <code>death</code> characteristics are of type <code>double</code>.</p>
-<p>The parameters are given by a named list. Each element of the list is a R object and the type is determined using the <code>typeof</code> function. The variable <code>code</code> contains simple C++ instructions depending on the parameters defined in <code>params</code>. You can directly use the name of parameter inside the C++ code. The <code>summary</code> of the model <code>mod</code> gives useful information on the types of characteristics and parameters used in C++ code.</p>
+<p><strong>Atomic model parameters</strong></p>
+<p>The model parameters are given by a named list of R objects. We recall that the type of an R object can be determined by calling the <code><a href="https://rdrr.io/r/base/typeof.html">?typeof</a></code> function. Atomic objects declared as model parameters can be directly used in the C++ code.<br>
+In the example below, the variable <code>code</code> contains simple C++ instructions depending on the parameters defined in <code>params</code>. The <code>summary</code> of the model <code>mod</code> gives useful information on the types of characteristics and parameters used in C++ code.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"lambda"</span> <span class="kw">=</span> <span class="fl">0.02</span>, <span class="st">"alpha"</span> <span class="kw">=</span> <span class="fl">0.4</span>, <span class="st">"mu"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="fl">2</span>))
 <span class="no">code</span> <span class="kw">&lt;-</span> <span class="st">'result = lambda + alpha * (age(I, t) + mu);'</span>
 <span class="no">event_birth</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span>(<span class="st">'birth'</span>, <span class="kw">intensity_code</span> <span class="kw">=</span> <span class="no">code</span>)
@@ -304,11 +306,11 @@ The conditional operator evaluates an expression, returning one value if that ex
 <span class="co">## R types:  double double integer </span>
 <span class="co">## C types:  double double int</span></pre></body></html></div>
 </div>
-<div id="vectors-and-matrices-parameters" class="section level3">
+<div id="cpparmadillo" class="section level3">
 <h3 class="hasAnchor">
-<a href="#vectors-and-matrices-parameters" class="anchor"></a>Vectors and matrices (parameters)</h3>
-<p>Two of the possible parameters types given in the argument <code>parameters</code> of the <code>mk_model</code> function are R vectors and R matrices. We call R vector a <code>numeric</code> of length at least 2. These types are converted, using the <a href="http://dirk.eddelbuettel.com/code/rcpp.armadillo.html">RcppArmadillo library</a>, in C++ <a href="http://arma.sourceforge.net/">Armadillo</a> types, <code>arma::vec</code> and <code>arma::matrix</code> respectively.</p>
-<p>The classes <code>arma::vec</code> and <code>arma::matrix</code> are rich and easy-to-use implementations of one-dimensional and two-dimensional arrays. To access to individual elements, use the operator <code>()</code> (or <code>[]</code> in dimension 1).</p>
+<a href="#cpparmadillo" class="anchor"></a>Vectors and matrices (model parameters)</h3>
+<p>Two of the possible model parameters types given in the argument <code>parameters</code> of the <code><a href="../reference/mk_model.html">?mk_model</a></code> function are R vectors and R matrices. We call R vector a <code>numeric</code> of length at least 2. These types are converted, using the <a href="http://dirk.eddelbuettel.com/code/rcpp.armadillo.html">RcppArmadillo library</a>, in C++ <a href="http://arma.sourceforge.net/">Armadillo</a> types, <code>arma::vec</code> and <code>arma::matrix</code> respectively.</p>
+<p>The classes <code>arma::vec</code> and <code>arma::matrix</code> are rich and easy-to-use implementations of one-dimensional and two-dimensional arrays. To access to individual elements of an array, use the operator <code>()</code> (or <code>[]</code> in dimension 1).</p>
 <ul>
 <li>
 <code>(n)</code> or <code>[n]</code> for <code>arma::vec</code>, access the n-th element.</li>
@@ -339,14 +341,14 @@ The conditional operator evaluates an expression, returning one value if that ex
 </li>
 </ul>
 </div>
-<div id="functions-parameters" class="section level3">
+<div id="cppIBMfunctions" class="section level3">
 <h3 class="hasAnchor">
-<a href="#functions-parameters" class="anchor"></a>Functions (parameters)</h3>
-<p>To facilitate the implementation of intensity functions, R functions and their C++ equivalents have been programmed. The goal is to make the use as transparent as possible.</p>
+<a href="#cppIBMfunctions" class="anchor"></a>Predefined functions (model parameters)</h3>
+<p>To facilitate the implementation of intensity functions and kernel code, R functions have been predefined in <code>IBMPopSim</code>, which can be defined as model parameters and then called in the C++ code. The goal is to make their use as transparent as possible.</p>
 <div id="real-functions-of-one-variable" class="section level4">
 <h4 class="hasAnchor">
 <a href="#real-functions-of-one-variable" class="anchor"></a>Real functions of one variable</h4>
-<p>In the C++ code these functions are identified as <code>function_x</code>. Here is a list of such functions that can be called from R and from C++.</p>
+<p>Here is a list of such functions that can be defined as a R object and called from R and C++.</p>
 <ul>
 <li>
 <code>stepfun</code>: Step function.</li>
@@ -359,24 +361,25 @@ The conditional operator evaluates an expression, returning one value if that ex
 <li>
 <code>piecewise_x</code>: Piecewise real function.</li>
 </ul>
-<p>See the reference manual for mathematicals definitions of these functions (<code><a href="../reference/stepfun.html">?stepfun</a></code>). We illustrate some examples of the use of some of these functions.</p>
-<ul>
+<p>See the reference manual for mathematical definitions of these functions (<code><a href="../reference/stepfun.html">?stepfun</a></code>).<br>
+Once the model is created, these predefined functions are transformed into C++ functions, identified as <code>function_x</code>.</p>
+<p>We illustrate below some examples of the use of these functions:</p>
+<ol style="list-style-type: decimal">
 <li>We define <code>dr</code> a <code>stepfun</code> depending on some values in <code>EW_pop_14$rates</code>. Note that this function applies to an age <code>a</code>.</li>
-</ul>
+</ol>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">dr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">EW_pop_14</span>$<span class="no">rates</span>,
            <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">death_male</span>[,<span class="st">"age"</span>], <span class="kw">y</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="no">death_male</span>[,<span class="st">"value"</span>])))
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">dr</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">dr</span>,<span class="kw">xlab</span><span class="kw">=</span><span class="st">"age"</span>, <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"dr"</span>,<span class="kw">main</span><span class="kw">=</span><span class="st">"Example of step function"</span>)</pre></body></html></div>
 <p><img src="IBMPopSim_cpp_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;"></p>
-<ul>
-<li>We initialize a piecewise real function <code>f</code> defined by the function <code>dr</code> before age 80, and by a Gompertz-Makeham intensity function for ages after 80.</li>
-</ul>
+<p>We can also initialize a piecewise real function <code>f</code> defined by the function <code>dr</code> before age 80, and by a Gompertz-Makeham intensity function for ages after 80.</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">f</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/piecewise_x.html">piecewise_x</a></span>(<span class="fl">80</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">dr</span>, <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span>(<span class="fl">0.00006</span>, <span class="fl">0.085</span>)))
 <span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">40</span>, <span class="fl">110</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">x</span>, <span class="no">f</span>))</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">x</span>, <span class="no">f</span>),<span class="kw">xlab</span><span class="kw">=</span><span class="st">"age"</span>,<span class="kw">ylab</span><span class="kw">=</span><span class="st">"f"</span>, <span class="kw">main</span><span class="kw">=</span><span class="st">"Example of piecewise function"</span>)</pre></body></html></div>
 <p><img src="IBMPopSim_cpp_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
-<ul>
-<li>We can use define a model depending on a function <code>function_x</code>, for example we use <code>dr</code> the <code>stepfun</code> as parameter named <code>rate</code>.</li>
-</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Once a function has been created and defined as model parameter, a model depending on the function can be defined. For example we use in the model below the <code>stepfun</code> <code>dr</code> as a model parameter named <code>rate</code>. The function is used to defined the intensity of death events in the model.
+s</li>
+</ol>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"rate"</span> <span class="kw">=</span> <span class="no">dr</span>)
 <span class="no">event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span>(<span class="st">'death'</span>, <span class="kw">intensity_code</span> <span class="kw">=</span> <span class="st">'result = rate(age(I, t));'</span>)
 <span class="no">mod</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span>(<span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop</span>), <span class="kw">events</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">'death'</span> <span class="kw">=</span> <span class="no">event</span>),
@@ -394,9 +397,9 @@ The conditional operator evaluates an expression, returning one value if that ex
 <span class="co">## names:  rate </span>
 <span class="co">## R types:  closure </span>
 <span class="co">## C types:  function_x</span></pre></body></html></div>
-<ul>
-<li>After compilation, you can use any function of type <code>function_x</code> for the parameter <code>rate</code>. For example you can call</li>
-</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>After compilation, the parameter <code>rate</code> can actually be replaced by any function of type <code>function_x</code>. For example you can call</li>
+</ol>
 <pre><code><a href="../reference/popsim.html">popsim(mod, pop, params = list("rate" = dr), age_max = 120, 
        events_bounds = c('death' = dr(age_max)), time = 10)</a></code></pre>
 <p>as well as</p>
@@ -406,19 +409,19 @@ The conditional operator evaluates an expression, returning one value if that ex
 <div id="piecewise-real-functions-of-two-variables" class="section level4">
 <h4 class="hasAnchor">
 <a href="#piecewise-real-functions-of-two-variables" class="anchor"></a>Piecewise real functions of two variables</h4>
-<p>In the C++ code this function <code>piecewise_xy</code> is identified as <code>function_xy</code>. See <code><a href="../reference/piecewise_xy.html">?piecewise_xy</a></code> for mathematical definition. This function allows to easily define a step function that depend on age and time.</p>
+<p>In the C++ code these R functions declared with <code><a href="../reference/piecewise_xy.html">?piecewise_xy</a></code> are identified as <code>function_xy</code> functions. See <code><a href="../reference/piecewise_xy.html">?piecewise_xy</a></code> for mathematical definition. This function allows to easily define a step function that depend on age and time.</p>
 </div>
 <div id="list-of-functions" class="section level4">
 <h4 class="hasAnchor">
 <a href="#list-of-functions" class="anchor"></a>List of functions</h4>
-<p>As parameter you can use a list of functions. All R functions in the list must be of the same C++ type: either <code>function_x</code> or <code>function_xy</code>. In C++ code the list of functions is replaced by a <code>std::vector</code> of <code>function_x</code> or <code>function_xy</code>.</p>
+<p>As parameter you can use a list of functions. All R functions in the list must be of the same C++ type: either <code>function_x</code> or <code>function_xy</code>. In C++ code the list of functions is replaced by a <code>std::vector</code> of <code>function_x</code> or <code>function_xy</code> (with first element indexed by 0).</p>
 </div>
 </div>
 </div>
-<div id="random" class="section level2">
+<div id="randomvar" class="section level2">
 <h2 class="hasAnchor">
-<a href="#random" class="anchor"></a>Random</h2>
-<p>We use the following notations to describe the available C++ random distributions.</p>
+<a href="#randomvar" class="anchor"></a>Random variables</h2>
+<p>We use the following notations to describe the available C++ random distributions, which can be used in the C++ intensity and kernel codes.</p>
 <ul>
 <li><p><span class="math inline">\(\mathcal{U}(a,b)\)</span> : Uniform distribution on <span class="math inline">\([a, b]\)</span> with <span class="math inline">\(a &lt; b\)</span></p></li>
 <li><p><span class="math inline">\(\mathcal{E}(\lambda)\)</span> : Exponential distribution, <span class="math inline">\(\lambda &gt; 0\)</span></p></li>
@@ -508,7 +511,7 @@ The conditional operator evaluates an expression, returning one value if that ex
 
 
       <footer><div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kakaai, Vincent Lemaire.</p>
+  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">
