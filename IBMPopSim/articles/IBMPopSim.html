@@ -97,7 +97,7 @@
 
       
 
-      </header><script src="IBMPopSim_files/header-attrs-2.3/header-attrs.js"></script><script src="IBMPopSim_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="IBMPopSim_files/header-attrs-2.3/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>IBMPopSim package description</h1>
@@ -150,7 +150,7 @@ Once the events modifying the population have been defined, the last step before
 <p>Once the different types or events and their action have been defined, it remains to define how frequently they can occur to define properly an IBM.</p>
 <p>An event intensity is a function <span class="math inline">\(\lambda^e(I,t)\)</span> describing the frequency at which an event <span class="math inline">\(e\)</span> can occur to <em>an individual</em> <code>I</code> in the population at a time <span class="math inline">\(t\)</span>. Informally, given an history of the population <span class="math inline">\((\mathcal{F}_t)\)</span>, the probability of event <span class="math inline">\(e\)</span> occurring to individual <code>I</code> during a small interval of time <span class="math inline">\((t,t+dt]\)</span> is proportional to <span class="math inline">\(\lambda^e(I,t)\)</span>:
 <span class="math display">\[\begin{equation}
-  \mathbb{P}(\text{event } e \text{ occurring to I during } (t,t+dt] | \mathcal{F}_t) = \lambda^e(I,t)dt. 
+  \mathbb{P}(\text{event } e \text{ occurring to I during } (t,t+dt] | \mathcal{F}_t) = \lambda^e(I,t)dt.
 \end{equation}\]</span></p>
 <p>The intensity function <span class="math inline">\(\lambda^e\)</span> can depend on:</p>
 <ul>
@@ -159,7 +159,7 @@ Once the events modifying the population have been defined, the last step before
 <li>Interactions with other individuals in the population,</li>
 <li>Other model parameters.</li>
 </ul>
-<p>When the intensity <span class="math inline">\(\lambda^e\)</span> does not depends on the other individuals living in the population (there are no interactions for this specific event), the intensity function is said to be in the class of <strong>individual</strong> intensity functions. This is case for instance when the death intensity of individuals only depend on their age and characteristics.<br>
+<p>When the intensity <span class="math inline">\(\lambda^e\)</span> does not depends on the other individuals living in the population (there are no interactions for this specific event), the intensity function is said to be in the class of <strong>individual</strong> intensity functions. This is case for instance when the death intensity of individuals only depend on their age and characteristics.
 Otherwise, the intensity function is said to be the class of <strong>interaction</strong> functions. In this package, we mainly focus on ``quadratic interactions’’, that is of intensity functions of the form</p>
 <p><span class="math display" id="eq:interaction">\[\begin{equation}
 \lambda^e(I,t) = \sum_{J \in pop} U(I,J,t).
@@ -174,7 +174,7 @@ Otherwise, the intensity function is said to be the class of <strong>interaction
 <div id="algo" class="section level3" number="1.1.3">
 <h3 class="hasAnchor">
 <a href="#algo" class="anchor"></a><span class="header-section-number">1.1.3</span> Simulation algorithm</h3>
-<p>The IBM simulation algorithm is based on an acceptance-rejection method for simulating random times called thinning, generalizing the algorithm proposed by <span class="citation">(Fournier and Méléard 2004)</span> (see also <span class="citation">(Ferrière and Tran 2009)</span>, <span class="citation">(Boumezoued 2016)</span>).<br>
+<p>The IBM simulation algorithm is based on an acceptance-rejection method for simulating random times called thinning, generalizing the algorithm proposed by <span class="citation">(Fournier and Méléard 2004)</span> (see also <span class="citation">(Ferrière and Tran 2009)</span>, <span class="citation">(Boumezoued 2016)</span>).
 The main idea of the algorithm is to use candidate event times with <em>constant</em> intensity <span class="math inline">\(\bar \lambda\)</span> (which corresponds to exponential variables with parameter <span class="math inline">\(\bar \lambda\)</span>). <span class="math inline">\(\bar \lambda\)</span> must <em>dominates</em> the true event intensity <span class="math inline">\(\lambda^e(I,t)\)</span> for all individuals <span class="math inline">\(I\)</span>:</p>
 <p><span class="math display">\[\begin{equation}
 \lambda^e(I,t) \leq \bar{\lambda}, \quad \forall I \in \text{pop}, \; t \in [0,T].
@@ -185,9 +185,12 @@ The main idea of the algorithm is to use candidate event times with <em>constant
 <li>Draw a candidate time <span class="math inline">\(t+\tau^e\)</span> for event <span class="math inline">\(e\)</span>, <span class="math inline">\(\tau^e \sim \mathcal E(\bar \lambda)\)</span> and an individual <span class="math inline">\(I\)</span>.</li>
 <li>Draw a uniform variable <span class="math inline">\(\theta \sim \mathcal U([0,1])\)</span>.</li>
 <li>
-<strong>If</strong> <span class="math inline">\(\theta \leq \dfrac{\lambda^e(I,t+\tau^e)}{\bar\lambda}\)</span> <strong>then</strong><br><span class="math inline">\(\qquad\)</span> Apply event kernel to individual <span class="math inline">\(I\)</span><br><strong>else</strong><br><span class="math inline">\(\qquad\)</span> Do nothing and start again from <span class="math inline">\(t+\tau^e\)</span>.</li>
+<strong>If</strong> <span class="math inline">\(\theta \leq \dfrac{\lambda^e(I,t+\tau^e)}{\bar\lambda}\)</span> <strong>then</strong>
+<span class="math inline">\(\qquad\)</span> Apply event kernel to individual <span class="math inline">\(I\)</span>
+<strong>else</strong>
+<span class="math inline">\(\qquad\)</span> Do nothing and start again from <span class="math inline">\(t+\tau^e\)</span>.</li>
 </ol>
-<p>In the presence of interactions, the intensity of an individual <span class="math inline">\(I\)</span> is computed making the sum over all individuals <span class="math inline">\(J\)</span> in the population of the interactions between <span class="math inline">\(I\)</span> and <span class="math inline">\(J\)</span>, which can be very time consuming.<br>
+<p>In the presence of interactions, the intensity of an individual <span class="math inline">\(I\)</span> is computed making the sum over all individuals <span class="math inline">\(J\)</span> in the population of the interactions between <span class="math inline">\(I\)</span> and <span class="math inline">\(J\)</span>, which can be very time consuming.
 We introduce in <code>IBMPopSim</code> a “randomized” algorithm, in which this computation is by picking randomly another individual in the population and computing its interaction function with the given individual. In this case the algorithm presented above is simply modified as follows: two individuals are picked, the intensity function <span class="math inline">\(\lambda^e\)</span> in the algorithm is replaced by the interaction function <span class="math inline">\(U^e\)</span>, and <span class="math inline">\(\bar \lambda\)</span> by a bound <span class="math inline">\(\bar U^e\)</span> of <span class="math inline">\(U^e\)</span>.</p>
 </div>
 </div>
@@ -205,7 +208,7 @@ We introduce in <code>IBMPopSim</code> a “randomized” algorithm, in which th
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'IBMPopSim'</span>)</pre></body></html></div>
 <p>The latest development version can be installed from github:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">'giorgi/IBMPopSim'</span>)</pre></body></html></div>
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">'DaphneGiorgi/IBMPopSim'</span>)</pre></body></html></div>
 <div id="first-example-to-check-installation" class="section level3" number="1.3.1">
 <h3 class="hasAnchor">
 <a href="#first-example-to-check-installation" class="anchor"></a><span class="header-section-number">1.3.1</span> First example to check installation</h3>
@@ -234,13 +237,13 @@ We introduce in <code>IBMPopSim</code> a “randomized” algorithm, in which th
 <span class="no">num_deaths</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>$<span class="no">death</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"births"</span> <span class="kw">=</span> <span class="no">num_births</span>, <span class="st">"deaths"</span> <span class="kw">=</span> <span class="no">num_deaths</span>))
 <span class="co">## births deaths </span>
-<span class="co">##   1023    999</span></pre></body></html></div>
+<span class="co">##    937    947</span></pre></body></html></div>
 </div>
 </div>
 <div id="quick-model-creation-and-simulation" class="section level2" number="1.4">
 <h2 class="hasAnchor">
 <a href="#quick-model-creation-and-simulation" class="anchor"></a><span class="header-section-number">1.4</span> Quick model creation and simulation</h2>
-<p>Before going into details on the different steps for defining an IBM in IBMPopSim, let us first go quickly through an example of model creation and simulation.<br>
+<p>Before going into details on the different steps for defining an IBM in IBMPopSim, let us first go quickly through an example of model creation and simulation.
 In order to define a model, the user must specify three building blocks:</p>
 <ul>
 <li>An initial population (see Section <a href="#population">2.1</a>),</li>
@@ -290,20 +293,20 @@ In order to define a model, the user must specify three building blocks:</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">pop_out</span> <span class="kw">&lt;-</span> <span class="no">sim_out</span>$<span class="no">population</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pop_out</span>)
 <span class="co">##       birth death  male</span>
-<span class="co">## 1 -84.99387    NA  TRUE</span>
-<span class="co">## 2 -84.97524    NA FALSE</span>
-<span class="co">## 3 -84.89871    NA  TRUE</span>
-<span class="co">## 4 -84.89593    NA  TRUE</span>
-<span class="co">## 5 -84.89490    NA FALSE</span>
-<span class="co">## 6 -84.86316    NA  TRUE</span>
+<span class="co">## 1 -84.94953    NA FALSE</span>
+<span class="co">## 2 -84.91944    NA  TRUE</span>
+<span class="co">## 3 -84.86167    NA FALSE</span>
+<span class="co">## 4 -84.86107    NA FALSE</span>
+<span class="co">## 5 -84.85859    NA  TRUE</span>
+<span class="co">## 6 -84.84958    NA FALSE</span>
 <span class="no">female_pop</span> <span class="kw">&lt;-</span> <span class="no">pop_out</span>[<span class="no">pop_out</span>$<span class="no">male</span><span class="kw">==</span><span class="fl">FALSE</span>, ]
 <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>)
 <span class="co">##       age  male value</span>
-<span class="co">## 1 85 - 86 FALSE   220</span>
-<span class="co">## 2 86 - 87 FALSE   248</span>
-<span class="co">## 3 87 - 88 FALSE   217</span>
-<span class="co">## 4 88 - 89 FALSE   197</span>
-<span class="co">## 5 89 - 90 FALSE   184</span>
+<span class="co">## 1 85 - 86 FALSE   231</span>
+<span class="co">## 2 86 - 87 FALSE   234</span>
+<span class="co">## 3 87 - 88 FALSE   230</span>
+<span class="co">## 4 88 - 89 FALSE   171</span>
+<span class="co">## 5 89 - 90 FALSE   186</span>
 <span class="no">Dxt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">period</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)
 <span class="no">Ext</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>, <span class="kw">period</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>)</pre></body></html></div>
 <ul>
@@ -330,7 +333,7 @@ In order to define a model, the user must specify three building blocks:</p>
 <li>A column <code>birth</code> containing the birth dates of individuals in the population.</li>
 <li>A column <code>death</code> containing the birth dates of individuals in the population ( <code>NA</code> for alive individuals).</li>
 </ul>
-<p>The data frame can contain more than two columns if individuals are described by additional characteristics such as gender, size, spatial location…<br>
+<p>The data frame can contain more than two columns if individuals are described by additional characteristics such as gender, size, spatial location…
 In the example below, individuals are described by their birth and death dates, as well a Boolean characteristics called <code>male</code>. For instance, the first individual is a female whose age at <span class="math inline">\(t_0=0\)</span> is <span class="math inline">\(t_0 - (-106.9055) = 106.9055\)</span>.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pop</span>)
 <span class="co">##       birth death  male</span>
@@ -341,10 +344,10 @@ In the example below, individuals are described by their birth and death dates, 
 <span class="co">## 5 -103.5225    NA FALSE</span>
 <span class="co">## 6 -103.3644    NA FALSE</span></pre></body></html></div>
 <ul>
-<li><p><strong>Type of a characteristic</strong>.<br>
+<li><p><strong>Type of a characteristic</strong>.
 A characteristic must be of atomic type: logical (<code>bool</code> in C++), integer (<code>int</code>), double or character (<code>char</code>). The function <code>?get_characteristic</code> allows to easily get characteristics names and their types (in R and C++) from a population data frame. See also section <a href="#cppcharacteristics">3.3</a>.</p></li>
 <li>
-<p><strong>Name of a characteristic</strong>.<br>
+<p><strong>Name of a characteristic</strong>.
 We draw the attention to the fact that some names for characteristics are forbidden, or are reserved to specific cases. The reserved words include:</p>
 <ul>
 <li>
@@ -365,7 +368,7 @@ is a reserved word. See <a href="https://en.cppreference.com/w/cpp/keyword">here
 </ul>
 </li>
 <li>
-<p><strong>An individual in C++</strong>.<br>
+<p><strong>An individual in C++</strong>.
 In the C++ compiled model, an individual <code>I</code> is an object of the C++ class <code>individual</code> containing some attributes:</p>
 <ul>
 <li>
@@ -425,10 +428,9 @@ During the model creation, a population of individuals is automatically created 
 <p>The last and most important step of the model creation is the events creation. The call to the function creating an event is of form,</p>
 <p><code>mk_event_CLASS(type = "TYPE", name ="NAME", kernel_code = "KERNEL_CODE", ...)</code></p>
 <p>where <code>CLASS</code> is replaced by the class of the event intensity, <code>type</code> is the event type and <code>kernel_code</code> the event kernel.</p>
-<p>The other arguments depend on the intensity class. Tables <a href="#tab:evtype">2.1</a> and <a href="#tab:evclass">2.2</a> summarize the different intensity classes and types of events introduced in Section <a href="#eventsTh">1.1.1</a>.</p>
+<p>The other arguments depend on the intensity class. Tables below <!--\@ref(tab:evtype) and \@ref(tab:evclass)--> summarize the different intensity classes and types of events introduced in Section <a href="#eventsTh">1.1.1</a>.</p>
 <table class="table">
-<caption>
-<span id="tab:evtype">Table 2.1: </span>Event types</caption>
+<caption>Event types</caption>
 <thead><tr class="header">
 <th align="left">Event type</th>
 <th align="left"><code>Type</code></th>
@@ -461,8 +463,7 @@ During the model creation, a population of individuals is automatically created 
 </tbody>
 </table>
 <table class="table">
-<caption>
-<span id="tab:evclass">Table 2.2: </span>Intensity classes</caption>
+<caption>Intensity classes</caption>
 <thead><tr class="header">
 <th align="left">Intensity class</th>
 <th align="left"><code>Class</code></th>
@@ -506,12 +507,12 @@ During the model creation, a population of individuals is automatically created 
 <li><strong>Birth event</strong></li>
 </ol>
 <p>For a <strong>birth event</strong>, the default generated event kernel is that an individual <code>I</code> gives birth to a new individual <code>newI</code> of age 0 at the current time <code>t</code>, which has the same characteristics than his parent <code>I</code>. If no kernel is specified, the default generated C++ code for a birth event is:</p>
-<pre><code>individual newI = I; 
-newI.birth_date = t;  
-pop.add(newI); </code></pre>
+<pre><code>individual newI = I;
+newI.birth_date = t;
+pop.add(newI);</code></pre>
 <p>The user can modify the birth kernel, by specify the argument `<code>kernel_code</code> of <code>mk_event_CLASS</code>. In this case, the generated code is</p>
-<pre><code>individual newI = I;   
-newI.birth_date = t;  
+<pre><code>individual newI = I;
+newI.birth_date = t;
 _KERNEL_CODE_
 pop.add(newI);</code></pre>
 <p>where <code>_KERNEL_CODE_</code> is replaced by the content of the <code>kernel_code</code> argument. For instance, in a population where individuals are characterized by their gender, the kernel code</p>
@@ -520,16 +521,15 @@ pop.add(newI);</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li><strong>Entry event</strong></li>
 </ol>
-<p>If an <strong>entry event</strong> is defined, a characteristic <code>entry</code> is automatically added to individuals in the population. When an individual <code>I</code> enters the population,<code>I.entry</code> is set as the date at which the individual enters the population.<br>
+<p>If an <strong>entry event</strong> is defined, a characteristic <code>entry</code> is automatically added to individuals in the population. When an individual <code>I</code> enters the population,<code>I.entry</code> is set as the date at which the individual enters the population.
 When an entry occurs the individual entering the population is not of age <span class="math inline">\(0\)</span>. In this case, the user must specify the <code>kernel_code</code> argument indicating how the age and characteristics of the new individual are chosen. For instance, with</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">entry_kernel_code</span> <span class="kw">&lt;-</span> <span class="st">"double a = CUnif(20,40); 
-                      newI.set_age(a,t); 
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">entry_kernel_code</span> <span class="kw">&lt;-</span> <span class="st">"double a = CUnif(20,40);
+                      newI.set_age(a,t);
                       newI.male = (CUnif(0, 1) &lt; p_male);"</span></pre></body></html></div>
 <p>An individual who enters the population has an age <code>a</code> taken uniformly in <span class="math inline">\([20,40]\)</span>, and is a male with probability <code>p_male</code>. His characteristic <code>I.entry</code> is equal to <code>t</code>.</p>
 <p>The available variables for the birth and entry events C++ kernel codes are:</p>
 <table class="table">
-<caption>
-<span id="tab:varBirth">Table 2.3: </span>C++ variables available for birth and entry events kernel code</caption>
+<caption>C++ variables available for birth and entry events kernel code</caption>
 <thead><tr class="header">
 <th align="left">Variable</th>
 <th align="left">Description</th>
@@ -558,16 +558,14 @@ When an entry occurs the individual entering the population is not of age <span 
 </tr>
 </tbody>
 </table>
-<div class="remark">
- <span class="remark"><em>Remark. </em></span> When there are several entry events, the user can identify which events generated the entry of an individual by adding a characteristic to the population recording the event name/id when it occurs. The same holds for the other types of events. See e.g. <code>vignette{'IBMPopSim_human_pop'}</code> for an example with different death events.
-</div>
+<!--```{remark}--><p>When there are several entry events, the user can identify which events generated the entry of an individual by adding a characteristic to the population recording the event name/id when it occurs. The same holds for the other types of events. See e.g. <code>vignette{'IBMPopSim_human_pop'}</code> for an example with different death events.
+<!--```--></p>
 <ol start="5" style="list-style-type: decimal">
 <li><strong>Swap event</strong></li>
 </ol>
 <p>Finally, the C++ kernel code for a <strong>swap event</strong> specifies how the new characteristics of the individual are chosen. The kernel code can depend on the following variables:</p>
 <table class="table">
-<caption>
-<span id="tab:varSwap">Table 2.4: </span>C++ variables available for swap events kernel code</caption>
+<caption>C++ variables available for swap events kernel code</caption>
 <thead><tr class="header">
 <th align="left">Variable</th>
 <th align="left">Description</th>
@@ -596,15 +594,14 @@ When an entry occurs the individual entering the population is not of age <span 
 <div id="event-creation-with-individual-intensity" class="section level3" number="2.3.2">
 <h3 class="hasAnchor">
 <a href="#event-creation-with-individual-intensity" class="anchor"></a><span class="header-section-number">2.3.2</span> Event creation with individual intensity</h3>
-<p>As explained in <a href="#Eventintensityth">1.1.2</a>, events with intensities in the class <code>individual</code> are intensity functions <span class="math inline">\(\lambda^e(I,t)\)</span> which depend only on a individual’s age and characteristics, and on time.<br>
+<p>As explained in <a href="#Eventintensityth">1.1.2</a>, events with intensities in the class <code>individual</code> are intensity functions <span class="math inline">\(\lambda^e(I,t)\)</span> which depend only on a individual’s age and characteristics, and on time.
 They are created using the function</p>
-<pre><code><a href="../reference/mk_event_individual.html">mk_event_individual(type = "TYPE", name ="name", 
-                    intensity_code = "INTENSITY",   
+<pre><code><a href="../reference/mk_event_individual.html">mk_event_individual(type = "TYPE", name ="name",
+                    intensity_code = "INTENSITY",
                     kernel_code = "KERNEL_CODE")</a></code></pre>
-<p>The <code>intensity_code</code> argument is a character string containing few lines C++ code describing the intensity function. The available variables for the intensity code are given in Table <a href="#tab:varInd">2.5</a> :</p>
+<p>The <code>intensity_code</code> argument is a character string containing few lines C++ code describing the intensity function. The available variables for the intensity code are given in the following Table <!--\@ref(tab:varInd) :--></p>
 <table class="table">
-<caption>
-<span id="tab:varInd">Table 2.5: </span>C++ variables available for individual intensities</caption>
+<caption>C++ variables available for individual intensities</caption>
 <thead><tr class="header">
 <th align="left">Variable</th>
 <th align="left">Description</th>
@@ -662,16 +659,15 @@ d(t,a) = 0.1\exp(0.005a) 1_{\{0\leq t &lt;5\}} + 0.08\exp(0.005a) 1_{\{5\leq t\}
 \end{equation*}\]</span></p>
 <p>where <span class="math inline">\(U(I,J,t)\)</span> is the intensity of the interaction between individual <span class="math inline">\(I\)</span> and <span class="math inline">\(J\)</span>.</p>
 <p>An event with intensity in the class <code>interaction</code> is created by calling the function</p>
-<pre><code><a href="../reference/mk_event_interaction.html">mk_event_interaction(type = "TYPE",  
+<pre><code><a href="../reference/mk_event_interaction.html">mk_event_interaction(type = "TYPE",
                      name = "NAME",
                      interaction_code = "INTERACTION_CODE",
                      kernel_code = "KERNEL_CODE",
                      interaction_type="random")</a></code></pre>
 <p>The <code>intensity_code</code> argument contains few lines of C++ code describing
-the interaction function <span class="math inline">\(U\)</span>. The interaction function value has to be stored in a variable called <code>result</code>. The available variables for the intensity code are given in Table <a href="#tab:varInt">2.6</a>:</p>
+the interaction function <span class="math inline">\(U\)</span>. The interaction function value has to be stored in a variable called <code>result</code>. The available variables for the intensity code are given in the following Table: <!-- \@ref(tab:varInt):--></p>
 <table class="table">
-<caption>
-<span id="tab:varInt">Table 2.6: </span>C++ variables available for interaction code</caption>
+<caption>C++ variables available for interaction code</caption>
 <thead><tr class="header">
 <th align="left">Variable</th>
 <th align="left">Description</th>
@@ -700,7 +696,7 @@ the interaction function <span class="math inline">\(U\)</span>. The interaction
 <p>In the example above, the death intensity of an individual <code>I</code> is the result of competition between individuals, depending on a characteristic named <code>size</code>:</p>
 <p><span class="math display">\[U(I,J,t) = (J.size - I.size)^+.\]</span></p>
 <p>If <code>I</code> meets randomly an individual <code>J</code> of size bigger than <code>I.size</code>, he can die at the intensity <code>J.size-I.size</code>. The bigger is <code>I.size</code>, the lower is the death intensity of individual <code>I</code>.</p>
-<p>The argument <code>interaction_type</code>, set by default at <code>random</code>, is an algorithm choice for simulating the model.<br>
+<p>The argument <code>interaction_type</code>, set by default at <code>random</code>, is an algorithm choice for simulating the model.
 When <code>interaction_type=full</code>, the intensity of an individual is computed making the sum over all the individuals in the population of the interactions with the given individual. In IBMPopSim, we introduced a “randomized” algorithm, in which the intensity of an individual is computed by picking randomly another individual in the population and computing its interaction function with the given individual. In most cases, the <code>random</code> algorithm is much faster than the <code>full</code> algorithm.</p>
 <p>Note that events with individual intensities are also much faster to simulate since they only require to observe <em>one</em> individual to be computed.</p>
 </div>
@@ -711,21 +707,21 @@ When <code>interaction_type=full</code>, the intensity of an individual is compu
 <p><strong>Poisson intensity</strong> When the event intensity is simply a constant, the class is called Poisson in reference to events occurring at jumps time of a Poisson process. Such events are created with the function</p>
 <pre><code><a href="../reference/mk_event_poisson.html">mk_event_poisson(type="TYPE",
                  name="NAME",
-                 intensity="CONSTANT",   
+                 intensity="CONSTANT",
                  kernel_code = "KERNEL_CODE")</a></code></pre>
 <p>For instance,</p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="../reference/mk_event_poisson.html">mk_event_poisson</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"entry"</span>, <span class="kw">intensity</span> <span class="kw">=</span> <span class="st">"lambda"</span>,
-                 <span class="kw">kernel_code</span> <span class="kw">=</span><span class="st">"double a_I= max(CNorm(20,2),0); 
+                 <span class="kw">kernel_code</span> <span class="kw">=</span><span class="st">"double a_I= max(CNorm(20,2),0);
                                newI.set_age(a_I,t);"</span>)</pre></body></html></div>
 <p>creates an event of type Entry, where individuals enter the population at a constant intensity <code>lambda</code> (which has to be in the list of model parameters). When an individual <code>newI</code> enters the population at time <code>t</code>, his age is chosen as a normally distributed random variable, with mean 20 and variance 4, using the function <code>CNorm()</code> (see Section <a href="#randomvar">3.4</a>).</p>
 <p>** Inhomogeneous Poisson intensity** When the intensity depends on time (but not on the population), the event can be created similarly by using the function</p>
 <pre><code>mk_event_inhomogeneous_poisson(type= "TYPE", name="NAME"
-                               intensity_code = "INTENSITY",   
+                               intensity_code = "INTENSITY",
                                kernel_code = "KERNEL_CODE")</code></pre>
 <p>For instance,</p>
 <div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="fu"><a href="../reference/mk_event_inhomogeneous_poisson.html">mk_event_inhomogeneous_poisson</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"entry"</span>,
                                <span class="kw">intensity</span> <span class="kw">=</span> <span class="st">"result = lambda*(1+ cos(t));"</span>,
-                               <span class="kw">kernel_code</span> <span class="kw">=</span><span class="st">" double a_I= CNorm(20,2); 
+                               <span class="kw">kernel_code</span> <span class="kw">=</span><span class="st">" double a_I= CNorm(20,2);
                                              newI.set_age(a_I,t);"</span>)</pre></body></html></div>
 <p>creates the same event than before, but now individuals enter the population at the rate <span class="math inline">\(\lambda(1+ \cos(t))\)</span> depending on the current time <code>t</code>.</p>
 </div>
@@ -743,7 +739,7 @@ When <code>interaction_type=full</code>, the intensity of an individual is compu
                   <span class="kw">event</span> <span class="kw">=</span> <span class="no">events_list</span>,
                   <span class="kw">parameters</span> <span class="kw">=</span> <span class="no">model_params</span>)</pre></body></html></div>
 <p>During this step which can take a few seconds, the model is created and compiled using the Rcpp package.
-One of the advantages of the model structure in IBMPopSim is that the model depends only on the population characteristics’ and parameters names and types, rather than their values.<br>
+One of the advantages of the model structure in IBMPopSim is that the model depends only on the population characteristics’ and parameters names and types, rather than their values.
 This means that once the model has been created, various simulations can be done with different initial populations and parameters values. Thus, only one model has to be created to simulation a class of IBMs with varying parameters (see Section <a href="#Simulation1">2.5.2</a> for an example).</p>
 <p><strong>Example</strong> Here is an example of model with a population structured by age and gender, with birth and death events. The death intensity of an individual of age <span class="math inline">\(a\)</span> is
 <span class="math display">\[d(a) = 0.008*\exp(0.02a),\]</span>
@@ -757,8 +753,8 @@ and females between 15 and 40 can give birth with birth intensity 0.05. The newb
 
 <span class="no">birth_event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span>( <span class="kw">type</span> <span class="kw">=</span> <span class="st">"birth"</span>,
                   <span class="kw">intensity_code</span> <span class="kw">=</span> <span class="st">" if (I.male)
-                                        result = 0; 
-                                     else 
+                                        result = 0;
+                                     else
                                         result=birth_rate(age(I,t));"</span>,
                   <span class="kw">kernel_code</span> <span class="kw">=</span> <span class="st">"newI.male = CUnif(0, 1) &lt; p_male;"</span>)
 
@@ -836,17 +832,20 @@ if the individual is a female. Thus, the intensity bound for birth events is</p>
 <li>A named numeric vector <code>logs</code> of variables related to the simulation algorithm.</li>
 <li>The simulation output called <code>population</code>.</li>
 </ul>
-<p>When there are no swap events (individuals don’t change of characteristics), the evolution of the population over the period <span class="math inline">\([0,30]\)</span> is recorded in a single data frame <code>sim_out$population</code>.<br>
+<p>When there are no swap events (individuals don’t change of characteristics), the evolution of the population over the period <span class="math inline">\([0,30]\)</span> is recorded in a single data frame <code>sim_out$population</code>.
 Each line of <code>sim_out$population</code> contains the information of an individual who lived in the population over the period <span class="math inline">\([0,30]\)</span>. This includes individuals who were initially in <code>pop</code>, as well as individuals who were born or entered the population.</p>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>)
-<span class="co">## 'data.frame':    117929 obs. of  3 variables:</span>
+<span class="co">## 'data.frame':    118140 obs. of  3 variables:</span>
 <span class="co">##  $ birth: num  -90 -89.9 -89.9 -89.8 -89.8 ...</span>
 <span class="co">##  $ death: num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">##  $ male : logi  FALSE TRUE TRUE TRUE FALSE TRUE ...</span></pre></body></html></div>
-<p>Table <a href="#tab:logs">2.7</a> describes the elements of the vector <code>sim_out$logs</code>containing information on simulation algorithm:</p>
+<span class="co">##  $ male : logi  TRUE TRUE FALSE FALSE FALSE FALSE ...</span></pre></body></html></div>
+<p>The following Table <!--\@ref(tab:logs)--> describes the elements of the vector <code>sim_out$logs</code>containing information on simulation algorithm:</p>
 <table class="table">
-<caption>
-<span id="tab:logs">Table 2.7: </span>Logs parameters</caption>
+<caption>Logs parameters</caption>
+<colgroup>
+<col width="29%">
+<col width="70%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Elements</th>
 <th align="left">Description</th>
@@ -873,20 +872,20 @@ Each line of <code>sim_out$population</code> contains the information of an indi
 <p>For instance, the acceptance rate in the toy model is</p>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">'effective_events'</span>]/<span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">'proposed_events'</span>]
 <span class="co">## effective_events </span>
-<span class="co">##        0.2192641</span></pre></body></html></div>
+<span class="co">##        0.2195992</span></pre></body></html></div>
 <p>and the simulation time is</p>
 <div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">'duration_main_algorithm'</span>]
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##                0.064414</span></pre></body></html></div>
+<span class="co">##                 0.13619</span></pre></body></html></div>
 <p><strong>Parameters modification and event removal</strong></p>
-<p>As explained in Section <a href="#Modelcreation">2.4</a> the structure of the compiled model allows the parameters’ values to be changed without recompiling the model. For instance, the parameter of the Gompertz death function can be modified to study the impact of an increase in mortality.<br>
+<p>As explained in Section <a href="#Modelcreation">2.4</a> the structure of the compiled model allows the parameters’ values to be changed without recompiling the model. For instance, the parameter of the Gompertz death function can be modified to study the impact of an increase in mortality.
 Before running the simulation, the events bounds should be updated accordingly accordingly.</p>
 <div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">params</span>$<span class="no">death_rate</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span>(<span class="fl">0.01</span>,<span class="fl">0.02</span>) <span class="co"># New death rate</span>
 
 <span class="no">events_bounds</span>[<span class="st">"my_death_event"</span>] <span class="kw">&lt;-</span> <span class="fl">0.01</span>*<span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="fl">0.02</span>*<span class="no">a_max</span>) <span class="co"># Death event bound update</span>
 
 <span class="no">new_sim_out</span>  <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="no">model</span>, <span class="no">pop</span>, <span class="no">events_bounds</span>,
-                       <span class="no">params</span>, <span class="kw">age_max</span> <span class="kw">=</span> <span class="no">a_max</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>) <span class="co"># Population simulation </span></pre></body></html></div>
+                       <span class="no">params</span>, <span class="kw">age_max</span> <span class="kw">=</span> <span class="no">a_max</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>) <span class="co"># Population simulation</span></pre></body></html></div>
 <p>An event can also be remove by setting the event bound to 0:</p>
 <div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="no">sim_out_no_birth</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="no">model</span>, <span class="no">pop</span>,
                            <span class="kw">events_bounds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"birth"</span><span class="kw">=</span><span class="fl">0</span>, <span class="st">"my_death_event"</span><span class="kw">=</span> <span class="fl">0.01</span>*<span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="fl">0.02</span>*<span class="no">a_max</span>)),
@@ -904,7 +903,7 @@ Before running the simulation, the events bounds should be updated accordingly a
 <span class="co"># Population age-pyramid at time 30:</span>
 <span class="no">pyr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">pop_out</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">0</span>:<span class="no">a_max</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>)
 <span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span>(<span class="no">pyr</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="main_plot_30-1.png" title="plot of chunk main_plot_30" alt="plot of chunk main_plot_30" style="display: block; margin: auto;"></p>
 <p>Mortality tables with compatibles with packages such as StMoMo can also be computed by with the functions <code><a href="../reference/death_table.html">?death_table</a></code> and <code><a href="../reference/exposure_table.html">?exposure_table</a></code>.</p>
 <div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="no">female_pop</span> <span class="kw">&lt;-</span> <span class="no">pop_out</span>[<span class="no">pop_out</span>$<span class="no">male</span><span class="kw">==</span><span class="fl">FALSE</span>, ]
 <span class="no">Dxt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span>(<span class="no">female_pop</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fl">85</span>:<span class="fl">90</span>,<span class="kw">period</span> <span class="kw">=</span> <span class="fl">20</span>:<span class="fl">30</span>) <span class="co"># Death table (death age is age at death)</span>
@@ -917,19 +916,19 @@ Before running the simulation, the events bounds should be updated accordingly a
 <div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="no">sim_out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="no">model</span>, <span class="no">pop</span>, <span class="no">events_bounds</span>, <span class="no">params</span>,
                   <span class="kw">age_max</span> <span class="kw">=</span> <span class="no">a_max</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fl">30</span>, <span class="kw">multithreading</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>## duration_main_algorithm 
-##                0.035019</code></pre>
+##                0.022743</code></pre>
 <p>By default, the number of threads is the number of concurrent threads supported by the available hardware implementation. The number of thread can be set manually with the optional argument <code>num_threads</code> of <code><a href="../reference/popsim.html">?popsim</a></code>.</p>
 </div>
 </div>
 <div id="simulationswap" class="section level2" number="2.6">
 <h2 class="hasAnchor">
 <a href="#simulationswap" class="anchor"></a><span class="header-section-number">2.6</span> Simulation with swap events</h2>
-<p>When there are swap events (individuals can change of characteristics), the dates of swap events and the changes of characteristics following each swap event should be recorded for each individual in the population, which is a memory intensive and computationally costly process.<br>
+<p>When there are swap events (individuals can change of characteristics), the dates of swap events and the changes of characteristics following each swap event should be recorded for each individual in the population, which is a memory intensive and computationally costly process.
 To maintain efficient simulations in the presence of swap events, we propose the following solution.</p>
 <div id="vector-of-times-in-popsim-" class="section level3" number="2.6.1">
 <h3 class="hasAnchor">
 <a href="#vector-of-times-in-popsim-" class="anchor"></a><span class="header-section-number">2.6.1</span> Vector of times in <code>?popsim</code>.</h3>
-<p>In the presence of swap events, the argument <code>time</code> of <code><a href="../reference/popsim.html">?popsim</a></code> should a vector of dates <span class="math inline">\((t_0,\dots, t_n)\)</span>. In this case, <code>popsim</code> returns in the object <code>population</code> a list of <span class="math inline">\(n\)</span> population data frames representing the population at time <span class="math inline">\(t_1,\dots t_n\)</span>, simulated from the initial time <span class="math inline">\(t_0\)</span>.<br>
+<p>In the presence of swap events, the argument <code>time</code> of <code><a href="../reference/popsim.html">?popsim</a></code> should a vector of dates <span class="math inline">\((t_0,\dots, t_n)\)</span>. In this case, <code>popsim</code> returns in the object <code>population</code> a list of <span class="math inline">\(n\)</span> population data frames representing the population at time <span class="math inline">\(t_1,\dots t_n\)</span>, simulated from the initial time <span class="math inline">\(t_0\)</span>.
 For <span class="math inline">\(i=1\dots n\)</span>, the <span class="math inline">\(i\)</span>th data frame describes individuals who lived in the population during the period <span class="math inline">\([t_0,t_i]\)</span>, with their characteristics at time <span class="math inline">\(t_i\)</span>.</p>
 <p><strong>Examples</strong> A population 100 thousand individuals (or particles) is generated, all born at time 0 and divided into two subgroups. Individuals can swap from subgroup 1 (resp. 2) to subgroup 2 (resp. 1) at rate 0.1 (resp. 0.3).</p>
 <div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">pop</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"birth"</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">0</span>,<span class="fl">1e5</span>),<span class="st">"death"</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">NA</span>,<span class="fl">1e5</span>),
@@ -938,7 +937,7 @@ For <span class="math inline">\(i=1\dots n\)</span>, the <span class="math inlin
 <span class="no">rates</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>( <span class="kw">k12</span> <span class="kw">=</span> <span class="fl">0.1</span>, <span class="kw">k21</span><span class="kw">=</span><span class="fl">0.3</span>)
 <span class="co">#Only swap events occur in the population</span>
 <span class="no">swap_event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span>( <span class="kw">type</span> <span class="kw">=</span> <span class="st">"swap"</span>,
-                  <span class="kw">intensity_code</span> <span class="kw">=</span> <span class="st">"if (I.sub_grp == 1) result = k12; 
+                  <span class="kw">intensity_code</span> <span class="kw">=</span> <span class="st">"if (I.sub_grp == 1) result = k12;
                                     else result = k21;"</span>,
                   <span class="kw">kernel_code</span> <span class="kw">=</span> <span class="st">"I.sub_grp = 3 - I.sub_grp;"</span>)
 
@@ -959,16 +958,10 @@ For <span class="math inline">\(i=1\dots n\)</span>, the <span class="math inlin
 <span class="no">p_1_t</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>, <span class="kw">function</span>(<span class="no">pop_df</span>){
                       <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">pop_df</span>, <span class="no">sub_grp</span><span class="kw">==</span><span class="fl">1</span>))/<span class="no">pop_size</span>)
                 })</pre></body></html></div>
-<div class="figure" style="text-align: center">
-<span id="fig:plot"></span>
-<img src="IBMPopSim_files/figure-html/plot-1.png" alt="Evolution of probability to be in subgroup 1" width="672"><p class="caption">
-Figure 2.1: Evolution of probability to be in subgroup 1
-</p>
-</div>
-
-<div class="remark">
- <span class="remark"><em>Remark. </em></span> This example shows that IBMPopSIm can also be used to simulated continuous time Markov Chain with finite state space.
-</div>
+<p><img src="main_prob_subgroup1-1.png" title="Evolution of probability to be in subgroup 1" alt="Evolution of probability to be in subgroup 1" style="display: block; margin: auto;"></p>
+<!--```{remark}-->
+<p>This example shows that IBMPopSIm can also be used to simulated continuous time Markov Chain with finite state space.
+<!--```--></p>
 </div>
 <div id="individual-life-courses" class="section level3" number="2.6.2">
 <h3 class="hasAnchor">
@@ -989,10 +982,10 @@ Figure 2.1: Evolution of probability to be in subgroup 1
 <span class="co">## Simulation on  [0, 1]  [1, 2]  [2, 3]  [3, 4]  [4, 5]</span></pre></body></html></div>
 <div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">sim_out_id</span>$<span class="no">population</span><span class="kw">[[</span><span class="fl">1</span>]])
 <span class="co">##   id birth death sub_grp</span>
-<span class="co">## 1  1     0    NA       1</span>
-<span class="co">## 2  5     0    NA       2</span>
-<span class="co">## 3  9     0    NA       1</span>
-<span class="co">## 4 13     0    NA       2</span>
+<span class="co">## 1  1     0    NA       2</span>
+<span class="co">## 2  5     0    NA       1</span>
+<span class="co">## 3  9     0    NA       2</span>
+<span class="co">## 4 13     0    NA       1</span>
 <span class="co">## 5 17     0    NA       1</span>
 <span class="co">## 6 21     0    NA       1</span></pre></body></html></div>
 <p>These data frames can be merged into a single data frame summarizing the life course of each individual, by calling the function <code>merge_pop_withid</code>.</p>
@@ -1000,10 +993,10 @@ Figure 2.1: Evolution of probability to be in subgroup 1
 <span class="no">pop_merge</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/merge_pop_withid.html">merge_pop_withid</a></span>(<span class="no">pop_list</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pop_merge</span>)
 <span class="co">##   id birth death sub_grp_1 sub_grp_2 sub_grp_3 sub_grp_4 sub_grp_5</span>
-<span class="co">## 1  1     0    NA         1         1         1         1         1</span>
-<span class="co">## 2  5     0    NA         2         2         2         2         2</span>
-<span class="co">## 3  9     0    NA         1         1         1         1         1</span>
-<span class="co">## 4 13     0    NA         2         2         1         1         1</span>
+<span class="co">## 1  1     0    NA         2         2         1         1         1</span>
+<span class="co">## 2  5     0    NA         1         1         1         1         1</span>
+<span class="co">## 3  9     0    NA         2         2         2         1         1</span>
+<span class="co">## 4 13     0    NA         1         1         1         1         1</span>
 <span class="co">## 5 17     0    NA         1         1         1         1         1</span>
 <span class="co">## 6 21     0    NA         1         1         1         1         1</span></pre></body></html></div>
 <p>Each line of <code>pop_merge</code> corresponds to the life course of one individual. However, the population is only represented at time <span class="math inline">\(t=0,1..,5\)</span>, and this data frame doesn’t account for exact swap event times or multiple swap events that occurred between between two time steps.</p>
@@ -1272,12 +1265,12 @@ Once the model is created, these predefined functions are transformed into C++ f
 <div class="sourceCode" id="cb58"><html><body><pre class="r"><span class="no">dr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">EW_pop_14</span>$<span class="no">rates</span>,
            <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">death_male</span>[,<span class="st">"age"</span>], <span class="kw">y</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="no">death_male</span>[,<span class="st">"value"</span>])))
 <span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">dr</span>,<span class="kw">xlab</span><span class="kw">=</span><span class="st">"age"</span>, <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"dr"</span>,<span class="kw">main</span><span class="kw">=</span><span class="st">"Example of step function"</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_files/figure-html/unnamed-chunk-47-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="plot_stepfun-1.png" title="plot of chunk plot_stepfun" alt="plot of chunk plot_stepfun" style="display: block; margin: auto;"></p>
 <p>We can also initialize a piecewise real function <code>f</code> defined by the function <code>dr</code> before age 80, and by a Gompertz-Makeham intensity function for ages after 80.</p>
 <div class="sourceCode" id="cb59"><html><body><pre class="r"><span class="no">f</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/piecewise_x.html">piecewise_x</a></span>(<span class="fl">80</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">dr</span>, <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span>(<span class="fl">0.00006</span>, <span class="fl">0.085</span>)))
 <span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">40</span>, <span class="fl">110</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">x</span>, <span class="no">f</span>),<span class="kw">xlab</span><span class="kw">=</span><span class="st">"age"</span>,<span class="kw">ylab</span><span class="kw">=</span><span class="st">"f"</span>, <span class="kw">main</span><span class="kw">=</span><span class="st">"Example of piecewise function"</span>)</pre></body></html></div>
-<p><img src="IBMPopSim_files/figure-html/unnamed-chunk-48-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="plot_piecewise-1.png" title="plot of chunk plot_piecewise" alt="plot of chunk plot_piecewise" style="display: block; margin: auto;"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Once a function has been created and defined as model parameter, a model depending on the function can be defined. For example we use in the model below the <code>stepfun</code> <code>dr</code> as a model parameter named <code>rate</code>. The function is used to defined the intensity of death events in the model.
 s</li>
