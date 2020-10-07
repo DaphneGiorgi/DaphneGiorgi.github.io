@@ -8,13 +8,6 @@
 
 <title>IBMPopSim C++ essentials • IBMPopSim</title>
 
-<!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -139,28 +132,12 @@
 
       </header>
 
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>IBMPopSim C++ essentials</h1>
-                        <h4 class="author">Daphné Giorgi</h4>
-                        <h4 class="author">Sarah Kaakaï</h4>
-                        <h4 class="author">Vincent Lemaire</h4>
+                        <h4 class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
             
       
       <small class="dont-index">Source: <a href='https://github.com/DaphneGiorgi/IBMPopSim/blob/master/vignettes/IBMPopSim_cpp.Rmd'><code>vignettes/IBMPopSim_cpp.Rmd</code></a></small>
@@ -170,7 +147,7 @@
 
     
     
-The arguments \texttt{intensity\_code}, \texttt{interaction\_code} and \texttt{kernel\_code} of the events functions must contain some C++ code given by the user. You don't need to be a C++ guru to write the few instructions needed. These functions should use very little C++ syntax. They are essentially arithmetic or logical operations, tests and calls to predefined functions.
+The arguments \texttt{intensity\_code}, \texttt{interaction\_code} and \texttt{kernel\_code} of the events functions must contain some C++ code given by the user. You don't need to be a C++ guru to write the few instructions needed. These functions should use very little C++ syntax. They are essentially arithmetic or logical operations, tests and calls to predefined functions, which we give an overview below.
 
 For code efficiency, you should not allocate memory in these functions (no \texttt{new}) or use type containers (\texttt{std::vector}, \texttt{std::list}, \ldots). If you think you need to allocate memory, consider as parameter an R vector that will be mapped via \texttt{arma::vector} (see below), or declare the variable as \texttt{static}.
 Also, it should not be necessary to make a loop. Keep in mind that these functions should be fast.
@@ -243,7 +220,7 @@ bool myBoolean = true;       // Boolean (true or false)
 \end{itemize}
 
 \begin{verbatim}
-condition ? result1 : result2
+condition ? result1; : result2;
 \end{verbatim}
 
 \begin{itemize}
@@ -346,26 +323,28 @@ The most popular functions of the \texttt{cmath} library, which is included in t
 
 Note that these functions are not vectorial, the arguments \texttt{x} and \texttt{y} must be scalar. If the user wants to call some other functions of \texttt{cmath} not listed in the table, this is possible by adding the prefix \texttt{std::} to the name of the function (scope resolution operator \texttt{::} to access to functions declared in namespace standard \texttt{std}).
 
-\hypertarget{link-between-r-and-c-characteristics-and-parameters}{%
-\subsection{Link between R and C++ (characteristics and parameters)}\label{link-between-r-and-c-characteristics-and-parameters}}
+\hypertarget{cppcharacteristics}{%
+\subsection{Individuals characteristics and model parameters: link between R and C++}\label{cppcharacteristics}}
+
+To facilitate the model creation, the individuals' characteristics and a list model parameters can be declared in the R environment and used in the C++ code.
 
 The data shared between the R environment and the C++ code are:
 
 \begin{itemize}
 \tightlist
 \item
-  the characteristics of the individuals which must be atomic (boolean, scalar, character)
+  The characteristics of the individuals which must be atomic (Boolean, scalar or character).
 \item
-  the model parameters: a list of variables of type:
+  The model parameters: a list of variables of type:
 
   \begin{itemize}
   \tightlist
   \item
-    atomic, vector or matrice
+    Atomic, vector or matrix.
   \item
-    real function of one variable, or list of real function of one variable
+    Predefined real functions of one variable, or list of such functions.
   \item
-    piecewise real function of one variable, of list of that
+    Piecewise real function of two variables, of list of such.
   \end{itemize}
 \end{itemize}
 
@@ -376,7 +355,7 @@ Here is the conversion table used between the atomic types of R and C++.
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
-C++ type & Type type\tabularnewline
+C++ type & R type\tabularnewline
 \midrule
 \endhead
 bool & \texttt{logical}\tabularnewline
@@ -386,7 +365,9 @@ char & \texttt{character}\tabularnewline
 \bottomrule
 \end{longtable}
 
-To declare the characteristics of an individual, you must define a named character vector containing the name of the characteristic and the associated C++ type. The function \texttt{get\_characteristics} provide a way to extract the characteristics from a population data frame.
+\textbf{Individuals characteristics}
+
+The characteristics of an individual are defined by a named character vector containing the name of the characteristic and the associated C++ type. The function \texttt{?get\_characteristics} provides a way to extract the characteristics from a population data frame.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -400,7 +381,10 @@ To declare the characteristics of an individual, you must define a named charact
 
 The requires \texttt{birth} and \texttt{death} characteristics are of type \texttt{double}.
 
-The parameters are given by a named list. Each element of the list is a R object and the type is determined using the \texttt{typeof} function. The variable \texttt{code} contains simple C++ instructions depending on the parameters defined in \texttt{params}. You can directly use the name of parameter inside the C++ code. The \texttt{summary} of the model \texttt{mod} gives useful information on the types of characteristics and parameters used in C++ code.
+\textbf{Atomic model parameters}
+
+The model parameters are given by a named list of R objects. We recall that the type of an R object can be determined by calling the \texttt{?typeof} function. Atomic objects declared as model parameters can be directly used in the C++ code.\\
+In the example below, the variable \texttt{code} contains simple C++ instructions depending on the parameters defined in \texttt{params}. The \texttt{summary} of the model \texttt{mod} gives useful information on the types of characteristics and parameters used in C++ code.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -425,12 +409,12 @@ The parameters are given by a named list. Each element of the list is a R object
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{vectors-and-matrices-parameters}{%
-\subsubsection{Vectors and matrices (parameters)}\label{vectors-and-matrices-parameters}}
+\hypertarget{cpparmadillo}{%
+\subsubsection{Vectors and matrices (model parameters)}\label{cpparmadillo}}
 
-Two of the possible parameters types given in the argument \texttt{parameters} of the \texttt{mk\_model} function are R vectors and R matrices. We call R vector a \texttt{numeric} of length at least 2. These types are converted, using the \href{http://dirk.eddelbuettel.com/code/rcpp.armadillo.html}{RcppArmadillo library}, in C++ \href{http://arma.sourceforge.net/}{Armadillo} types, \texttt{arma::vec} and \texttt{arma::matrix} respectively.
+Two of the possible model parameters types given in the argument \texttt{parameters} of the \texttt{?mk\_model} function are R vectors and R matrices. We call R vector a \texttt{numeric} of length at least 2. These types are converted, using the \href{http://dirk.eddelbuettel.com/code/rcpp.armadillo.html}{RcppArmadillo library}, in C++ \href{http://arma.sourceforge.net/}{Armadillo} types, \texttt{arma::vec} and \texttt{arma::matrix} respectively.
 
-The classes \texttt{arma::vec} and \texttt{arma::matrix} are rich and easy-to-use implementations of one-dimensional and two-dimensional arrays. To access to individual elements, use the operator \texttt{()} (or \texttt{{[}{]}} in dimension 1).
+The classes \texttt{arma::vec} and \texttt{arma::matrix} are rich and easy-to-use implementations of one-dimensional and two-dimensional arrays. To access to individual elements of an array, use the operator \texttt{()} (or \texttt{{[}{]}} in dimension 1).
 
 \begin{itemize}
 \tightlist
@@ -462,34 +446,129 @@ Let \texttt{v} be a an object of type \texttt{arma::vec} and A be a an object of
   \texttt{A.end\_col(i)}: iterator pointing to the last element of column \texttt{i}
 \end{itemize}
 
-\hypertarget{functions-parameters}{%
-\subsubsection{Functions (parameters)}\label{functions-parameters}}
+\hypertarget{cppIBMfunctions}{%
+\subsubsection{Predefined functions (model parameters)}\label{cppIBMfunctions}}
 
-To facilitate the implementation of intensity functions, R functions and their C++ equivalents have been programmed. The goal is to make the use as transparent as possible.
+To facilitate the implementation of intensity functions and kernel code, R functions have been predefined in \texttt{IBMPopSim}, which can be defined as model parameters and then called in the C++ code. The goal is to make their use as transparent as possible.
 
 \hypertarget{real-functions-of-one-variable}{%
 \paragraph{Real functions of one variable}\label{real-functions-of-one-variable}}
 
-In the C++ code these functions are identified as \texttt{function\_x}.
+Here is a list of such functions that can be defined as a R object and called from R and C++.
 
--stepfun
--linfun
--piecewise\_x
--gompertz
--weibull
+\begin{itemize}
+\tightlist
+\item
+  \texttt{stepfun}: Step function.
+\item
+  \texttt{linfun}: Linear interpolation function.
+\item
+  \texttt{gompertz}: Gompertz--Makeham intensity function.
+\item
+  \texttt{weibull}: Weibull density function.
+\item
+  \texttt{piecewise\_x}: Piecewise real function.
+\end{itemize}
+
+See the reference manual for mathematical definitions of these functions (\texttt{?stepfun}).\\
+Once the model is created, these predefined functions are transformed into C++ functions, identified as \texttt{function\_x}.
+
+We illustrate below some examples of the use of these functions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  We define \texttt{dr} a \texttt{stepfun} depending on some values in \texttt{EW\_pop\_14\$rates}. Note that this function applies to an age \texttt{a}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dr \textless{}{-}}\StringTok{ }\KeywordTok{with}\NormalTok{(EW\_pop\_}\DecValTok{14}\OperatorTok{$}\NormalTok{rates,}
+           \KeywordTok{stepfun}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ death\_male[,}\StringTok{"age"}\NormalTok{], }\DataTypeTok{y =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, death\_male[,}\StringTok{"value"}\NormalTok{])))}
+\KeywordTok{plot}\NormalTok{(dr,}\DataTypeTok{xlab=}\StringTok{"age"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"dr"}\NormalTok{,}\DataTypeTok{main=}\StringTok{"Example of step function"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{plot_stepfun-1} \end{center}
+
+We can also initialize a piecewise real function \texttt{f} defined by the function \texttt{dr} before age 80, and by a Gompertz-Makeham intensity function for ages after 80.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f \textless{}{-}}\StringTok{ }\KeywordTok{piecewise\_x}\NormalTok{(}\DecValTok{80}\NormalTok{, }\KeywordTok{list}\NormalTok{(dr, }\KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.00006}\NormalTok{, }\FloatTok{0.085}\NormalTok{)))}
+\NormalTok{x \textless{}{-}}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DecValTok{110}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(x, }\KeywordTok{sapply}\NormalTok{(x, f),}\DataTypeTok{xlab=}\StringTok{"age"}\NormalTok{,}\DataTypeTok{ylab=}\StringTok{"f"}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Example of piecewise function"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{plot_piecewise-1} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Once a function has been created and defined as model parameter, a model depending on the function can be defined. For example we use in the model below the \texttt{stepfun} \texttt{dr} as a model parameter named \texttt{rate}. The function is used to defined the intensity of death events in the model.
+  s
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"rate"}\NormalTok{ =}\StringTok{ }\NormalTok{dr)}
+\NormalTok{event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{(}\StringTok{\textquotesingle{}death\textquotesingle{}}\NormalTok{, }\DataTypeTok{intensity\_code =} \StringTok{\textquotesingle{}result = rate(age(I, t));\textquotesingle{}}\NormalTok{)}
+\NormalTok{mod \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\KeywordTok{get\_characteristics}\NormalTok{(pop), }\DataTypeTok{events =} \KeywordTok{list}\NormalTok{(}\StringTok{\textquotesingle{}death\textquotesingle{}}\NormalTok{ =}\StringTok{ }\NormalTok{event), }
+                \DataTypeTok{parameters =}\NormalTok{ params, }\DataTypeTok{with\_compilation =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(mod)}
+\CommentTok{\#\# Events:}
+\CommentTok{\#\# \#1: individual event of type death}
+\CommentTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} }
+\CommentTok{\#\# Individual description:}
+\CommentTok{\#\# names:  birth death male IMD }
+\CommentTok{\#\# R types:  double double logical integer }
+\CommentTok{\#\# C types:  double double bool int}
+\CommentTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} }
+\CommentTok{\#\# R parameters available in C++ code:}
+\CommentTok{\#\# names:  rate }
+\CommentTok{\#\# R types:  closure }
+\CommentTok{\#\# C types:  function\_x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  After compilation, the parameter \texttt{rate} can actually be replaced by any function of type \texttt{function\_x}. For example you can call
+\end{enumerate}
+
+\begin{verbatim}
+popsim(mod, pop, params = list("rate" = dr), age_max = 120, 
+       events_bounds = c('death' = dr(age_max)), time = 10)
+\end{verbatim}
+
+as well as
+
+\begin{verbatim}
+popsim(mod, pop, params = list("rate" = f), age_max = 120, 
+       events_bounds = c('death' = f(age_max)), time = 10)
+\end{verbatim}
 
 \hypertarget{piecewise-real-functions-of-two-variables}{%
 \paragraph{Piecewise real functions of two variables}\label{piecewise-real-functions-of-two-variables}}
 
--piecewise\_xy
+In the C++ code these R functions declared with \texttt{?piecewise\_xy} are identified as \texttt{function\_xy} functions. See \texttt{?piecewise\_xy} for mathematical definition. This function allows to easily define a step function that depend on age and time.
 
 \hypertarget{list-of-functions}{%
 \paragraph{List of functions}\label{list-of-functions}}
 
-\hypertarget{random}{%
-\subsection{Random}\label{random}}
+As parameter you can use a list of functions. All R functions in the list must be of the same C++ type: either \texttt{function\_x} or \texttt{function\_xy}. In C++ code the list of functions is replaced by a \texttt{std::vector} of \texttt{function\_x} or \texttt{function\_xy} (with first element indexed by 0).
 
-We use the following notations to describe the available C++ random distributions.
+\hypertarget{randomvar}{%
+\subsection{Random variables}\label{randomvar}}
+
+We use the following notations to describe the available C++ random distributions, which can be used in the C++ intensity and kernel codes.
 
 \begin{itemize}
 \item
@@ -550,11 +629,11 @@ In the discrete distribution call \texttt{CDiscrete(p\_begin,\ p\_end)}, the arg
 
       <footer>
       <div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kakaai, Vincent Lemaire.</p>
+  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

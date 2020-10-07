@@ -8,19 +8,12 @@
 
 <title>Step Function. — stepfun • IBMPopSim</title>
 
-<!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -48,7 +41,7 @@
 
 <meta property="og:title" content="Step Function. — stepfun" />
 <meta property="og:description" content="Given the vectors (x[1],...,x[n]) and (y[0],y[1],...,y[n]) (one value more!), stepfun(x, y) returns an interpolating step function, say f_n. This is the cadlag version (right = FALSE) of the stepfun function from package stats. The step function value f_n(t) equals to the constant y[k-1] for t in [x[k-1], x[k]) so that
-$$f_n(t) = \sum_{k=1}^{n+1} y_{k-1} \mathbb{1}_{[x_{k-1}, x_{k})}(t),$$
+$$f_n(t) = \sum_{k=1}^{n+1} y_{k-1} {1}_{[x_{k-1}, x_{k})}(t),$$
 with\(x_0=-\infty\) and \(x_{n+1}=+\infty\)." />
 
 
@@ -151,11 +144,11 @@ with\(x_0=-\infty\) and \(x_{n+1}=+\infty\)." />
 
     <div class="ref-description">
     <p>Given the vectors <code>(x[1],...,x[n])</code> and <code>(y[0],y[1],...,y[n])</code> (one value more!), <code>stepfun(x, y)</code> returns an interpolating step function, say <code>f_n</code>. This is the cadlag version (<code>right = FALSE</code>) of the <code>stepfun</code> function from package <code>stats</code>. The step function value <code>f_n(t)</code> equals to the constant <code>y[k-1]</code> for <code>t</code> in <code>[x[k-1], x[k])</code> so that
-$$f_n(t) = \sum_{k=1}^{n+1} y_{k-1} \mathbb{1}_{[x_{k-1}, x_{k})}(t),$$
+$$f_n(t) = \sum_{k=1}^{n+1} y_{k-1} {1}_{[x_{k-1}, x_{k})}(t),$$
 with\(x_0=-\infty\) and \(x_{n+1}=+\infty\).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stepfun</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
+    <pre class="usage"><span class='fu'>stepfun</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -196,7 +189,7 @@ with\(x_0=-\infty\) and \(x_{n+1}=+\infty\).</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

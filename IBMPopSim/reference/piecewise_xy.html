@@ -8,19 +8,12 @@
 
 <title>Piecewise real function of two variables. — piecewise_xy • IBMPopSim</title>
 
-<!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -50,7 +43,7 @@
 <meta property="og:description" content="Given the vectors (breaks[1],...,breaks[n]) and the list of IBMPopSim compatible
 functions funs = (f[0],f[1],...,f[n]) (one value more!), piecewise_xy(breaks, funs) returns
 the function
-$$f(x,y) = f_0(x) \mathbb{1}_{y\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[breaks_{k}, breaks_{k+1})}(y) + f_n(x)\mathbb{1}_{y \ge breaks[n]}$$" />
+$$f(x,y) = f_0(x) {1}_{y\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) {1}_{[breaks_{k}, breaks_{k+1})}(y) + f_n(x){1}_{y \ge breaks[n]}$$" />
 
 
 
@@ -154,10 +147,10 @@ $$f(x,y) = f_0(x) \mathbb{1}_{y\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}
     <p>Given the vectors <code>(breaks[1],...,breaks[n])</code> and the list of <code>IBMPopSim</code> compatible
 functions <code>funs = (f[0],f[1],...,f[n])</code> (one value more!), <code>piecewise_xy(breaks, funs)</code> returns
 the function
-$$f(x,y) = f_0(x) \mathbb{1}_{y\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[breaks_{k}, breaks_{k+1})}(y) + f_n(x)\mathbb{1}_{y \ge breaks[n]}$$</p>
+$$f(x,y) = f_0(x) {1}_{y\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) {1}_{[breaks_{k}, breaks_{k+1})}(y) + f_n(x){1}_{y \ge breaks[n]}$$</p>
     </div>
 
-    <pre class="usage"><span class='fu'>piecewise_xy</span>(<span class='no'>breaks</span>, <span class='no'>funs</span>)</pre>
+    <pre class="usage"><span class='fu'>piecewise_xy</span><span class='op'>(</span><span class='va'>breaks</span>, <span class='va'>funs</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,9 +173,10 @@ $$f(x,y) = f_0(x) \mathbb{1}_{y\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}
     <p>A C++ version of this function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>time_dep_function</span> <span class='kw'>&lt;-</span> <span class='fu'>piecewise_xy</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>),
-                                  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='gompertz.html'>gompertz</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.005</span>), <span class='fu'><a href='gompertz.html'>gompertz</a></span>(<span class='fl'>0.08</span>, <span class='fl'>0.005</span>)))
-<span class='fu'>time_dep_function</span>(<span class='fl'>0</span>, <span class='fl'>65</span>)  <span class='co'># death intensity at time 0 and age 65.</span></div><div class='output co'>#&gt; [1] 0.1384031</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>time_dep_function</span> <span class='op'>&lt;-</span> <span class='fu'>piecewise_xy</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>,
+                                  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='gompertz.html'>gompertz</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0.005</span><span class='op'>)</span>, <span class='fu'><a href='gompertz.html'>gompertz</a></span><span class='op'>(</span><span class='fl'>0.08</span>, <span class='fl'>0.005</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>time_dep_function</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>65</span><span class='op'>)</span>  <span class='co'># death intensity at time 0 and age 65.</span>
+</div><div class='output co'>#&gt; [1] 0.1384031</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -199,7 +193,7 @@ $$f(x,y) = f_0(x) \mathbb{1}_{y\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

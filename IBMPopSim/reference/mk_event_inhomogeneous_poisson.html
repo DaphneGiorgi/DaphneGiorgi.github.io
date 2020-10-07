@@ -8,19 +8,12 @@
 
 <title>Creates inhomogeneous Poisson class event. — mk_event_inhomogeneous_poisson • IBMPopSim</title>
 
-<!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -155,7 +148,7 @@ When the event occurs, something happens in the population.
 The created event must be used with <code><a href='mk_model.html'>mk_model</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mk_event_inhomogeneous_poisson</span>(<span class='no'>type</span>, <span class='no'>name</span>, <span class='no'>intensity_code</span>, <span class='kw'>kernel_code</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    <pre class="usage"><span class='fu'>mk_event_inhomogeneous_poisson</span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>name</span>, <span class='va'>intensity_code</span>, kernel_code <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,7 +176,7 @@ The created event must be used with <code><a href='mk_model.html'>mk_model</a></
     <p>An S3 object of class <code>event</code> of type inhomogeneous Poisson.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>type</code> argument is one of the following</p><dl'>
+    <p>The <code>type</code> argument is one of the following</p><dl>
 <dt><code>'birth'</code></dt><dd><p>By default, a new individual <code>newI</code> is created, with the same characteristics of the parent <code>I</code> and birth date equal to the current time. Optional code can be precised in <code>kernel_code</code>.</p></dd>
 <dt><code>'death'</code></dt><dd><p>By default, the individual <code>I</code> dies. Optional code can be precised in <code>kernel_code</code>.</p></dd>
 <dt><code>'entry'</code></dt><dd><p>A new individual <code>newI</code> is added to the population, and its characteristics have to be defined by the user in the entry <code>kernel_code</code>.</p></dd>
@@ -217,7 +210,7 @@ See <code><a href='../articles/IBMPopSim.html'>vignette('IBMPopSim')</a></code> 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

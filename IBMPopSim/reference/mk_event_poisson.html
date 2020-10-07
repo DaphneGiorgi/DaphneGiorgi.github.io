@@ -8,19 +8,12 @@
 
 <title>Creates Poisson class event. — mk_event_poisson • IBMPopSim</title>
 
-<!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -155,7 +148,7 @@ When the event occurs, something happens in the population.
 The created event must be used with <code><a href='mk_model.html'>mk_model</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mk_event_poisson</span>(<span class='no'>type</span>, <span class='no'>name</span>, <span class='no'>intensity</span>, <span class='kw'>kernel_code</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    <pre class="usage"><span class='fu'>mk_event_poisson</span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>name</span>, <span class='va'>intensity</span>, kernel_code <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,7 +176,7 @@ The created event must be used with <code><a href='mk_model.html'>mk_model</a></
     <p>An S3 object of class <code>event</code> of type Poisson.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>type</code> argument is one of the following</p><dl'>
+    <p>The <code>type</code> argument is one of the following</p><dl>
 <dt><code>'birth'</code></dt><dd><p>By default, a new individual <code>newI</code> is created, with the same characteristics of the parent <code>I</code> and birth date equal to the current time. Optional code can be precised in <code>kernel_code</code>.</p></dd>
 <dt><code>'death'</code></dt><dd><p>By default, the individual <code>I</code> dies. Optional code can be precised in <code>kernel_code</code>.</p></dd>
 <dt><code>'entry'</code></dt><dd><p>A new individual <code>newI</code> is added to the population, and its characteristics have to be defined by the user in the entry <code>kernel_code</code>.</p></dd>
@@ -200,13 +193,107 @@ See <code><a href='../articles/IBMPopSim.html'>vignette('IBMPopSim')</a></code> 
     <div class='dont-index'><p>See also <code><a href='mk_model.html'>mk_model</a></code>, <code><a href='mk_event_inhomogeneous_poisson.html'>mk_event_inhomogeneous_poisson</a></code>, <code><a href='mk_event_individual.html'>mk_event_individual</a></code>, <code><a href='mk_event_interaction.html'>mk_event_interaction</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>birth</span> <span class='kw'>&lt;-</span> <span class='fu'>mk_event_poisson</span>(<span class='st'>'birth'</span>, <span class='kw'>intensity</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+    <pre class="examples"><div class='input'><span class='va'>birth</span> <span class='op'>&lt;-</span> <span class='fu'>mk_event_poisson</span><span class='op'>(</span><span class='st'>'birth'</span>, intensity <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>params</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='no'>death</span> <span class='kw'>&lt;-</span> <span class='fu'>mk_event_poisson</span>(<span class='st'>'death'</span>, <span class='kw'>intensity</span> <span class='kw'>=</span> <span class='st'>'beta'</span>) <span class='co'># name of one parameter</span>
-<span class='fu'><a href='mk_model.html'>mk_model</a></span>(<span class='kw'>events</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>birth</span>, <span class='no'>death</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='no'>params</span>)
-}</div></pre>
+<span class='co'># \donttest{</span>
+<span class='va'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>beta <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>death</span> <span class='op'>&lt;-</span> <span class='fu'>mk_event_poisson</span><span class='op'>(</span><span class='st'>'death'</span>, intensity <span class='op'>=</span> <span class='st'>'beta'</span><span class='op'>)</span> <span class='co'># name of one parameter</span>
+<span class='fu'><a href='mk_model.html'>mk_model</a></span><span class='op'>(</span>events <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>birth</span>, <span class='va'>death</span><span class='op'>)</span>, parameters <span class='op'>=</span> <span class='va'>params</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $individual_type
+#&gt; $individual_type$names
+#&gt; [1] "birth" "death"
+#&gt; 
+#&gt; $individual_type$typesR
+#&gt; [1] "double" "double"
+#&gt; 
+#&gt; $individual_type$typesC
+#&gt; [1] "double" "double"
+#&gt; 
+#&gt; 
+#&gt; $parameters_types
+#&gt; $parameters_types$names
+#&gt; [1] "beta"
+#&gt; 
+#&gt; $parameters_types$typesR
+#&gt; [1] "double"
+#&gt; 
+#&gt; $parameters_types$typesC
+#&gt; [1] "double"
+#&gt; 
+#&gt; $parameters_types$lengths
+#&gt; beta 
+#&gt;    1 
+#&gt; 
+#&gt; 
+#&gt; $events
+#&gt; $events[[1]]
+#&gt; $name
+#&gt; [1] "birth"
+#&gt; 
+#&gt; $type
+#&gt; [1] "poisson" "birth"  
+#&gt; 
+#&gt; $intensity_code
+#&gt; [1] "10"
+#&gt; 
+#&gt; $kernel_code
+#&gt; [1] ""
+#&gt; 
+#&gt; $cpp_code
+#&gt; [1] "// Event \"birth\"\nstruct event_J_ : public event {\n    double __lambda(unsigned k, population const &amp; pop, double t, context &amp; cntxt) const {\n        double result = cntxt.__intensity_bound[_J_];\n        return result;\n    }\n    double __lambda_bound(population const &amp; pop, context &amp; cntxt) const {\n        double result = cntxt.__intensity_bound[_J_] / cntxt.__num_threads;\n        return result;\n    }\n    void __kernel(unsigned k, population &amp; pop, double t, context &amp; cntxt) const {\n        individual &amp; I = pop[k];\n        individual newI = I;\n\tnewI.birth_date = t;\n\t\n\tpop.add(newI);\n    }\n    bool __apply(double t, population &amp; pop, context &amp; cntxt) const {\n        unsigned k = pop.pick_alive(t, cntxt);\n        __kernel(k, pop, t, cntxt);\n        return true;\n    }\n};\n"
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "event"
+#&gt; 
+#&gt; $events[[2]]
+#&gt; $name
+#&gt; [1] "death"
+#&gt; 
+#&gt; $type
+#&gt; [1] "poisson" "death"  
+#&gt; 
+#&gt; $intensity_code
+#&gt; [1] "beta"
+#&gt; 
+#&gt; $kernel_code
+#&gt; [1] ""
+#&gt; 
+#&gt; $cpp_code
+#&gt; [1] "// Event \"death\"\nstruct event_J_ : public event {\n    double __lambda(unsigned k, population const &amp; pop, double t, context &amp; cntxt) const {\n        double result = cntxt.__intensity_bound[_J_];\n        return result;\n    }\n    double __lambda_bound(population const &amp; pop, context &amp; cntxt) const {\n        double result = cntxt.__intensity_bound[_J_] / cntxt.__num_threads;\n        return result;\n    }\n    void __kernel(unsigned k, population &amp; pop, double t, context &amp; cntxt) const {\n        individual &amp; I = pop[k];\n        \n\tpop.kill(k, t);\n    }\n    bool __apply(double t, population &amp; pop, context &amp; cntxt) const {\n        unsigned k = pop.pick_alive(t, cntxt);\n        __kernel(k, pop, t, cntxt);\n        return true;\n    }\n};\n"
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "event"
+#&gt; 
+#&gt; 
+#&gt; $cpp_code
+#&gt; [1] "// -*- coding: utf-8 -*-\n//[[Rcpp::depends(IBMPopSim)]]\n//[[Rcpp::depends(RcppArmadillo)]]\n//[[Rcpp::plugins(cpp11)]]\n#include &lt;RcppArmadillo.h&gt;\n#include &lt;cmath&gt;\n#include &lt;limits&gt;\n#include &lt;array&gt;\n#include &lt;vector&gt;\n#include &lt;string&gt;\n#include &lt;thread&gt;\n#include &lt;chrono&gt;\n\n#include \"functions.hpp\"\n\n// ***** DECLARATION_INDIVIDUAL\nstruct  individual{\n    individual() : death_date(NAN){}\n    individual(double birth_date,  double death_date = NAN)\n        : birth_date(birth_date),  death_date(death_date) { }\n    double birth_date;\n\n    // **** caracteristiques supplémentaires\n\n    // ****\n\n    double death_date; // If not dead, death_date = nan\n    double age(double t) const { return t - birth_date; };\n    void set_age(double a, double t) { birth_date = t-a; };\n    bool is_dead() const {return !std::isnan(death_date); };\n};\n\ninline double age(individual const &amp; I, double t) { return I.age(t); }\n\n// *****\n\n// ***** DECLARATION_PARAMS MK_CONTEXT\nstruct context {\n    std::mt19937_64 __gen;\n    int __num_threads;\n    std::vector&lt;double&gt; __intensity_bound;\n\tdouble beta;\n#define beta cntxt.beta\n\n\n    template&lt;typename ... Args&gt;\n    double Unif(Args&amp;&amp;... arg) { return std::uniform_real_distribution&lt;double&gt;(std::forward&lt;Args&gt;(arg)...)(__gen); }\n#define CUnif cntxt.Unif\n    template&lt;typename ... Args&gt;\n    double Exp(Args&amp;&amp;... arg) { return std::exponential_distribution&lt;double&gt;(std::forward&lt;Args&gt;(arg)...)(__gen); }\n#define CExp  cntxt.Exp\n    template&lt;typename ... Args&gt;\n    double Norm(Args&amp;&amp;... arg) { return std::normal_distribution&lt;double&gt;(std::forward&lt;Args&gt;(arg)...)(__gen); }\n#define CNorm cntxt.Norm\n    template&lt;typename ... Args&gt;\n    unsigned Poisson(Args&amp;&amp;... arg) { return std::poisson_distribution&lt;&gt;(std::forward&lt;Args&gt;(arg)...)(__gen); }\n#define CPoisson cntxt.Poisson\n    template&lt;typename ... Args&gt;\n    double Gamma(Args&amp;&amp;... arg) { return std::gamma_distribution&lt;double&gt;(std::forward&lt;Args&gt;(arg)...)(__gen); }\n#define CGamma cntxt.Gamma\n    template&lt;typename ... Args&gt;\n    double Weibull(Args&amp;&amp;... arg) { return std::weibull_distribution&lt;double&gt;(std::forward&lt;Args&gt;(arg)...)(__gen); }\n#define CWeibull cntxt.Weibull\n    template&lt;typename ... Args&gt;\n    int UnifInt(Args&amp;&amp;... arg) { return std::uniform_int_distribution&lt;int&gt;(std::forward&lt;Args&gt;(arg)...)(__gen); }\n#define CUnifInt  cntxt.UnifInt\n    template&lt;typename ... Args&gt;\n    unsigned Discrete(Args&amp;&amp;... arg) { return std::discrete_distribution&lt;int&gt;(std::forward&lt;Args&gt;(arg)...)(__gen); }\n#define CDiscrete  cntxt.Discrete\n    template&lt;typename ... Args&gt;\n    bool Bernoulli(Args&amp;&amp;... arg) { return std::bernoulli_distribution(std::forward&lt;Args&gt;(arg)...)(__gen); }\n#define CBern  cntxt.Bernoulli\n    template&lt;typename ... Args&gt;\n    unsigned Binomial(Args&amp;&amp;... arg) { return std::binomial_distribution&lt;int&gt;(std::forward&lt;Args&gt;(arg)...)(__gen); }\n#define CBinom  cntxt.Binomial\n};\n// *****\n\n#include \"population.hpp\"\n\n// ***** DEFINITION_EVENTS\nstruct event {\n    virtual double __lambda(unsigned k, population const &amp; pop, double t, context &amp; cntxt) const = 0;\n    virtual double __lambda_bound(population const &amp; pop, context &amp; cntxt) const = 0;\n    virtual void __kernel(unsigned k, population &amp; pop, double t, context &amp; cntxt) const = 0;\n    virtual bool __apply(double t, population &amp; pop, context &amp; cntxt) const = 0;\n};\n\nconstexpr int NEVENTS = 2;\n// Event \"birth\"\nstruct event0 : public event {\n    double __lambda(unsigned k, population const &amp; pop, double t, context &amp; cntxt) const {\n        double result = cntxt.__intensity_bound[0];\n        return result;\n    }\n    double __lambda_bound(population const &amp; pop, context &amp; cntxt) const {\n        double result = cntxt.__intensity_bound[0] / cntxt.__num_threads;\n        return result;\n    }\n    void __kernel(unsigned k, population &amp; pop, double t, context &amp; cntxt) const {\n        individual &amp; I = pop[k];\n        individual newI = I;\n\tnewI.birth_date = t;\n\t\n\tpop.add(newI);\n    }\n    bool __apply(double t, population &amp; pop, context &amp; cntxt) const {\n        unsigned k = pop.pick_alive(t, cntxt);\n        __kernel(k, pop, t, cntxt);\n        return true;\n    }\n};\n// Event \"death\"\nstruct event1 : public event {\n    double __lambda(unsigned k, population const &amp; pop, double t, context &amp; cntxt) const {\n        double result = cntxt.__intensity_bound[1];\n        return result;\n    }\n    double __lambda_bound(population const &amp; pop, context &amp; cntxt) const {\n        double result = cntxt.__intensity_bound[1] / cntxt.__num_threads;\n        return result;\n    }\n    void __kernel(unsigned k, population &amp; pop, double t, context &amp; cntxt) const {\n        individual &amp; I = pop[k];\n        \n\tpop.kill(k, t);\n    }\n    bool __apply(double t, population &amp; pop, context &amp; cntxt) const {\n        unsigned k = pop.pick_alive(t, cntxt);\n        __kernel(k, pop, t, cntxt);\n        return true;\n    }\n};\nstd::array&lt;event*, NEVENTS&gt; events { new event0, new event1 };\n// *****\n\n#include \"popsim_algorithm.hpp\"\n\nusing namespace Rcpp;\n\n//' @param pop_df Dataframe representing the initial population\n//' @param events_bounds NumericVector containing the events bounds\n//' @param parameters R parameters and functions available in C++ code\n//' @param age_max Age max of the population\n//' @param T0 Initial time\n//' @param T Final time\n//' @param clean_step Clean step for cleaning population from dead (or exit) individuals, by default equal to population age max\n//' @param clean_ratio Ratio of dead (or exit) individuals in the population for cleaning population from dead (or exit) individuals\n//' @param seed Seed for the random number generator\n//' @param multithreading Boolean for multithread activation, by default multithread is deactivated\n//' @param num_threads Number of threads for multithread run, if multihtread is activated the default value is the maximum of threads\n//' @param verbose verbose by default false\n//'\n//' @export\n// [[Rcpp::export]]\nRcpp::List popsim_cpp(Rcpp::DataFrame pop_df,\n        Rcpp::NumericVector events_bounds,\n        Rcpp::List parameters,\n        double age_max, double T0, double T,\n        double clean_step, double clean_ratio,\n        int seed,\n        bool multithreading, int num_threads = NA_INTEGER,\n        bool verbose = false)\n{\n    std::vector&lt;double&gt; intensity_bound = Rcpp::as&lt;std::vector&lt;double&gt;&gt;(events_bounds);\n    population pop(age_max);\n\n    if (verbose)\n        Rcpp::Rcout &lt;&lt; \"Simulation on the interval [\" &lt;&lt; T0 &lt;&lt; \", \" &lt;&lt; T &lt;&lt; \"] \" &lt;&lt; std::endl;\n    if (multithreading) {\n#ifdef __INTERACTION\n        Rcpp::Rcout &lt;&lt; \"Warning: Multithreading should be deactivated...\" &lt;&lt; std::endl;\n#endif\n        if (num_threads == NA_INTEGER) {\n            num_threads = std::thread::hardware_concurrency();\n        }\n        if (verbose) Rcpp::Rcout &lt;&lt; \"Multithreading activated with \" &lt;&lt; num_threads &lt;&lt; \" threads\" &lt;&lt; std::endl;\n    } else {\n        if (verbose) Rcpp::Rcout &lt;&lt; \"Multithreading deactivated\" &lt;&lt; std::endl;\n        num_threads = 1;\n    }\n\n    if (verbose) Rcpp::Rcout &lt;&lt; \"Seed: \" &lt;&lt; seed &lt;&lt; std::endl;\n    std::vector&lt;uint32_t&gt; seeds(2*num_threads);\n    std::seed_seq seq { seed };\n    seq.generate(seeds.begin(), seeds.end());\n\n    auto start = std::chrono::system_clock::now();\n\n    // ***** INITIALISATION_POPULATION\n    Rcpp::DoubleVector _birth_date = pop_df[\"birth\"];\n\tRcpp::DoubleVector _death_date = pop_df[\"death\"];\n\tfor (unsigned k = 0; k &lt; pop_df.nrow(); ++k)\n\t    pop.add_init(individual(_birth_date[k], _death_date[k]));\n\t\n    // *****\n\n    // ***** DEFINITION_PARAMETERS\n    context cntxt {\n        std::mt19937_64(),\n        num_threads,\n        intensity_bound,\n        Rcpp::as&lt;double&gt;(parameters[\"beta\"])\n\t\t\n    };\n    // *****\n\n    auto end = std::chrono::system_clock::now();\n\n    std::vector&lt;std::thread&gt; threads(num_threads);\n    std::vector&lt;counter&gt; counters(num_threads);\n    std::vector&lt;population&gt; pops = split(pop, num_threads);\n\n    std::chrono::duration&lt;double&gt; elapsed_seconds = end-start;\n    double secs_initialize = elapsed_seconds.count();\n    if (verbose) {\n        std::cout &lt;&lt; \"before main algorithm \\t\" &lt;&lt; std::endl;\n        std::cout &lt;&lt; \"parameters age max \" &lt;&lt; age_max  &lt;&lt; std::endl;\n        std::cout &lt;&lt; \"parameters clean_step \" &lt;&lt; clean_step  &lt;&lt; std::endl;\n        std::cout &lt;&lt; \"parameters clean_ratio \" &lt;&lt; clean_ratio  &lt;&lt; std::endl;\n        std::cout &lt;&lt; \"parameters num_threads \" &lt;&lt; num_threads  &lt;&lt; std::endl;\n    }\n    start = std::chrono::system_clock::now();\n\n    // Main algorithm\n    for (unsigned k = 0; k &lt; num_threads; ++k) {\n        cntxt.__gen.seed(static_cast&lt;uint64_t&gt;(seeds[2*k]) &lt;&lt; 32 | seeds[2*k+1]);\n        auto &amp; counter_k = counters[k];\n        auto &amp; pop_k = pops[k];\n        if (verbose) std::cout &lt;&lt; pop_k.individuals.size() &lt;&lt; std::endl;\n\n        threads[k] = std::thread(\n                [=, &amp;pop_k, &amp;counter_k]() mutable {\n                counter_k = popsim_algorithm(pop_k, cntxt, events,\n                        T0, T, clean_step, clean_ratio);\n                });\n    }\n    for (auto &amp; th : threads) th.join();\n\n    end = std::chrono::system_clock::now();\n    elapsed_seconds = end-start;\n    double secs_main_algorithm = elapsed_seconds.count();\n\n    pop = merge(pops);\n    counter C {0, 0, 0 };\n    for (auto &amp; Cs : counters) C += Cs;\n\n    // ***** OUTPUT_POPULATION\n    start = std::chrono::system_clock::now();\n    if (verbose) std::cout &lt;&lt; \"Before output conversion \" &lt;&lt; std::endl;\n\tstd::vector&lt;double&gt; _birth_date_out;\n\t_birth_date_out.reserve(pop.individuals.size()+pop.dead_individuals.size());\n\tstd::vector&lt;double&gt; _death_date_out;\n\t_death_date_out.reserve(pop.individuals.size()+pop.dead_individuals.size());\n\tif (verbose) std::cout &lt;&lt; \"individuals size : \" &lt;&lt; pop.individuals.size() &lt;&lt; std::endl;\n\tfor (unsigned k = 0; k &lt; pop.individuals.size(); ++k) {\n\t    _birth_date_out.push_back( pop.individuals[k].birth_date );\n\t    _death_date_out.push_back( pop.individuals[k].death_date );\n\t    }\n\tif (verbose) std::cout &lt;&lt; \"dead_individuals size : \" &lt;&lt; pop.dead_individuals.size() &lt;&lt; std::endl;\n\tfor (unsigned k = 0; k &lt; pop.dead_individuals.size(); ++k) {\n\t    _birth_date_out.push_back( pop.dead_individuals[k].birth_date );\n\t    _death_date_out.push_back( pop.dead_individuals[k].death_date );\n\t    }\n\tRcpp::DataFrame new_pop_df = Rcpp::DataFrame::create(\n\t    Rcpp::Named(\"birth\") = _birth_date_out,\n\t    Rcpp::Named(\"death\") = _death_date_out);\n\tif (verbose) std::cout &lt;&lt; \"After output conversion \" &lt;&lt; std::endl;\n\t\n    // *****\n    end = std::chrono::system_clock::now();\n    elapsed_seconds = end-start;\n    double secs_finalize = elapsed_seconds.count();\n\n    Rcpp::NumericVector logs = Rcpp::NumericVector::create(\n            Rcpp::Named(\"proposed_events\")= C.proposedEvents,\n            Rcpp::Named(\"effective_events\")= C.effectiveEvents,\n            Rcpp::Named(\"cleanall_counter\")= C.cleanAll,\n            Rcpp::Named(\"duration_main_algorithm\")=secs_main_algorithm);\n    // Returns population and simulation info\n    Rcpp::List L = Rcpp::List::create(\n            Rcpp::Named(\"population\") = new_pop_df,\n            Rcpp::Named(\"logs\") = logs);\n    return L;\n};\n"
+#&gt; 
+#&gt; $sourceCpp
+#&gt; $sourceCpp$functions
+#&gt; [1] "popsim_cpp"
+#&gt; 
+#&gt; $sourceCpp$modules
+#&gt; character(0)
+#&gt; 
+#&gt; $sourceCpp$cppSourcePath
+#&gt; [1] "/private/var/folders/bz/mbzv1m453zsgj5vwzbk9rhm40000gn/T/RtmpS7TB94/sourceCpp-x86_64-apple-darwin19.5.0-1.0.5/filea2a7583da5b5.cpp"
+#&gt; 
+#&gt; $sourceCpp$buildDirectory
+#&gt; [1] "/private/var/folders/bz/mbzv1m453zsgj5vwzbk9rhm40000gn/T/RtmpS7TB94/sourceCpp-x86_64-apple-darwin19.5.0-1.0.5/sourcecpp_a2a7374a3b55"
+#&gt; 
+#&gt; 
+#&gt; $popsim_cpp
+#&gt; function (pop_df, events_bounds, parameters, age_max, T0, T, 
+#&gt;     clean_step, clean_ratio, seed, multithreading, num_threads = NA_integer_, 
+#&gt;     verbose = FALSE) 
+#&gt; .Call(&lt;pointer: 0x11a241230&gt;, pop_df, events_bounds, parameters, 
+#&gt;     age_max, T0, T, clean_step, clean_ratio, seed, multithreading, 
+#&gt;     num_threads, verbose)
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "model"</div><div class='input'><span class='co'># }</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -222,7 +309,7 @@ See <code><a href='../articles/IBMPopSim.html'>vignette('IBMPopSim')</a></code> 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

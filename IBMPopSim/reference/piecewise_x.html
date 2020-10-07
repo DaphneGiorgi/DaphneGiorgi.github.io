@@ -8,19 +8,12 @@
 
 <title>Piecewise real function. — piecewise_x • IBMPopSim</title>
 
-<!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -50,7 +43,7 @@
 <meta property="og:description" content="Given the vectors (breaks[1],...,breaks[n]) and the list of IBMPopSim compatible
 functions funs = (f[0],f[1],...,f[n]) (one value more!), piecewise_x(breaks, funs) returns
 the function
-$$f(x) = f_0(x)\mathbb{1}_{x\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[breaks_{k}, breaks_{k+1})}(x) + f_n(x)\mathbb{1}_{x \ge breaks[n]}$$" />
+$$f(x) = f_0(x){1}_{x\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) {1}_{[breaks_{k}, breaks_{k+1})}(x) + f_n(x){1}_{x \ge breaks[n]}$$" />
 
 
 
@@ -154,10 +147,10 @@ $$f(x) = f_0(x)\mathbb{1}_{x\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[
     <p>Given the vectors <code>(breaks[1],...,breaks[n])</code> and the list of <code>IBMPopSim</code> compatible
 functions <code>funs = (f[0],f[1],...,f[n])</code> (one value more!), <code>piecewise_x(breaks, funs)</code> returns
 the function
-$$f(x) = f_0(x)\mathbb{1}_{x\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[breaks_{k}, breaks_{k+1})}(x) + f_n(x)\mathbb{1}_{x \ge breaks[n]}$$</p>
+$$f(x) = f_0(x){1}_{x\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) {1}_{[breaks_{k}, breaks_{k+1})}(x) + f_n(x){1}_{x \ge breaks[n]}$$</p>
     </div>
 
-    <pre class="usage"><span class='fu'>piecewise_x</span>(<span class='no'>breaks</span>, <span class='no'>funs</span>)</pre>
+    <pre class="usage"><span class='fu'>piecewise_x</span><span class='op'>(</span><span class='va'>breaks</span>, <span class='va'>funs</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,12 +173,13 @@ $$f(x) = f_0(x)\mathbb{1}_{x\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[
     <p>A C++ version of this function is available. See <code><a href='../articles/IBMPopSim_cpp.html'>vignette('IBMPopSim_cpp')</a></code> for more details.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>dr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>EW_pop_14</span>$<span class='no'>rates</span>,
-           <span class='fu'><a href='stepfun.html'>stepfun</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>death_male</span>[,<span class='st'>"age"</span>], <span class='kw'>y</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='no'>death_male</span>[,<span class='st'>"value"</span>])))
+    <pre class="examples"><div class='input'><span class='va'>dr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>EW_pop_14</span><span class='op'>$</span><span class='va'>rates</span>,
+           <span class='fu'><a href='stepfun.html'>stepfun</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>death_male</span><span class='op'>[</span>,<span class='st'>"age"</span><span class='op'>]</span>, y<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='va'>death_male</span><span class='op'>[</span>,<span class='st'>"value"</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># before age 80 the stepfun and after age 80 the gompertz function</span>
-<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>piecewise_x</span>(<span class='fl'>80</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>dr</span>, <span class='fu'><a href='gompertz.html'>gompertz</a></span>(<span class='fl'>0.00006</span>, <span class='fl'>0.085</span>)))
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>40</span>:<span class='fl'>120</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>x</span>, <span class='no'>f</span>))</div><div class='img'><img src='piecewise_x-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'>piecewise_x</span><span class='op'>(</span><span class='fl'>80</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>dr</span>, <span class='fu'><a href='gompertz.html'>gompertz</a></span><span class='op'>(</span><span class='fl'>0.00006</span>, <span class='fl'>0.085</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>40</span><span class='op'>:</span><span class='fl'>120</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='piecewise_x-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -202,7 +196,7 @@ $$f(x) = f_0(x)\mathbb{1}_{x\le breaks[1]}+\sum_{k=1}^{n-1} f_k(x) \mathbb{1}_{[
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

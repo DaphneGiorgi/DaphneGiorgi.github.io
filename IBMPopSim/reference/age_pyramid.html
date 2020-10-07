@@ -8,19 +8,12 @@
 
 <title>Age pyramid from a population data frame at a given time. — age_pyramid • IBMPopSim</title>
 
-<!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -151,7 +144,7 @@
     <p>Reduce a population data frame containing all individuals (with some characteristics) to an age-groups data frame (preserving characteristics). The function computes the number of individuals at <code>time</code> in each age group <code>[ages[i],ages[i+1][</code>, for <code>i</code> in <code>{1,...,N-1}</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>age_pyramid</span>(<span class='no'>population</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>ages</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>:<span class='fl'>110</span>, <span class='fl'>Inf</span>))</pre>
+    <pre class="usage"><span class='fu'>age_pyramid</span><span class='op'>(</span><span class='va'>population</span>, time <span class='op'>=</span> <span class='fl'>0</span>, ages <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>110</span>, <span class='cn'>Inf</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,7 +171,8 @@
     <p>See also <code><a href='age_pyramids.html'>age_pyramids</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>age_pyramid</span>(<span class='no'>EW_pop_14</span>$<span class='no'>sample</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt;           age  male value
+    <pre class="examples"><div class='input'><span class='fu'>age_pyramid</span><span class='op'>(</span><span class='va'>EW_pop_14</span><span class='op'>$</span><span class='va'>sample</span>, time <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           age  male value
 #&gt; 1       0 - 1 FALSE   581
 #&gt; 2       0 - 1  TRUE   584
 #&gt; 3       1 - 2 FALSE   577
@@ -401,7 +395,8 @@
 #&gt; 220 109 - 110  TRUE     0
 #&gt; 221 110 - Inf FALSE     0
 #&gt; 222 110 - Inf  TRUE     0</div><div class='input'>
-<span class='fu'>age_pyramid</span>(<span class='no'>EW_popIMD_14</span>$<span class='no'>sample</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>ages</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>120</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fl'>2</span>))</div><div class='output co'>#&gt;           age  male IMD value
+<span class='fu'>age_pyramid</span><span class='op'>(</span><span class='va'>EW_popIMD_14</span><span class='op'>$</span><span class='va'>sample</span>, time <span class='op'>=</span> <span class='fl'>0</span>, ages <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>120</span>, by<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           age  male IMD value
 #&gt; 1       0 - 2 FALSE   1   166
 #&gt; 2       0 - 2 FALSE   2   217
 #&gt; 3       0 - 2 FALSE   3   220
@@ -1018,7 +1013,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

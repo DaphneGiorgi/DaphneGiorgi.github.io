@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>IBMPopSim description • IBMPopSim</title>
+<title>IBMPopSim package description • IBMPopSim</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="IBMPopSim description" />
+<meta property="og:title" content="IBMPopSim package description" />
 <meta property="og:description" content="IBMPopSim" />
 
 
@@ -90,9 +90,12 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../articles/IBMPopSim_cpp.html">C++ essentials</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Vignettes
      
     <span class="caret"></span>
   </a>
@@ -102,6 +105,9 @@
     </li>
     <li>
       <a href="../articles/IBMPopSim_human_pop_IMD.html">Human population with swap</a>
+    </li>
+    <li>
+      <a href="../articles/IBMPopSim_insurance_portfolio.html">Insurance portfolio</a>
     </li>
     <li>
       <a href="../articles/IBMPopSim_interaction.html">Population with genetically variable traits</a>
@@ -130,10 +136,8 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>IBMPopSim description</h1>
-                        <h4 class="author">Daphné Giorgi</h4>
-                        <h4 class="author">Sarah Kaakaï</h4>
-                        <h4 class="author">Vincent Lemaire</h4>
+      <h1 data-toc-skip>IBMPopSim package description</h1>
+                        <h4 class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
             
       
       <small class="dont-index">Source: <a href='https://github.com/DaphneGiorgi/IBMPopSim/blob/master/vignettes/IBMPopSim.Rmd'><code>vignettes/IBMPopSim.Rmd</code></a></small>
@@ -143,10 +147,11 @@
 
     
     
-The IBMPopSim package is conceived to simulate the random evolution of structured population dynamics, called stochastic Individual Based Models (IBMs).
+The IBMPopSim package is conceived to simulate the random evolution of structured population dynamics, called stochastic Individual Based Models (IBMs), based on the description of individual behaviors.
 
-The package allows users to simulate the random evolution of a population in which individuals are characterized by their date of birth, a set of (discrete or continuous) attributes, and their potential date of death.\\
-The population is modified due to different types of events defined by the user, and occurring at random dates. These events include the birth/arrival or death/exit of an individual in the population, an individual changing characteristics.
+The package IBMPopSim allows the efficient simulation of a wide class IBMs where individuals are marked by their date of birth and a set of (discrete or continuous) characteristics. The scope of applications includes population models in actuarial science, biology, demography, ecology, epidemiology or economy.
+
+An IBM is summarized by the different types events occurring in the population at random dates. These events include the birth/arrival or death/exit of an individual in the population, and individuals changing of characteristics.
 Once the events modifying the population have been defined, the last step before simulating the population evolution is to specify the so-called events intensities, describing the frequency at which the different types of events occur in the population.
 
 \hypertarget{general-features-and-package-installation}{%
@@ -155,11 +160,9 @@ Once the events modifying the population have been defined, the last step before
 \hypertarget{brief-overview-of-individual-based-models-ibms}{%
 \subsection{Brief overview of Individual-Based-Models (IBMs)}\label{brief-overview-of-individual-based-models-ibms}}
 
-Stochastic Individual-Based-Models (IBMs) can be defined as a general class of population dynamics models, where different types of events can occur to individuals at random dates, depending on their characteristics and interactions with others.
+Stochastic IBMs can be defined as a general class of population dynamics models, where different types of events can occur to individuals at random dates, depending on their age (or equivalently their date of birth) and characteristics (gender, location, size, socioeconomic class\ldots), and interactions with others.
 
-The package IBMPopSim allows the efficient simulation of a wide class IBMs where individuals are marked by their age (or equivalently their date of birth) and a set of characteristics (gender, location, size, socioeconomic class\ldots). { champs d'application}
-
-An IBM can always be summarized by the different types events that can occur to individuals and modify the population composition, and how frequently they happen. Let us start by recalling briefly these features before going into detailed on how they can be defined in IBMPopSim.
+An IBM can be summarized by the different types events that can occur to individuals and modify the population composition, and how frequently they happen. Let us start by recalling briefly these features before going into detailed on how they can be defined in IBMPopSim.
 
 \hypertarget{eventsTh}{%
 \subsubsection{Events type and associated kernel}\label{eventsTh}}
@@ -179,30 +182,21 @@ In IBMPopSim, the population can evolve according to six main types of events:
 \item
   \textbf{Swap event}: an individual changes of characteristics.
 \item
-  \textbf{custom events}.
+  \textbf{Custom event}.
 \end{itemize}
 
-With each event type is associated an \textbf{event kernel}, describing how the population is modified following the occurrence of the event. For instance, if an individual \texttt{I} dies or exit a time \(t\), the individual is removed from the population.
+With each event type is associated an \textbf{event kernel}, describing how the population is modified following the occurrence of the event. For instance, if an individual \(I\) dies or exit a time \(t\), the individual is removed from the population.
 
-For other types of events, the event kernel has to be specified. Indeed, if an new individual enters the population (entry event), the rule for choosing the age and characteristics of this new individual has to be defined.\\
-For instance, the characteristics of a new individual in the population can be chosen uniformly in the space of all characteristics, or can depends on the distribution of his parents or those of the other individuals composing the population.
+For other types of events, the event kernel has to be specified. Indeed, if an new individual enters the population (entry event), the rule for choosing the age and characteristics of this new individual has to be defined. For instance, the characteristics of a new individual in the population can be chosen uniformly in the space of all characteristics, or can depends on the distribution of his parents or those of the other individuals composing the population.
 
 \hypertarget{Eventintensityth}{%
-\subsubsection{Events intensity}\label{Eventintensityth}}
+\subsubsection{Events intensities}\label{Eventintensityth}}
 
 Once the different types or events and their action have been defined, it remains to define how frequently they can occur to define properly an IBM.
 
-An event intensity a function
-
+An event intensity is a function \(\lambda^e(I,t)\) describing the frequency at which an event \(e\) can occur to \emph{an individual} \(I\) in the population at a time \(t\). Informally, given an history of the population \((\mathcal{F}_t)\), the probability of event \(e\) occurring to individual \(I\) during a small interval of time \((t,t+dt]\) is proportional to \(\lambda^e(I,t)\):
 \begin{equation}
-\lambda^e(I,t) = f(I,t,\dots)
-(\#eq:intensity)
-\end{equation}
-
-describing the frequency at which an event \(e\) can occur to \emph{an individual} \texttt{I} in the population. Informally, given an history of the population \((\mathcal{F}_t)\),
-
-\begin{equation}
-\mathbb{P}(\text{event } e \text{ occurring to I during } ]t,t+dt] | \mathcal{F}_t) = \lambda^e(I,t).
+  \mathbb{P}(\text{event } e \text{ occurring to $I$ during } (t,t+dt] | \mathcal{F}_t) = \lambda^e(I,t)dt.
 \end{equation}
 
 The intensity function \(\lambda^e\) can depend on:
@@ -212,47 +206,132 @@ The intensity function \(\lambda^e\) can depend on:
 \item
   The individual's age and characteristics,
 \item
-  The time t,
+  The time \(t\),
 \item
-  Interactions with other individuals,
+  Interactions with other individuals in the population,
 \item
   Other model parameters.
 \end{itemize}
 
-When the intensity \(\lambda^e\) does not depends on the other individuals living in the population (there are no interactions for this specific event), the intensity function is said to be in the class of \textbf{individual} intensity functions. This is case for instance when the death intensity of individuals only depend on their age and characteristics.\\
-Otherwise, the intensity function is said to be the class of \textbf{interaction} functions. In this package, we mainly focus on ``quadratic interactions", that is of intensity functions of the form
+When the intensity \(\lambda^e\) does not depends on the other individuals living in the population (there are no interactions for this specific event), the intensity function is said to be in the class of \textbf{individual} intensity functions. This is case for instance when the death intensity of individuals only depend on their age and characteristics.
+Otherwise, the intensity function is said to be the class of \textbf{interaction} functions. In this package, we mainly focus on \emph{quadratic interactions}, that is of intensity functions of the form
 
 \begin{equation}
-\lambda^e(I,t) = \sum_{J \in pop} U(I,J,t),
+\lambda^e(I,t) = \sum_{J \in pop} U(I,J,t).
   (\#eq:interaction)
 \end{equation}
 
-where the interaction function \(U(I,J,t)\) represent the interaction between two individuals \(I\) and \(J\) at time \(t\). See for instance the vignette {\ldots{}} for examples of intensities with interactions.
+The interaction function \(U(I,J,t)\) represent the interaction between two individuals \(I\) and \(J\) at time \(t\). See for instance the \texttt{vignette(\textquotesingle{}IBMPopSim\_interaction\textquotesingle{})} for examples of intensities with interactions.
 
-Sometimes, the intensity refers to the frequency at which an event can occur in \emph{all the population}. This is the case for instance when individuals enter the population at a constant rate \(C^e\) (intensity of class \texttt{poisson}), or at a rate only depending on time \((\Lambda^e_t)\) (intensity of class \texttt{inhomogeneous\_poisson}). In this case, the intensity \(\Lambda^e_t\) is informally defined as
+Sometimes, the intensity refers to the frequency at which an event can occur in \emph{all the population}. This is the case for instance when individuals enter the population at a constant rate \(C^e\) (intensity of class \texttt{poisson}), or at a rate \((\Lambda^e_t)\) depending on time (intensity of class \texttt{inhomogeneous\_poisson}). In this case, the intensity \(\Lambda^e_t\) is informally defined as
 
 \begin{equation}
-\mathbb{P}(\text{event } e \text{ occurring to in the population during } ]t,t+dt] | \mathcal{F}_t) = \Lambda^e_t.
+\mathbb{P}(\text{event } e \text{ occurring in the population during } (t,t+dt] | \mathcal{F}_t) = \Lambda^e_t dt.
 \end{equation}
 
-\hypertarget{installation-and-quick-model-creation-and-simulation}{%
-\subsection{Installation and quick model creation and simulation}\label{installation-and-quick-model-creation-and-simulation}}
+\hypertarget{algo}{%
+\subsubsection{Simulation algorithm}\label{algo}}
+
+The IBM simulation algorithm is based on an acceptance-rejection method for simulating random times called \textbf{thinning}, generalizing the algorithm proposed by (Fournier and Méléard 2004) (see also (Ferrière and Tran, n.d.), (Boumezoued 2016)).
+The main idea of the algorithm is to use candidate event times with \emph{constant} intensity \(\bar \lambda\) (which corresponds to exponential variables with parameter \(\bar \lambda\)). The constant \(\bar \lambda\) must be greater than the true event intensity \(\lambda^e(I,t)\) for all individuals \(I\):
+
+\begin{equation}
+\lambda^e(I,t) \leq \bar{\lambda}, \quad \forall I \in \text{pop}, \; t \in [0,T].
+\end{equation}
+
+Starting from time \(t\), once a candidate event time \(t + \tau^e\) has been proposed for a given event \(e\) and individual \(I\), it remains to accept or reject the candidate event with probability \(\frac{\lambda^e(I,t+\tau^e)}{\bar{\lambda}}\). If the candidate event time is accepted, then the event \(e\) occurs to the individual \(I\) at time \(t + \tau^e\). The main idea of the algorithm implemented can be summarized as follows:
+
+\textbf{Thinning algorithm}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Draw a candidate time \(t+\tau^e\) for event \(e\), \(\tau^e \sim \mathcal E(\bar \lambda)\) and an individual \(I\).
+\item
+  Draw a uniform variable \(\theta \sim \mathcal U([0,1])\).
+\item
+  \textbf{If} \(\theta \leq \dfrac{\lambda^e(I,t+\tau^e)}{\bar\lambda}\) \textbf{then} Apply event kernel to individual \(I\),
+  \textbf{else} Do nothing and start again from \(t+\tau^e\).
+\end{enumerate}
+
+In the presence of interactions, the intensity of an individual \(I\) is computed making the sum over all individuals \(J\) in the population of the interactions between \(I\) and \(J\), which can be very time consuming.
+We introduce in IBMPopSim a ``randomized'' algorithm, in which this computation is by picking randomly another individual in the population and computing its interaction function with the given individual. In this case the algorithm presented above is simply modified as follows: two individuals are picked, the intensity function \(\lambda^e\) in the algorithm is replaced by the interaction function \(U^e\), and \(\bar \lambda\) by a bound of \(U^e\).
+
+\hypertarget{overview-of-package-structure}{%
+\subsection{Overview of package structure}\label{overview-of-package-structure}}
+
+Emphasis is placed on code efficiency (speed of execution) and ease of implementation, while trying to be as general as possible.
+
+The implementation of an IBM model is based on a few building blocks, easy to manipulate. For code efficiency, we have chosen to let the user write a few lines of C++ code in R interface to define events intensity and action kernel. The user's code is concatenated with internal code in the package. Compilation is done via the \texttt{sourceCpp} call of the \texttt{Rcpp} package. The code produced is usually very fast and can be multithreaded.
+
+Thanks to model parameters and predefined functions, the C++ code to be written is simple and does not require a great knowledge of C++: it is enough to respect the rules of syntax, to do arithmetic operations and tests. Furthermore, various inputs of the model can be modified without having to recompile the code.
 
 \hypertarget{installation}{%
-\subsubsection{Installation}\label{installation}}
+\subsection{Installation}\label{installation}}
+
+The latest stable version can be installed from CRAN:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{install.packages}\NormalTok{(}\StringTok{"IBMPopSim"}\NormalTok{)}
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}IBMPopSim\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
+The latest development version can be installed from github:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# install.packages("devtools")}
+\NormalTok{devtools}\OperatorTok{::}\KeywordTok{install\_github}\NormalTok{(}\StringTok{\textquotesingle{}DaphneGiorgi/IBMPopSim\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{first-example-to-check-installation}{%
+\subsubsection{First example to check installation}\label{first-example-to-check-installation}}
+
+To illustrate the use of the package and to check the installation, a simple model with Poisson arrivals and exits is implemented.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(IBMPopSim)}
+
+\NormalTok{init\_size \textless{}{-}}\StringTok{ }\DecValTok{100000}
+\NormalTok{pop \textless{}{-}}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{birth =} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, init\_size), }\DataTypeTok{death =} \OtherTok{NA}\NormalTok{)}
+
+\NormalTok{birth =}\StringTok{ }\KeywordTok{mk\_event\_poisson}\NormalTok{(}\DataTypeTok{type =} \StringTok{\textquotesingle{}birth\textquotesingle{}}\NormalTok{, }\DataTypeTok{intensity =} \StringTok{\textquotesingle{}lambda\textquotesingle{}}\NormalTok{)}
+\NormalTok{death =}\StringTok{ }\KeywordTok{mk\_event\_poisson}\NormalTok{(}\DataTypeTok{type =} \StringTok{\textquotesingle{}death\textquotesingle{}}\NormalTok{, }\DataTypeTok{intensity =} \StringTok{\textquotesingle{}mu\textquotesingle{}}\NormalTok{)}
+\NormalTok{params =}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{\textquotesingle{}lambda\textquotesingle{}}\NormalTok{ =}\StringTok{ }\DecValTok{100}\NormalTok{, }\StringTok{\textquotesingle{}mu\textquotesingle{}}\NormalTok{ =}\StringTok{ }\DecValTok{100}\NormalTok{)}
+
+\CommentTok{\# mk\_model compiles C++ code using sourceCpp from Rcpp}
+\NormalTok{birth\_death \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{events =} \KeywordTok{list}\NormalTok{(birth, death),}
+                        \DataTypeTok{parameters =}\NormalTok{ params)}
+\end{Highlighting}
+\end{Shaded}
+
+If there are no errors then the C++ built environment is compatible with the package. The model is created and a C++ code has been compiled. The simulation is done using the \texttt{popsim} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sim\_out \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ birth\_death, }
+                  \DataTypeTok{population =}\NormalTok{ pop, }
+                  \DataTypeTok{events\_bounds =} \KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}birth\textquotesingle{}}\NormalTok{ =}\StringTok{ }\NormalTok{params}\OperatorTok{$}\NormalTok{lambda, }\StringTok{\textquotesingle{}death\textquotesingle{}}\NormalTok{ =}\StringTok{ }\NormalTok{params}\OperatorTok{$}\NormalTok{mu),}
+                  \DataTypeTok{parameters =}\NormalTok{ params, }
+                  \DataTypeTok{time =} \DecValTok{10}\NormalTok{)}
+\CommentTok{\#\# Simulation on  [0, 10]}
+
+\NormalTok{num\_births \textless{}{-}}\StringTok{ }\KeywordTok{length}\NormalTok{(sim\_out}\OperatorTok{$}\NormalTok{population}\OperatorTok{$}\NormalTok{birth) }\OperatorTok{{-}}\StringTok{ }\NormalTok{init\_size}
+\NormalTok{num\_deaths \textless{}{-}}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(sim\_out}\OperatorTok{$}\NormalTok{population}\OperatorTok{$}\NormalTok{death))}
+\KeywordTok{print}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"births"}\NormalTok{ =}\StringTok{ }\NormalTok{num\_births, }\StringTok{"deaths"}\NormalTok{ =}\StringTok{ }\NormalTok{num\_deaths))}
+\CommentTok{\#\# births deaths }
+\CommentTok{\#\#    959    959}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{quick-model-creation-and-simulation}{%
-\subsubsection{Quick model creation and simulation}\label{quick-model-creation-and-simulation}}
+\subsection{Quick model creation and simulation}\label{quick-model-creation-and-simulation}}
 
-Before going into details on the different steps for defining an IBM in IBMPopSim, let us first go quickly through an example of model creation and simulation.\\
+Before going into details on the different steps for defining an IBM in IBMPopSim, let us first go quickly through an example of model creation and simulation.
 In order to define a model, the user must specify three building blocks:
 
 \begin{itemize}
@@ -262,87 +341,81 @@ In order to define a model, the user must specify three building blocks:
 \item
   The model parameters (see Section @ref(params)),
 \item
-  The different events (see Section @ref(events)).
+  The different events thant can occur and their intensity (see Section @ref(events)).
 \end{itemize}
 
 The model can then be created from these three blocks.
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
+\begin{itemize}
 \tightlist
 \item
-  We take here an initial population, stored in a dataframe, composed of 100 000 individuals marked by their gender (encoded by a Boolean characteristic):
-\end{enumerate}
+  We take here an initial population, stored in a data frame, composed of \(100\,000\) individuals marked by their gender (encoded by a Boolean characteristic):
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{population\_df \textless{}{-}}\StringTok{ }\NormalTok{EW\_pop\_}\DecValTok{14}\OperatorTok{$}\NormalTok{sample}
+\KeywordTok{library}\NormalTok{(}\StringTok{"IBMPopSim"}\NormalTok{)}
+\NormalTok{pop \textless{}{-}}\StringTok{ }\NormalTok{EW\_pop\_}\DecValTok{14}\OperatorTok{$}\NormalTok{sample}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
+\begin{itemize}
 \tightlist
 \item
   The second step is to define the model parameters' list:
-\end{enumerate}
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"alpha"}\NormalTok{ =}\StringTok{  }\FloatTok{0.008}\NormalTok{, }\StringTok{"beta"}\NormalTok{ =}\FloatTok{0.02}\NormalTok{, }\StringTok{"p\_male"}\NormalTok{=}\StringTok{ }\FloatTok{0.51}\NormalTok{,}
-               \StringTok{"birth\_rate"}\NormalTok{ =}\StringTok{ }\KeywordTok{stepfun}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{,}\DecValTok{40}\NormalTok{),}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.05}\NormalTok{,}\DecValTok{0}\NormalTok{)))}
+\NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"alpha"}\NormalTok{ =}\StringTok{ }\FloatTok{0.008}\NormalTok{, }\StringTok{"beta"}\NormalTok{ =}\StringTok{ }\FloatTok{0.02}\NormalTok{, }\StringTok{"p\_male"}\NormalTok{ =}\StringTok{ }\FloatTok{0.51}\NormalTok{,}
+               \StringTok{"birth\_rate"}\NormalTok{ =}\StringTok{ }\KeywordTok{stepfun}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{,}\DecValTok{40}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.05}\NormalTok{,}\DecValTok{0}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
+\begin{itemize}
 \tightlist
 \item
   The last step is to defined the events that can occur in the population, here birth and death events:
-\end{enumerate}
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{death\_event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{(}\DataTypeTok{type =} \StringTok{"death"}\NormalTok{,}
-                  \DataTypeTok{intensity\_code =} \StringTok{" result = alpha*exp(beta*age(I, t));"}\NormalTok{)}
+                  \DataTypeTok{intensity\_code =} \StringTok{"result = alpha * exp(beta * age(I, t));"}\NormalTok{)}
 
-\NormalTok{birth\_event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{( }\DataTypeTok{type =} \StringTok{"birth"}\NormalTok{, }
-                  \DataTypeTok{intensity\_code =} \StringTok{"result=birth\_rate(age(I,t));"}\NormalTok{,}
+\NormalTok{birth\_event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{(}\DataTypeTok{type =} \StringTok{"birth"}\NormalTok{, }
+                  \DataTypeTok{intensity\_code =} \StringTok{"result = birth\_rate(age(I,t));"}\NormalTok{,}
                   \DataTypeTok{kernel\_code =} \StringTok{"newI.male = CUnif(0, 1) \textless{} p\_male;"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
+Note that these events contain some C++ statements that depend (implicitly) on the previously declared parameters in variable \texttt{params}.
+
+\begin{itemize}
 \tightlist
 \item
-  Finally, the model is created by calling the function \texttt{mk\_model}
-\end{enumerate}
+  Finally, the model is created by calling the function \texttt{mk\_model}. A C++ source code is obtained from the events and parameters, then compiled using the \texttt{sourceCpp} function of the \texttt{Rcpp} package.
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{characteristics =} \KeywordTok{get\_characteristics}\NormalTok{(population\_df),}
+\NormalTok{model \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{characteristics =} \KeywordTok{get\_characteristics}\NormalTok{(pop),}
                   \DataTypeTok{events =} \KeywordTok{list}\NormalTok{(death\_event, birth\_event),}
                   \DataTypeTok{parameters =}\NormalTok{ params)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{4}
+\begin{itemize}
 \tightlist
 \item
   In order to simulate a random trajectory of the population until a given time \texttt{T} bounds on the events intensities have to be specified:
-\end{enumerate}
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{a\_max \textless{}{-}}\StringTok{ }\DecValTok{115}
-\NormalTok{events\_bounds =}\StringTok{ }\KeywordTok{c}\NormalTok{( }\StringTok{"death"}\NormalTok{ =}\StringTok{ }\NormalTok{params}\OperatorTok{$}\NormalTok{alpha}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(params}\OperatorTok{$}\NormalTok{beta}\OperatorTok{*}\NormalTok{a\_max),}
-                   \StringTok{"birth"}\NormalTok{ =}\StringTok{ }\KeywordTok{max}\NormalTok{(params}\OperatorTok{$}\NormalTok{birth\_rate))}
+\NormalTok{events\_bounds =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"death"}\NormalTok{ =}\StringTok{ }\NormalTok{params}\OperatorTok{$}\NormalTok{alpha }\OperatorTok{*}\StringTok{ }\KeywordTok{exp}\NormalTok{(params}\OperatorTok{$}\NormalTok{beta }\OperatorTok{*}\StringTok{ }\NormalTok{a\_max),}
+                  \StringTok{"birth"}\NormalTok{ =}\StringTok{ }\KeywordTok{max}\NormalTok{(params}\OperatorTok{$}\NormalTok{birth\_rate))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -350,63 +423,56 @@ Then, the function \texttt{popsim} can be called:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sim\_out \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, population\_df, events\_bounds, params,}
+\NormalTok{sim\_out \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, pop, events\_bounds, params,}
                   \DataTypeTok{age\_max =}\NormalTok{ a\_max, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{)}
+\CommentTok{\#\# Simulation on  [0, 30]}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Simulation on  [0, 30]
-\end{verbatim}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{5}
+\begin{itemize}
 \tightlist
 \item
-  The dataframe \texttt{pop\_out\$population} contains the information (date of birth, date of death, gender) on individuals who lived in the population over the period \([0,30]\). Functions of the package allows to provide aggregated information on the population.
-\end{enumerate}
+  The data frame \texttt{sim\_out\$population} contains the information (date of birth, date of death, gender) on individuals who lived in the population over the period \([0,30]\). Functions of the package allows to provide aggregated information on the population.
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pop\_out \textless{}{-}}\StringTok{ }\NormalTok{sim\_out}\OperatorTok{$}\NormalTok{population}
-\NormalTok{female\_pop \textless{}{-}}\StringTok{ }\NormalTok{pop\_out[pop\_out}\OperatorTok{$}\NormalTok{male}\OperatorTok{==}\OtherTok{FALSE}\NormalTok{,]}
+\KeywordTok{head}\NormalTok{(pop\_out)}
+\CommentTok{\#\#       birth death  male}
+\CommentTok{\#\# 1 {-}84.97719    NA  TRUE}
+\CommentTok{\#\# 2 {-}84.96353    NA FALSE}
+\CommentTok{\#\# 3 {-}84.95439    NA  TRUE}
+\CommentTok{\#\# 4 {-}84.95336    NA FALSE}
+\CommentTok{\#\# 5 {-}84.93471    NA FALSE}
+\CommentTok{\#\# 6 {-}84.89871    NA  TRUE}
+\NormalTok{female\_pop \textless{}{-}}\StringTok{ }\NormalTok{pop\_out[pop\_out}\OperatorTok{$}\NormalTok{male}\OperatorTok{==}\OtherTok{FALSE}\NormalTok{, ]}
 \KeywordTok{age\_pyramid}\NormalTok{(female\_pop, }\DataTypeTok{ages =} \DecValTok{85}\OperatorTok{:}\DecValTok{90}\NormalTok{, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{)}
+\CommentTok{\#\#       age  male value}
+\CommentTok{\#\# 1 85 {-} 86 FALSE   234}
+\CommentTok{\#\# 2 86 {-} 87 FALSE   240}
+\CommentTok{\#\# 3 87 {-} 88 FALSE   194}
+\CommentTok{\#\# 4 88 {-} 89 FALSE   186}
+\CommentTok{\#\# 5 89 {-} 90 FALSE   191}
+\NormalTok{Dxt \textless{}{-}}\StringTok{ }\KeywordTok{death\_table}\NormalTok{(female\_pop, }\DataTypeTok{ages =} \DecValTok{85}\OperatorTok{:}\DecValTok{90}\NormalTok{, }\DataTypeTok{period =} \DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{)}
+\NormalTok{Ext \textless{}{-}}\StringTok{ }\KeywordTok{exposure\_table}\NormalTok{(female\_pop, }\DataTypeTok{ages =} \DecValTok{85}\OperatorTok{:}\DecValTok{90}\NormalTok{, }\DataTypeTok{period =} \DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##       age  male value
-## 1 85 - 86 FALSE   222
-## 2 86 - 87 FALSE   249
-## 3 87 - 88 FALSE   211
-## 4 88 - 89 FALSE   187
-## 5 89 - 90 FALSE   202
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{Dxt \textless{}{-}}\StringTok{ }\KeywordTok{death\_table}\NormalTok{(female\_pop, }\DataTypeTok{ages =} \DecValTok{85}\OperatorTok{:}\DecValTok{90}\NormalTok{,}\DataTypeTok{times =} \DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{)}
-\NormalTok{Ext \textless{}{-}}\StringTok{ }\KeywordTok{exposure\_table}\NormalTok{(female\_pop, }\DataTypeTok{ages =} \DecValTok{85}\OperatorTok{:}\DecValTok{90}\NormalTok{,}\DataTypeTok{times =} \DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{7}
+\begin{itemize}
 \tightlist
 \item
-  Parameters of the model can be changed without recompiling the model.
-\end{enumerate}
+  Note that parameters of the model can be changed without recompiling the model.
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{params}\OperatorTok{$}\NormalTok{beta  \textless{}{-}}\StringTok{ }\FloatTok{0.01}
+\NormalTok{params}\OperatorTok{$}\NormalTok{beta \textless{}{-}}\StringTok{ }\FloatTok{0.01}
 
 \CommentTok{\# Update death event bound:}
-\NormalTok{events\_bounds[}\StringTok{"death"}\NormalTok{]\textless{}{-}}\StringTok{ }\NormalTok{params}\OperatorTok{$}\NormalTok{alpha}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(params}\OperatorTok{$}\NormalTok{beta}\OperatorTok{*}\NormalTok{a\_max)}
+\NormalTok{events\_bounds[}\StringTok{"death"}\NormalTok{] \textless{}{-}}\StringTok{ }\NormalTok{params}\OperatorTok{$}\NormalTok{alpha }\OperatorTok{*}\StringTok{ }\KeywordTok{exp}\NormalTok{(params}\OperatorTok{$}\NormalTok{beta }\OperatorTok{*}\StringTok{ }\NormalTok{a\_max)}
 
-\NormalTok{pop\_out \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, population\_df, events\_bounds, params,}
+\NormalTok{sim\_out \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, pop, events\_bounds, params,}
                   \DataTypeTok{age\_max =}\NormalTok{ a\_max, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -417,108 +483,131 @@ Then, the function \texttt{popsim} can be called:
 The first step to define a model in IBMPopSim is to define the population structure.
 
 \hypertarget{population}{%
-\subsection{Population}\label{population}}
+\subsection{Population, individuals, characteristics}\label{population}}
 
-\hypertarget{initial-population}{%
-\subsubsection{Initial population}\label{initial-population}}
-
-A population is a dataframe in which each row corresponds to an individual, and
-which has at least two columns:
+A population is a data frame in which each row corresponds to an individual, and which has at least two columns:
 
 \begin{itemize}
 \tightlist
 \item
   A column \texttt{birth} containing the birth dates of individuals in the population.
 \item
-  A column \texttt{death} containing the birth dates of individuals in the population ( \texttt{NA} for alive individuals).
+  A column \texttt{death} containing the birth dates of individuals in the population (\texttt{NA} for alive individuals).
 \end{itemize}
 
-The dataframe can contain more than two columns if individuals are described by additional characteristics such as gender, size, spatial location\ldots{}
+The data frame can contain more than two columns if individuals are described by additional characteristics such as gender, size, spatial location\ldots{}
+In the example below, individuals are described by their birth and death dates, as well a Boolean characteristics called \texttt{male}. For instance, the first individual is a female whose age at \(t_0=0\) is \(t_0 - (-106.9055) = 106.9055\).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{head}\NormalTok{(population\_df)}
+\KeywordTok{head}\NormalTok{(pop)}
+\CommentTok{\#\#       birth death  male}
+\CommentTok{\#\# 1 {-}106.9055    NA FALSE}
+\CommentTok{\#\# 2 {-}106.8303    NA FALSE}
+\CommentTok{\#\# 3 {-}104.5097    NA  TRUE}
+\CommentTok{\#\# 4 {-}104.2218    NA FALSE}
+\CommentTok{\#\# 5 {-}103.5225    NA FALSE}
+\CommentTok{\#\# 6 {-}103.3644    NA FALSE}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##       birth death  male
-## 1 -106.9055    NA FALSE
-## 2 -106.8303    NA FALSE
-## 3 -104.5097    NA  TRUE
-## 4 -104.2218    NA FALSE
-## 5 -103.5225    NA FALSE
-## 6 -103.3644    NA FALSE
-\end{verbatim}
-
-In the example above, individuals are described by their birth and death dates, as well a Boolean characteristics called \texttt{male}. For instance, the first individual is a female whose age at \(t_0=0\) is \(t_0 - (-106.9055) = 106.9055\).
-
-We draw the attention to the fact that some characteristics names are forbidden, or are reserved to specific cases. The reserved words include:
-
 \begin{itemize}
-\tightlist
 \item
-  \texttt{male}: can only be used for a Boolean characteristics, usually referring to the individuals' sex/gender.
+  \textbf{Type of a characteristic}.
+  A characteristic must be of atomic type: logical (\texttt{bool} in C++), integer (\texttt{int}), double or character (\texttt{char}). The function \texttt{?get\_characteristic} allows to easily get characteristics names and their types (in R and C++) from a population data frame. See also section @ref(cppcharacteristics).
 \item
-  \texttt{id}: can only be used in order to defined the individuals unique identifier (see Section @ref(simulationswap)).
+  \textbf{Name of a characteristic}.
+  We draw the attention to the fact that some names for characteristics are forbidden, or are reserved to specific cases. The reserved words include:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{birth} and \texttt{death}: which are of type \texttt{double}, referring to dates of the events of birth and death,
+  \item
+    \texttt{male}: can only be used for a Boolean characteristics, usually referring to the individuals' sex/gender,
+  \item
+    \texttt{entry}: can only be used with an event of type \texttt{entry}. This characteristic is a \texttt{double} containing the date of entry in the population of the individual.
+  \item
+    \texttt{out}: can only be used with an event of type \texttt{exit}. This characteristic is a Boolean which is \texttt{TRUE} if the individual came out of the population at time \texttt{death}
+  \item
+    \texttt{id}: can only be used in order to defined the individuals unique identifier (see Section @ref(simulationswap)),
+  \item
+    \texttt{time}, \texttt{I}, \texttt{J}, \texttt{pop}, \texttt{newI}, \texttt{t} and \texttt{k} : forbidden as characteristics or variable name,
+  \item
+    C++ reserved words: forbidden as characteristics or variable name. Note that \texttt{char}
+    is a reserved word. See \href{https://en.cppreference.com/w/cpp/keyword}{here} for a comprehensive list of C++ reserved words.
+  \end{itemize}
 \item
-  \texttt{time} : forbidden as characteristics or variable name.\\
+  \textbf{An individual in C++}.
+  In the C++ compiled model, an individual \texttt{I} is an object of the C++ class \texttt{individual} containing some attributes:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{birth\_date} and \texttt{death\_date} which are \texttt{double},
+  \item
+    the characteristics,
+  \item
+    and some methods:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \texttt{I.age(t)}: a \texttt{const} method returning the age of an individual \texttt{I} at time \texttt{t},
+    \item
+      \texttt{I.set\_age(a,\ t)}: to set the age \texttt{a} at time \texttt{t} of an individual \texttt{I}(set \texttt{birth\_date} at \texttt{t-a}),
+    \item
+      \texttt{I.is\_dead(t)}: a \texttt{const} method returning \texttt{true} is the individual \texttt{I} is dead at time \texttt{t}.
+      For convenience, there is also a global function \texttt{age} to get the age of an individual \texttt{I} so that \texttt{age(I,\ t)} is equivalent to \texttt{I.age(t)}.
+    \end{itemize}
+  \end{itemize}
 \item
-  C++ reserved words: forbidden as characteristics or variable name. Note that \texttt{char}
-  is a reserved word. See \href{https://en.cppreference.com/w/cpp/keyword}{here} for a comprehensive list of C++ reserved words.
+  \textbf{Using characteristic in C++ code}.
+  If \texttt{Chi} is the name of a characteristic, then \texttt{I.Chi} returns the value of the characteristic \texttt{Chi} for the individual \texttt{I}. For instance, in the previous example \texttt{I.male} would equal to \texttt{true} if \texttt{I} is a male of \texttt{false} if \texttt{I} is a female.
+\item
+  \textbf{A population in C++}
+  During the model creation, a population of individuals is automatically created from the initial population data frame. In C++ we denote by \texttt{pop} the current population which is an object of a internal class.containing some methods:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    an operator \texttt{{[}{]}} to access the \texttt{k}-th individual, note that most of time we denote \texttt{k} the current individual such that \texttt{pop{[}k{]}} is equivalent to \texttt{I} (in fact \texttt{I} is defined as a reference on \texttt{pop{[}k{]}}),
+  \item
+    \texttt{pop.kill(k,\ t)} to kill the individual \texttt{k} at time \texttt{t}.
+  \end{itemize}
 \end{itemize}
-
-Attention: I, J, pop, newI, t, k
-
-\hypertarget{individuals}{%
-\subsubsection{Individuals}\label{individuals}}
-
-During the model creation, a population of individuals is created from the initial population dataframe. The C++ class \texttt{individual} contains several useful functions, whose context of use is detailed in the following. For instance,
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{age(I,t)} returns the age of an individual \texttt{I} at time \texttt{t}.
-\item
-  \texttt{newI.set\_age(a,t)} sets the birth date \(t-a\) of a new individual called \texttt{newI}, of age \texttt{a} at time \texttt{t}.
-\end{itemize}
-
-If \texttt{Chi} is the name of a characteristic, then \texttt{I.Chi} returns the value of the characteristic \texttt{Chi} for the individual \texttt{I}. For instance, in the previous example \texttt{I.male} would equal to \texttt{TRUE} if \texttt{I} is a male of \texttt{FALSE} if \texttt{I} is a female.
 
 \hypertarget{params}{%
 \subsection{Model parameters}\label{params}}
 
-A list of model parameters can be defined to simplify the events creation. These parameters can be of various types, summarized in the following table:
+A list of model parameters can be defined to simplify the events creation (see also section @ref(cppcharacteristics) for more details). These parameters can be of various types:
 
-\begin{longtable}[]{@{}ll@{}}
-\caption{(\#tab:unnamed-chunk-11)Parameters}\tabularnewline
-\toprule
-Types of parameters & Parameters\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-Types of parameters & Parameters\tabularnewline
-\midrule
-\endhead
-\texttt{R} objects & Numeric, logical, character\tabularnewline
-\texttt{Armadillo} objects & Vector (\texttt{arma::vec}), matrix (numeric) (\texttt{arma::mat})\tabularnewline
-List of IBMPopSim functions & \texttt{gompertz}, \texttt{stepfun}, \texttt{piecewise\_x}, \texttt{piecewise\_xy}, \texttt{weibull}\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Atomic type}: likewise characteristics, a parameter may be \texttt{logical}, \texttt{integer}, \texttt{double} or \texttt{character} (and internal in C++ there is conversion to \texttt{bool}, \texttt{int}, \texttt{double} and \texttt{char} respectively),
+\item
+  \textbf{Vector or matrix}: we call vector a \texttt{Numeric} of \texttt{double} of length larger than 1 (and dimension 1), we use \texttt{RcppArmadillo} to convert theses types in \texttt{arma::vec} and \texttt{arma::mat} in C++,
+\item
+  \textbf{Predefined function of one variable}: such functions are \texttt{stepfun}, \texttt{linfun}, \texttt{gompertz}, \texttt{weibull}, \texttt{piecewise\_x}, in C++ these functions are \texttt{function\_x},
+\item
+  \textbf{Piecewise function of two variable}: \texttt{piecewise\_xy} which is \texttt{function\_xy} in C++,
+\item
+  \textbf{List of predefined functions}: of same C++ type, either \texttt{function\_x} or \texttt{function\_xy}.
+\end{itemize}
 
 For example,
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"coeff"}\NormalTok{ =}\StringTok{ }\FloatTok{1.1}\NormalTok{,}
-                \StringTok{"death\_function"}\NormalTok{ =}\StringTok{ }\KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.1}\NormalTok{,}\FloatTok{0.005}\NormalTok{))}
+               \StringTok{"death\_function"}\NormalTok{ =}\StringTok{ }\KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.005}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 creates a numeric parameter \texttt{coeff} and a Gompertz function \texttt{death\_function} which can be used when creating the events of the model.
 
-\textbf{IBMPopSim functions} are classes of functions predefined in the package to simplify models creation. For instance, \texttt{gompertz(a,b)} returns the function \(g(x) = a \exp(bx)\)
-and \texttt{stepfun} is the usual R function for the creation of step functions. Another example is \texttt{piecewise\_xy} which allow the creation of age and time functions. See Section @ref(IBMfunctions) for a description of all IBM functions, and Section @ref(armadillo) for more details of Armadillo objects.
+\textbf{Predefined IBMPopSim functions} are classes of functions predefined in the package to simplify models creation. For instance, \texttt{gompertz(a,b)} returns the function \(g(x) = a \exp(bx)\) and \texttt{stepfun} is the usual R function for the creation of step functions. Another example is \texttt{piecewise\_xy} which allow the creation of age and time functions. See Section @ref(cppIBMfunctions) for a description of all IBMPopSim functions, and Section @ref(cpparmadillo) for more details of Armadillo objects.
 
 \hypertarget{events}{%
 \subsection{Events creations}\label{events}}
@@ -529,10 +618,10 @@ The last and most important step of the model creation is the events creation. T
 
 where \texttt{CLASS} is replaced by the class of the event intensity, \texttt{type} is the event type and \texttt{kernel\_code} the event kernel.
 
-The other arguments depend on the intensity class. Tables @ref(tab:evtype) and @ref(tab:evclass) summarize the different intensity classes and types of events introduced in Section @ref(eventsTh).
+The other arguments depend on the intensity class. Tables below summarize the different intensity classes and types of events introduced in Section @ref(eventsTh).
 
 \begin{longtable}[]{@{}ll@{}}
-\caption{(\#tab:evtype)Event types}\tabularnewline
+\caption{Event types}\tabularnewline
 \toprule
 Event type & \texttt{Type}\tabularnewline
 \midrule
@@ -551,7 +640,7 @@ Custom & \texttt{custom}\tabularnewline
 \end{longtable}
 
 \begin{longtable}[]{@{}ll@{}}
-\caption{(\#tab:evclass)Intensity classes}\tabularnewline
+\caption{Intensity classes}\tabularnewline
 \toprule
 Intensity class & \texttt{Class}\tabularnewline
 \midrule
@@ -561,42 +650,65 @@ Intensity class & \texttt{Class}\tabularnewline
 \midrule
 \endhead
 Poisson & \texttt{poisson}\tabularnewline
-Inhomogeneous Poisson & \texttt{inohomogeneous\_poisson}\tabularnewline
+Inhomogeneous Poisson & \texttt{inhomogeneous\_poisson}\tabularnewline
 Individual & \texttt{individual}\tabularnewline
 Interaction & \texttt{interaction}\tabularnewline
 \bottomrule
 \end{longtable}
 
-Tables @ref(tab:evtype) ou @ref(evtype).
+The intensity function and kernel of an event are defined through arguments of the function \texttt{mk\_event\_CLASS}. These arguments are strings composed of few lines of code defining an event frequency and its action of the event on individuals. Since the model is compiled using Rcpp, the code should be written in C++. However, thanks to the model parameters and functions/variables of the package, even the non-experienced C++ user can define a model quite easily. Several examples are given in the several vignettes of this package, and basic C++ tools are presented in Section @ref(cppessentials).
 
-The intensity function and kernel of an event are defined through arguments of the function \texttt{mk\_event\_CLASS}. These arguments are strings composed of few lines of code defining an event frequency and its action of the event on individuals. Since the model is compiled using Rcpp, the code should be written in C++. However, thanks to the model parameters and functions/variables of the package, even the non-experienced C++ user can define a model quite easily. Several examples are given in the several vignettes of this package, and basic C++ tools are presented in Section @ref(essentials).
+The optional argument \texttt{name} gives a name to the event. If not specified, the name of the event is its type, for instance \texttt{death}. However, a name must be specified if the model is composed of several events with the same type.
 
-The optional argument \texttt{name} gives a name to the event. If not specified, the name of the event is its type, for instance \texttt{death}. However, a name must be specified if the model is composed of several events with the same name.
+\hypertarget{event-kernel-code}{%
+\subsubsection{Event kernel code}\label{event-kernel-code}}
 
-\hypertarget{event-type-and-kernel-code}{%
-\subsubsection{Event type and kernel code}\label{event-type-and-kernel-code}}
+The argument \texttt{kernel\_code} is \texttt{NULL} by default and doesn't have to be specified for death and exit events. For those types of events, the event kernel is automatically generated during the model creation.
 
-The argument \texttt{kernel\_code} is \texttt{NULL} by default and doesn't have to be specified for death and exit events. For those types of events, the event kernel is automatically generated during the model creation. For instance, if the user defines a \textbf{death event}, the C++ code generated is
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Death event}
+\end{enumerate}
+
+If the user defines a \textbf{death event}, the C++ code generated is
 
 \texttt{pop.kill(k,\ t);}
 
 which removes the individual number \texttt{k} from the population \texttt{pop} if he dies. No kernel has to be specified by the user.
 
-If an \textbf{exit events} is defined, a characteristic \texttt{out} is automatically added to individuals in the population. When an individual \texttt{I} exit the population,\texttt{I.out} is set \texttt{TRUE} and his exit time is recorded as a ``death'' date.
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Exit event}
+\end{enumerate}
+
+If an \textbf{exit event} is defined, a characteristic \texttt{out} is automatically added to individuals in the population. When an individual \texttt{I} exit the population,\texttt{I.out} is set \texttt{TRUE} and his exit time is recorded as a ``death'' date.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \textbf{Birth event}
+\end{enumerate}
 
 For a \textbf{birth event}, the default generated event kernel is that an individual \texttt{I} gives birth to a new individual \texttt{newI} of age 0 at the current time \texttt{t}, which has the same characteristics than his parent \texttt{I}. If no kernel is specified, the default generated C++ code for a birth event is:
 
 \begin{verbatim}
-individual newI = I; 
-newI.birth_date = t;  
-pop.add(newI); 
+individual newI = I;
+newI.birth_date = t;
+pop.add(newI);
 \end{verbatim}
 
-The user can modify the birth kernel, by specify the argument `\texttt{kernel\_code} of \texttt{mk\_event\_CLASS}. In this case, the generated code is
+The user can modify the birth kernel, by specify the argument \texttt{kernel\_code} of \texttt{mk\_event\_CLASS}. In this case, the generated code is
 
 \begin{verbatim}
-individual newI = I;   
-newI.birth_date = t;  
+individual newI = I;
+newI.birth_date = t;
 _KERNEL_CODE_
 pop.add(newI);
 \end{verbatim}
@@ -609,25 +721,33 @@ where \texttt{\_KERNEL\_CODE\_} is replaced by the content of the \texttt{kernel
 \end{Highlighting}
 \end{Shaded}
 
-creates new individuals which are males with probability \texttt{p\_male}, or females otherwise. Here, \texttt{p\_male} should be included in the parameters of the model.
+creates new individuals which are males with probability \texttt{p\_male}, or females otherwise. Here, \texttt{p\_male} should be included in the list of model parameters.
 
-When an \textbf{entry events} occurs the individual entering the population is not of age \(0\). In this case, the user must specify the \texttt{kernel\_code} argument indicating how the age and characteristics of the new individual are chosen. For instance, with
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \textbf{Entry event}
+\end{enumerate}
+
+If an \textbf{entry event} is defined, a characteristic \texttt{entry} is automatically added to individuals in the population. When an individual \texttt{I} enters the population,\texttt{I.entry} is set as the date at which the individual enters the population.
+When an entry occurs the individual entering the population is not of age \(0\). In this case, the user must specify the \texttt{kernel\_code} argument indicating how the age and characteristics of the new individual are chosen. For instance, with
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{entry\_kernel\_code \textless{}{-}}\StringTok{ "double a = CUnif(20,40); }
-\StringTok{                      newI.set\_age(a,t); }
-\StringTok{                      newI.male = (CUnif(0, 1) \textless{} p\_male);}
-\StringTok{                      newI.immigrant =TRUE;"}
+\NormalTok{entry\_kernel\_code \textless{}{-}}\StringTok{ "double a = CUnif(20,40);}
+\StringTok{                      newI.set\_age(a,t);}
+\StringTok{                      newI.male = (CUnif(0, 1) \textless{} p\_male);"}
 \end{Highlighting}
 \end{Shaded}
 
-individuals who enter the population have age \texttt{a} taken uniformly in \([20,40]\). In this example, the characteristic \texttt{immigrant} has been added to the population to distinguish individuals who entered the population from individuals ``born in the population''.
+An individual who enters the population has an age \texttt{a} taken uniformly in \([20,40]\), and is a male with probability \texttt{p\_male}. His characteristic \texttt{I.entry} is equal to \texttt{t}.
 
 The available variables for the birth and entry events C++ kernel codes are:
 
 \begin{longtable}[]{@{}ll@{}}
-\caption{(\#tab:varBirth)C++ variables available for birth and entry events kernel code}\tabularnewline
+\caption{C++ variables available for birth and entry events kernel code}\tabularnewline
 \toprule
 Variable & Description\tabularnewline
 \midrule
@@ -639,15 +759,25 @@ Variable & Description\tabularnewline
 \texttt{I} & Current individual\tabularnewline
 \texttt{t} & Current time\tabularnewline
 \texttt{pop} & Current population (vector)\tabularnewline
-\texttt{newI} & New individual. By default \texttt{newI\ =\ I} with \texttt{newI.birth\ =\ t}\tabularnewline
+\texttt{newI} & New individual. By default for birth events \texttt{newI\ =\ I} with \texttt{newI.birth\ =\ t}\tabularnewline
 Model parameters & Depends on the model\tabularnewline
 \bottomrule
 \end{longtable}
 
-Finally, the C++ kernel code for a \textbf{swap event} is only specified by the \texttt{kernel\_code} argument of \texttt{mk\_event\_CLASS} which must specify how the new characteristics of the individual are chosen. The kernel code can depend on the following variables:
+When there are several entry events, the user can identify which events generated the entry of an individual by adding a characteristic to the population recording the event name/id when it occurs. The same holds for the other types of events. See e.g.~\texttt{vignette\{\textquotesingle{}IBMPopSim\_human\_pop\textquotesingle{}\}} for an example with different death events.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  \textbf{Swap event}
+\end{enumerate}
+
+Finally, the C++ kernel code for a \textbf{swap event} specifies how the new characteristics of the individual are chosen. The kernel code can depend on the following variables:
 
 \begin{longtable}[]{@{}ll@{}}
-\caption{(\#tab:varSwap)C++ variables available for swap events kernel code}\tabularnewline
+\caption{C++ variables available for swap events kernel code}\tabularnewline
 \toprule
 Variable & Description\tabularnewline
 \midrule
@@ -668,19 +798,19 @@ We can now describe the different intensity classes.
 \hypertarget{event-creation-with-individual-intensity}{%
 \subsubsection{Event creation with individual intensity}\label{event-creation-with-individual-intensity}}
 
-As explained in @ref(Eventintensityth), events with intensities in the class \texttt{individual} are intensity functions which depend only the individual age and characteristics and on time.\\
+As explained in @ref(Eventintensityth), events with intensities in the class \texttt{individual} are intensity functions \(\lambda^e(I,t)\) which depend only on a individual's age and characteristics, and on time.
 They are created using the function
 
 \begin{verbatim}
-mk_event_individual(type = "TYPE", name ="name" 
-                    intensity_code = "INTENSITY",   
-                    kernel_code = "KERNEL_CODE"),
+mk_event_individual(type = "TYPE", name ="name",
+                    intensity_code = "INTENSITY",
+                    kernel_code = "KERNEL_CODE")
 \end{verbatim}
 
-The \texttt{intensity\_code} argument contains few lines C++ code describing the intensity function. The available variables for the intensity code are given in Table @ref(tab:varInd) :
+The \texttt{intensity\_code} argument is a character string containing few lines C++ code describing the intensity function. The available variables for the intensity code are given in the following Table
 
 \begin{longtable}[]{@{}ll@{}}
-\caption{(\#tab:varInd)C++ variables available for individual intensities}\tabularnewline
+\caption{C++ variables available for individual intensities}\tabularnewline
 \toprule
 Variable & Description\tabularnewline
 \midrule
@@ -695,47 +825,54 @@ Model parameters & Depends on the model\tabularnewline
 \bottomrule
 \end{longtable}
 
-The intensity value has to be stored in a variable called \texttt{result}. For instance, the intensity code
+The intensity value has to be stored in a variable called \texttt{result}.
+
+\textbf{Examples}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The intensity code below
+\end{enumerate}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{death\_intensity\textless{}{-}}\StringTok{ " if (I.male)}
-\StringTok{                      result = alpha\_1*exp(beta\_1*age(I, t));}
-\StringTok{                    else}
-\StringTok{                      result = alpha\_2*exp(beta\_2*age(I,t));"}
+\NormalTok{death\_intensity\textless{}{-}}\StringTok{ "if (I.male)}
+\StringTok{                       result = alpha\_1*exp(beta\_1*age(I, t));}
+\StringTok{                   else}
+\StringTok{                       result = alpha\_2*exp(beta\_2*age(I,t));"}
 \end{Highlighting}
 \end{Shaded}
 
 corresponds to a death intensity equal to \(d_1(a) = \alpha_1 \exp(\beta_1 a)\) for males and \(d_2(a) = \alpha_2 \exp(\beta_2 a)\) for females. In this case, the intensity function depends on the individuals' age, gender, and on the model parameters \(\alpha = (\alpha_1, \alpha_2)\) and \(\beta = (\beta_1, \beta_2)\).
 
-The code
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  This example creates a death event with intensity depending on age and time, equal to
+  \begin{equation*}
+  d(t,a) = 0.1\exp(0.005a) 1_{\{0\leq t <5\}} + 0.08\exp(0.005a) 1_{\{5\leq t\}}
+  \end{equation*}
+\end{enumerate}
+
+This is done by creating the death function \(d\) using the predefined package functions \texttt{?piecewise\_xy} and \texttt{?gompertz}. The function is then recorded as a model parameter and used in the argument \texttt{intensity\_code} of \texttt{?mk\_event\_individual}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{time\_dep\_function \textless{}{-}}\StringTok{ }\KeywordTok{piecewise\_xy}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{),}
-                                  \KeywordTok{list}\NormalTok{(}\KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.1}\NormalTok{,}\FloatTok{0.005}\NormalTok{), }
+                                  \KeywordTok{list}\NormalTok{(}\KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.1}\NormalTok{,}\FloatTok{0.005}\NormalTok{),}
                                        \KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.08}\NormalTok{,}\FloatTok{0.005}\NormalTok{)))}
-\KeywordTok{time\_dep\_function}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{65}\NormalTok{) }\CommentTok{\# death intensity at time 0 and age 65.}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.1384031
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\KeywordTok{time\_dep\_function}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{65}\NormalTok{) }\CommentTok{\# death intensity at time 0 and age 65.}
+\CommentTok{\#\# [1] 0.1384031}
 \NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"death\_function"}\NormalTok{=}\StringTok{ }\NormalTok{time\_dep\_function)}
 
-\NormalTok{time\_dep\_intensity\textless{}{-}}\StringTok{ "result=death\_function(t,age(I,t));"}
+\NormalTok{death\_event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{(}\DataTypeTok{type =} \StringTok{"death"}\NormalTok{,}
+                    \DataTypeTok{intensity\_code =} \StringTok{"result=time\_dep\_intensity(t,age(I,t));"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-creates a death intensity depending on a age and time, equal to
-
-\begin{equation*}
-d(t,a) = 0.1\exp(0.005a) 1_{\{0\leq t <5\}} + 0.08\exp(0.005a) 1_{\{5\leq t\}} 
-\end{equation*}
 
 \hypertarget{event-creation-with-interaction-intensity}{%
 \subsubsection{Event creation with interaction intensity}\label{event-creation-with-interaction-intensity}}
@@ -744,7 +881,6 @@ Events with intensities in the class \texttt{interaction} are events which occur
 
 \begin{equation*}
 \lambda^e(I,t) = \sum_{J \in pop} U(I,J,t),
-  (\#eq:interaction)
 \end{equation*}
 
 where \(U(I,J,t)\) is the intensity of the interaction between individual \(I\) and \(J\).
@@ -752,35 +888,34 @@ where \(U(I,J,t)\) is the intensity of the interaction between individual \(I\) 
 An event with intensity in the class \texttt{interaction} is created by calling the function
 
 \begin{verbatim}
-mk_event_interaction(type = "TYPE",  
-    interaction_code = "INTERACTION_CODE",  
-    interaction_type="random",
-    kernel_code = "KERNEL_CODE").
+mk_event_interaction(type = "TYPE",
+                     name = "NAME",
+                     interaction_code = "INTERACTION_CODE",
+                     kernel_code = "KERNEL_CODE",
+                     interaction_type="random")
 \end{verbatim}
 
 The \texttt{intensity\_code} argument contains few lines of C++ code describing
-the interaction function \(U\). The available variables for the intensity code are:
+the interaction function \(U\). The interaction function value has to be stored in a variable called \texttt{result}. The available variables for the intensity code are given in the following Table:
 
-\begin{table}
+\begin{longtable}[]{@{}ll@{}}
+\caption{C++ variables available for interaction code}\tabularnewline
+\toprule
+Variable & Description\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Variable & Description\tabularnewline
+\midrule
+\endhead
+\texttt{I} & Current individual\tabularnewline
+\texttt{J} & Another individual in the population\tabularnewline
+\texttt{t} & Current time\tabularnewline
+Model parameters & Depends on the model\tabularnewline
+\bottomrule
+\end{longtable}
 
-\caption{(\#tab:varInt)C++ variables available for interaction code}
-\centering
-\begin{tabular}[t]{l|l}
-\hline
-Variable & Description\\
-\hline
-`I` & Current individual\\
-\hline
-`J` & Another individual in the population\\
-\hline
-`t` & Current time\\
-\hline
-Model parameters & Depends on the model\\
-\hline
-\end{tabular}
-\end{table}
-
-Here is example of interaction code:
+\textbf{Example}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -788,40 +923,48 @@ Here is example of interaction code:
 \end{Highlighting}
 \end{Shaded}
 
-In the example above, the death intensity of an individual \texttt{I} is the result of competition between individuals, depending on a characteristic named \texttt{size}. If \texttt{I} meets randomly an individual \texttt{J} of size bigger than \texttt{I.size}, he can die at the intensity \texttt{J.size-I.size}. The bigger is \texttt{I.size}, the lower is the death intensity of individual \texttt{I}.
+In the example above, the death intensity of an individual \texttt{I} is the result of competition between individuals, depending on a characteristic named \texttt{size}:
 
-The argument \texttt{interaction\_type}, set by default at \texttt{random}, is an algorithm choice for simulating the model.\\
+\[U(I,J,t) = (J.size - I.size)^+.\]
+
+If \texttt{I} meets randomly an individual \texttt{J} of size bigger than \texttt{I.size}, he can die at the intensity \texttt{J.size-I.size}. The bigger is \texttt{I.size}, the lower is the death intensity of individual \texttt{I}.
+
+The argument \texttt{interaction\_type}, set by default at \texttt{random}, is an algorithm choice for simulating the model.
 When \texttt{interaction\_type=full}, the intensity of an individual is computed making the sum over all the individuals in the population of the interactions with the given individual. In IBMPopSim, we introduced a ``randomized'' algorithm, in which the intensity of an individual is computed by picking randomly another individual in the population and computing its interaction function with the given individual. In most cases, the \texttt{random} algorithm is much faster than the \texttt{full} algorithm.
 
 Note that events with individual intensities are also much faster to simulate since they only require to observe \emph{one} individual to be computed.
 
-\hypertarget{poisson-and-inhomogeneous-poisson-events-creation}{%
-\subsubsection{Poisson and Inhomogeneous Poisson events creation}\label{poisson-and-inhomogeneous-poisson-events-creation}}
+\hypertarget{events-creation-with-poisson-and-inhomogeneous-poisson-intensity}{%
+\subsubsection{Events creation with Poisson and Inhomogeneous Poisson intensity}\label{events-creation-with-poisson-and-inhomogeneous-poisson-intensity}}
 
-When a event occur in the population with an intensity which does not depend on the population, the event intensity is of (inhomogeneous) Poisson class. When the event intensity is simply a constant, the class is called Poisson in reference to Poisson processes intensities. Such events are created with the function
+When a event occur in the population with an intensity which does not depend on the population, the event intensity is of (inhomogeneous) Poisson class.
+
+\textbf{Poisson intensity} When the event intensity is simply a constant, the class is called Poisson in reference to events occurring at jumps time of a Poisson process. Such events are created with the function
 
 \begin{verbatim}
-mk_event_poisson(type="TYPE",   
-                 intensity="CONSTANT",   
+mk_event_poisson(type="TYPE",
+                 name="NAME",
+                 intensity="CONSTANT",
                  kernel_code = "KERNEL_CODE")
 \end{verbatim}
 
-If the parameters \texttt{lambda} has been defined in the list of model parameters, then
+For instance,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mk\_event\_poisson}\NormalTok{(}\DataTypeTok{type =} \StringTok{"entry"}\NormalTok{, }\DataTypeTok{intensity =} \StringTok{"lambda"}\NormalTok{, }
-                 \DataTypeTok{kernel\_code =}\StringTok{"double a\_I= CNorm(20,2); }
-\StringTok{                               newI.set\_age(a\_I,t);"}\NormalTok{)}
+\KeywordTok{mk\_event\_poisson}\NormalTok{(}\DataTypeTok{type =} \StringTok{"entry"}\NormalTok{, }\DataTypeTok{intensity =} \StringTok{"lambda"}\NormalTok{,}
+                 \DataTypeTok{kernel\_code =} \StringTok{"double a\_I= max(CNorm(20,2),0);}
+\StringTok{                                newI.set\_age(a\_I,t);"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-creates an event of type Entry, where individuals enter the population at a constant intensity \texttt{lambda}. When an individual \texttt{newI} enters the population at time \texttt{t}, his age is chosen as a normally distributed random variable, with mean 20 and variance 4, using the function \texttt{CNorm()} ({ see doc }).
-When the intensity depends on time (but not on the population), the event can be created similarly by using the function
+creates an event of type Entry, where individuals enter the population at a constant intensity \texttt{lambda} (which has to be in the list of model parameters). When an individual \texttt{newI} enters the population at time \texttt{t}, his age is chosen as a normally distributed random variable, with mean 20 and variance 4, using the function \texttt{CNorm()} (see Section @ref(randomvar)).
+
+\textbf{Inhomogeneous Poisson intensity} When the intensity depends on time (but not on the population), the event can be created similarly by using the function
 
 \begin{verbatim}
-mk_event_inhomogeneous_poisson(type= "TYPE",   
-                               intensity_code = "INTENSITY",   
+mk_event_inhomogeneous_poisson(type= "TYPE", name="NAME"
+                               intensity_code = "INTENSITY",
                                kernel_code = "KERNEL_CODE")
 \end{verbatim}
 
@@ -829,24 +972,24 @@ For instance,
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mk\_event\_inhomogeneous\_poisson}\NormalTok{(}\DataTypeTok{type =} \StringTok{"entry"}\NormalTok{,    }
-                               \DataTypeTok{intensity =} \StringTok{"result = lambda*cos(t);"}\NormalTok{, }
-                               \DataTypeTok{kernel\_code =}\StringTok{" double a\_I= CNorm(20,2); }
-\StringTok{                                             newI.set\_age(a\_I,t);"}\NormalTok{)}
+\KeywordTok{mk\_event\_inhomogeneous\_poisson}\NormalTok{(}\DataTypeTok{type =} \StringTok{"entry"}\NormalTok{,}
+                               \DataTypeTok{intensity =} \StringTok{"result = lambda*(1+ cos(t));"}\NormalTok{,}
+                               \DataTypeTok{kernel\_code =} \StringTok{"double a\_I= CNorm(20,2);}
+\StringTok{                                              newI.set\_age(a\_I,t);"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-creates the same event than before, but now individuals enter the population at the rate \(\lambda \cos(t)\) depending on the current time \texttt{t}.
+creates the same event than before, but now individuals enter the population at the rate \(\lambda(1+ \cos(t))\) depending on the current time \texttt{t}.
 
 \hypertarget{Modelcreation}{%
 \subsection{Model creation}\label{Modelcreation}}
 
-Finally, the IBM model is created using the function \texttt{mk\_model}. The model is composed of:
+Finally, the IBM model is created using the function \texttt{?mk\_model}. The model is composed of:
 
 \begin{itemize}
 \tightlist
 \item
-  The characteristics names and types, which can be obtained from a population dataframe with the function \texttt{get\_characteristics},
+  The characteristics names and types, which can be obtained from a population data frame with the function \texttt{?get\_characteristics},
 \item
   The events list,
 \item
@@ -855,59 +998,58 @@ Finally, the IBM model is created using the function \texttt{mk\_model}. The mod
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{characteristics =} \KeywordTok{get\_characteristics}\NormalTok{(population\_df),}
+\NormalTok{model \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{characteristics =} \KeywordTok{get\_characteristics}\NormalTok{(pop),}
                   \DataTypeTok{event =}\NormalTok{ events\_list,}
                   \DataTypeTok{parameters =}\NormalTok{ model\_params)}
 \end{Highlighting}
 \end{Shaded}
 
 During this step which can take a few seconds, the model is created and compiled using the Rcpp package.
-One of the advantages of the model structure in IBMPopSim is that only the model only depends on the population characteristics' and parameters names and types, rather than their values.
+One of the advantages of the model structure in IBMPopSim is that the model depends only on the population characteristics' and parameters names and types, rather than their values.
+This means that once the model has been created, various simulations can be done with different initial populations and parameters values. Thus, only one model has to be created to simulation a class of IBMs with varying parameters (see Section @ref(Simulation1) for an example).
 
-This means that once the model has been created, various simulations can be done with various initial populations and different parameters values. Thus, only one model has to be created to simulation a class of IBMs with varying parameters (see Section @ref(Simulation1) for an example).
-
-Here is an example of model with a gender characteristic and two events (birth and death):
+\textbf{Example} Here is an example of model with a population structured by age and gender, with birth and death events. The death intensity of an individual of age \(a\) is
+\[d(a) = 0.008 \exp(0.02a),\]
+and females between 15 and 40 can give birth with birth intensity 0.05. The newborn is a male with probability \(p_{male}= 0.51\).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"p\_male"}\NormalTok{=}\StringTok{ }\FloatTok{0.51}\NormalTok{, }
-               \StringTok{"birth\_rate"}\NormalTok{ =}\StringTok{ }\KeywordTok{stepfun}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{,}\DecValTok{40}\NormalTok{),}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.05}\NormalTok{,}\DecValTok{0}\NormalTok{)),}\StringTok{"death\_rate"}\NormalTok{=}\KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.008}\NormalTok{,}\FloatTok{0.02}\NormalTok{))}
+\NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"p\_male"}\NormalTok{=}\StringTok{ }\FloatTok{0.51}\NormalTok{,}
+               \StringTok{"birth\_rate"}\NormalTok{ =}\StringTok{ }\KeywordTok{stepfun}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{,}\DecValTok{40}\NormalTok{),}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.05}\NormalTok{,}\DecValTok{0}\NormalTok{)),}
+               \StringTok{"death\_rate"}\NormalTok{ =}\StringTok{ }\KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.008}\NormalTok{,}\FloatTok{0.02}\NormalTok{))}
 
 
 \NormalTok{death\_event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{(}\DataTypeTok{type =} \StringTok{"death"}\NormalTok{, }\DataTypeTok{name=} \StringTok{"my\_death\_event"}\NormalTok{,}
                   \DataTypeTok{intensity\_code =} \StringTok{"result = death\_rate(age(I,t));"}\NormalTok{)}
 
-\NormalTok{birth\_event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{( }\DataTypeTok{type =} \StringTok{"birth"}\NormalTok{, }
-                  \DataTypeTok{intensity\_code =} \StringTok{" if (I.male)}
-\StringTok{                                        result = 0; }
-\StringTok{                                     else }
+\NormalTok{birth\_event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{( }\DataTypeTok{type =} \StringTok{"birth"}\NormalTok{,}
+                  \DataTypeTok{intensity\_code =} \StringTok{"if (I.male)}
+\StringTok{                                        result = 0;}
+\StringTok{                                    else}
 \StringTok{                                        result=birth\_rate(age(I,t));"}\NormalTok{,}
                   \DataTypeTok{kernel\_code =} \StringTok{"newI.male = CUnif(0, 1) \textless{} p\_male;"}\NormalTok{)}
 
 
-\NormalTok{model \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{characteristics =} \KeywordTok{get\_characteristics}\NormalTok{(population\_df),}
+\NormalTok{model \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{characteristics =} \KeywordTok{get\_characteristics}\NormalTok{(pop),}
                   \DataTypeTok{events =} \KeywordTok{list}\NormalTok{(death\_event,birth\_event),}
                   \DataTypeTok{parameters =}\NormalTok{ params)}
 
 \KeywordTok{summary}\NormalTok{(model)}
+\CommentTok{\#\# Events:}
+\CommentTok{\#\# \#1: individual event of type death}
+\CommentTok{\#\# \#2: individual event of type birth}
+\CommentTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} }
+\CommentTok{\#\# Individual description:}
+\CommentTok{\#\# names:  birth death male }
+\CommentTok{\#\# R types:  double double logical }
+\CommentTok{\#\# C types:  double double bool}
+\CommentTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} }
+\CommentTok{\#\# R parameters available in C++ code:}
+\CommentTok{\#\# names:  p\_male birth\_rate death\_rate }
+\CommentTok{\#\# R types:  double closure closure }
+\CommentTok{\#\# C types:  double function\_x function\_x}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Events:
-## #1: individual event of type death
-## #2: individual event of type birth
-## --------------------------------------- 
-## Individual description:
-## names:  birth death male 
-## R types:  double double logical 
-## C types:  double double bool
-## --------------------------------------- 
-## R parameters available in C++ code:
-## names:  p_male birth_rate death_rate 
-## R types:  double closure closure 
-## C types:  double function_x function_x
-\end{verbatim}
 
 \hypertarget{simulation}{%
 \subsection{Simulation and outputs}\label{simulation}}
@@ -915,7 +1057,7 @@ Here is an example of model with a gender characteristic and two events (birth a
 Once the model has been created, the random evolution of the population can be simulated over a period of time \([0,T]\) by calling the function
 
 \begin{verbatim}
-popsim(model,population, events_bounds, parameters,age_max,time,...)
+popsim(model,population, events_bounds, parameters,age_max= Inf,time,...)
 \end{verbatim}
 
 Where:
@@ -925,7 +1067,7 @@ Where:
 \item
   \texttt{model} is the model created in the previous step,
 \item
-  \texttt{population} is a population dataframe representing the initial population,
+  \texttt{population} is a population data frame representing the initial population,
 \item
   \texttt{parameters} is the list of parameters value,
 \item
@@ -936,49 +1078,22 @@ Where:
   \texttt{events\_bounds} is a named vector of \textbf{bounds} for the intensity or interaction function of each event.
 \end{itemize}
 
-\hypertarget{algorithm-and-events-bounds}{%
-\subsubsection{Algorithm and events bounds}\label{algorithm-and-events-bounds}}
+\hypertarget{events-bounds}{%
+\subsubsection{Events bounds}\label{events-bounds}}
 
-The IBM simulation algorithm is based on an acceptance-rejection method for simulating random times, called thinning ({donner ref}). The main idea of the algorithm is to simulate candidate event times with \emph{constant} intensity \(\bar \lambda\) (which is simply an exponential variable with parameter \(\lambda\)), which \emph{dominates} the true event intensity \(\lambda^e(I,t)\) for all individuals \(I\):
+Since the IBM simulation algorithm is based on an acceptance-rejection method for simulating random times (see @ref(algo)), the user has to specify bounds for the intensity (or interaction) function of each event before simulating a random path of the population evolution. Let us consider the model with a birth and death built in the previous section.
 
-\begin{equation}
-\lambda^e(I,t) \leq \bar{\lambda}, \quad \forall I \in \text{pop}, \; t \in [0,T].
-\end{equation}
-
-Starting from time \(t\), once a candidate event time \(t + \tau^e\) has been proposed for a given event \(e\) and individual \(I\), it remains to accept or reject the candidate event with probability \(\frac{\lambda^e(I,t+\tau^e)}{\bar{\lambda}}\). If the candidate event is accepted, then the event \(e\) occurs to the individual \(I\) at time \(t + \tau^e\). The thinning algorithm can be summarized as follow:
-
-\textbf{Thinning algorithm}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Draw a candidate time \(t+\tau^e\) for event \(e\), \(\tau^e \sim \mathcal E(\bar \lambda)\).
-\item
-  Draw a uniform variable \(\theta \sim \mathcal U([0,1])\).
-\item
-  \textbf{If} \(\theta \leq \dfrac{\lambda^e(I,t+\tau^e)}{\bar\lambda}\) \textbf{then}\\
-  \(\qquad\) Apply event kernel to individual \(I\)\\
-  \textbf{else}\\
-  \(\qquad\) Do nothing and start again from \(t+\tau^e\).
-\end{enumerate}
-
-If the intensity is of class \texttt{interaction}, the intensity function \(\lambda^e\) is replaced by the interaction function \(U^e\), and \(\bar \lambda\) by a bound \(\bar U^e\) of \(U^e\).
-
-Thus, before simulating a random path of the population evolution, the user has to specify bounds for the intensity function (resp. interaction kernel) of each event. Let us consider the model with a birth and death built in the previous section.
-
-In the model, the birth intensity of an individual of age \(a\) is \(0\) if he is a male, and
-\[ b(a) = 0.005  \mathbb{1}_{[15,40]},\]
+In the model example, the birth intensity of an individual of age \(a\) is \(0\) if he is a male, and
+\[ b(a) = 0.005  1_{[15,40]},\]
 if the individual is a female. Thus, the intensity bound for birth events is
 
 \[\bar\lambda_b = \sup_{a\geq 0} \;  \text{birth\_rate}(a) = 0.05\]
 
-Since the death intensity function is not bounded, the user will have to specify a maximum age \(a_{max}\) in \texttt{popsim}. Then, the bound for death events is
+Since the death intensity function is not bounded, the user will have to specify a maximum age \(a_{max}\) in \texttt{popsim} (all individuals above \(a_{max}\) die automatically). Then, the bound for death events is
 
 \[ \bar \lambda_d = 0.008\exp(0.02 a_{max}).\]
 
-The events bounds are defined as a \emph{named} R vector, with components names corresponding to the events names.\\
-In our example, the event of type death has been named \texttt{"my\_death\_event"}. No name has been specified for the event of type birth which thus has the default name \texttt{"birth"}. Then,
+The events bounds are defined as a \emph{named} R vector, with components names corresponding to the events names. In our example, the death event has been named \texttt{"my\_death\_event"}. No name has been specified for the birth event which thus has the default name \texttt{"birth"}. Then,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -987,15 +1102,12 @@ In our example, the event of type death has been named \texttt{"my\_death\_event
                   \StringTok{"birth"}\NormalTok{ =}\StringTok{ }\KeywordTok{max}\NormalTok{(params}\OperatorTok{$}\NormalTok{birth\_rate))}
 
 \NormalTok{events\_bounds}
+\CommentTok{\#\# my\_death\_event          birth }
+\CommentTok{\#\#     0.08818541     0.05000000}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## my_death_event          birth 
-##     0.08818541     0.05000000
-\end{verbatim}
-
-{ Utilisation de max, renvoyer à la section C++. }
+Note that the \texttt{?max} operator has been overloaded for some predefined functions of the package such as \texttt{?stepfun}.
 
 \hypertarget{Simulation1}{%
 \subsubsection{Simulation without swap events}\label{Simulation1}}
@@ -1004,17 +1116,9 @@ Once the model and events bounds have been defined, a random trajectory of the p
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sim\_out \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, population\_df, events\_bounds, params,}
+\NormalTok{sim\_out \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, pop, events\_bounds, params,}
                   \DataTypeTok{age\_max =}\NormalTok{ a\_max, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Simulation on  [0, 30]
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\CommentTok{\#\# Simulation on  [0, 30]}
 \CommentTok{\#str(sim\_out)}
 \end{Highlighting}
 \end{Shaded}
@@ -1031,82 +1135,95 @@ Once the model and events bounds have been defined, a random trajectory of the p
   The simulation output called \texttt{population}.
 \end{itemize}
 
-When there are no swap events (individuals don't change of characteristics), the evolution of the population over the period \([0,30]\) is recorded in a single dataframe \texttt{sim\_out\$population} containing the information of all individuals who lived in the population during the period.\\
-Each line of \texttt{sim\_out\$population} contains the information of an individual who lived in the population over the period \([0,30]\). This includes individuals who were initially in \texttt{population\_df}, as well as individuals who were born or entered the population.
+When there are no swap events (individuals don't change of characteristics), the evolution of the population over the period \([0,30]\) is recorded in a single data frame \texttt{sim\_out\$population}.
+Each line of \texttt{sim\_out\$population} contains the information of an individual who lived in the population over the period \([0,30]\). This includes individuals who were initially in \texttt{pop}, as well as individuals who were born or entered the population.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{str}\NormalTok{(sim\_out}\OperatorTok{$}\NormalTok{population)}
+\CommentTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    118234 obs. of  3 variables:}
+\CommentTok{\#\#  $ birth: num  {-}90 {-}90 {-}89.9 {-}89.9 {-}89.9 ...}
+\CommentTok{\#\#  $ death: num  NA NA NA NA NA NA NA NA NA NA ...}
+\CommentTok{\#\#  $ male : logi  TRUE TRUE FALSE TRUE TRUE TRUE ...}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## 'data.frame':    118275 obs. of  3 variables:
-##  $ birth: num  -90 -89.9 -89.9 -89.9 -89.9 ...
-##  $ death: num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ male : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-\end{verbatim}
+The following Table describes the elements of the vector \texttt{sim\_out\$logs}containing information on simulation algorithm:
 
-Table @ref(tab:logs) describes the elements of the vector \texttt{sim\_out\$logs}containing information on simulation algorithm:
-
-\begin{table}
-
-\caption{(\#tab:logs)Logs parameters}
-\centering
-\begin{tabular}[t]{l|l}
-\hline
-Elements & Description\\
-\hline
-`proposed\_events` & Number of candidate event times proposed during the simulation\\
-\hline
-`effective\_events` & Number of events which occured during the simulation\\
-\hline
-`cleanall\_counter` & Number of population cleans\\
-\hline
-`duration\_main\_algorithm` & Simulation time\\
-\hline
-\end{tabular}
-\end{table}
+\begin{longtable}[]{@{}ll@{}}
+\caption{Logs parameters}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.27\columnwidth}\raggedright
+Elements\strut
+\end{minipage} & \begin{minipage}[b]{0.67\columnwidth}\raggedright
+Description\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.27\columnwidth}\raggedright
+Elements\strut
+\end{minipage} & \begin{minipage}[b]{0.67\columnwidth}\raggedright
+Description\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.27\columnwidth}\raggedright
+\texttt{proposed\_events}\strut
+\end{minipage} & \begin{minipage}[t]{0.67\columnwidth}\raggedright
+Number of candidate event times proposed during the simulation\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.27\columnwidth}\raggedright
+\texttt{effective\_events}\strut
+\end{minipage} & \begin{minipage}[t]{0.67\columnwidth}\raggedright
+Number of events which occured during the simulation\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.27\columnwidth}\raggedright
+\texttt{cleanall\_counter}\strut
+\end{minipage} & \begin{minipage}[t]{0.67\columnwidth}\raggedright
+Number of population cleans\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.27\columnwidth}\raggedright
+\texttt{duration\_main\_algorithm}\strut
+\end{minipage} & \begin{minipage}[t]{0.67\columnwidth}\raggedright
+Simulation time\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
 
 For instance, the acceptance rate in the toy model is
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sim\_out}\OperatorTok{$}\NormalTok{logs[}\StringTok{\textquotesingle{}effective\_events\textquotesingle{}}\NormalTok{]}\OperatorTok{/}\NormalTok{sim\_out}\OperatorTok{$}\NormalTok{logs[}\StringTok{\textquotesingle{}proposed\_events\textquotesingle{}}\NormalTok{]}
+\CommentTok{\#\# effective\_events }
+\CommentTok{\#\#          0.21782}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## effective_events 
-##        0.2182352
-\end{verbatim}
 
 and the simulation time is
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sim\_out}\OperatorTok{$}\NormalTok{logs[}\StringTok{\textquotesingle{}duration\_main\_algorithm\textquotesingle{}}\NormalTok{]}
+\CommentTok{\#\# duration\_main\_algorithm }
+\CommentTok{\#\#                0.032053}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## duration_main_algorithm 
-##                0.078262
-\end{verbatim}
-
 \textbf{Parameters modification and event removal}
 
-As explained in Section @ref(Modelcreation) the structure of the compiled model allows the parameters' values to be changed without recompiling the model. For instance, the parameter of the Gompertz death function can be modified to study the impact of an increase in mortality.\\
+As explained in Section @ref(Modelcreation) the structure of the compiled model allows the parameters' values to be changed without recompiling the model. For instance, the parameter of the Gompertz death function can be modified to study the impact of an increase in mortality.
 Before running the simulation, the events bounds should be updated accordingly accordingly.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{params}\OperatorTok{$}\NormalTok{death\_rate \textless{}{-}}\StringTok{ }\KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.01}\NormalTok{,}\FloatTok{0.02}\NormalTok{)}
+\NormalTok{params}\OperatorTok{$}\NormalTok{death\_rate \textless{}{-}}\StringTok{ }\KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.01}\NormalTok{,}\FloatTok{0.02}\NormalTok{) }\CommentTok{\# New death rate}
 
 \NormalTok{events\_bounds[}\StringTok{"my\_death\_event"}\NormalTok{] \textless{}{-}}\StringTok{ }\FloatTok{0.01}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(}\FloatTok{0.02}\OperatorTok{*}\NormalTok{a\_max) }\CommentTok{\# Death event bound update}
 
-\NormalTok{new\_sim\_out  \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, population\_df, events\_bounds, params,}
-                  \DataTypeTok{age\_max =}\NormalTok{ a\_max, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{) }\CommentTok{\# Population simulation }
+\NormalTok{new\_sim\_out  \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, pop, events\_bounds,}
+\NormalTok{                       params, }\DataTypeTok{age\_max =}\NormalTok{ a\_max, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{) }\CommentTok{\# Population simulation}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1114,103 +1231,104 @@ An event can also be remove by setting the event bound to 0:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sim\_out\_no\_birth \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, population\_df, }\DataTypeTok{events\_bounds =} \KeywordTok{c}\NormalTok{(}\StringTok{"birth"}\NormalTok{=}\DecValTok{0}\NormalTok{, }\StringTok{"my\_death\_event"}\NormalTok{=}\StringTok{ }\FloatTok{0.01}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(}\FloatTok{0.02}\OperatorTok{*}\NormalTok{a\_max)),}
-\NormalTok{                                params, }\DataTypeTok{age\_max =}\NormalTok{ a\_max, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{) }\CommentTok{\# Simulation without birth events}
+\NormalTok{sim\_out\_no\_birth \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, pop,}
+    \DataTypeTok{events\_bounds =} \KeywordTok{c}\NormalTok{(}\StringTok{"birth"}\NormalTok{ =}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"my\_death\_event"}\NormalTok{ =}\StringTok{ }\FloatTok{0.01}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(}\FloatTok{0.02}\OperatorTok{*}\NormalTok{a\_max)),}
+\NormalTok{    params, }\DataTypeTok{age\_max =}\NormalTok{ a\_max, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{)}
+\CommentTok{\#\# [1] "event birth is deactivated"}
+\CommentTok{\#\# Simulation on  [0, 30]}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] "event birth is deactivated"
-## Simulation on  [0, 30]
-\end{verbatim}
+\hypertarget{outputs}{%
+\subsubsection{Outputs}\label{outputs}}
 
-\textbf{Outputs}
+The R data frame format for the output of the simulation allows all data manipulation functionalities of tidyverse or data.table packages to be used for analyzing the population. We also provide base functions to study the simulation outputs.
 
-The R dataframe format for the output of the simulation allows all data manipulation functionalities of tidyverse or data.table packages to be used for analyzing the population. IBMPopSim also provides base functions to study the simulation outputs.
-
-For instance, the population age pyramid can computed at a give time (resp. at multiple dates) with the function \texttt{age\_pyramid} (resp. \texttt{age\_pyramids}). We refer to the other vignettes for more details on age pyramids computation and visualization.
+For instance, the population age pyramid can computed at a give time (resp. at multiple dates) with the function \texttt{?age\_pyramid} (resp. \texttt{?age\_pyramids}). We refer to the other vignettes for more details on age pyramids computation and visualization.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pop\_out \textless{}{-}}\StringTok{ }\NormalTok{sim\_out}\OperatorTok{$}\NormalTok{population}
 
 \CommentTok{\# Population age{-}pyramid at time 30:}
-\NormalTok{pyr \textless{}{-}}\StringTok{ }\KeywordTok{age\_pyramid}\NormalTok{(pop\_out, }\DataTypeTok{ages =} \DecValTok{0}\OperatorTok{:}\NormalTok{a\_max, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{) }
+\NormalTok{pyr \textless{}{-}}\StringTok{ }\KeywordTok{age\_pyramid}\NormalTok{(pop\_out, }\DataTypeTok{ages =} \DecValTok{0}\OperatorTok{:}\NormalTok{a\_max, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{)}
 \KeywordTok{plot\_pyramid}\NormalTok{(pyr)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{/Users/lemaire/Travail/Codes/IBMPopSim/docs/articles/IBMPopSim_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\begin{center}\includegraphics{figure/main_plot_30-1} \end{center}
 
-Mortality tables with compatibles with packages such as StMoMo can also be computed by with the functions \texttt{death\_table} and \texttt{exposure\_table}.
+Mortality tables with compatibles with packages such as StMoMo can also be computed by with the functions \texttt{?death\_table} and \texttt{?exposure\_table}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{female\_pop \textless{}{-}}\StringTok{ }\NormalTok{pop\_out[pop\_out}\OperatorTok{$}\NormalTok{male}\OperatorTok{==}\OtherTok{FALSE}\NormalTok{, ]}
-\NormalTok{Dxt \textless{}{-}}\StringTok{ }\KeywordTok{death\_table}\NormalTok{(female\_pop, }\DataTypeTok{ages =} \DecValTok{85}\OperatorTok{:}\DecValTok{90}\NormalTok{,}\DataTypeTok{times =} \DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{) }\CommentTok{\# Death table (death age is age at death)}
-\NormalTok{Ext \textless{}{-}}\StringTok{ }\KeywordTok{exposure\_table}\NormalTok{(female\_pop, }\DataTypeTok{ages =} \DecValTok{85}\OperatorTok{:}\DecValTok{90}\NormalTok{,}\DataTypeTok{times =} \DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{) }\CommentTok{\# Exact computation of central Exposure{-}to{-}risk}
+\NormalTok{Dxt \textless{}{-}}\StringTok{ }\KeywordTok{death\_table}\NormalTok{(female\_pop, }\DataTypeTok{ages =} \DecValTok{85}\OperatorTok{:}\DecValTok{90}\NormalTok{, }\DataTypeTok{period =} \DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{)    }\CommentTok{\# Death table}
+\NormalTok{Ext \textless{}{-}}\StringTok{ }\KeywordTok{exposure\_table}\NormalTok{(female\_pop, }\DataTypeTok{ages =} \DecValTok{85}\OperatorTok{:}\DecValTok{90}\NormalTok{, }\DataTypeTok{period =} \DecValTok{20}\OperatorTok{:}\DecValTok{30}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Simple multithreading}
+\hypertarget{simple-multithreading}{%
+\subsubsection{Simple multithreading}\label{simple-multithreading}}
 
 If there are \textbf{no interactions} between individuals, i.e.~if there are no events with intensity of class \texttt{interaction}, then the simulation can be parallelized easily by setting the optional parameter \texttt{multithreading} (\texttt{FALSE} by default) to \texttt{TRUE}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sim\_out \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, population\_df, events\_bounds, params,}
+\NormalTok{sim\_out \textless{}{-}}\StringTok{ }\KeywordTok{popsim}\NormalTok{(model, pop, events\_bounds, params,}
                   \DataTypeTok{age\_max =}\NormalTok{ a\_max, }\DataTypeTok{time =} \DecValTok{30}\NormalTok{, }\DataTypeTok{multithreading =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## duration_main_algorithm 
-##                0.053349
+##                0.008734
 \end{verbatim}
 
-By default, the number of threads is the number of concurrent threads supported by the available hardware implementation.\\
-The number of thread can be set manually with the optional argument \texttt{num\_threads} of \texttt{popsim}.
+By default, the number of threads is the number of concurrent threads supported by the available hardware implementation. The number of thread can be set manually with the optional argument \texttt{num\_threads} of \texttt{?popsim}.
 
 \hypertarget{simulationswap}{%
 \subsection{Simulation with swap events}\label{simulationswap}}
 
-When there are swap events (individuals can change of characteristics), the dates of swap events and the individual changed characteristics following each swap event should be recorded for each individual in the population, which is a memory intensive and computationally costly process.\\
-To maintain efficient simulations in the presence of swap events, we propose the following solution:
+When there are swap events (individuals can change of characteristics), the dates of swap events and the changes of characteristics following each swap event should be recorded for each individual in the population, which is a memory intensive and computationally costly process.
+To maintain efficient simulations in the presence of swap events, we propose the following solution.
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Use a vector of dates \((t_0,\dots, t_n)\) in the argument \texttt{time} of \texttt{popsim}. Then \texttt{popsim} returns in the object \texttt{population} a list of \(n\) population dataframes representing the population at time \(t_1,\dots t_n\), simulated from the initial time \(t_0\).\\
-  For \(i=1\dots n\), the \(i\)th dataframe describes individuals who lived in the population during the period \([t_0,t_i]\), with their characteristics at time \(t_i\).
-\end{enumerate}
+\hypertarget{vector-of-times-in-popsim.}{%
+\subsubsection{\texorpdfstring{Vector of times in \texttt{?popsim}.}{Vector of times in ?popsim.}}\label{vector-of-times-in-popsim.}}
 
-In the following toy model, a population 100 thousand individuals (or particles) is generated, all born at time 0 and divided into two subgroups. Individuals can swap from subgroup 1 (resp. 2) to subgroup 2 (resp. 1) at rate 0.1 (resp. 0.3).
+In the presence of swap events, the argument \texttt{time} of \texttt{?popsim} should a vector of dates \((t_0,\dots, t_n)\). In this case, \texttt{popsim} returns in the object \texttt{population} a list of \(n\) population data frames representing the population at time \(t_1,\dots t_n\), simulated from the initial time \(t_0\).
+For \(i=1\dots n\), the \(i\)th data frame describes individuals who lived in the population during the period \([t_0,t_i]\), with their characteristics at time \(t_i\).
+
+\textbf{Examples} A population 100 thousand individuals (or particles) is generated, all born at time 0 and divided into two subgroups. Individuals can swap from subgroup 1 (resp. 2) to subgroup 2 (resp. 1) at rate 0.1 (resp. 0.3).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{population\_df \textless{}{-}}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"birth"}\NormalTok{=}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{1e5}\NormalTok{),}\StringTok{"death"}\NormalTok{=}\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{,}\FloatTok{1e5}\NormalTok{), }
-                         \StringTok{"sub\_grp"}\NormalTok{ =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\FloatTok{1e5}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{))}
+\NormalTok{pop \textless{}{-}}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"birth"}\NormalTok{ =}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{1e5}\NormalTok{), }\StringTok{"death"}\NormalTok{ =}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{,}\FloatTok{1e5}\NormalTok{),}
+                  \StringTok{"sub\_grp"}\NormalTok{ =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\FloatTok{1e5}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{))}
 
 \NormalTok{rates \textless{}{-}}\StringTok{ }\KeywordTok{list}\NormalTok{( }\DataTypeTok{k12 =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{k21=}\FloatTok{0.3}\NormalTok{)}
 \CommentTok{\#Only swap events occur in the population}
-\NormalTok{swap\_event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{( }\DataTypeTok{type =} \StringTok{"swap"}\NormalTok{, }
-                  \DataTypeTok{intensity\_code =} \StringTok{"if (I.sub\_grp==1) result= k12 ; }
-\StringTok{                                    else result= k21;"}\NormalTok{,}
+\NormalTok{swap\_event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{(}\DataTypeTok{type =} \StringTok{"swap"}\NormalTok{,}
+                  \DataTypeTok{intensity\_code =} \StringTok{"if (I.sub\_grp == 1) result = k12;}
+\StringTok{                                    else result = k21;"}\NormalTok{,}
                   \DataTypeTok{kernel\_code =} \StringTok{"I.sub\_grp = 3 {-} I.sub\_grp;"}\NormalTok{)}
 
-\NormalTok{model\_swap \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{characteristics =}\KeywordTok{get\_characteristics}\NormalTok{(population\_df), }\DataTypeTok{events =} \KeywordTok{list}\NormalTok{(swap\_event),}\DataTypeTok{parameters =}\NormalTok{ rates)}
+\NormalTok{model\_swap \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{characteristics =} \KeywordTok{get\_characteristics}\NormalTok{(pop),}
+                       \DataTypeTok{events =} \KeywordTok{list}\NormalTok{(swap\_event),}
+                       \DataTypeTok{parameters =}\NormalTok{ rates)}
 \end{Highlighting}
 \end{Shaded}
 
-Then, the population is simulated from \(t_0=0\) to \(t_n =20\), and \texttt{popsim} returns a list of 20 dataframes composed of the population at times \(t=1\dots 20\).
+Then, the population is simulated from \(t_0=0\) to \(t_n =20\), and \texttt{popsim} returns a list of 20 data frames composed of the population at times \(t=1\dots 20\).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{time\_vec \textless{}{-}}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{20}
-
-\NormalTok{sim\_out \textless{}{-}}\KeywordTok{popsim}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ model\_swap, }\DataTypeTok{population =}\NormalTok{ population\_df, }\DataTypeTok{events\_bounds =} \KeywordTok{c}\NormalTok{(}\StringTok{"swap"}\NormalTok{=}\KeywordTok{max}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(rates))), }
-                 \DataTypeTok{parameters =}\NormalTok{  rates, }\DataTypeTok{time =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,time\_vec), }\DataTypeTok{multithreading =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{time\_vec \textless{}{-}}\StringTok{ }\DecValTok{0}\OperatorTok{:}\DecValTok{20}
+\NormalTok{sim\_out \textless{}{-}}\KeywordTok{popsim}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ model\_swap, }\DataTypeTok{population =}\NormalTok{ pop,}
+                 \DataTypeTok{events\_bounds =} \KeywordTok{c}\NormalTok{(}\StringTok{"swap"}\NormalTok{=}\KeywordTok{max}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(rates))),}
+                 \DataTypeTok{parameters =}\NormalTok{  rates,}
+                 \DataTypeTok{time =}\NormalTok{ time\_vec,}
+                 \DataTypeTok{multithreading =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1218,7 +1336,7 @@ The model is an ergodic two states continuous time Markov chain with stationary 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pop\_size \textless{}{-}}\StringTok{ }\KeywordTok{nrow}\NormalTok{(population\_df)}
+\NormalTok{pop\_size \textless{}{-}}\StringTok{ }\KeywordTok{nrow}\NormalTok{(pop)}
 \CommentTok{\# Mean number of individuals in subgroup 1 at each time:}
 \NormalTok{p\_}\DecValTok{1}\NormalTok{\_t \textless{}{-}}\StringTok{ }\KeywordTok{lapply}\NormalTok{(sim\_out}\OperatorTok{$}\NormalTok{population, }\ControlFlowTok{function}\NormalTok{(pop\_df)\{}
                       \KeywordTok{return}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(}\KeywordTok{subset}\NormalTok{(pop\_df, sub\_grp}\OperatorTok{==}\DecValTok{1}\NormalTok{))}\OperatorTok{/}\NormalTok{pop\_size)}
@@ -1226,96 +1344,89 @@ The model is an ergodic two states continuous time Markov chain with stationary 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
+\begin{center}\includegraphics{figure/main_prob_subgroup1-1} \end{center}
 
-{\centering \includegraphics{/Users/lemaire/Travail/Codes/IBMPopSim/docs/articles/IBMPopSim_files/figure-latex/plot-1} 
+This example shows that IBMPopSIm can also be used to simulated continuous time Markov Chain with finite state space.
 
-}
+\hypertarget{individual-life-courses}{%
+\subsubsection{Individual life courses}\label{individual-life-courses}}
 
-\caption{Evolution of probability to be in subgroup 1}(\#fig:plot)
-\end{figure}
-
-This example shows that any continuous time Markov Chain with finite state space can be simulated in a few steps with IBMPopSim.
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  {[}Optional{]} Activate the optional argument \texttt{with\_id} during the model creation step.
-\end{enumerate}
-
-It is possible to isolate the individuals' life course, by setting the optional argument \texttt{with\_id} of \texttt{mk\_model} to \texttt{TRUE}. In this case, a new characteristic called \texttt{id} is added to the population (if not already defined), identifying each individual with a unique integer.
+It is possible to isolate the individuals' life course, by setting the optional argument \texttt{with\_id} of \texttt{?mk\_model} to \texttt{TRUE}. In this case, a new characteristic called \texttt{id} is automatically added to the population (if not already defined), identifying each individual with a unique integer.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model\_swap\_id \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{characteristics =}  \KeywordTok{get\_characteristics}\NormalTok{(population\_df), }\DataTypeTok{events =} \KeywordTok{list}\NormalTok{(swap\_event), }
-                          \DataTypeTok{parameters =}\NormalTok{ rates, }\DataTypeTok{with\_id =} \OtherTok{TRUE}\NormalTok{)          }
+\NormalTok{model\_swap\_id \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\DataTypeTok{characteristics =}  \KeywordTok{get\_characteristics}\NormalTok{(pop),}
+                          \DataTypeTok{events =} \KeywordTok{list}\NormalTok{(swap\_event),}
+                          \DataTypeTok{parameters =}\NormalTok{ rates,}
+                          \DataTypeTok{with\_id =} \OtherTok{TRUE}\NormalTok{)}
+\CommentTok{\#\# [1] "add \textquotesingle{}id\textquotesingle{} as individual attributes"}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] "add 'id' as individual attributes"
-\end{verbatim}
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sim\_out\_id \textless{}{-}}\KeywordTok{popsim}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ model\_swap\_id, }
-                    \DataTypeTok{population =}\NormalTok{ population\_df, }
-                    \DataTypeTok{parameters =}\NormalTok{ rates, }
+\NormalTok{sim\_out\_id \textless{}{-}}\KeywordTok{popsim}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ model\_swap\_id,}
+                    \DataTypeTok{population =}\NormalTok{ pop,}
+                    \DataTypeTok{parameters =}\NormalTok{ rates,}
                     \DataTypeTok{events\_bounds =} \KeywordTok{c}\NormalTok{(}\StringTok{"swap"}\NormalTok{=}\FloatTok{0.3}\NormalTok{),}
-                    \DataTypeTok{time =} \KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{5}\NormalTok{, }\DataTypeTok{by=}\DecValTok{1}\NormalTok{), }
+                    \DataTypeTok{time =} \KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{5}\NormalTok{, }\DataTypeTok{by=}\DecValTok{1}\NormalTok{),}
                     \DataTypeTok{multithreading =} \OtherTok{TRUE}\NormalTok{)}
+\CommentTok{\#\# [1] "Add \textquotesingle{}id\textquotesingle{} attributes to the population."}
+\CommentTok{\#\# Simulation on  [0, 1]  [1, 2]  [2, 3]  [3, 4]  [4, 5]}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [1] "Add 'id' attributes to the population."
-## Simulation on  [0, 1]  [1, 2]  [2, 3]  [3, 4]  [4, 5]
-\end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{head}\NormalTok{(sim\_out\_id}\OperatorTok{$}\NormalTok{population[[}\DecValTok{1}\NormalTok{]])}
+\CommentTok{\#\#   id birth death sub\_grp}
+\CommentTok{\#\# 1  1     0    NA       1}
+\CommentTok{\#\# 2  9     0    NA       2}
+\CommentTok{\#\# 3 17     0    NA       2}
+\CommentTok{\#\# 4 25     0    NA       2}
+\CommentTok{\#\# 5 33     0    NA       1}
+\CommentTok{\#\# 6 41     0    NA       1}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##   id birth death sub_grp
-## 1  1     0    NA       1
-## 2  5     0    NA       2
-## 3  9     0    NA       1
-## 4 13     0    NA       2
-## 5 17     0    NA       2
-## 6 21     0    NA       2
-\end{verbatim}
-
-These dataframes can be merged into a single dataframe summarizing the life course of each individual, by calling the function \texttt{merge\_pop\_withid}.
+These data frames can be merged into a single data frame summarizing the life course of each individual, by calling the function \texttt{merge\_pop\_withid}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pop\_list \textless{}{-}}\StringTok{ }\NormalTok{sim\_out\_id}\OperatorTok{$}\NormalTok{population}
 \NormalTok{pop\_merge \textless{}{-}}\StringTok{ }\KeywordTok{merge\_pop\_withid}\NormalTok{(pop\_list)}
 \KeywordTok{head}\NormalTok{(pop\_merge)}
+\CommentTok{\#\#   id birth death sub\_grp\_1 sub\_grp\_2 sub\_grp\_3 sub\_grp\_4 sub\_grp\_5}
+\CommentTok{\#\# 1  1     0    NA         1         1         1         1         1}
+\CommentTok{\#\# 2  9     0    NA         2         2         2         2         2}
+\CommentTok{\#\# 3 17     0    NA         2         2         2         2         1}
+\CommentTok{\#\# 4 25     0    NA         2         2         2         2         2}
+\CommentTok{\#\# 5 33     0    NA         1         1         1         1         1}
+\CommentTok{\#\# 6 41     0    NA         1         1         1         1         2}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##   id birth death sub_grp_1 sub_grp_2 sub_grp_3 sub_grp_4 sub_grp_5
-## 1  1     0    NA         1         1         1         2         2
-## 2  5     0    NA         2         2         2         1         1
-## 3  9     0    NA         1         1         1         1         2
-## 4 13     0    NA         2         2         2         2         2
-## 5 17     0    NA         2         2         2         1         1
-## 6 21     0    NA         2         2         1         1         2
-\end{verbatim}
+Each line of \texttt{pop\_merge} corresponds to the life course of one individual. However, the population is only represented at time \(t=0,1..,5\), and this data frame doesn't account for exact swap event times or multiple swap events that occurred between between two time steps.
 
-For instance, a transition from subgroup 1 to subgroup 2 is observed for the individual with \texttt{id} number 5, between time 2 and 3.
+\hypertarget{cppessentials}{%
+\section{C++ essentials}\label{cppessentials}}
 
-\hypertarget{essentials}{%
-\section{C++ essentials}\label{essentials}}
+The arguments \texttt{intensity\_code}, \texttt{interaction\_code} and \texttt{kernel\_code} of the events functions must contain some C++ code given by the user. You don't need to be a C++ guru to write the few instructions needed. These functions should use very little C++ syntax. They are essentially arithmetic or logical operations, tests and calls to predefined functions, which we give an overview below.
 
-The arguments \texttt{intensity\_code} and \texttt{kernel\_code} of the \texttt{mk\_event\_CLASS} functions must contain some C++ code given by the user. In this section we give the essential tools to write this little code.
+For code efficiency, you should not allocate memory in these functions (no \texttt{new}) or use type containers (\texttt{std::vector}, \texttt{std::list}, \ldots). If you think you need to allocate memory, consider as parameter an R vector that will be mapped via \texttt{arma::vector} (see below), or declare the variable as \texttt{static}.
+Also, it should not be necessary to make a loop. Keep in mind that these functions should be fast.
+
+There are no C++ language restrictions so you can use all the functions of the standard C++11 library. However we detail in this section some functions that should be sufficient. For more details on C++ and Rcpp we recommend:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.cplusplus.com/doc/tutorial/}{C++ tutorial}
+\item
+  \href{http://dirk.eddelbuettel.com/code/rcpp.html}{Rcpp} and \href{http://dirk.eddelbuettel.com/code/rcpp.armadillo.html}{RcppArmadillo}
+\item
+  \href{https://teuder.github.io/rcpp4everyone_en/}{Rcpp for everyone}
+\end{itemize}
 
 \hypertarget{c-syntax}{%
 \subsection{C++ syntax}\label{c-syntax}}
@@ -1334,7 +1445,6 @@ The arguments \texttt{intensity\_code} and \texttt{kernel\_code} of the \texttt{
 int myNum = 5;               // Integer (whole number without decimals)
 double myFloatNum = 5.99;    // Floating point number (with decimals)
 char myLetter = 'D';         // Character
-string myText = "Hello";     // String (text)
 bool myBoolean = true;       // Boolean (true or false)
 \end{verbatim}
 
@@ -1361,6 +1471,25 @@ bool myBoolean = true;       // Boolean (true or false)
     Not Equal to: \texttt{a\ !=\ b}
   \end{itemize}
 \item
+  The logical operators are: \texttt{!}, \texttt{\&\&}, \texttt{\textbar{}\textbar{}}
+\item
+  The arithmetic operators are: \texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%}
+\item
+  Compound assignment: \texttt{+=}, \texttt{-=}, \texttt{*=}, \texttt{/=}, \texttt{\%=}
+\item
+  Increment and decrement: \texttt{++}, \texttt{-\/-}
+\item
+  Conditional ternary operator: \texttt{?\ :}
+  The conditional operator evaluates an expression, returning one value if that expression evaluates to \texttt{true}, and a different one if the expression evaluates as \texttt{false}. Its syntax is:
+\end{itemize}
+
+\begin{verbatim}
+condition ? result1; : result2;
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
   Use the \texttt{if}, \texttt{else\ if}, \texttt{else} statements to specify a block of C++ code to be executed if one or more conditions are or not \texttt{true}.
 \end{itemize}
 
@@ -1377,17 +1506,37 @@ if (condition1) {
 \begin{itemize}
 \tightlist
 \item
+  The syntax of the switch statement is a bit peculiar. Its purpose is to check for a value among a number of possible constant expressions. It is something similar to concatenating \texttt{if-else} statements, but limited to constant expressions. Its most typical syntax is:
+\end{itemize}
+
+\begin{verbatim}
+switch (expression)
+{
+  case constant1:
+     group-of-statements-1;
+     break;
+  case constant2:
+     group-of-statements-2;
+     break;
+  .
+  .
+  .
+  default:
+     default-group-of-statements
+}
+\end{verbatim}
+
+It works in the following way: switch evaluates expression and checks if it is equivalent to \texttt{constant1}; if it is, it executes \texttt{group-of-statements-1} until it finds the \texttt{break} statement. When it finds this break statement, the program jumps to the end of the entire switch statement (the closing brace).
+
+\begin{itemize}
+\tightlist
+\item
   When you know exactly how many times you want to loop through a block of code, use the \texttt{for} loop.
 \end{itemize}
 
 \begin{verbatim}
 for (statement 1; statement 2; statement 3) {
   // code block to be executed
-}
-
-//example
-for (int i = 0; i < 5; i++) {
-  cout << i << "\n";
 }
 \end{verbatim}
 
@@ -1403,130 +1552,347 @@ while (condition) {
 }
 \end{verbatim}
 
+For more details we recommend a few pages of \href{https://www.cplusplus.com/}{www.cplusplus.com} about:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.cplusplus.com/doc/tutorial/variables/}{Variables}
+\item
+  \href{https://www.cplusplus.com/doc/tutorial/operators/}{Operators}
+\item
+  \href{https://www.cplusplus.com/doc/tutorial/control/}{Statements}
+\end{itemize}
+
 \hypertarget{usual-numeric-functions}{%
 \subsection{Usual numeric functions}\label{usual-numeric-functions}}
 
-The most popular functions of the \texttt{\textless{}cmath\textgreater{}} library, which is included in the package, are listed in the table below. If the user wants to call some other functions of \texttt{cmath} not listed in the table, this is possible by adding the prefix \texttt{std::} to the name of the function.
+The most popular functions of the \texttt{cmath} library, which is included in the package, are the following:
+
+\begin{itemize}
+\tightlist
+\item
+  Exponential and logarithm functions: \texttt{exp(x)}, \texttt{log(x)} (natural logarithm)
+\item
+  Trigonometric functions: \texttt{cos(x)}, \texttt{sin(x)}, \texttt{tan(x)}
+\item
+  Power functions: \texttt{pow(x,\ a)} meaning \(x^a\) and \texttt{sqrt(x)} meaning \(\sqrt{x}\)
+\item
+  Absolute value: \texttt{abs(x)}
+\item
+  Truncation functions: \texttt{ceil(x)} meaning \(\lceil x \rceil\) and \texttt{floor(x)} meaning \(\lfloor x \rfloor\)
+\item
+  Bivariate functions: \texttt{max(x,\ y)} and \texttt{min(x,y)}
+\end{itemize}
+
+Note that these functions are not vectorial, the arguments \texttt{x} and \texttt{y} must be scalar. If the user wants to call some other functions of \texttt{cmath} not listed in the table, this is possible by adding the prefix \texttt{std::} to the name of the function (scope resolution operator \texttt{::} to access to functions declared in namespace standard \texttt{std}).
+
+\hypertarget{cppcharacteristics}{%
+\subsection{Individuals characteristics and model parameters: link between R and C++}\label{cppcharacteristics}}
+
+To facilitate the model creation, the individuals' characteristics and a list model parameters can be declared in the R environment and used in the C++ code.
+
+The data shared between the R environment and the C++ code are:
+
+\begin{itemize}
+\tightlist
+\item
+  The characteristics of the individuals which must be atomic (Boolean, scalar or character).
+\item
+  The model parameters: a list of variables of type:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Atomic, vector or matrix.
+  \item
+    Predefined real functions of one variable, or list of such functions.
+  \item
+    Piecewise real function of two variables, of list of such.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{atomic-types-characteristics-and-parameters}{%
+\subsubsection{Atomic types (characteristics and parameters)}\label{atomic-types-characteristics-and-parameters}}
+
+Here is the conversion table used between the atomic types of R and C++.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+C++ type & R type\tabularnewline
+\midrule
+\endhead
+bool & \texttt{logical}\tabularnewline
+int & \texttt{integer}\tabularnewline
+double & \texttt{double}\tabularnewline
+char & \texttt{character}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\textbf{Individuals characteristics}
+
+The characteristics of an individual are defined by a named character vector containing the name of the characteristic and the associated C++ type. The function \texttt{?get\_characteristics} provides a way to extract the characteristics from a population data frame.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(IBMPopSim)}
+\NormalTok{pop \textless{}{-}}\StringTok{ }\NormalTok{IBMPopSim}\OperatorTok{::}\NormalTok{EW\_popIMD\_}\DecValTok{14}\OperatorTok{$}\NormalTok{sample}
+\KeywordTok{get\_characteristics}\NormalTok{(pop)}
+\CommentTok{\#\#   male    IMD }
+\CommentTok{\#\# "bool"  "int"}
+\end{Highlighting}
+\end{Shaded}
+
+The requires \texttt{birth} and \texttt{death} characteristics are of type \texttt{double}.
+
+\textbf{Atomic model parameters}
+
+The model parameters are given by a named list of R objects. We recall that the type of an R object can be determined by calling the \texttt{?typeof} function. Atomic objects declared as model parameters can be directly used in the C++ code.\\
+In the example below, the variable \texttt{code} contains simple C++ instructions depending on the parameters defined in \texttt{params}. The \texttt{summary} of the model \texttt{mod} gives useful information on the types of characteristics and parameters used in C++ code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"lambda"}\NormalTok{ =}\StringTok{ }\FloatTok{0.02}\NormalTok{, }\StringTok{"alpha"}\NormalTok{ =}\StringTok{ }\FloatTok{0.4}\NormalTok{, }\StringTok{"mu"}\NormalTok{ =}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\DecValTok{2}\NormalTok{))}
+\NormalTok{code \textless{}{-}}\StringTok{ "result = lambda + alpha * (age(I, t) + mu);"}
+\NormalTok{event\_birth \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{(}\StringTok{"birth"}\NormalTok{, }\DataTypeTok{intensity\_code =}\NormalTok{ code)}
+\NormalTok{mod \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\KeywordTok{get\_characteristics}\NormalTok{(pop), }\DataTypeTok{events =} \KeywordTok{list}\NormalTok{(}\StringTok{"birth"}\NormalTok{ =}\StringTok{ }\NormalTok{event\_birth), }
+                \DataTypeTok{parameters =}\NormalTok{ params, }\DataTypeTok{with\_compilation =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(mod)}
+\CommentTok{\#\# Events:}
+\CommentTok{\#\# \#1: individual event of type birth}
+\CommentTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} }
+\CommentTok{\#\# Individual description:}
+\CommentTok{\#\# names:  birth death male IMD }
+\CommentTok{\#\# R types:  double double logical integer }
+\CommentTok{\#\# C types:  double double bool int}
+\CommentTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} }
+\CommentTok{\#\# R parameters available in C++ code:}
+\CommentTok{\#\# names:  lambda alpha mu }
+\CommentTok{\#\# R types:  double double integer }
+\CommentTok{\#\# C types:  double double int}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{cpparmadillo}{%
+\subsubsection{Vectors and matrices (model parameters)}\label{cpparmadillo}}
+
+Two of the possible model parameters types given in the argument \texttt{parameters} of the \texttt{?mk\_model} function are R vectors and R matrices. We call R vector a \texttt{numeric} of length at least 2. These types are converted, using the \href{http://dirk.eddelbuettel.com/code/rcpp.armadillo.html}{RcppArmadillo library}, in C++ \href{http://arma.sourceforge.net/}{Armadillo} types, \texttt{arma::vec} and \texttt{arma::matrix} respectively.
+
+The classes \texttt{arma::vec} and \texttt{arma::matrix} are rich and easy-to-use implementations of one-dimensional and two-dimensional arrays. To access to individual elements of an array, use the operator \texttt{()} (or \texttt{{[}{]}} in dimension 1).
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{(n)} or \texttt{{[}n{]}} for \texttt{arma::vec}, access the n-th element.
+\item
+  \texttt{(i,j)} for \texttt{arma::matrix}, access the element stored at the \(i\)-th row and \(j\)-th column.
+\end{itemize}
+
+\textbf{Warning:} The first element of the array is indexed by subscript of 0 (in each dimension).
+
+Another standard way (in C++) to access elements is to used iterators. An iterator is an object that, pointing to some element in a range of elements, has the ability to iterate through the elements of that range using a set of operators (see \href{https://teuder.github.io/rcpp4everyone_en/290_iterator.html}{more details on iterators}).
+
+Let \texttt{v} be a an object of type \texttt{arma::vec} and A be a an object of type \texttt{arma::matrix}. Here we show how to get the begin and the end iterators of these objects.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{v.begin()}: iterator pointing to the begin of \texttt{v}
+\item
+  \texttt{v.end()}: iterator pointing to the end of \texttt{v}
+\item
+  \texttt{A.begin\_row(i)}: iterator pointing to the first element of row \texttt{i}
+\item
+  \texttt{A.end\_row(i)}: iterator pointing to the last element of row \texttt{i}
+\item
+  \texttt{A.begin\_col(i)}: iterator pointing to the first element of column \texttt{i}
+\item
+  \texttt{A.end\_col(i)}: iterator pointing to the last element of column \texttt{i}
+\end{itemize}
+
+\hypertarget{cppIBMfunctions}{%
+\subsubsection{Predefined functions (model parameters)}\label{cppIBMfunctions}}
+
+To facilitate the implementation of intensity functions and kernel code, R functions have been predefined in \texttt{IBMPopSim}, which can be defined as model parameters and then called in the C++ code. The goal is to make their use as transparent as possible.
+
+\hypertarget{real-functions-of-one-variable}{%
+\paragraph{Real functions of one variable}\label{real-functions-of-one-variable}}
+
+Here is a list of such functions that can be defined as a R object and called from R and C++.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{stepfun}: Step function.
+\item
+  \texttt{linfun}: Linear interpolation function.
+\item
+  \texttt{gompertz}: Gompertz--Makeham intensity function.
+\item
+  \texttt{weibull}: Weibull density function.
+\item
+  \texttt{piecewise\_x}: Piecewise real function.
+\end{itemize}
+
+See the reference manual for mathematical definitions of these functions (\texttt{?stepfun}).\\
+Once the model is created, these predefined functions are transformed into C++ functions, identified as \texttt{function\_x}.
+
+We illustrate below some examples of the use of these functions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  We define \texttt{dr} a \texttt{stepfun} depending on some values in \texttt{EW\_pop\_14\$rates}. Note that this function applies to an age \texttt{a}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dr \textless{}{-}}\StringTok{ }\KeywordTok{with}\NormalTok{(EW\_pop\_}\DecValTok{14}\OperatorTok{$}\NormalTok{rates,}
+           \KeywordTok{stepfun}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ death\_male[,}\StringTok{"age"}\NormalTok{], }\DataTypeTok{y =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, death\_male[,}\StringTok{"value"}\NormalTok{])))}
+\KeywordTok{plot}\NormalTok{(dr, }\DataTypeTok{xlab=}\StringTok{"age"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"dr"}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Example of step function"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{figure/plot_stepfun-1} \end{center}
+
+We can also initialize a piecewise real function \texttt{f} defined by the function \texttt{dr} before age 80, and by a Gompertz-Makeham intensity function for ages after 80.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f \textless{}{-}}\StringTok{ }\KeywordTok{piecewise\_x}\NormalTok{(}\DecValTok{80}\NormalTok{, }\KeywordTok{list}\NormalTok{(dr, }\KeywordTok{gompertz}\NormalTok{(}\FloatTok{0.00006}\NormalTok{, }\FloatTok{0.085}\NormalTok{)))}
+\NormalTok{x \textless{}{-}}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DecValTok{110}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(x, }\KeywordTok{sapply}\NormalTok{(x, f), }\DataTypeTok{xlab=}\StringTok{"age"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"f"}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Example of piecewise function"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{figure/plot_piecewise-1} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Once a function has been created and defined as model parameter, a model depending on the function can be defined. For example we use in the model below the \texttt{stepfun} \texttt{dr} as a model parameter named \texttt{rate}. The function is used to defined the intensity of death events in the model.
+  s
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"rate"}\NormalTok{ =}\StringTok{ }\NormalTok{dr)}
+\NormalTok{event \textless{}{-}}\StringTok{ }\KeywordTok{mk\_event\_individual}\NormalTok{(}\StringTok{"death"}\NormalTok{, }\DataTypeTok{intensity\_code =} \StringTok{"result = rate(age(I, t));"}\NormalTok{)}
+\NormalTok{mod \textless{}{-}}\StringTok{ }\KeywordTok{mk\_model}\NormalTok{(}\KeywordTok{get\_characteristics}\NormalTok{(pop), }\DataTypeTok{events =} \KeywordTok{list}\NormalTok{(}\StringTok{"death"}\NormalTok{ =}\StringTok{ }\NormalTok{event), }
+                \DataTypeTok{parameters =}\NormalTok{ params, }\DataTypeTok{with\_compilation =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(mod)}
+\CommentTok{\#\# Events:}
+\CommentTok{\#\# \#1: individual event of type death}
+\CommentTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} }
+\CommentTok{\#\# Individual description:}
+\CommentTok{\#\# names:  birth death male IMD }
+\CommentTok{\#\# R types:  double double logical integer }
+\CommentTok{\#\# C types:  double double bool int}
+\CommentTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} }
+\CommentTok{\#\# R parameters available in C++ code:}
+\CommentTok{\#\# names:  rate }
+\CommentTok{\#\# R types:  closure }
+\CommentTok{\#\# C types:  function\_x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  After compilation, the parameter \texttt{rate} can actually be replaced by any function of type \texttt{function\_x}. For example you can call
+\end{enumerate}
+
+\begin{verbatim}
+popsim(mod, pop, params = list("rate" = dr), age_max = 120, 
+       events_bounds = c("death" = dr(age_max)), time = 10)
+\end{verbatim}
+
+as well as
+
+\begin{verbatim}
+popsim(mod, pop, params = list("rate" = f), age_max = 120, 
+       events_bounds = c("death" = f(age_max)), time = 10)
+\end{verbatim}
+
+\hypertarget{piecewise-real-functions-of-two-variables}{%
+\paragraph{Piecewise real functions of two variables}\label{piecewise-real-functions-of-two-variables}}
+
+In the C++ code these R functions declared with \texttt{?piecewise\_xy} are identified as \texttt{function\_xy} functions. See \texttt{?piecewise\_xy} for mathematical definition. This function allows to easily define a step function that depend on age and time.
+
+\hypertarget{list-of-functions}{%
+\paragraph{List of functions}\label{list-of-functions}}
+
+As parameter you can use a list of functions. All R functions in the list must be of the same C++ type: either \texttt{function\_x} or \texttt{function\_xy}. In C++ code the list of functions is replaced by a \texttt{std::vector} of \texttt{function\_x} or \texttt{function\_xy} (with first element indexed by 0).
+
+\hypertarget{randomvar}{%
+\subsection{Random variables}\label{randomvar}}
+
+We use the following notations to describe the available C++ random distributions, which can be used in the C++ intensity and kernel codes.
+
+\begin{itemize}
+\item
+  \(\mathcal{U}(a,b)\) : Uniform distribution on \([a, b]\) with \(a < b\)
+\item
+  \(\mathcal{E}(\lambda)\) : Exponential distribution, \(\lambda > 0\)
+\item
+  \(\mathcal{N}(\mu,\sigma)\) : Gaussian distribution, \(\mu, \sigma \in \mathbf{R}\)
+\item
+  \(\mathrm{Pois}(\lambda)\): Poisson distribution, \(\lambda > 0\)
+\item
+  \(\Gamma(\alpha, \beta)\): Gamma distribution, \(\alpha > 0\), \(\beta > 0\)
+\item
+  \(\mathrm{Weib}(a, b)\): Weibull distribution, \(a > 0\), \(b > 0\)
+\item
+  \(\mathcal{U}\{a, b\}\): Discrete uniform distribution on \(\{a, a+1, \dots, b\}\) with \(a < b\)
+\item
+  \(\mathcal{B}(p)\): Bernoulli distribution, the probability of success is \(p \in (0,1)\)
+\item
+  \(\mathcal{B}(n, p)\): Binomial distribution \(n \ge 1\), \(p \in (0,1)\)
+\item
+  \(\mathcal{D}_n\) : Discrete distribution with values in \(\{ 0, \dots, n-1 \}\) and with probabilities \(\{p_0, \dots, p_{n-1}\}\).
+\end{itemize}
+
+In the table below we show how to call them, which means how to make independent realizations of these random variables, and we give the reference to the C++ corresponding function of the \href{http://www.cplusplus.com/reference/random/}{random library} hidden in this call.
 
 \begin{longtable}[]{@{}lll@{}}
 \toprule
-Function name & Function call & Meaning\tabularnewline
+Function call & Meaning & C++ \href{http://www.cplusplus.com/reference/random/}{\texttt{random}} internal function\tabularnewline
 \midrule
 \endhead
-max & max(a,b) & \(\max(a,b)\)\tabularnewline
-min & min(a,b) & \(\min(a,b)\)\tabularnewline
-log & log(x) & \(\log(x)=ln(x)\)\tabularnewline
-exp & exp(x) & \(e^x\)\tabularnewline
-sin & sin(x) & \(\sin(x)\)\tabularnewline
-cos & cos(x) & \(\cos(x)\)\tabularnewline
-pow & pow(x,a) & \(x^a\)\tabularnewline
-sqrt & sqrt(x) & \(\sqrt(x)\)\tabularnewline
-abs & abs(x) & \(|x|\)\tabularnewline
-ceil & ceil(x) & \(\lceil x \rceil\)\tabularnewline
-floor & floor(x) & \(\lfloor x \rfloor\)\tabularnewline
+CUnif(\(a=0, b=1\)) & \(\mathcal{U}(a,b)\) & \href{http://www.cplusplus.com/reference/random/uniform_real_distribution/}{\texttt{uniform\_real\_distribution\textless{}double\textgreater{}}}\tabularnewline
+CExp(\(\lambda=1\)) & \(\mathcal{E}(\lambda)\) & \href{http://www.cplusplus.com/reference/random/exponential_distribution/}{\texttt{exponential\_distribution\textless{}double\textgreater{}}}\tabularnewline
+CNorm(\(\mu=0, \sigma=1\)) & \(\mathcal{N}(\mu,\sigma)\) & \href{http://www.cplusplus.com/reference/random/normal_distribution/}{\texttt{normal\_distribution\textless{}double\textgreater{}}}\tabularnewline
+CPoisson(\(\lambda=1\)) & \(\mathrm{Pois}(\lambda)\) & \href{http://www.cplusplus.com/reference/random/poisson_distribution/}{\texttt{poisson\_distribution\textless{}unsigned\textgreater{}}}\tabularnewline
+CGamma(\(\alpha=1, \beta=1\)) & \(\Gamma(\alpha,\beta)\) & \href{http://www.cplusplus.com/reference/random/gamma_distribution/}{\texttt{gamma\_distribution\textless{}double\textgreater{}}}\tabularnewline
+CWeibull(\(a=1\), \(b=1\)) & \(\mathrm{Weib}(a,b)\) & \href{http://www.cplusplus.com/reference/random/weibull_distribution/}{\texttt{weibull\_distribution\textless{}double\textgreater{}}}\tabularnewline
+CUnifInt(\(a=0, b=2^{31}-1\)) & \(\mathcal{U}\{a,b\}\) & \href{http://www.cplusplus.com/reference/random/uniform_int_distribution/}{\texttt{uniform\_int\_distribution\textless{}int\textgreater{}}}\tabularnewline
+CBern(\(p=0.5\)) & \(\mathcal{B}(p)\) & \href{http://www.cplusplus.com/reference/random/bernoulli_distribution/}{\texttt{bernoulli\_distribution}}\tabularnewline
+CBinom(\(n=1, p=0.5\)) & \(\mathcal{B}(n,p)\) & \href{http://www.cplusplus.com/reference/random/binomial_distribution/}{\texttt{binomial\_distribution\textless{}int\textgreater{}}}\tabularnewline
+CDiscrete(\texttt{p\_begin}, \texttt{p\_end}) & \(\mathcal{D}_n\) & \href{http://www.cplusplus.com/reference/random/discrete_distribution/}{\texttt{discrete\_distribution\textless{}int\textgreater{}}}\tabularnewline
 \bottomrule
 \end{longtable}
 
-\hypertarget{random}{%
-\subsection{Random}\label{random}}
+In the discrete distribution call \texttt{CDiscrete(p\_begin,\ p\_end)}, the arguments \texttt{p\_begin} and \texttt{p\_end} represent the iterators to the begin and to the end of an array which contains \(\{p_0, \dots, p_{n-1}\}\). Note that the use of iterators is a convenient and fast way to access a column or row of a matrix \texttt{arma::mat}.
 
-We use the following notations to describe the available C++ random distributions.
+\hypertarget{references}{%
+\section{References}\label{references}}
 
-\begin{itemize}
-\tightlist
-\item
-  \(\mathcal{U}(a,b)\) : uniform distribution with density function \(f(x) = \frac{1}{b-a}\) for \(a\leq x <b\)
-\item
-  \(\mathcal{E}(\lambda)\) : exponential distribution with density function \(\lambda e^{-\lambda x}\) for \(x\geq 0\)
-\item
-  \(\mathcal{N}(\mu,\sigma)\) : Gaussian distribution with density function \(\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac 1 2 \left( \frac{x-\mu}{\sigma}\right)^2}\)
-\item
-  \(\mathcal{D_n}\) : discrete distribution with \(n\) possible values and with probabilities \(\{ p_0, p_1, \ldots, p_{n-1}\}\) such that \(\mathbb{P}(i|(p_0, \ldots, p_{n-1})) = p_i/\sum_{k=0}^{n-1}p_k\) \(\forall i=0, \ldots, n-1\)
-\end{itemize}
+\hypertarget{refs}{}
+\begin{cslreferences}
+\leavevmode\hypertarget{ref-boumezoued2016}{}%
+Boumezoued, Alexandre. 2016. ``Approches Micro-Macro Des Dynamiques de Populations Hétérogènes Structurées Par âge. Application Aux Processus Auto-Excitants et à La démographie.''
 
-In the table below we show how to call them, which means how to make independent realizations of these random variables, and we give the reference to the C++ corresponding function of the \href{http://www.cplusplus.com/reference/random/}{\texttt{\textless{}random\textgreater{}} library} hidden in this call.
+\leavevmode\hypertarget{ref-MR2562651}{}%
+Ferrière, Régis, and Viet Chi Tran. n.d. ``Stochastic and Deterministic Models for Age-Structured Populations with Genetically Variable Traits.'' \emph{ESAIM Proc. CANUM 2008} 27 (4): 289--310.
 
-\begin{longtable}[]{@{}llll@{}}
-\toprule
-\begin{minipage}[b]{0.22\columnwidth}\raggedright
-Function name\strut
-\end{minipage} & \begin{minipage}[b]{0.22\columnwidth}\raggedright
-Function call\strut
-\end{minipage} & \begin{minipage}[b]{0.22\columnwidth}\raggedright
-Meaning\strut
-\end{minipage} & \begin{minipage}[b]{0.22\columnwidth}\raggedright
-\texttt{\textless{}random\textgreater{}} original function\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.22\columnwidth}\raggedright
-CUnif\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-CUnif(a=0,b=1)\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-\(\mathcal{U}(a,b)\)\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-\href{http://www.cplusplus.com/reference/random/uniform_real_distribution/}{\texttt{uniform\_real\_distribution\textless{}double\textgreater{}}}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.22\columnwidth}\raggedright
-CExp\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-CExp(\(\lambda=1\))\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-\(\mathcal{E}(\lambda)\)\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-\href{http://www.cplusplus.com/reference/random/exponential_distribution/}{\texttt{exponential\_distribution\textless{}double\textgreater{}}}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.22\columnwidth}\raggedright
-CNorm\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-CNorm(\(\mu=0\), \(\sigma=1\))\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-\(\mathcal{N}(\mu,\sigma)\)\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-\href{http://www.cplusplus.com/reference/random/normal_distribution/}{\texttt{normal\_distribution\textless{}double\textgreater{}}}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.22\columnwidth}\raggedright
-CDiscrete\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-CDiscrete(p\_begin, p\_end)\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-\(\mathcal{D_n}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
-\href{http://www.cplusplus.com/reference/random/discrete_distribution/}{\texttt{discrete\_distribution\textless{}int\textgreater{}}}\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
-Here p\_begin and p\_end represent the iterators to the begin and to the end of an object which should be of size n, see the section ``Armadillo'' in order to see how to pass vectors or rows (columns) of a matrix to CDiscrete.
-
-\hypertarget{armadillo}{%
-\subsection{Armadillo}\label{armadillo}}
-
-Two of the possible parameters types given in the argument \texttt{parameters} of the \texttt{mk\_model} function are R vectors (objects created with ``c(x\_1, \ldots,x\_n)'') and R matrices. These types are converted, using the \href{http://dirk.eddelbuettel.com/code/rcpp.armadillo.html}{RcppArmadillo library}, in C++ \href{http://arma.sourceforge.net/}{Armadillo} types, \texttt{arma::vec} and \texttt{arma::matrix} respectively.
-
-Let v be a an object of type \texttt{arma::vec} and A be a an object of type \texttt{arma::matrix}. Here we show how to get the begin and the end iterators of these objects.
-
-\begin{itemize}
-\tightlist
-\item
-  v.begin(): iterator pointing to the begin of v
-\item
-  v.end(): iterator pointing to the end of v
-\item
-  A.begin\_row(i) : iterator pointing to the first element of row i
-\item
-  A.end\_row(i) : iterator pointing to the last element of row i
-\item
-  A.begin\_col(i) : iterator pointing to the first element of column i
-\item
-  A.end\_col(i) : iterator pointing to the last element of column i
-\end{itemize}
-
-\hypertarget{IBMfunctions}{%
-\subsection{IBMPopSim functions}\label{IBMfunctions}}
-
-{ TO DO }
+\leavevmode\hypertarget{ref-MELEARD2004}{}%
+Fournier, Nicolas, and Sylvie Méléard. 2004. ``A microscopic probabilistic description of a locally regulated population and macroscopic approximations.'' \emph{Annals of Applied Probability} 14 (4): 1880--1919.
+\end{cslreferences}
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -1542,11 +1908,11 @@ Let v be a an object of type \texttt{arma::vec} and A be a an object of type \te
 
       <footer>
       <div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kakaai, Vincent Lemaire.</p>
+  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

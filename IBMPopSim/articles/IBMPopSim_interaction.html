@@ -6,13 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Population with genetically variable traits • IBMPopSim</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -97,7 +91,9 @@
 
       
 
-      </header><script src="IBMPopSim_interaction_files/header-attrs-2.3/header-attrs.js"></script><div class="row">
+      </header><script src="IBMPopSim_interaction_files/header-attrs-2.4/header-attrs.js"></script><script src="IBMPopSim_interaction_files/jquery-1.11.3/jquery.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="IBMPopSim_interaction_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="IBMPopSim_interaction_files/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="IBMPopSim_interaction_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="IBMPopSim_interaction_files/bootstrap-3.3.5/shim/respond.min.js"></script><script src="IBMPopSim_interaction_files/navigation-1.1/tabsets.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Population with genetically variable traits</h1>
@@ -126,7 +122,7 @@ The body size is an increasing function of age, and the size of an individual of
 <li>Birth: Each individual can give birth to an offspring, with an intensity</li>
 </ul>
 <p><span class="math display">\[b(x_0) = \alpha (4 - x_0)\]</span></p>
-<p>depending on a parameter <span class="math inline">\(\alpha\)</span> and his initial size. Smaller individuals have a higher birth intensity. When a birth occurs, the new individual have the same size than his parent with a high probability <span class="math inline">\(1-p\)</span>. A mutation can occur with probability <span class="math inline">\(p\)</span> and then the birth size of the new individual is</p>
+<p>depending on a parameter <span class="math inline">\(\alpha\)</span> and its initial size. Smaller individuals have a higher birth intensity. When a birth occurs, the new individual have the same size than his parent with a high probability <span class="math inline">\(1-p\)</span>. A mutation can occur with probability <span class="math inline">\(p\)</span> and then the birth size of the new individual is</p>
 <p><span class="math display">\[x_0'  = \min(\max(0, x_0 + G), 4),\]</span></p>
 <p>where <span class="math inline">\(G\)</span> is a Gaussian random variable <span class="math inline">\(\mathcal{N}(0,\sigma^2)\)</span>.</p>
 <ul>
@@ -141,19 +137,21 @@ The body size is an increasing function of age, and the size of an individual of
 <div id="population-creation" class="section level1" number="2">
 <h1 class="hasAnchor">
 <a href="#population-creation" class="anchor"></a><span class="header-section-number">2</span> Population creation</h1>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># Generate population</span>
-<span class="no">N</span> <span class="kw">&lt;-</span> <span class="fl">900</span>  <span class="co"># Number of individuals in the initial population</span>
-<span class="no">x0</span> <span class="kw">&lt;-</span> <span class="fl">1.06</span>
-<span class="no">agemin</span> <span class="kw">&lt;-</span> <span class="fl">0.</span>
-<span class="no">agemax</span> <span class="kw">&lt;-</span> <span class="fl">2.</span></pre></body></html></div>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">pop_init</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
-  <span class="st">"birth"</span> <span class="kw">=</span> -<span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="no">N</span>, <span class="no">agemin</span>, <span class="no">agemax</span>), <span class="co"># Age of each individual chosen uniformly in [0,2]</span>
-  <span class="st">"death"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span>(<span class="fl">NA</span>),
-  <span class="st">"birth_size"</span> <span class="kw">=</span> <span class="no">x0</span> <span class="co"># All individuals have initially the same birth size x0.</span>
-)
-<span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop_init</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># Generate population</span>
+<span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">900</span>  <span class="co"># Number of individuals in the initial population</span>
+<span class="va">x0</span> <span class="op">&lt;-</span> <span class="fl">1.06</span>
+<span class="va">agemin</span> <span class="op">&lt;-</span> <span class="fl">0.</span>
+<span class="va">agemax</span> <span class="op">&lt;-</span> <span class="fl">2.</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="va">pop_init</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+  <span class="st">"birth"</span> <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">N</span>, <span class="va">agemin</span>, <span class="va">agemax</span><span class="op">)</span>, <span class="co"># Age of each individual chosen uniformly in [0,2]</span>
+  <span class="st">"death"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>,
+  <span class="st">"birth_size"</span> <span class="op">=</span> <span class="va">x0</span> <span class="co"># All individuals have initially the same birth size x0.</span>
+<span class="op">)</span>
+<span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop_init</span><span class="op">)</span>
 <span class="co">## birth_size </span>
-<span class="co">##   "double"</span></pre></body></html></div>
+<span class="co">##   "double"</span></pre></div>
 </div>
 <div id="events-and-model-creation" class="section level1" number="3">
 <h1 class="hasAnchor">
@@ -163,7 +161,7 @@ The body size is an increasing function of age, and the size of an individual of
 <li>Birth (with or without mutation)</li>
 <li>Death</li>
 </ul>
-<p>Each event is characterized by its intensity and kernel code, as follows.</p>
+<p>Each event is characterized by its intensity and kernel code, described below.</p>
 <div id="birth-event-with-individual-intensity" class="section level2" number="3.1">
 <h2 class="hasAnchor">
 <a href="#birth-event-with-individual-intensity" class="anchor"></a><span class="header-section-number">3.1</span> Birth event with individual intensity</h2>
@@ -176,21 +174,22 @@ In the case of a mutation, the new trait is <span class="math inline">\(x_0' = \
 <div id="parameters" class="section level3" number="3.1.1">
 <h3 class="hasAnchor">
 <a href="#parameters" class="anchor"></a><span class="header-section-number">3.1.1</span> Parameters</h3>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">params_birth</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>( <span class="co"># parameters for birth event.</span>
-  <span class="st">"p"</span> <span class="kw">=</span> <span class="fl">0.03</span>,
-  <span class="st">"sigma"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fl">0.01</span>),
-  <span class="st">"alpha"</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="va">params_birth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> <span class="co"># parameters for birth event.</span>
+  <span class="st">"p"</span> <span class="op">=</span> <span class="fl">0.03</span>,
+  <span class="st">"sigma"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">0.01</span><span class="op">)</span>,
+  <span class="st">"alpha"</span> <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 </div>
 <div id="event-creation" class="section level3" number="3.1.2">
 <h3 class="hasAnchor">
 <a href="#event-creation" class="anchor"></a><span class="header-section-number">3.1.2</span> Event creation</h3>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">birth_event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span>( <span class="kw">type</span> <span class="kw">=</span> <span class="st">"birth"</span>,
-  <span class="kw">intensity_code</span> <span class="kw">=</span> <span class="st">'result = alpha * (4 - I.birth_size);'</span>,
-  <span class="kw">kernel_code</span> <span class="kw">=</span> <span class="st">'if (CUnif() &lt; p)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="va">birth_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span> type <span class="op">=</span> <span class="st">"birth"</span>,
+  intensity_code <span class="op">=</span> <span class="st">'result = alpha * (4 - I.birth_size);'</span>,
+  kernel_code <span class="op">=</span> <span class="st">'if (CUnif() &lt; p)
                      newI.birth_size = min(max(0., CNorm(I.birth_size, sigma)), 4.);
                  else
-                     newI.birth_size = I.birth_size;'</span>
-)</pre></body></html></div>
+                     newI.birth_size = I.birth_size;'</span><span class="op">)</span></pre></div>
 </div>
 </div>
 <div id="death-event-with-interaction" class="section level2" number="3.2">
@@ -204,33 +203,35 @@ In the case of a mutation, the new trait is <span class="math inline">\(x_0' = \
 <div id="parameters-1" class="section level3" number="3.2.1">
 <h3 class="hasAnchor">
 <a href="#parameters-1" class="anchor"></a><span class="header-section-number">3.2.1</span> Parameters</h3>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">params_death</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-  <span class="st">"g"</span> <span class="kw">=</span> <span class="fl">1</span>,
-  <span class="st">"beta"</span> <span class="kw">=</span> <span class="fl">2.</span>/<span class="fl">300.</span>,
-  <span class="st">"c"</span> <span class="kw">=</span> <span class="fl">1.2</span>
-)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="va">params_death</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  <span class="st">"g"</span> <span class="op">=</span> <span class="fl">1</span>,
+  <span class="st">"beta"</span> <span class="op">=</span> <span class="fl">2.</span><span class="op">/</span><span class="fl">300.</span>,
+  <span class="st">"c"</span> <span class="op">=</span> <span class="fl">1.2</span>
+<span class="op">)</span></pre></div>
 </div>
 <div id="event-creation-1" class="section level3" number="3.2.2">
 <h3 class="hasAnchor">
 <a href="#event-creation-1" class="anchor"></a><span class="header-section-number">3.2.2</span> Event creation</h3>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">death_event</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_interaction.html">mk_event_interaction</a></span>( <span class="co"># Event with intensity of type interaction</span>
-  <span class="kw">type</span> <span class="kw">=</span> <span class="st">"death"</span>,
-  <span class="kw">interaction_code</span> <span class="kw">=</span> <span class="st">"double x_I = I.birth_size + g * age(I,t);
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_interaction.html">mk_event_interaction</a></span><span class="op">(</span> <span class="co"># Event with intensity of type interaction</span>
+  type <span class="op">=</span> <span class="st">"death"</span>,
+  interaction_code <span class="op">=</span> <span class="st">"double x_I = I.birth_size + g * age(I,t);
                       double x_J = J.birth_size + g * age(J,t);
-                      result = beta * ( 1.- 1./(1. + c * exp(-4. * (x_I-x_J))));"</span> <span class="co"># Implementation of U</span>
-)</pre></body></html></div>
+                      result = beta * ( 1.- 1./(1. + c * exp(-4. * (x_I-x_J))));"</span> <span class="co">#  U</span>
+<span class="op">)</span></pre></div>
 </div>
 </div>
 <div id="model-creation" class="section level2" number="3.3">
 <h2 class="hasAnchor">
 <a href="#model-creation" class="anchor"></a><span class="header-section-number">3.3</span> Model creation</h2>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span>(
-  <span class="kw">characteristics</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop_init</span>),
-  <span class="kw">events</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">birth_event</span>, <span class="no">death_event</span>),
-  <span class="kw">parameters</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">params_birth</span>, <span class="no">params_death</span>) <span class="co"># Model parameters</span>
-)
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">model</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>
+  characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop_init</span><span class="op">)</span>,
+  events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">birth_event</span>, <span class="va">death_event</span><span class="op">)</span>,
+  parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">params_birth</span>, <span class="va">params_death</span><span class="op">)</span> <span class="co"># Model parameters</span>
+<span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 <span class="co">## Events:</span>
 <span class="co">## #1: individual event of type birth</span>
 <span class="co">## #2: interaction event of type death</span>
@@ -243,7 +244,7 @@ In the case of a mutation, the new trait is <span class="math inline">\(x_0' = \
 <span class="co">## R parameters available in C++ code:</span>
 <span class="co">## names:  p sigma alpha g beta c </span>
 <span class="co">## R types:  double double double double double double </span>
-<span class="co">## C types:  double double double double double double</span></pre></body></html></div>
+<span class="co">## C types:  double double double double double double</span></pre></div>
 </div>
 </div>
 <div id="simulation" class="section level1" number="4">
@@ -251,175 +252,219 @@ In the case of a mutation, the new trait is <span class="math inline">\(x_0' = \
 <a href="#simulation" class="anchor"></a><span class="header-section-number">4</span> Simulation</h1>
 <p><strong>Event bounds</strong></p>
 <p>Bounds for the birth intensity and the death interaction function <span class="math inline">\(U\)</span> have to be computed.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">birth_intensity_max</span> <span class="kw">&lt;-</span> <span class="fl">4</span>*<span class="no">params_birth</span>$<span class="no">alpha</span>
-<span class="no">interaction_fun_max</span> <span class="kw">&lt;-</span> <span class="no">params_death</span>$<span class="no">beta</span></pre></body></html></div>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">T</span> <span class="kw">=</span> <span class="fl">500</span>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="va">birth_intensity_max</span> <span class="op">&lt;-</span> <span class="fl">4</span><span class="op">*</span><span class="va">params_birth</span><span class="op">$</span><span class="va">alpha</span>
+<span class="va">interaction_fun_max</span> <span class="op">&lt;-</span> <span class="va">params_death</span><span class="op">$</span><span class="va">beta</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="cn">T</span> <span class="op">=</span> <span class="fl">500</span>
 
 <span class="co"># Multithreading is NOT possible due to interaction between individuals</span>
 
-<span class="no">sim_out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="kw">model</span> <span class="kw">=</span> <span class="no">model</span>,
-  <span class="kw">population</span> <span class="kw">=</span> <span class="no">pop_init</span>,
-  <span class="kw">events_bounds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'birth'</span><span class="kw">=</span><span class="no">birth_intensity_max</span>, <span class="st">'death'</span><span class="kw">=</span><span class="no">interaction_fun_max</span>),
-  <span class="kw">parameters</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">params_birth</span>, <span class="no">params_death</span>),
-  <span class="kw">age_max</span> <span class="kw">=</span> <span class="fl">2</span>,
-  <span class="kw">time</span> <span class="kw">=</span> <span class="no">T</span>)
-<span class="co">## Simulation on  [0, 500]</span></pre></body></html></div>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">"duration_main_algorithm"</span>]
+<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,
+  population <span class="op">=</span> <span class="va">pop_init</span>,
+  events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth'</span><span class="op">=</span><span class="va">birth_intensity_max</span>, <span class="st">'death'</span><span class="op">=</span><span class="va">interaction_fun_max</span><span class="op">)</span>,
+  parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">params_birth</span>, <span class="va">params_death</span><span class="op">)</span>,
+  age_max <span class="op">=</span> <span class="fl">2</span>,
+  time <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
+<span class="co">## Simulation on  [0, 500]</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">"duration_main_algorithm"</span><span class="op">]</span>
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##                0.283575</span></pre></body></html></div>
+<span class="co">##                0.137394</span></pre></div>
 </div>
 <div id="outputs" class="section level1" number="5">
 <h1 class="hasAnchor">
 <a href="#outputs" class="anchor"></a><span class="header-section-number">5</span> Outputs</h1>
 <p><code>sim_out$population</code> is a data frame containing the date of birth, death, and characteristics of all individuals who lived in the population over the period [0,500].</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>)
-<span class="co">## 'data.frame':    300919 obs. of  3 variables:</span>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">)</span>
+<span class="co">## 'data.frame':    312613 obs. of  3 variables:</span>
 <span class="co">##  $ birth     : num  498 498 498 498 498 ...</span>
 <span class="co">##  $ death     : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">##  $ birth_size: num  2.6 2.35 2.49 2.62 2.46 ...</span>
-<span class="no">pop_out</span> <span class="kw">&lt;-</span> <span class="no">sim_out</span>$<span class="no">population</span></pre></body></html></div>
+<span class="co">##  $ birth_size: num  2.27 2.63 2.72 2.67 2.19 ...</span>
+<span class="va">pop_out</span> <span class="op">&lt;-</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">population</span></pre></div>
 <p>Population size at <span class="math inline">\(t=500\)</span>.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">pop_size</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="fu"><a href="../reference/population_alive.html">population_alive</a></span>(<span class="no">pop_out</span>,<span class="kw">t</span> <span class="kw">=</span> <span class="fl">500</span>))
-<span class="no">pop_size</span>
-<span class="co">## [1] 353</span></pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="va">pop_size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="va">pop_out</span>,t <span class="op">=</span> <span class="fl">500</span><span class="op">)</span><span class="op">)</span>
+<span class="va">pop_size</span>
+<span class="co">## [1] 337</span></pre></div>
 <p>Result from <span class="citation">(Ferrière and Tran 2009)</span> can be reproduce from the simulation.
 For each individual in the population, we draw below a line representing its birth size during its life time.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">pop_out</span>) +
-  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span><span class="no">birth</span>, <span class="kw">xend</span><span class="kw">=</span><span class="no">death</span>, <span class="kw">y</span><span class="kw">=</span><span class="no">birth_size</span>, <span class="kw">yend</span><span class="kw">=</span><span class="no">birth_size</span>),
-               <span class="kw">na.rm</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">colour</span><span class="kw">=</span><span class="st">"blue"</span>, <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.1</span>) +
-  <span class="fu">xlab</span>(<span class="st">"Time"</span>) + <span class="fu">ylab</span>(<span class="st">"Birth size"</span>)</pre></body></html></div>
-<p><img src="inter_output2-1.png" title="plot of chunk inter_output2" alt="plot of chunk inter_output2" style="display: block; margin: auto;"></p>
-</div>
-<div id="simulation-with-different-parameters" class="section level1" number="6">
-<h1 class="hasAnchor">
-<a href="#simulation-with-different-parameters" class="anchor"></a><span class="header-section-number">6</span> Simulation with different parameters</h1>
-<p>The model can be simulated with different parameters without being recompiled.</p>
-<div id="impact-of-aging-velocity" class="section level2" number="6.1">
-<h2 class="hasAnchor">
-<a href="#impact-of-aging-velocity" class="anchor"></a><span class="header-section-number">6.1</span> Impact of aging velocity</h2>
-<p>The ageing velocity has an impact on the distribution of birth sizes of over time.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">params_death</span>$<span class="no">g</span> <span class="kw">&lt;-</span> <span class="fl">0.3</span></pre></body></html></div>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">pop_out</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_segment</span><span class="op">(</span>
+                    <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">birth</span>, xend<span class="op">=</span><span class="va">death</span>, y<span class="op">=</span><span class="va">birth_size</span>, yend<span class="op">=</span><span class="va">birth_size</span><span class="op">)</span>,
+                    na.rm<span class="op">=</span><span class="cn">TRUE</span>, colour<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
+                <span class="fu">xlab</span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span>
+                <span class="fu">ylab</span><span class="op">(</span><span class="st">"Birth size"</span><span class="op">)</span></pre></div>
+<p>&lt;img src=“figure/inter_output2-1.png”)</p>
+<pre><code>
+# Simulation with different parameters
+
+
+The model can be simulated with different parameters without being recompiled.
+
+
+## Impact of aging velocity
+
+
+The ageing velocity has an impact on the distribution of birth sizes of over time.
+
+
+```r
+params_death$g &lt;- 0.3</code></pre>
 <p>Events bounds are not modified since they do not depend on <span class="math inline">\(g\)</span>.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">sim_out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="kw">model</span> <span class="kw">=</span> <span class="no">model</span>,
-  <span class="kw">population</span> <span class="kw">=</span> <span class="no">pop_init</span>,
-  <span class="kw">events_bounds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'birth'</span><span class="kw">=</span><span class="no">birth_intensity_max</span>, <span class="st">'death'</span><span class="kw">=</span><span class="no">interaction_fun_max</span>),
-  <span class="kw">parameters</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">params_birth</span>, <span class="no">params_death</span>),
-  <span class="kw">age_max</span> <span class="kw">=</span> <span class="fl">2</span>,
-  <span class="kw">time</span> <span class="kw">=</span> <span class="no">T</span>)
-<span class="co">## Simulation on  [0, 500]</span></pre></body></html></div>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">pop_out</span> <span class="kw">&lt;-</span> <span class="no">sim_out</span>$<span class="no">population</span></pre></body></html></div>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">pop_out</span>) +
-  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span><span class="no">birth</span>, <span class="kw">xend</span><span class="kw">=</span><span class="no">death</span>, <span class="kw">y</span><span class="kw">=</span><span class="no">birth_size</span>, <span class="kw">yend</span><span class="kw">=</span><span class="no">birth_size</span>),
-               <span class="kw">na.rm</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">colour</span><span class="kw">=</span><span class="st">"blue"</span>, <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.1</span>) +
-  <span class="fu">xlab</span>(<span class="st">"Time"</span>) + <span class="fu">ylab</span>(<span class="st">"Birth size"</span>)</pre></body></html></div>
-<p><img src="inter_output3-1.png" title="plot of chunk inter_output3" alt="plot of chunk inter_output3" style="display: block; margin: auto;"></p>
-<p><strong>Evolution of age pyramid by birth size</strong></p>
-<p><code><a href="../reference/age_pyramid.html">?age_pyramid</a></code> returns the age pyramid data frame of the population, by birth size at a given time.
-We can see in the example below that several individuals have the same size, at time 500, corresponding to individuals of the same line with no mutations.</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">pyr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span>(<span class="no">pop_out</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>,<span class="fl">2</span>,<span class="kw">by</span><span class="kw">=</span><span class="fl">0.2</span>), <span class="kw">time</span> <span class="kw">=</span> <span class="fl">500</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pyr</span>)
-<span class="co">##       age birth_size value</span>
-<span class="co">## 1 0 - 0.2  0.9419007     2</span>
-<span class="co">## 2 0 - 0.2  1.0255093     0</span>
-<span class="co">## 3 0 - 0.2  1.0760937    19</span>
-<span class="co">## 4 0 - 0.2  1.0882825     5</span>
-<span class="co">## 5 0 - 0.2  1.0983297     1</span>
-<span class="co">## 6 0 - 0.2  1.1059204     4</span></pre></body></html></div>
-<p>The age pyramid can be plotted, with a visualization of the individuals birth size. We start by defining discrete birth sizes subgroups, and by assigning a color to each subgroup.</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">pyr</span>$<span class="no">group_name</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span>(<span class="no">pyr</span>$<span class="no">birth_size</span>+<span class="fl">1e-6</span>, <span class="kw">breaks</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>,<span class="fl">4</span>,<span class="kw">by</span><span class="kw">=</span><span class="fl">0.25</span>)))
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pyr</span>)
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,
+  population <span class="op">=</span> <span class="va">pop_init</span>,
+  events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth'</span><span class="op">=</span><span class="va">birth_intensity_max</span>, <span class="st">'death'</span><span class="op">=</span><span class="va">interaction_fun_max</span><span class="op">)</span>,
+  parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">params_birth</span>, <span class="va">params_death</span><span class="op">)</span>,
+  age_max <span class="op">=</span> <span class="fl">2</span>,
+  time <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
+<span class="co">## Simulation on  [0, 500]</span></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit">
+<span class="va">pop_out</span> <span class="op">&lt;-</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">population</span></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">pop_out</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">birth</span>, xend<span class="op">=</span><span class="va">death</span>, y<span class="op">=</span><span class="va">birth_size</span>, yend<span class="op">=</span><span class="va">birth_size</span><span class="op">)</span>,
+               na.rm<span class="op">=</span><span class="cn">TRUE</span>, colour<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Birth size"</span><span class="op">)</span></pre></div>
+<p>&lt;img src=“figure/inter_output3-1.png”)</p>
+<pre><code>
+**Evolution of age pyramid by birth size**
+
+`?age_pyramid` returns the age pyramid  data frame of the population, by birth size at a given time.
+
+
+```r
+pyr &lt;- age_pyramid(pop_out, ages = seq(0,2,by=0.2), time = 500)
+head(pyr)
+##       age birth_size value
+## 1 0 - 0.2   2.045249     1
+## 2 0 - 0.2   2.053036     1
+## 3 0 - 0.2   2.063858     0
+## 4 0 - 0.2   2.078156     0
+## 5 0 - 0.2   2.122118     3
+## 6 0 - 0.2   2.151586     5</code></pre>
+<p>The age pyramid can be plotted, with a visualization of the individuals birth size, starting by defining discrete birth sizes subgroups, and by assigning a color to each subgroup.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="va">pyr</span><span class="op">$</span><span class="va">group_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">$</span><span class="va">birth_size</span><span class="op">+</span><span class="fl">1e-6</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">4</span>,by<span class="op">=</span><span class="fl">0.25</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">)</span>
 <span class="co">##       age birth_size value group_name</span>
-<span class="co">## 1 0 - 0.2  0.9419007     2   (0.75,1]</span>
-<span class="co">## 2 0 - 0.2  1.0255093     0   (1,1.25]</span>
-<span class="co">## 3 0 - 0.2  1.0760937    19   (1,1.25]</span>
-<span class="co">## 4 0 - 0.2  1.0882825     5   (1,1.25]</span>
-<span class="co">## 5 0 - 0.2  1.0983297     1   (1,1.25]</span>
-<span class="co">## 6 0 - 0.2  1.1059204     4   (1,1.25]</span></pre></body></html></div>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">colorspace</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">lbls</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">pyr</span>$<span class="no">group_name</span>))
-<span class="no">colors</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="http://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html">diverging_hcl</a></span>(<span class="kw">n</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">lbls</span>), <span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Red-Green"</span>)) <span class="co"># attributes a color to each subgroup</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">colors</span>) <span class="kw">&lt;-</span> <span class="no">lbls</span></pre></body></html></div>
-<p>The function <code><a href="../reference/plot_pyramid.html">?plot_pyramid</a></code> allows the user to plot the age pyramid at a given time of a population composed of several subgroups, given a population data frame with a column named <code>group_name</code>(only needed for displaying several subgroups).</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span>(<span class="no">pyr</span>, <span class="kw">group_colors</span> <span class="kw">=</span> <span class="no">colors</span>, <span class="kw">group_legend</span> <span class="kw">=</span> <span class="st">'Birth size'</span>)</pre></body></html></div>
-<p><img src="inter_pyramid-1.png" title="plot of chunk inter_pyramid" alt="plot of chunk inter_pyramid" style="display: block; margin: auto;"></p>
-<p>Due to the interaction between individuals, only bigger individuals survive at higher ages.</p>
-<p>Several age pyramids at different time can be computed similarly at different times by calling <code><a href="../reference/age_pyramids.html">?age_pyramids</a></code>.</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">pyrs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/age_pyramids.html">age_pyramids</a></span>(<span class="no">pop_out</span>, <span class="kw">ages</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>,<span class="fl">2</span>,<span class="kw">by</span><span class="kw">=</span><span class="fl">0.2</span>), <span class="kw">time</span> <span class="kw">=</span> <span class="fl">50</span>:<span class="fl">500</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">pyrs</span>$<span class="no">group_name</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span>(<span class="no">pyrs</span>$<span class="no">birth_size</span>+<span class="fl">1e-6</span>, <span class="kw">breaks</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>,<span class="fl">4</span>,<span class="kw">by</span><span class="kw">=</span><span class="fl">0.25</span>)))</pre></body></html></div>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">lbls</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">pyrs</span>$<span class="no">group_name</span>))
-<span class="no">colors</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="http://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html">diverging_hcl</a></span>(<span class="kw">n</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">lbls</span>), <span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Red-Green"</span>)) <span class="co"># attributes a color to each group</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">colors</span>) <span class="kw">&lt;-</span> <span class="no">lbls</span></pre></body></html></div>
-<div class="sourceCode" id="cb26"><html><body><pre class="r">#library(gganimate)</pre></body></html></div>
-<div class="sourceCode" id="cb27"><html><body><pre class="r">#anim &lt;- plot_pyramid(pyrs, group_colors = colors,
-                    #group_legend = 'Birth size') +
-        #transition_time(time) + labs(title = "Time: {frame_time}")</pre></body></html></div>
-<div class="sourceCode" id="cb28"><html><body><pre class="r">#animate(anim, nframes = 450, fps = 10)</pre></body></html></div>
-</div>
-<div id="increase-in-initial-population-size" class="section level2" number="6.2">
+<span class="co">## 1 0 - 0.2   2.045249     1   (2,2.25]</span>
+<span class="co">## 2 0 - 0.2   2.053036     1   (2,2.25]</span>
+<span class="co">## 3 0 - 0.2   2.063858     0   (2,2.25]</span>
+<span class="co">## 4 0 - 0.2   2.078156     0   (2,2.25]</span>
+<span class="co">## 5 0 - 0.2   2.122118     3   (2,2.25]</span>
+<span class="co">## 6 0 - 0.2   2.151586     5   (2,2.25]</span></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://colorspace.R-Forge.R-project.org">colorspace</a></span><span class="op">)</span>
+<span class="va">lbls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">$</span><span class="va">group_name</span><span class="op">)</span><span class="op">)</span>
+<span class="co"># Attribution of a color to each subgroup</span>
+<span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="http://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html">diverging_hcl</a></span><span class="op">(</span>n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">lbls</span><span class="op">)</span>, palette <span class="op">=</span> <span class="st">"Red-Green"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">colors</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">lbls</span></pre></div>
+<p><code><a href="../reference/plot_pyramid.html">?plot_pyramid</a></code> allows the user to plot the age pyramid at a given time of a population composed of several subgroups, given a population data frame with a column named <code>group_name</code> (only needed for displaying several subgroups).</p>
+<div class="sourceCode" id="cb21"><pre class="downlit">
+<span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span>, group_colors <span class="op">=</span> <span class="va">colors</span>, group_legend <span class="op">=</span> <span class="st">'Birth size'</span><span class="op">)</span></pre></div>
+<p>&lt;img src=“figure/inter_pyramid-1.png”)</p>
+<pre><code>
+Due to the interaction between individuals, only bigger individuals survive at higher ages.
+
+
+Several age pyramids at different times can be computed similarly at different times by calling `?age_pyramids`.
+
+
+```r
+pyrs &lt;- age_pyramids(pop_out, ages = seq(0,2,by=0.2), time = 50:500)
+pyrs$group_name &lt;- as.character(cut(pyrs$birth_size+1e-6, breaks = seq(0,4,by=0.25)))</code></pre>
+<div class="sourceCode" id="cb23"><pre class="downlit">
+<span class="va">lbls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">pyrs</span><span class="op">$</span><span class="va">group_name</span><span class="op">)</span><span class="op">)</span>
+<span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="http://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html">diverging_hcl</a></span><span class="op">(</span>n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">lbls</span><span class="op">)</span>, palette <span class="op">=</span> <span class="st">"Red-Green"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">colors</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">lbls</span>
+
+<span class="co"># library(gganimate)</span>
+<span class="co"># anim &lt;- plot_pyramid(pyrs, group_colors = colors, group_legend = 'Birth size') +</span>
+<span class="co">#             transition_time(time) +</span>
+<span class="co">#             labs(title = "Time: {frame_time}")</span>
+
+<span class="co"># animate(anim, nframes = 450, fps = 10)</span></pre></div>
+<div id="increase-in-initial-population-size" class="section level2" number="5.1">
 <h2 class="hasAnchor">
-<a href="#increase-in-initial-population-size" class="anchor"></a><span class="header-section-number">6.2</span> Increase in initial population size</h2>
-<p>We can do the same simulation with a bigger initial population. In order for the population size to stay approximately constant, the birth (resp. death) intensity in increased (resp. decreased).</p>
-<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">N</span> <span class="kw">&lt;-</span> <span class="fl">2000</span>
-<span class="no">pop_init_big</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
-  <span class="st">"birth"</span> <span class="kw">=</span> -<span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="no">N</span>, <span class="no">agemin</span>, <span class="no">agemax</span>), <span class="co"># Age of each individual chosen uniformly in [0,2]</span>
-  <span class="st">"death"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span>(<span class="fl">NA</span>),
-  <span class="st">"birth_size"</span> <span class="kw">=</span> <span class="no">x0</span> <span class="co"># All individuals have initially the same birth size x0.</span>
-)</pre></body></html></div>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">params_birth</span>$<span class="no">alpha</span> <span class="kw">&lt;-</span> <span class="fl">4</span>
-<span class="no">params_birth</span>$<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fl">0.01</span> <span class="co"># Mutation probability</span>
-<span class="no">params_death</span>$<span class="no">beta</span> <span class="kw">&lt;-</span> <span class="fl">1</span>/<span class="fl">100</span>
-<span class="no">params_death</span>$<span class="no">g</span> <span class="kw">&lt;-</span> <span class="fl">1</span></pre></body></html></div>
+<a href="#increase-in-initial-population-size" class="anchor"></a><span class="header-section-number">5.1</span> Increase in initial population size</h2>
+<p>We can do the same simulation with a bigger initial population. In order for the population size to stay approximately constant, the birth (resp. death) intensity are increased (resp. decreased).</p>
+<div class="sourceCode" id="cb24"><pre class="downlit">
+<span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">2000</span>
+<span class="va">pop_init_big</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+  <span class="st">"birth"</span> <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">N</span>, <span class="va">agemin</span>, <span class="va">agemax</span><span class="op">)</span>, <span class="co"># Age of each individual chosen uniformly in [0,2]</span>
+  <span class="st">"death"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>,
+  <span class="st">"birth_size"</span> <span class="op">=</span> <span class="va">x0</span> <span class="co"># All individuals have initially the same birth size x0.</span>
+<span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit">
+<span class="va">params_birth</span><span class="op">$</span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">4</span>
+<span class="va">params_birth</span><span class="op">$</span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">0.01</span> <span class="co"># Mutation probability</span>
+<span class="va">params_death</span><span class="op">$</span><span class="va">beta</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">100</span>
+<span class="va">params_death</span><span class="op">$</span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fl">1</span></pre></div>
 <p>The birth intensity bound and interaction function bound must be updated before simulation.</p>
-<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="no">birth_intensity_max</span> <span class="kw">&lt;-</span> <span class="fl">4</span>*<span class="no">params_birth</span>$<span class="no">alpha</span>
-<span class="no">interaction_fun_max</span> <span class="kw">&lt;-</span>  <span class="no">params_death</span>$<span class="no">beta</span></pre></body></html></div>
-<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="no">sim_out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="kw">model</span> <span class="kw">=</span> <span class="no">model</span>,
-  <span class="kw">population</span> <span class="kw">=</span> <span class="no">pop_init_big</span>,
-  <span class="kw">events_bounds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'birth'</span><span class="kw">=</span><span class="no">birth_intensity_max</span>, <span class="st">'death'</span><span class="kw">=</span><span class="no">interaction_fun_max</span>),
-  <span class="kw">parameters</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">params_birth</span>, <span class="no">params_death</span>),
-  <span class="kw">age_max</span> <span class="kw">=</span> <span class="fl">2</span>,
-  <span class="kw">time</span> <span class="kw">=</span> <span class="no">T</span>)
-<span class="co">## Simulation on  [0, 500]</span></pre></body></html></div>
-<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="no">pop_size</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="fu"><a href="../reference/population_alive.html">population_alive</a></span>(<span class="no">sim_out</span>$<span class="no">population</span>,<span class="kw">t</span> <span class="kw">=</span> <span class="fl">500</span>))
-<span class="no">pop_size</span>
-<span class="co">## [1] 1458</span></pre></body></html></div>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">sim_out</span>$<span class="no">population</span>) +
-  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="kw">x</span><span class="kw">=</span><span class="no">birth</span>, <span class="kw">xend</span><span class="kw">=</span><span class="no">death</span>, <span class="kw">y</span><span class="kw">=</span><span class="no">birth_size</span>, <span class="kw">yend</span><span class="kw">=</span><span class="no">birth_size</span>),
-               <span class="kw">na.rm</span><span class="kw">=</span><span class="fl">TRUE</span>, <span class="kw">colour</span><span class="kw">=</span><span class="st">"blue"</span>, <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.1</span>) +
-  <span class="fu">xlab</span>(<span class="st">"Time"</span>) + <span class="fu">ylab</span>(<span class="st">"Birth size"</span>)</pre></body></html></div>
-<p><img src="inter_output-1.png" title="plot of chunk inter_output" alt="plot of chunk inter_output" style="display: block; margin: auto;"></p>
-</div>
-</div>
-<div id="model-with-full-simulation-algorithm" class="section level1" number="7">
-<h1 class="hasAnchor">
-<a href="#model-with-full-simulation-algorithm" class="anchor"></a><span class="header-section-number">7</span> Model with “full” simulation algorithm</h1>
-<p>In the presence of interactions, the randomized algorithm (activated by default in <code><a href="../reference/mk_event_interaction.html">?mk_event_interaction</a></code>) is much faster than the standard algorithm (named <code>full</code>) which requires to iterate through the population vector at each candidate event time.</p>
-<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="co"># Comparison full vs random</span>
-<span class="no">death_event_full</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_event_interaction.html">mk_event_interaction</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"death"</span>,
-  <span class="kw">interaction_type</span><span class="kw">=</span> <span class="st">"full"</span>,
-  <span class="kw">interaction_code</span> <span class="kw">=</span> <span class="st">"double x_I = I.birth_size + g * age(I,t);
+<div class="sourceCode" id="cb26"><pre class="downlit">
+<span class="va">birth_intensity_max</span> <span class="op">&lt;-</span> <span class="fl">4</span><span class="op">*</span><span class="va">params_birth</span><span class="op">$</span><span class="va">alpha</span>
+<span class="va">interaction_fun_max</span> <span class="op">&lt;-</span>  <span class="va">params_death</span><span class="op">$</span><span class="va">beta</span></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit">
+<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>
+  model <span class="op">=</span> <span class="va">model</span>,
+  population <span class="op">=</span> <span class="va">pop_init_big</span>,
+  events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth'</span><span class="op">=</span><span class="va">birth_intensity_max</span>, <span class="st">'death'</span><span class="op">=</span><span class="va">interaction_fun_max</span><span class="op">)</span>,
+  parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">params_birth</span>, <span class="va">params_death</span><span class="op">)</span>,
+  age_max <span class="op">=</span> <span class="fl">2</span>,
+  time <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
+<span class="co">## Simulation on  [0, 500]</span></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit">
+<span class="va">pop_size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, t <span class="op">=</span> <span class="fl">500</span><span class="op">)</span><span class="op">)</span>
+<span class="va">pop_size</span>
+<span class="co">## [1] 1219</span></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit">
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">birth</span>, xend<span class="op">=</span><span class="va">death</span>, y<span class="op">=</span><span class="va">birth_size</span>, yend<span class="op">=</span><span class="va">birth_size</span><span class="op">)</span>,
+               na.rm<span class="op">=</span><span class="cn">TRUE</span>, colour<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Birth size"</span><span class="op">)</span></pre></div>
+<p>&lt;img src=“figure/inter_output-1.png”)</p>
+<pre><code>
+# Model with "full" simulation algorithm
+
+
+In the presence of interactions, the randomized algorithm (activated by default in `?mk_event_interaction`) is much faster than the standard algorithm (named `full`) which requires to iterate through the population vector at each candidate event time.
+
+
+```r
+# Comparison full vs random
+death_event_full &lt;- mk_event_interaction(type = "death",
+  interaction_type= "full",
+  interaction_code = "double x_I = I.birth_size + g * age(I,t);
                       double x_J = J.birth_size + g * age(J,t);
-                      result = beta * ( 1.- 1./(1. + c * exp(-4. * (x_I-x_J))));"</span>
+                      result = beta * ( 1.- 1./(1. + c * exp(-4. * (x_I-x_J))));"
 )
-<span class="no">model_full</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span>(<span class="kw">characteristics</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span>(<span class="no">pop_init</span>),
-    <span class="kw">events</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">birth_event</span>, <span class="no">death_event_full</span>),
-    <span class="kw">parameters</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">params_birth</span>, <span class="no">params_death</span>))</pre></body></html></div>
-<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="no">sim_out_full</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span>(<span class="kw">model</span> <span class="kw">=</span> <span class="no">model_full</span>,
-  <span class="kw">population</span> <span class="kw">=</span> <span class="no">pop_init_big</span>,
-  <span class="kw">events_bounds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'birth'</span> <span class="kw">=</span> <span class="no">birth_intensity_max</span>, <span class="st">'death'</span> <span class="kw">=</span><span class="no">interaction_fun_max</span>),
-  <span class="kw">parameters</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">params_birth</span>, <span class="no">params_death</span>),
-  <span class="kw">age_max</span> <span class="kw">=</span> <span class="fl">2</span>,
-  <span class="kw">time</span> <span class="kw">=</span> <span class="no">T</span>)
-<span class="co">## Simulation on  [0, 500]</span></pre></body></html></div>
-<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">sim_out_full</span>$<span class="no">logs</span>[<span class="st">"duration_main_algorithm"</span>]/<span class="no">sim_out</span>$<span class="no">logs</span>[<span class="st">"duration_main_algorithm"</span>]
+model_full &lt;- mk_model(characteristics = get_characteristics(pop_init),
+    events = list(birth_event, death_event_full),
+    parameters = c(params_birth, params_death))</code></pre>
+<div class="sourceCode" id="cb31"><pre class="downlit">
+<span class="va">sim_out_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model_full</span>,
+  population <span class="op">=</span> <span class="va">pop_init_big</span>,
+  events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">birth_intensity_max</span>, <span class="st">'death'</span> <span class="op">=</span><span class="va">interaction_fun_max</span><span class="op">)</span>,
+  parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">params_birth</span>, <span class="va">params_death</span><span class="op">)</span>,
+  age_max <span class="op">=</span> <span class="fl">2</span>,
+  time <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
+<span class="co">## Simulation on  [0, 500]</span></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit">
+<span class="va">sim_out_full</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">"duration_main_algorithm"</span><span class="op">]</span><span class="op">/</span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">"duration_main_algorithm"</span><span class="op">]</span>
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##                 22.3345</span></pre></body></html></div>
+<span class="co">##                80.54791</span></pre></div>
 </div>
-<div id="references" class="section level1" number="8">
+</div>
+<div id="references" class="section level1" number="6">
 <h1 class="hasAnchor">
-<a href="#references" class="anchor"></a><span class="header-section-number">8</span> References</h1>
+<a href="#references" class="anchor"></a><span class="header-section-number">6</span> References</h1>
 <div id="refs" class="references hanging-indent">
 <div id="ref-MR2562651">
-<p>Ferrière, Régis, and Viet Chi Tran. 2009. “Stochastic and Deterministic Models for Age-Structured Populations with Genetically Variable Traits.” In <em>CANUM 2008</em>, 27:289–310. ESAIM Proc. EDP Sci., Les Ulis. <a href="https://doi.org/10.1051/proc/2009033">https://doi.org/10.1051/proc/2009033</a>.</p>
+<p>Ferrière, Régis, and Viet Chi Tran. 2009. “Stochastic and Deterministic Models for Age-Structured Populations with Genetically Variable Traits.” <em>ESAIM Proc. CANUM 2008</em> 27 (4): 289–310.</p>
 </div>
 </div>
 </div>
@@ -440,7 +485,7 @@ We can see in the example below that several individuals have the same size, at 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
