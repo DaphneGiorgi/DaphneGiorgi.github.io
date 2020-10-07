@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Human population • IBMPopSim</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -91,9 +91,7 @@
 
       
 
-      </header><script src="IBMPopSim_human_pop_files/header-attrs-2.4/header-attrs.js"></script><script src="IBMPopSim_human_pop_files/jquery-1.11.3/jquery.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="IBMPopSim_human_pop_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
-<script src="IBMPopSim_human_pop_files/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="IBMPopSim_human_pop_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="IBMPopSim_human_pop_files/bootstrap-3.3.5/shim/respond.min.js"></script><script src="IBMPopSim_human_pop_files/navigation-1.1/tabsets.js"></script><div class="row">
+      </header><script src="IBMPopSim_human_pop_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Human population</h1>
@@ -236,13 +234,13 @@
 <div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span>
 <span class="co">##         proposed_events        effective_events        cleanall_counter </span>
-<span class="co">##            1.687002e+06            1.136600e+05            6.000000e+00 </span>
+<span class="co">##            1.678206e+06            1.129520e+05            6.000000e+00 </span>
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##            3.345300e-02</span></pre></div>
+<span class="co">##            3.413000e-02</span></pre></div>
 <p>The ratio of accepted events is</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[[</span><span class="st">"effective_events"</span><span class="op">]</span><span class="op">]</span> <span class="op">/</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[[</span><span class="st">"proposed_events"</span><span class="op">]</span><span class="op">]</span>
-<span class="co">## [1] 0.06737396</span></pre></div>
+<span class="co">## [1] 0.06730521</span></pre></div>
 <p><strong>Outputs</strong></p>
 <p><code>sim_out$population</code> is a data frame composed of all individuals who lived in the population over the period <span class="math inline">\([0,50]\)</span> (individuals in the initial population and born during the simulation period).
 Each line corresponds to an individual, with his date of birth, date of death (<code>NA</code> if still alive at the end of the simulation) and gender.</p>
@@ -290,9 +288,9 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <div class="sourceCode" id="cb20"><pre class="downlit">
 <span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span>
 <span class="co">##         proposed_events        effective_events        cleanall_counter </span>
-<span class="co">##            1.678193e+07            1.134549e+06            6.000000e+00 </span>
+<span class="co">##            1.679795e+07            1.134136e+06            6.000000e+00 </span>
 <span class="co">## duration_main_algorithm </span>
-<span class="co">##            4.259580e-01</span></pre></div>
+<span class="co">##            4.674200e-01</span></pre></div>
 </div>
 <div id="modify-an-intensity" class="section level2" number="6.2">
 <h2 class="hasAnchor">
@@ -325,7 +323,7 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <span class="va">pop_size_90plus_const</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>,t <span class="op">=</span> <span class="fl">50</span>,a1<span class="op">=</span><span class="fl">90</span><span class="op">)</span><span class="op">)</span>
 <span class="va">pop_size_90plus_lin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="va">sim_out_lin</span><span class="op">$</span><span class="va">population</span>,t <span class="op">=</span> <span class="fl">50</span>,a1<span class="op">=</span><span class="fl">90</span><span class="op">)</span><span class="op">)</span>
 <span class="op">(</span><span class="va">pop_size_90plus_const</span><span class="op">-</span><span class="va">pop_size_90plus_lin</span><span class="op">)</span><span class="op">/</span><span class="va">pop_size_90plus_const</span><span class="op">*</span><span class="fl">100</span>
-<span class="co">## [1] 6.98098</span></pre></div>
+<span class="co">## [1] 5.392585</span></pre></div>
 </div>
 <div id="deactivate-an-event" class="section level2" number="6.3">
 <h2 class="hasAnchor">
@@ -350,10 +348,10 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <div class="sourceCode" id="cb27"><pre class="downlit">
 <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, ages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">70</span>,<span class="fl">90</span>,<span class="fl">10</span><span class="op">)</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
 <span class="co">##       age  male value</span>
-<span class="co">## 1 70 - 80 FALSE  5811</span>
-<span class="co">## 2 70 - 80  TRUE  5100</span>
-<span class="co">## 3 80 - 90 FALSE  3644</span>
-<span class="co">## 4 80 - 90  TRUE  2762</span></pre></div>
+<span class="co">## 1 70 - 80 FALSE  5804</span>
+<span class="co">## 2 70 - 80  TRUE  5053</span>
+<span class="co">## 3 80 - 90 FALSE  3677</span>
+<span class="co">## 4 80 - 90  TRUE  2812</span></pre></div>
 </div>
 </div>
 <div id="addition-of-number-of-children-characteristic" class="section level1" number="7">
@@ -416,11 +414,11 @@ Each line corresponds to an individual, with his date of birth, date of death (<
 <span class="co"># Females of age over 50 alive at time 100:</span>
 <span class="va">pop_female_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, <span class="va">male</span> <span class="op">==</span> <span class="cn">F</span><span class="op">)</span>, t<span class="op">=</span> <span class="fl">100</span>, a1<span class="op">=</span> <span class="fl">50</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">pop_female_time</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="co"># Number of females over 50</span>
-<span class="co">## [1] 16875</span></pre></div>
+<span class="co">## [1] 17077</span></pre></div>
 <p><img src="figure/hp_birth_distrib-1.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb34"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pop_female_time</span><span class="op">$</span><span class="va">children</span><span class="op">)</span> <span class="co">#Mean number of children</span>
-<span class="co">## [1] 1.817541</span></pre></div>
+<span class="co">## [1] 1.82901</span></pre></div>
 </div>
 <div id="addition-of-cause-of-death-characteristics" class="section level1" number="8">
 <h1 class="hasAnchor">
