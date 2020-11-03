@@ -925,7 +925,7 @@ Before running the simulation, the events bounds should be updated accordingly a
 <span class="co"># Population age-pyramid at time 30:</span>
 <span class="va">pyr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">pop_out</span>, ages <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
 <span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">)</span></pre></div>
-<p><img src="figure/main_plot_30-1.png" style="display: block; margin: auto;"></p>
+<p><img src="main_plot_30-1.png" style="display: block; margin: auto;"></p>
 <p>Mortality tables with compatibles with packages such as StMoMo can also be computed by with the functions <code><a href="../reference/death_table.html">?death_table</a></code> and <code><a href="../reference/exposure_table.html">?exposure_table</a></code>.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit">
 <span class="va">female_pop</span> <span class="op">&lt;-</span> <span class="va">pop_out</span><span class="op">[</span><span class="va">pop_out</span><span class="op">$</span><span class="va">male</span><span class="op">==</span><span class="cn">FALSE</span>, <span class="op">]</span>
@@ -984,7 +984,7 @@ For <span class="math inline">\(i=1\dots n\)</span>, the <span class="math inlin
 <span class="va">p_1_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, <span class="kw">function</span><span class="op">(</span><span class="va">pop_df</span><span class="op">)</span><span class="op">{</span>
                       <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">pop_df</span>, <span class="va">sub_grp</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">pop_size</span><span class="op">)</span>
                 <span class="op">}</span><span class="op">)</span></pre></div>
-<p><img src="figure/main_prob_subgroup1-1.png" style="display: block; margin: auto;"></p>
+<p><img src="main_prob_subgroup1-1.png" style="display: block; margin: auto;"></p>
 <!--```{remark}-->
 <p>This example shows that IBMPopSIm can also be used to simulated continuous time Markov Chain with finite state space.
 <!--```--></p>
@@ -1298,13 +1298,13 @@ Once the model is created, these predefined functions are transformed into C++ f
 <span class="va">dr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">rates</span>,
            <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">death_male</span><span class="op">[</span>,<span class="st">"age"</span><span class="op">]</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">death_male</span><span class="op">[</span>,<span class="st">"value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dr</span>, xlab<span class="op">=</span><span class="st">"age"</span>, ylab<span class="op">=</span><span class="st">"dr"</span>, main<span class="op">=</span><span class="st">"Example of step function"</span><span class="op">)</span></pre></div>
-<p><img src="figure/plot_stepfun-1.png" style="display: block; margin: auto;"></p>
+<p><img src="plot_stepfun-1.png" style="display: block; margin: auto;"></p>
 <p>We can also initialize a piecewise real function <code>f</code> defined by the function <code>dr</code> before age 80, and by a Gompertz-Makeham intensity function for ages after 80.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit">
 <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_x.html">piecewise_x</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">dr</span>, <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.00006</span>, <span class="fl">0.085</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">110</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">"age"</span>, ylab<span class="op">=</span><span class="st">"f"</span>, main<span class="op">=</span><span class="st">"Example of piecewise function"</span><span class="op">)</span></pre></div>
-<p><img src="figure/plot_piecewise-1.png" style="display: block; margin: auto;"></p>
+<p><img src="plot_piecewise-1.png" style="display: block; margin: auto;"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Once a function has been created and defined as model parameter, a model depending on the function can be defined. For example we use in the model below the <code>stepfun</code> <code>dr</code> as a model parameter named <code>rate</code>. The function is used to defined the intensity of death events in the model.
 s</li>

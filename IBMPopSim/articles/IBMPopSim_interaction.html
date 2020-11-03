@@ -294,7 +294,7 @@ For each individual in the population, we draw below a line representing its bir
                     na.rm<span class="op">=</span><span class="cn">TRUE</span>, colour<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
                 <span class="fu">xlab</span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span>
                 <span class="fu">ylab</span><span class="op">(</span><span class="st">"Birth size"</span><span class="op">)</span></pre></div>
-<p>&lt;img src=“figure/inter_output2-1.png”)</p>
+<p>&lt;img src=“inter_output2-1.png”)</p>
 <pre><code>
 # Simulation with different parameters
 
@@ -326,7 +326,7 @@ params_death$g &lt;- 0.3</code></pre>
   <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">birth</span>, xend<span class="op">=</span><span class="va">death</span>, y<span class="op">=</span><span class="va">birth_size</span>, yend<span class="op">=</span><span class="va">birth_size</span><span class="op">)</span>,
                na.rm<span class="op">=</span><span class="cn">TRUE</span>, colour<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Birth size"</span><span class="op">)</span></pre></div>
-<p>&lt;img src=“figure/inter_output3-1.png”)</p>
+<p>&lt;img src=“inter_output3-1.png”)</p>
 <pre><code>
 **Evolution of age pyramid by birth size**
 
@@ -363,7 +363,7 @@ head(pyr)
 <p><code><a href="../reference/plot_pyramid.html">?plot_pyramid</a></code> allows the user to plot the age pyramid at a given time of a population composed of several subgroups, given a population data frame with a column named <code>group_name</code> (only needed for displaying several subgroups).</p>
 <div class="sourceCode" id="cb21"><pre class="downlit">
 <span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span>, group_colors <span class="op">=</span> <span class="va">colors</span>, group_legend <span class="op">=</span> <span class="st">'Birth size'</span><span class="op">)</span></pre></div>
-<p>&lt;img src=“figure/inter_pyramid-1.png”)</p>
+<p>&lt;img src=“inter_pyramid-1.png”)</p>
 <pre><code>
 Due to the interaction between individuals, only bigger individuals survive at higher ages.
 
@@ -424,7 +424,7 @@ pyrs$group_name &lt;- as.character(cut(pyrs$birth_size+1e-6, breaks = seq(0,4,by
                na.rm<span class="op">=</span><span class="cn">TRUE</span>, colour<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">ylab</span><span class="op">(</span><span class="st">"Birth size"</span><span class="op">)</span></pre></div>
-<p>&lt;img src=“figure/inter_output-1.png”)</p>
+<p>&lt;img src=“inter_output-1.png”)</p>
 <pre><code>
 # Model with "full" simulation algorithm
 

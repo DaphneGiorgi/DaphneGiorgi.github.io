@@ -179,7 +179,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">EW_popIMD_14</span><span class="op">$</span><span class="va">death_rates</span><span class="op">$</span><span class="va">male</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">age</span>,y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,color<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">IMD</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
 <span class="fu">geom_step</span><span class="op">(</span><span class="op">)</span><span class="op">+</span><span class="fu">scale_color_discrete</span><span class="op">(</span>name<span class="op">=</span><span class="st">"IMD quintile"</span><span class="op">)</span><span class="op">+</span><span class="fu">ylab</span><span class="op">(</span><span class="st">"Males log death rates"</span><span class="op">)</span></pre></div>
-<p><img src="figure/hpIMD_death_rate-1.png" style="display: block; margin: auto;"></p>
+<p><img src="hpIMD_death_rate-1.png" style="display: block; margin: auto;"></p>
 <p><strong>Step functions creation</strong></p>
 <p>The death intensity functions for each IMD and gender are defined as parameters of the model, as two list of R step functions.</p>
 <p>These parameters will be transformed during the model creation into a vector of C++ step functions (starting from index 0).</p>
@@ -255,7 +255,7 @@
 <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"green"</span>,<span class="st">"red"</span>,<span class="st">"blue"</span><span class="op">)</span>,
     legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IMD 1 and 2"</span>, <span class="st">"IMD 3"</span>, <span class="st">"IMD 4 and 5"</span><span class="op">)</span>,
     bty<span class="op">=</span><span class="st">"n"</span>,lwd<span class="op">=</span><span class="st">"2"</span><span class="op">)</span></pre></div>
-<p><img src="figure/hpIMD_birth_intensities-1.png" style="display: block; margin: auto;"></p>
+<p><img src="hpIMD_birth_intensities-1.png" style="display: block; margin: auto;"></p>
 </div>
 <div id="event-creation" class="section level3" number="3.2.2">
 <h3 class="hasAnchor">
@@ -308,7 +308,7 @@ The vectors of discrete probabilities determining the action of the event when a
 <div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">df_intensities</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">age</span>,y<span class="op">=</span><span class="va">value</span>,color<span class="op">=</span><span class="va">variable</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_step</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
 <span class="fu">scale_color_discrete</span><span class="op">(</span>name<span class="op">=</span><span class="st">"Origin IMD quintile"</span><span class="op">)</span><span class="op">+</span><span class="fu">ylab</span><span class="op">(</span><span class="st">"swap intensity"</span><span class="op">)</span></pre></div>
-<p><img src="figure/hpIMD_df-1.png" style="display: block; margin: auto;"></p>
+<p><img src="hpIMD_df-1.png" style="display: block; margin: auto;"></p>
 <p>C++ code of the intensity of a swap event, using the model parameters:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit">
 <span class="va">intensity_code_swap</span> <span class="op">&lt;-</span> <span class="st">'
@@ -444,10 +444,10 @@ The vectors of discrete probabilities determining the action of the event when a
                    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">'Males - IMD'</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></pre></div>
 <div class="sourceCode" id="cb29"><pre class="downlit">
 <span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr_init</span>,<span class="va">colors</span><span class="op">)</span></pre></div>
-<p><img src="figure/hpIMD_pyramids-1.png" style="display: block; margin: auto;"></p>
+<p><img src="hpIMD_pyramids-1.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb30"><pre class="downlit">
 <span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr_IMD</span>,<span class="va">colors</span><span class="op">)</span></pre></div>
-<p><img src="figure/hpIMD_pyramids-2.png" style="display: block; margin: auto;"></p>
+<p><img src="hpIMD_pyramids-2.png" style="display: block; margin: auto;"></p>
 <!--```{remark}-->
 <p>The high number of individuals aged over 100 is due to the fact that mortality rates are assumed to be constant at ages over 90, which is of course not realistic for human populations (see <code><a href="../articles/IBMPopSim_human_pop.html">vignette('IBMPopSim_human_pop')</a></code>) for another choice of moratlity rates.
 <!--```--></p>
@@ -470,7 +470,7 @@ The vectors of discrete probabilities determining the action of the event when a
 <span class="fu">scale_y_continuous</span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span><span class="op">)</span><span class="op">+</span>
 <span class="fu">xlab</span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span><span class="op">+</span>
 <span class="fu">ylab</span><span class="op">(</span><span class="st">"Proportion of females in IMD subgroup"</span><span class="op">)</span></pre></div>
-<p><img src="figure/hpIMD_compo_fem-1.png" style="display: block; margin: auto;"></p>
+<p><img src="hpIMD_compo_fem-1.png" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="different-simulations-with-the-same-model" class="section level1" number="7">
@@ -506,7 +506,7 @@ The vectors of discrete probabilities determining the action of the event when a
 <span class="fu">xlab</span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span><span class="op">+</span>
 <span class="fu">ylab</span><span class="op">(</span><span class="st">"Proportion of females in IMD subgroup"</span><span class="op">)</span><span class="op">+</span>
 <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Population without swap events"</span><span class="op">)</span></pre></div>
-<p><img src="figure/hpIMD_compo_fem2-1.png" style="display: block; margin: auto;"></p>
+<p><img src="hpIMD_compo_fem2-1.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb36"><pre class="downlit">
 
 
@@ -518,7 +518,7 @@ The vectors of discrete probabilities determining the action of the event when a
 <span class="fu">xlab</span><span class="op">(</span><span class="st">"Time"</span><span class="op">)</span><span class="op">+</span>
 <span class="fu">ylab</span><span class="op">(</span><span class="st">"Proportion of females in IMD subgroup"</span><span class="op">)</span><span class="op">+</span>
 <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Population with swap events"</span><span class="op">)</span></pre></div>
-<p><img src="figure/hpIMD_compo_fem2-2.png" style="display: block; margin: auto;"></p>
+<p><img src="hpIMD_compo_fem2-2.png" style="display: block; margin: auto;"></p>
 </div>
 <div id="simulation-of-individual-life-courses" class="section level2" number="7.2">
 <h2 class="hasAnchor">
