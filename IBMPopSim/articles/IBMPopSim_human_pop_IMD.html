@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">IBMPopSim</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -72,6 +72,9 @@
       <a href="../articles/IBMPopSim_interaction.html">Population with genetically variable traits</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -284,7 +287,7 @@
 <a href="#swap-event" class="anchor"></a><span class="header-section-number">3.3</span> Swap event</h2>
 <p>Individuals can move during their lifetime, and thus change of IMD subgroup (swap events).</p>
 <p>We assume that an individual can change of IMD subgroup with an intensity depending on his age and IMD subgroup.</p>
-<p>Young individuals in the age class <span class="math inline">\([15,30]\)</span> and in the less deprived IMD quintiles (1 and 2) can move to more deprived areas, for instance for studying. On the other hand, older individuals in the age class <span class="math inline">\([30,45]\)</span> and <span class="math inline">\([0,15]\)</span>, and in deprived areas can move to a less deprived area, modelling for instance family formation, moving out to less deprived areas.</p>
+<p>Young individuals in the age class <span class="math inline">\([15,30]\)</span> and in the less deprived IMD quintiles (1 and 2) can move to more deprived areas, for instance for studying. On the other hand, older individuals in the age class <span class="math inline">\([30,45]\)</span> and <span class="math inline">\([0,15]\)</span>, and in deprived areas can move to a less deprived area, modeling for instance family formation, moving out to less deprived areas.</p>
 <p>Age-specific swap intensities are given by 5 step functions, one for each IMD subgroup. When a swap event occur, the new IMD subgroup of the individual is determined by a discrete random variable depending on his age.</p>
 <div id="parameters-2" class="section level3" number="3.3.1">
 <h3 class="hasAnchor">
@@ -449,7 +452,7 @@ The vectors of discrete probabilities determining the action of the event when a
 <span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr_IMD</span>,<span class="va">colors</span><span class="op">)</span></pre></div>
 <p><img src="hpIMD_pyramids-2.png" style="display: block; margin: auto;"></p>
 <!--```{remark}-->
-<p>The high number of individuals aged over 100 is due to the fact that mortality rates are assumed to be constant at ages over 90, which is of course not realistic for human populations (see <code><a href="../articles/IBMPopSim_human_pop.html">vignette('IBMPopSim_human_pop')</a></code>) for another choice of moratlity rates.
+<p>The high number of individuals aged over 100 is due to the fact that mortality rates are assumed to be constant at ages over 90, which is of course not realistic for human populations (see <code><a href="../articles/IBMPopSim_human_pop.html">vignette('IBMPopSim_human_pop')</a></code>) for another choice of mortality rates.
 <!--```--></p>
 </div>
 <div id="evolution-of-population-composition-by-age-group" class="section level2" number="6.2">
