@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">IBMPopSim</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
       </span>
     </div>
 
@@ -39,7 +41,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -53,7 +55,7 @@
   <a href="../articles/IBMPopSim_cpp.html">C++ essentials</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
      
     <span class="caret"></span>
@@ -79,8 +81,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/DaphneGiorgi/IBMPopSim/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/DaphneGiorgi/IBMPopSim/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -94,14 +96,14 @@
 
       
 
-      </header><script src="IBMPopSim_human_pop_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Human population</h1>
-                        <h4 class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
+                        <h4 data-toc-skip class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/master/vignettes/IBMPopSim_human_pop.Rmd"><code>vignettes/IBMPopSim_human_pop.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/HEAD/vignettes/IBMPopSim_human_pop.Rmd" class="external-link"><code>vignettes/IBMPopSim_human_pop.Rmd</code></a></small>
       <div class="hidden name"><code>IBMPopSim_human_pop.Rmd</code></div>
 
     </div>
@@ -109,65 +111,61 @@
     
     
 <p>This document provides a first simple example of usage of the package IBMPopSim, for simulating a human population with birth and death events. See <code><a href="../articles/IBMPopSim.html">vignette('IBMPopSim')</a></code> for a detailed presentation of the package.</p>
-<div id="example-description" class="section level1" number="1">
-<h1 class="hasAnchor">
-<a href="#example-description" class="anchor"></a><span class="header-section-number">1</span> Example description</h1>
+<div class="section level2" number="1">
+<h2 id="example-description">
+<span class="header-section-number">1</span> Example description<a class="anchor" aria-label="anchor" href="#example-description"></a>
+</h2>
 <p>We consider a population in which individuals are characterized by their age and gender (male or female).</p>
 <p>Individuals can give birth (only if female) or die. Birth and death intensities depend on the individuals’ age and gender, but stay constant over time. In this toy model, birth and death intensities are fitted to England and Wales’ 2014 birth and death rates (source: Office for National Statistics).</p>
 </div>
-<div id="population-creation" class="section level1" number="2">
-<h1 class="hasAnchor">
-<a href="#population-creation" class="anchor"></a><span class="header-section-number">2</span> Population creation</h1>
+<div class="section level2" number="2">
+<h2 id="population-creation">
+<span class="header-section-number">2</span> Population creation<a class="anchor" aria-label="anchor" href="#population-creation"></a>
+</h2>
 <p>The initial population is a 100 000 individuals population sampled from England and Wales’ 2014 age pyramid distribution (source: Office for National Statistics).</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">)</span>
-<span class="co">## List of 3</span>
-<span class="co">##  $ age_pyramid:'data.frame': 232 obs. of  3 variables:</span>
-<span class="co">##   ..$ age  : Factor w/ 116 levels "0 - 1","1 - 2",..: 1 1 2 2 3 3 4 4 5 5 ...</span>
-<span class="co">##   ..$ male : logi [1:232] FALSE TRUE FALSE TRUE FALSE TRUE ...</span>
-<span class="co">##   ..$ value: num [1:232] 323863 340320 332357 350346 344972 ...</span>
-<span class="co">##  $ rates      :List of 3</span>
-<span class="co">##   ..$ birth       :'data.frame': 7 obs. of  2 variables:</span>
-<span class="co">##   .. ..$ age  : num [1:7] 15 20 25 30 35 40 45</span>
-<span class="co">##   .. ..$ value: num [1:7] 0.0156 0.0601 0.1008 0.1104 0.0645 ...</span>
-<span class="co">##   ..$ death_male  :'data.frame': 91 obs. of  2 variables:</span>
-<span class="co">##   .. ..$ age  : int [1:91] 0 1 2 3 4 5 6 7 8 9 ...</span>
-<span class="co">##   .. ..$ value: num [1:91] 4.03e-03 3.60e-04 1.52e-04 1.35e-04 7.73e-05 ...</span>
-<span class="co">##   ..$ death_female:'data.frame': 91 obs. of  2 variables:</span>
-<span class="co">##   .. ..$ age  : int [1:91] 0 1 2 3 4 5 6 7 8 9 ...</span>
-<span class="co">##   .. ..$ value: num [1:91] 0.003634 0.000226 0.000139 0.000121 0.000078 ...</span>
-<span class="co">##  $ sample     :'data.frame': 100000 obs. of  3 variables:</span>
-<span class="co">##   ..$ birth: num [1:100000] -107 -107 -105 -104 -104 ...</span>
-<span class="co">##   ..$ death: num [1:100000] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">##   ..$ male : logi [1:100000] FALSE FALSE TRUE FALSE FALSE FALSE ...</span></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="../reference/plot_population.html">plot_population</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span><span class="op">)</span></pre></div>
-<p><img src="hp_pop_init-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">)</span></span>
+<span><span class="co">## List of 3</span></span>
+<span><span class="co">##  $ age_pyramid:'data.frame': 232 obs. of  3 variables:</span></span>
+<span><span class="co">##   ..$ age  : Factor w/ 116 levels "0 - 1","1 - 2",..: 1 1 2 2 3 3 4 4 5 5 ...</span></span>
+<span><span class="co">##   ..$ male : logi [1:232] FALSE TRUE FALSE TRUE FALSE TRUE ...</span></span>
+<span><span class="co">##   ..$ value: num [1:232] 323863 340320 332357 350346 344972 ...</span></span>
+<span><span class="co">##  $ rates      :List of 3</span></span>
+<span><span class="co">##   ..$ birth       :'data.frame': 7 obs. of  2 variables:</span></span>
+<span><span class="co">##   .. ..$ age  : num [1:7] 15 20 25 30 35 40 45</span></span>
+<span><span class="co">##   .. ..$ value: num [1:7] 0.0156 0.0601 0.1008 0.1104 0.0645 ...</span></span>
+<span><span class="co">##   ..$ death_male  :'data.frame': 91 obs. of  2 variables:</span></span>
+<span><span class="co">##   .. ..$ age  : int [1:91] 0 1 2 3 4 5 6 7 8 9 ...</span></span>
+<span><span class="co">##   .. ..$ value: num [1:91] 4.03e-03 3.60e-04 1.52e-04 1.35e-04 7.73e-05 ...</span></span>
+<span><span class="co">##   ..$ death_female:'data.frame': 91 obs. of  2 variables:</span></span>
+<span><span class="co">##   .. ..$ age  : int [1:91] 0 1 2 3 4 5 6 7 8 9 ...</span></span>
+<span><span class="co">##   .. ..$ value: num [1:91] 0.003634 0.000226 0.000139 0.000121 0.000078 ...</span></span>
+<span><span class="co">##  $ sample     :'data.frame': 100000 obs. of  3 variables:</span></span>
+<span><span class="co">##   ..$ birth: num [1:100000] -107 -107 -105 -104 -104 ...</span></span>
+<span><span class="co">##   ..$ death: num [1:100000] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##   ..$ male : logi [1:100000] FALSE FALSE TRUE FALSE FALSE FALSE ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_population.html">plot_population</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span><span class="op">)</span></span></code></pre></div>
+<p><img src="hp_pop_init-1.png" width="1050" style="display: block; margin: auto;"></p>
 </div>
-<div id="model-parameters" class="section level1" number="3">
-<h1 class="hasAnchor">
-<a href="#model-parameters" class="anchor"></a><span class="header-section-number">3</span> Model parameters</h1>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">rates</span>,
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"p_male"</span> <span class="op">=</span> <span class="fl">0.512</span>, <span class="co"># probability to give birth to a male.</span>
-         <span class="st">"birth_rate"</span> <span class="op">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">birth</span><span class="op">[</span>,<span class="st">"age"</span><span class="op">]</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">birth</span><span class="op">[</span>,<span class="st">"value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,
-         <span class="st">"death_male"</span> <span class="op">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">death_male</span><span class="op">[</span>,<span class="st">"age"</span><span class="op">]</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">death_male</span><span class="op">[</span>,<span class="st">"value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,
-         <span class="st">"death_female"</span> <span class="op">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">death_female</span><span class="op">[</span>,<span class="st">"age"</span><span class="op">]</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">death_female</span><span class="op">[</span>,<span class="st">"value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-        <span class="op">)</span>
-      <span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">lbl</span> <span class="op">=</span> <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Age"</span>, y<span class="op">=</span><span class="st">"Intensity"</span><span class="op">)</span>
-<span class="va">thm</span> <span class="op">=</span> <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">grid.arrange</span><span class="op">(</span>
-    <span class="fu">autoplot</span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">birth</span>, shape <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Birth intensity"</span><span class="op">)</span> <span class="op">+</span> <span class="va">lbl</span>,
-    <span class="fu">autoplot</span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">death_male</span>, shape <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Death male intensity"</span><span class="op">)</span> <span class="op">+</span> <span class="va">lbl</span>,
-    <span class="fu">autoplot</span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">death_female</span>, shape <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Death female intensity"</span><span class="op">)</span> <span class="op">+</span> <span class="va">lbl</span>
-<span class="op">)</span></pre></div>
-<p><img src="hp_intensities-1.png" style="display: block; margin: auto;"></p>
+<div class="section level2" number="3">
+<h2 id="model-parameters">
+<span class="header-section-number">3</span> Model parameters<a class="anchor" aria-label="anchor" href="#model-parameters"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">rates</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"p_male"</span> <span class="op">=</span> <span class="fl">0.512</span>, <span class="co"># probability to give birth to a male.</span></span>
+<span>         <span class="st">"birth_rate"</span> <span class="op">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">birth</span><span class="op">[</span>,<span class="st">"age"</span><span class="op">]</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">birth</span><span class="op">[</span>,<span class="st">"value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>         <span class="st">"death_male"</span> <span class="op">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">death_male</span><span class="op">[</span>,<span class="st">"age"</span><span class="op">]</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">death_male</span><span class="op">[</span>,<span class="st">"value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>         <span class="st">"death_female"</span> <span class="op">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">death_female</span><span class="op">[</span>,<span class="st">"age"</span><span class="op">]</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">death_female</span><span class="op">[</span>,<span class="st">"value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span>      <span class="op">)</span></span></code></pre></div>
+<p><img src="hp_intensities-1.png" width="1050" style="display: block; margin: auto;"></p>
 </div>
-<div id="events-creation" class="section level1" number="4">
-<h1 class="hasAnchor">
-<a href="#events-creation" class="anchor"></a><span class="header-section-number">4</span> Events creation</h1>
+<div class="section level2" number="4">
+<h2 id="events-creation">
+<span class="header-section-number">4</span> Events creation<a class="anchor" aria-label="anchor" href="#events-creation"></a>
+</h2>
 <p>There are 2 possible events :</p>
 <ul>
 <li>Birth</li>
@@ -176,317 +174,322 @@
 <p>Both event intensities are of type <code>individual</code>, which means that the intensity at which an individual gives birth or dies only depends on his age and characteristics, and not on other individuals characteristics (in other word, there are no interactions).</p>
 <p>The birth and the death intensities are bounded step functions, which are constant over time.</p>
 <p><strong>Birth event creation</strong></p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">birth_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>
-    type <span class="op">=</span> <span class="st">"birth"</span>,
-    intensity_code <span class="op">=</span> <span class="st">"if (I.male) result = 0; else result = birth_rate(age(I, t));"</span>,
-    kernel_code <span class="op">=</span> <span class="st">"newI.male = CUnif(0, 1) &lt; p_male;"</span> <span class="co"># Newborn is male with probability p_male</span>
-<span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">birth_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span></span>
+<span>    type <span class="op">=</span> <span class="st">"birth"</span>,</span>
+<span>    intensity_code <span class="op">=</span> <span class="st">"if (I.male) result = 0; else result = birth_rate(age(I, t));"</span>,</span>
+<span>    kernel_code <span class="op">=</span> <span class="st">"newI.male = CUnif(0, 1) &lt; p_male;"</span> <span class="co"># Newborn is male with probability p_male</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><strong>Death event creation</strong></p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>
-    type <span class="op">=</span> <span class="st">"death"</span>,
-    intensity_code <span class="op">=</span> <span class="st">"result = (I.male) ? death_male(age(I, t)) : death_female(age(I, t));"</span>
-<span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span></span>
+<span>    type <span class="op">=</span> <span class="st">"death"</span>,</span>
+<span>    intensity_code <span class="op">=</span> <span class="st">"result = (I.male) ? death_male(age(I, t)) : death_female(age(I, t));"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="model-creation-and-simulation" class="section level1" number="5">
-<h1 class="hasAnchor">
-<a href="#model-creation-and-simulation" class="anchor"></a><span class="header-section-number">5</span> Model creation and simulation</h1>
-<div id="model-creation" class="section level2" number="5.1">
-<h2 class="hasAnchor">
-<a href="#model-creation" class="anchor"></a><span class="header-section-number">5.1</span> Model creation</h2>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>
-    characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span><span class="op">)</span>,<span class="co"># Characteristics names ant type</span>
-    events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">birth_event</span>, <span class="va">death_event</span><span class="op">)</span>, <span class="co"># Model events</span>
-    parameters <span class="op">=</span> <span class="va">params</span> <span class="co"># Model parameters</span>
-<span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">## Events:</span>
-<span class="co">## #1: individual event of type birth</span>
-<span class="co">## #2: individual event of type death</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## Individual description:</span>
-<span class="co">## names:  birth death male </span>
-<span class="co">## R types:  double double logical </span>
-<span class="co">## C types:  double double bool</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## R parameters available in C++ code:</span>
-<span class="co">## names:  p_male birth_rate death_male death_female </span>
-<span class="co">## R types:  double closure closure closure </span>
-<span class="co">## C types:  double function_x function_x function_x</span></pre></div>
+<div class="section level2" number="5">
+<h2 id="model-creation-and-simulation">
+<span class="header-section-number">5</span> Model creation and simulation<a class="anchor" aria-label="anchor" href="#model-creation-and-simulation"></a>
+</h2>
+<div class="section level3" number="5.1">
+<h3 id="model-creation">
+<span class="header-section-number">5.1</span> Model creation<a class="anchor" aria-label="anchor" href="#model-creation"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span></span>
+<span>    characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span><span class="op">)</span>,<span class="co"># Characteristics names ant type</span></span>
+<span>    events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">birth_event</span>, <span class="va">death_event</span><span class="op">)</span>, <span class="co"># Model events</span></span>
+<span>    parameters <span class="op">=</span> <span class="va">params</span> <span class="co"># Model parameters</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">## Events:</span></span>
+<span><span class="co">## #1: individual event of type birth</span></span>
+<span><span class="co">## #2: individual event of type death</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## Individual description:</span></span>
+<span><span class="co">## names:  birth death male </span></span>
+<span><span class="co">## R types:  double double logical </span></span>
+<span><span class="co">## C types:  double double bool</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## R parameters available in C++ code:</span></span>
+<span><span class="co">## names:  p_male birth_rate death_male death_female </span></span>
+<span><span class="co">## R types:  double closure closure closure </span></span>
+<span><span class="co">## C types:  double function_x function_x function_x</span></span></code></pre></div>
 <p><strong>Computation of event intensity bounds</strong> (needed for acceptance/rejection algorithm)</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">birth_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">birth</span><span class="op">)</span>
-<span class="va">death_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">params</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">death_male</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">death_female</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">birth_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">birth</span><span class="op">)</span></span>
+<span><span class="va">death_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">params</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">death_male</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">death_female</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="simulation-of-the-population-over-50-years" class="section level2" number="5.2">
-<h2 class="hasAnchor">
-<a href="#simulation-of-the-population-over-50-years" class="anchor"></a><span class="header-section-number">5.2</span> Simulation of the population over 50 years</h2>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,
-    population <span class="op">=</span> <span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span>, <span class="co"># Initial population</span>
-     <span class="co">#Vector of intensity bounds, with name corresponding to events name:</span>
-    events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">birth_max</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="va">death_max</span><span class="op">)</span>,
-    parameters <span class="op">=</span> <span class="va">params</span>,
-    time <span class="op">=</span> <span class="fl">50</span>,
-    age_max <span class="op">=</span> <span class="fl">120</span>,
-    multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">## Simulation on  [0, 50]</span></pre></div>
+<div class="section level3" number="5.2">
+<h3 id="simulation-of-the-population-over-50-years">
+<span class="header-section-number">5.2</span> Simulation of the population over 50 years<a class="anchor" aria-label="anchor" href="#simulation-of-the-population-over-50-years"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,</span>
+<span>    population <span class="op">=</span> <span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span>, <span class="co"># Initial population</span></span>
+<span>     <span class="co">#Vector of intensity bounds, with name corresponding to events name:</span></span>
+<span>    events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">birth_max</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="va">death_max</span><span class="op">)</span>,</span>
+<span>    parameters <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    time <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>    age_max <span class="op">=</span> <span class="fl">120</span>,</span>
+<span>    multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## Simulation on  [0, 50]</span></span></code></pre></div>
 <p><strong>Simulation logs</strong></p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span>
-<span class="co">##         proposed_events        effective_events        cleanall_counter </span>
-<span class="co">##            1.678206e+06            1.129520e+05            6.000000e+00 </span>
-<span class="co">## duration_main_algorithm </span>
-<span class="co">##            3.413000e-02</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span></span>
+<span><span class="co">##         proposed_events        effective_events        cleanall_counter duration_main_algorithm </span></span>
+<span><span class="co">##                 1682806                  113453                       6                64516649</span></span></code></pre></div>
 <p>The ratio of accepted events is</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[[</span><span class="st">"effective_events"</span><span class="op">]</span><span class="op">]</span> <span class="op">/</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[[</span><span class="st">"proposed_events"</span><span class="op">]</span><span class="op">]</span>
-<span class="co">## [1] 0.06730521</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[[</span><span class="st">"effective_events"</span><span class="op">]</span><span class="op">]</span> <span class="op">/</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[[</span><span class="st">"proposed_events"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">## [1] 0.06741894</span></span></code></pre></div>
 <p><strong>Outputs</strong></p>
 <p><code>sim_out$population</code> is a data frame composed of all individuals who lived in the population over the period <span class="math inline">\([0,50]\)</span> (individuals in the initial population and born during the simulation period).
 Each line corresponds to an individual, with his date of birth, date of death (<code>NA</code> if still alive at the end of the simulation) and gender.</p>
 <p>The function <code><a href="../reference/age_pyramid.html">?age_pyramid</a></code> computes the age pyramid of a population data frame at a given time.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="va">pyr_init</span> <span class="op">=</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, time <span class="op">=</span> <span class="fl">0</span>,ages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">100</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pyr</span> <span class="op">=</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, time <span class="op">=</span> <span class="fl">50</span>, ages<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">100</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">grid.arrange</span><span class="op">(</span><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr_init</span><span class="op">)</span>,
-             <span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span>,value_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">800</span>,<span class="fl">200</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
-<p><img src="hp_pyramids-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pyr_init</span> <span class="op">=</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, time <span class="op">=</span> <span class="fl">0</span>,ages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">100</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pyr</span> <span class="op">=</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, time <span class="op">=</span> <span class="fl">50</span>, ages<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">100</span>,<span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">grid.arrange</span><span class="op">(</span><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr_init</span><span class="op">)</span>,</span>
+<span>             <span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span>,value_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">800</span>,<span class="fl">200</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="hp_pyramids-1.png" width="1050" style="display: block; margin: auto;"></p>
 <p>Female age pyramid at t=50</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">[</span><span class="va">pyr</span><span class="op">$</span><span class="va">male</span><span class="op">==</span><span class="cn">FALSE</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"age"</span>,<span class="st">"value"</span><span class="op">)</span><span class="op">]</span>, age_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">101</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
-<p><img src="hp_pyramid_50-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">[</span><span class="va">pyr</span><span class="op">$</span><span class="va">male</span><span class="op">==</span><span class="cn">FALSE</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>,<span class="st">"value"</span><span class="op">)</span><span class="op">]</span>, age_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">101</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="hp_pyramid_50-1.png" width="1050" style="display: block; margin: auto;"></p>
 <p><code><a href="../reference/age_pyramids.html">?age_pyramids</a></code> (plural) returns a data frame representing the population age pyramids at different times.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="co">#pyrs = age_pyramids(sim_out$population, time = 1:50)</span></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="co">#library(gganimate)</span></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="co">#plot_pyramid(pyrs) + transition_time(time) + labs(title = "Time: {frame_time}")</span></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#pyrs = age_pyramids(sim_out$population, time = 1:50)</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#library(gganimate)</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#plot_pyramid(pyrs) + transition_time(time) + labs(title = "Time: {frame_time}")</span></span></code></pre></div>
 </div>
 </div>
-<div id="different-simulations-with-the-same-model" class="section level1" number="6">
-<h1 class="hasAnchor">
-<a href="#different-simulations-with-the-same-model" class="anchor"></a><span class="header-section-number">6</span> Different simulations with the same model</h1>
-<div id="change-of-initial-population" class="section level2" number="6.1">
-<h2 class="hasAnchor">
-<a href="#change-of-initial-population" class="anchor"></a><span class="header-section-number">6.1</span> Change of initial population</h2>
+<div class="section level2" number="6">
+<h2 id="different-simulations-with-the-same-model">
+<span class="header-section-number">6</span> Different simulations with the same model<a class="anchor" aria-label="anchor" href="#different-simulations-with-the-same-model"></a>
+</h2>
+<div class="section level3" number="6.1">
+<h3 id="change-of-initial-population">
+<span class="header-section-number">6.1</span> Change of initial population<a class="anchor" aria-label="anchor" href="#change-of-initial-population"></a>
+</h3>
 <p>The population evolution can be simulated starting from a different initial population, without having to recompile the model.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="va">pop_sample_1e6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsample.html">popsample</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">age_pyramid</span>, size <span class="op">=</span> <span class="fl">1e6</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="../reference/plot_population.html">plot_population</a></span><span class="op">(</span><span class="va">pop_sample_1e6</span><span class="op">)</span></pre></div>
-<p><img src="hp_pop_init_1e6-1.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,
-    population <span class="op">=</span> <span class="va">pop_sample_1e6</span>, <span class="co"># Initial population</span>
-    events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">birth_max</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="va">death_max</span><span class="op">)</span>,
-    parameters <span class="op">=</span> <span class="va">params</span>,
-    time <span class="op">=</span> <span class="fl">50</span>,
-    age_max <span class="op">=</span> <span class="fl">120</span>,
-    multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">## Simulation on  [0, 50]</span></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span>
-<span class="co">##         proposed_events        effective_events        cleanall_counter </span>
-<span class="co">##            1.679795e+07            1.134136e+06            6.000000e+00 </span>
-<span class="co">## duration_main_algorithm </span>
-<span class="co">##            4.674200e-01</span></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pop_sample_1e6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsample.html">popsample</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">age_pyramid</span>, size <span class="op">=</span> <span class="fl">1e6</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_population.html">plot_population</a></span><span class="op">(</span><span class="va">pop_sample_1e6</span><span class="op">)</span></span></code></pre></div>
+<p><img src="hp_pop_init_1e6-1.png" width="1050" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,</span>
+<span>    population <span class="op">=</span> <span class="va">pop_sample_1e6</span>, <span class="co"># Initial population</span></span>
+<span>    events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">birth_max</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="va">death_max</span><span class="op">)</span>,</span>
+<span>    parameters <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    time <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>    age_max <span class="op">=</span> <span class="fl">120</span>,</span>
+<span>    multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## Simulation on  [0, 50]</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span></span>
+<span><span class="co">##         proposed_events        effective_events        cleanall_counter duration_main_algorithm </span></span>
+<span><span class="co">##                16798752                 1134722                       6               644070338</span></span></code></pre></div>
 </div>
-<div id="modify-an-intensity" class="section level2" number="6.2">
-<h2 class="hasAnchor">
-<a href="#modify-an-intensity" class="anchor"></a><span class="header-section-number">6.2</span> Modify an intensity</h2>
+<div class="section level3" number="6.2">
+<h3 id="modify-an-intensity">
+<span class="header-section-number">6.2</span> Modify an intensity<a class="anchor" aria-label="anchor" href="#modify-an-intensity"></a>
+</h3>
 <p>Events intensities and/or kernels can be modified without recompiling the model, simply by changing the parameters value.</p>
 <p>In the first toy model, mortality rates are assumed to be constant after age 90, with a maximum age of 120 in the population. This leads to a significant increase in the number of individuals of age over 100, even though mortality rates don’t change over time in this model.</p>
 <p>A more realistic assumption is to assume that mortality rates increase after age 90, by changing the model parameters <code>death_male</code> and <code>death_female</code>. The two step functions are replaced by functions of type <code><a href="../reference/piecewise_x.html">?piecewise_x</a></code> (see documentation), composed of a step function before age 90 and a linear function after for older ages.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="va">death_male_90</span> <span class="op">&lt;-</span> <span class="va">params</span><span class="op">$</span><span class="va">death_male</span>
-<span class="va">old_death_male</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linfun.html">linfun</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">89</span>,<span class="fl">120</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu">death_male_90</span><span class="op">(</span><span class="fl">89</span><span class="op">)</span>, <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span> <span class="co">#?linfun</span>
-<span class="va">params</span><span class="op">$</span><span class="va">death_male</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_x.html">piecewise_x</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">89</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">death_male_90</span>,<span class="va">old_death_male</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">death_female_90</span> <span class="op">&lt;-</span> <span class="va">params</span><span class="op">$</span><span class="va">death_female</span>
-<span class="va">old_death_female</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linfun.html">linfun</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">89</span>,<span class="fl">120</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu">death_female_90</span><span class="op">(</span><span class="fl">89</span><span class="op">)</span>, <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span>
-<span class="va">params</span><span class="op">$</span><span class="va">death_female</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_x.html">piecewise_x</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">89</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">death_female_90</span>,<span class="va">old_death_female</span><span class="op">)</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">120</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="fu">death_female</span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">120</span><span class="op">)</span><span class="op">)</span>,type<span class="op">=</span><span class="st">"l"</span>,main<span class="op">=</span><span class="st">"log female death rates"</span>,ylab <span class="op">=</span> <span class="st">"rates"</span><span class="op">)</span></pre></div>
-<p><img src="hp_log_death-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">death_male_90</span> <span class="op">&lt;-</span> <span class="va">params</span><span class="op">$</span><span class="va">death_male</span></span>
+<span><span class="va">old_death_male</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linfun.html">linfun</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">89</span>,<span class="fl">120</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">death_male_90</span><span class="op">(</span><span class="fl">89</span><span class="op">)</span>, <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span> <span class="co">#?linfun</span></span>
+<span><span class="va">params</span><span class="op">$</span><span class="va">death_male</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_x.html">piecewise_x</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">89</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">death_male_90</span>,<span class="va">old_death_male</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">death_female_90</span> <span class="op">&lt;-</span> <span class="va">params</span><span class="op">$</span><span class="va">death_female</span></span>
+<span><span class="va">old_death_female</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/linfun.html">linfun</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">89</span>,<span class="fl">120</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">death_female_90</span><span class="op">(</span><span class="fl">89</span><span class="op">)</span>, <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">params</span><span class="op">$</span><span class="va">death_female</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_x.html">piecewise_x</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">89</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">death_female_90</span>,<span class="va">old_death_female</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="hp_log_death-1.png" width="1050" style="display: block; margin: auto;"></p>
 <p>Once the new model parameters have be defined, the event bounds must be updated.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="va">sim_out_lin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,
-                  population <span class="op">=</span> <span class="va">pop_sample_1e6</span>, <span class="co"># Initial population</span>
-                  events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">birth_max</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>,
-                  parameters <span class="op">=</span> <span class="va">params</span>,
-                  time <span class="op">=</span> <span class="fl">50</span>,
-                  age_max <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>
-<span class="co">## Simulation on  [0, 50]</span></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out_lin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,</span>
+<span>                  population <span class="op">=</span> <span class="va">pop_sample_1e6</span>, <span class="co"># Initial population</span></span>
+<span>                  events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">birth_max</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>,</span>
+<span>                  parameters <span class="op">=</span> <span class="va">params</span>,</span>
+<span>                  time <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>                  age_max <span class="op">=</span> <span class="fl">120</span><span class="op">)</span></span>
+<span><span class="co">## Simulation on  [0, 50]</span></span></code></pre></div>
 <p>The modification of the shape of mortality rates for ages over 90 generates a decrease of about 10% (depending on the simulation) in the individuals aged over 100 after 50 years of simulation.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="va">pop_size_90plus_const</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>,t <span class="op">=</span> <span class="fl">50</span>,a1<span class="op">=</span><span class="fl">90</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pop_size_90plus_lin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="va">sim_out_lin</span><span class="op">$</span><span class="va">population</span>,t <span class="op">=</span> <span class="fl">50</span>,a1<span class="op">=</span><span class="fl">90</span><span class="op">)</span><span class="op">)</span>
-<span class="op">(</span><span class="va">pop_size_90plus_const</span><span class="op">-</span><span class="va">pop_size_90plus_lin</span><span class="op">)</span><span class="op">/</span><span class="va">pop_size_90plus_const</span><span class="op">*</span><span class="fl">100</span>
-<span class="co">## [1] 5.392585</span></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pop_size_90plus_const</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>,t <span class="op">=</span> <span class="fl">50</span>,a1<span class="op">=</span><span class="fl">90</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pop_size_90plus_lin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="va">sim_out_lin</span><span class="op">$</span><span class="va">population</span>,t <span class="op">=</span> <span class="fl">50</span>,a1<span class="op">=</span><span class="fl">90</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">pop_size_90plus_const</span><span class="op">-</span><span class="va">pop_size_90plus_lin</span><span class="op">)</span><span class="op">/</span><span class="va">pop_size_90plus_const</span><span class="op">*</span><span class="fl">100</span></span>
+<span><span class="co">## [1] 5.355789</span></span></code></pre></div>
 </div>
-<div id="deactivate-an-event" class="section level2" number="6.3">
-<h2 class="hasAnchor">
-<a href="#deactivate-an-event" class="anchor"></a><span class="header-section-number">6.3</span> Deactivate an event</h2>
+<div class="section level3" number="6.3">
+<h3 id="deactivate-an-event">
+<span class="header-section-number">6.3</span> Deactivate an event<a class="anchor" aria-label="anchor" href="#deactivate-an-event"></a>
+</h3>
 <p>An event can be deactivated by setting the event bound to 0.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,
-       population <span class="op">=</span> <span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span>,
-       events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="fl">0</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="va">death_max</span><span class="op">)</span>,
-       parameters <span class="op">=</span> <span class="va">params</span>,
-       age_max <span class="op">=</span> <span class="fl">130</span>,
-       time <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>
-<span class="co">## [1] "event birth is deactivated"</span>
-<span class="co">## Simulation on  [0, 50]</span></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,</span>
+<span>       population <span class="op">=</span> <span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span>,</span>
+<span>       events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="fl">0</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="va">death_max</span><span class="op">)</span>,</span>
+<span>       parameters <span class="op">=</span> <span class="va">params</span>,</span>
+<span>       age_max <span class="op">=</span> <span class="fl">130</span>,</span>
+<span>       time <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span><span class="co">## [1] "event birth is deactivated"</span></span>
+<span><span class="co">## Simulation on  [0, 50]</span></span></code></pre></div>
 <p>The age pyramid can be directly plotted from the population data frame with <code><a href="../reference/plot_population.html">?plot_population</a></code></p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="fu">grid.arrange</span><span class="op">(</span>
-    <span class="fu"><a href="../reference/plot_population.html">plot_population</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, time<span class="op">=</span><span class="fl">0</span>, ages<span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">105</span><span class="op">)</span>,
-    <span class="fu"><a href="../reference/plot_population.html">plot_population</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, time<span class="op">=</span><span class="fl">20</span>, ages<span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">105</span><span class="op">)</span>
-    <span class="op">)</span></pre></div>
-<p><img src="hp_pyramids2-1.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, ages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">70</span>,<span class="fl">90</span>,<span class="fl">10</span><span class="op">)</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
-<span class="co">##       age  male value</span>
-<span class="co">## 1 70 - 80 FALSE  5804</span>
-<span class="co">## 2 70 - 80  TRUE  5053</span>
-<span class="co">## 3 80 - 90 FALSE  3677</span>
-<span class="co">## 4 80 - 90  TRUE  2812</span></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">grid.arrange</span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/plot_population.html">plot_population</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, time<span class="op">=</span><span class="fl">0</span>, ages<span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">105</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/plot_population.html">plot_population</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, time<span class="op">=</span><span class="fl">20</span>, ages<span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">105</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
+<p><img src="hp_pyramids2-1.png" width="1050" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, ages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">70</span>,<span class="fl">90</span>,<span class="fl">10</span><span class="op">)</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span><span class="co">##       age  male value</span></span>
+<span><span class="co">## 1 70 - 80 FALSE  5860</span></span>
+<span><span class="co">## 2 80 - 90 FALSE  3677</span></span>
+<span><span class="co">## 3 70 - 80  TRUE  5074</span></span>
+<span><span class="co">## 4 80 - 90  TRUE  2790</span></span></code></pre></div>
 </div>
 </div>
-<div id="addition-of-number-of-children-characteristic" class="section level1" number="7">
-<h1 class="hasAnchor">
-<a href="#addition-of-number-of-children-characteristic" class="anchor"></a><span class="header-section-number">7</span> Addition of “number of children” characteristic</h1>
+<div class="section level2" number="7">
+<h2 id="addition-of-number-of-children-characteristic">
+<span class="header-section-number">7</span> Addition of “number of children” characteristic<a class="anchor" aria-label="anchor" href="#addition-of-number-of-children-characteristic"></a>
+</h2>
 <p>The number of children by women can be recorded by adding a new characteristic (here named <code>children</code>) and changing the birth event kernel code.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit">
-<span class="va">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span><span class="op">)</span>
-<span class="va">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">chi</span>, <span class="st">'children'</span> <span class="op">=</span> <span class="st">'int'</span><span class="op">)</span> <span class="co"># Addition  of characteristic "chi"</span></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span><span class="op">)</span></span>
+<span><span class="va">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">chi</span>, <span class="st">'children'</span> <span class="op">=</span> <span class="st">'int'</span><span class="op">)</span> <span class="co"># Addition  of characteristic "chi"</span></span></code></pre></div>
 <p><strong>Birth event with children count</strong></p>
-<div class="sourceCode" id="cb29"><pre class="downlit">
-<span class="va">new_birth_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>
-    type <span class="op">=</span> <span class="st">"birth"</span>, name <span class="op">=</span><span class="st">"birth_child"</span>,
-    intensity_code <span class="op">=</span> <span class="st">"if (I.male) result = 0; else result = birth_rate(age(I, t));"</span>,
-    kernel_code <span class="op">=</span> <span class="st">" newI.male = CUnif(0, 1) &lt; p_male;
-                    newI.children = 0;
-                    //When birth occur, I.children is increased of 1
-                    I.children += 1;"</span>
-<span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="va">model_child</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>
-    characteristics <span class="op">=</span> <span class="va">chi</span>,
-    events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">new_birth_event</span>, <span class="va">death_event</span><span class="op">)</span>,
-    parameters <span class="op">=</span> <span class="va">params</span>
-<span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_child</span><span class="op">)</span>
-<span class="co">## Events:</span>
-<span class="co">## #1: individual event of type birth</span>
-<span class="co">## #2: individual event of type death</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## Individual description:</span>
-<span class="co">## names:  birth death male children </span>
-<span class="co">## R types:  double double logical integer </span>
-<span class="co">## C types:  double double bool int</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## R parameters available in C++ code:</span>
-<span class="co">## names:  p_male birth_rate death_male death_female </span>
-<span class="co">## R types:  double closure closure closure </span>
-<span class="co">## C types:  double function_x function_x function_x</span></pre></div>
-<div class="sourceCode" id="cb31"><pre class="downlit">
-<span class="va">init_pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span>, <span class="st">"children"</span><span class="op">=</span><span class="fl">0</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">init_pop</span><span class="op">)</span>
-<span class="co">##       birth death  male children</span>
-<span class="co">## 1 -106.9055    NA FALSE        0</span>
-<span class="co">## 2 -106.8303    NA FALSE        0</span>
-<span class="co">## 3 -104.5097    NA  TRUE        0</span>
-<span class="co">## 4 -104.2218    NA FALSE        0</span>
-<span class="co">## 5 -103.5225    NA FALSE        0</span>
-<span class="co">## 6 -103.3644    NA FALSE        0</span></pre></div>
-<div class="sourceCode" id="cb32"><pre class="downlit">
-<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model_child</span>,
-       population <span class="op">=</span> <span class="va">init_pop</span>,
-       events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth_child'</span> <span class="op">=</span> <span class="va">birth_max</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="va">death_max</span><span class="op">)</span>,
-       parameters <span class="op">=</span> <span class="va">params</span>,
-       time <span class="op">=</span> <span class="fl">100</span>,
-       age_max <span class="op">=</span> <span class="fl">120</span>,
-       multithreading<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">## Simulation on  [0, 100]</span></pre></div>
-<div class="sourceCode" id="cb33"><pre class="downlit">
-<span class="co"># Females of age over 50 alive at time 100:</span>
-<span class="va">pop_female_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, <span class="va">male</span> <span class="op">==</span> <span class="cn">F</span><span class="op">)</span>, t<span class="op">=</span> <span class="fl">100</span>, a1<span class="op">=</span> <span class="fl">50</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">pop_female_time</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="co"># Number of females over 50</span>
-<span class="co">## [1] 17077</span></pre></div>
-<p><img src="hp_birth_distrib-1.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb34"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pop_female_time</span><span class="op">$</span><span class="va">children</span><span class="op">)</span> <span class="co">#Mean number of children</span>
-<span class="co">## [1] 1.82901</span></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">new_birth_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span></span>
+<span>    type <span class="op">=</span> <span class="st">"birth"</span>, name <span class="op">=</span><span class="st">"birth_child"</span>,</span>
+<span>    intensity_code <span class="op">=</span> <span class="st">"if (I.male) result = 0; else result = birth_rate(age(I, t));"</span>,</span>
+<span>    kernel_code <span class="op">=</span> <span class="st">" newI.male = CUnif(0, 1) &lt; p_male;</span></span>
+<span><span class="st">                    newI.children = 0;</span></span>
+<span><span class="st">                    //When birth occur, I.children is increased of 1</span></span>
+<span><span class="st">                    I.children += 1;"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model_child</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span></span>
+<span>    characteristics <span class="op">=</span> <span class="va">chi</span>,</span>
+<span>    events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">new_birth_event</span>, <span class="va">death_event</span><span class="op">)</span>,</span>
+<span>    parameters <span class="op">=</span> <span class="va">params</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model_child</span><span class="op">)</span></span>
+<span><span class="co">## Events:</span></span>
+<span><span class="co">## #1: individual event of type birth</span></span>
+<span><span class="co">## #2: individual event of type death</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## Individual description:</span></span>
+<span><span class="co">## names:  birth death male children </span></span>
+<span><span class="co">## R types:  double double logical integer </span></span>
+<span><span class="co">## C types:  double double bool int</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## R parameters available in C++ code:</span></span>
+<span><span class="co">## names:  p_male birth_rate death_male death_female </span></span>
+<span><span class="co">## R types:  double closure closure closure </span></span>
+<span><span class="co">## C types:  double function_x function_x function_x</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">init_pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span>, <span class="st">"children"</span><span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">init_pop</span><span class="op">)</span></span>
+<span><span class="co">##       birth death  male children</span></span>
+<span><span class="co">## 1 -106.9055    NA FALSE        0</span></span>
+<span><span class="co">## 2 -106.8303    NA FALSE        0</span></span>
+<span><span class="co">## 3 -104.5097    NA  TRUE        0</span></span>
+<span><span class="co">## 4 -104.2218    NA FALSE        0</span></span>
+<span><span class="co">## 5 -103.5225    NA FALSE        0</span></span>
+<span><span class="co">## 6 -103.3644    NA FALSE        0</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model_child</span>,</span>
+<span>       population <span class="op">=</span> <span class="va">init_pop</span>,</span>
+<span>       events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'birth_child'</span> <span class="op">=</span> <span class="va">birth_max</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="va">death_max</span><span class="op">)</span>,</span>
+<span>       parameters <span class="op">=</span> <span class="va">params</span>,</span>
+<span>       time <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>       age_max <span class="op">=</span> <span class="fl">120</span>,</span>
+<span>       multithreading<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## Simulation on  [0, 100]</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Females of age over 50 alive at time 100:</span></span>
+<span><span class="va">pop_female_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/population_alive.html">population_alive</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, <span class="va">male</span> <span class="op">==</span> <span class="cn">F</span><span class="op">)</span>, t<span class="op">=</span> <span class="fl">100</span>, a1<span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">pop_female_time</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="co"># Number of females over 50</span></span>
+<span><span class="co">## [1] 17217</span></span></code></pre></div>
+<p><img src="hp_birth_distrib-1.png" width="1050" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">pop_female_time</span><span class="op">$</span><span class="va">children</span><span class="op">)</span> <span class="co">#Mean number of children</span></span>
+<span><span class="co">## [1] 1.829645</span></span></code></pre></div>
 </div>
-<div id="addition-of-cause-of-death-characteristics" class="section level1" number="8">
-<h1 class="hasAnchor">
-<a href="#addition-of-cause-of-death-characteristics" class="anchor"></a><span class="header-section-number">8</span> Addition of “cause of death” characteristics</h1>
+<div class="section level2" number="8">
+<h2 id="addition-of-cause-of-death-characteristics">
+<span class="header-section-number">8</span> Addition of “cause of death” characteristics<a class="anchor" aria-label="anchor" href="#addition-of-cause-of-death-characteristics"></a>
+</h2>
 <p>In order to model different competing causes of death, several death events can be created, each modeling one cause of death.</p>
-<div id="model-with-two-independent-causes-of-death" class="section level2" number="8.1">
-<h2 class="hasAnchor">
-<a href="#model-with-two-independent-causes-of-death" class="anchor"></a><span class="header-section-number">8.1</span> Model with two independent causes of death</h2>
+<div class="section level3" number="8.1">
+<h3 id="model-with-two-independent-causes-of-death">
+<span class="header-section-number">8.1</span> Model with two independent causes of death<a class="anchor" aria-label="anchor" href="#model-with-two-independent-causes-of-death"></a>
+</h3>
 <p>Individuals can die from two main causes of death 1 and 2, supposed to be independent. Then, the death intensity at age <span class="math inline">\(a\)</span> is</p>
 <p><span class="math display">\[ \mu(a) = \mu_1(a) + \mu_2(a),\]</span></p>
 <p>where <span class="math inline">\(\mu_i(a)\)</span> is the death intensity at age <span class="math inline">\(a\)</span> associated with cause <span class="math inline">\(i\)</span>.</p>
 <p>This model can be simulated with two death events associated to cause 1 and 2, and adding a new characteristic recording the cause of death.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit">
-<span class="va">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop_sample_1e6</span><span class="op">)</span>
-<span class="va">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">chi</span>, <span class="st">'CoD'</span> <span class="op">=</span> <span class="st">'int'</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb36"><pre class="downlit">
-<span class="va">params</span><span class="op">$</span><span class="va">CoD1_prop</span> <span class="op">&lt;-</span> <span class="fl">0.6</span></pre></div>
-<div class="sourceCode" id="cb37"><pre class="downlit">
-<span class="va">death_event1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"death"</span>, name<span class="op">=</span><span class="st">"CoD1"</span>,
-                        intensity_code <span class="op">=</span> <span class="st">"if (I.male) result = CoD1_prop*death_male(age(I,t));
-                                         else result= CoD1_prop*death_female(age(I,t));"</span>,
-                        kernel_code <span class="op">=</span> <span class="st">"I.CoD =1;"</span> <span class="co"># Records cause of death when event occurs</span>
-                                    <span class="op">)</span>
-<span class="va">death_event2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"death"</span>, name<span class="op">=</span><span class="st">"CoD2"</span>,
-                        intensity_code <span class="op">=</span> <span class="st">"if (I.male) result = (1-CoD1_prop)*death_male(age(I,t));
-                                          else result= (1-CoD1_prop)*death_female(age(I,t));"</span>,
-                        kernel_code <span class="op">=</span> <span class="st">"I.CoD =2;"</span>
-                                    <span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb38"><pre class="downlit">
-<span class="co"># Model creation</span>
-<span class="va">model_CoD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span> <span class="va">chi</span>,
-                events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">birth_event</span>, <span class="va">death_event1</span>, <span class="va">death_event2</span><span class="op">)</span>,
-                parameters <span class="op">=</span> <span class="va">params</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb39"><pre class="downlit">
-<span class="va">init_pop_CoD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">pop_sample_1e6</span>, <span class="st">"CoD"</span><span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="co"># Initial population</span></pre></div>
-<div class="sourceCode" id="cb40"><pre class="downlit">
-<span class="va">ev_bounds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">birth_max</span>,
-               <span class="st">'CoD1'</span> <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">CoD1_prop</span><span class="op">*</span><span class="va">death_max</span>,
-               <span class="st">'CoD2'</span> <span class="op">=</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">params</span><span class="op">$</span><span class="va">CoD1_prop</span><span class="op">)</span><span class="op">*</span><span class="va">death_max</span><span class="op">)</span>
-
-<span class="va">sim_out_CoD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model_CoD</span>,
-                  population <span class="op">=</span> <span class="va">init_pop_CoD</span>,
-                  events_bounds <span class="op">=</span> <span class="va">ev_bounds</span>,
-                  parameters <span class="op">=</span> <span class="va">params</span>,
-                  time <span class="op">=</span> <span class="fl">20</span>,
-                  age_max <span class="op">=</span> <span class="fl">120</span>,
-                  multithreading<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">## Simulation on  [0, 20]</span></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop_sample_1e6</span><span class="op">)</span></span>
+<span><span class="va">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">chi</span>, <span class="st">'CoD'</span> <span class="op">=</span> <span class="st">'int'</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span><span class="op">$</span><span class="va">CoD1_prop</span> <span class="op">&lt;-</span> <span class="fl">0.6</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">death_event1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"death"</span>, name<span class="op">=</span><span class="st">"CoD1"</span>,</span>
+<span>                        intensity_code <span class="op">=</span> <span class="st">"if (I.male) result = CoD1_prop*death_male(age(I,t));</span></span>
+<span><span class="st">                                         else result= CoD1_prop*death_female(age(I,t));"</span>,</span>
+<span>                        kernel_code <span class="op">=</span> <span class="st">"I.CoD =1;"</span> <span class="co"># Records cause of death when event occurs</span></span>
+<span>                                    <span class="op">)</span></span>
+<span><span class="va">death_event2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"death"</span>, name<span class="op">=</span><span class="st">"CoD2"</span>,</span>
+<span>                        intensity_code <span class="op">=</span> <span class="st">"if (I.male) result = (1-CoD1_prop)*death_male(age(I,t));</span></span>
+<span><span class="st">                                          else result= (1-CoD1_prop)*death_female(age(I,t));"</span>,</span>
+<span>                        kernel_code <span class="op">=</span> <span class="st">"I.CoD =2;"</span></span>
+<span>                                    <span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Model creation</span></span>
+<span><span class="va">model_CoD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span> <span class="va">chi</span>,</span>
+<span>                events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">birth_event</span>, <span class="va">death_event1</span>, <span class="va">death_event2</span><span class="op">)</span>,</span>
+<span>                parameters <span class="op">=</span> <span class="va">params</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">init_pop_CoD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">pop_sample_1e6</span>, <span class="st">"CoD"</span><span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="co"># Initial population</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ev_bounds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">birth_max</span>,</span>
+<span>               <span class="st">'CoD1'</span> <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">CoD1_prop</span><span class="op">*</span><span class="va">death_max</span>,</span>
+<span>               <span class="st">'CoD2'</span> <span class="op">=</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">params</span><span class="op">$</span><span class="va">CoD1_prop</span><span class="op">)</span><span class="op">*</span><span class="va">death_max</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sim_out_CoD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model_CoD</span>,</span>
+<span>                  population <span class="op">=</span> <span class="va">init_pop_CoD</span>,</span>
+<span>                  events_bounds <span class="op">=</span> <span class="va">ev_bounds</span>,</span>
+<span>                  parameters <span class="op">=</span> <span class="va">params</span>,</span>
+<span>                  time <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>                  age_max <span class="op">=</span> <span class="fl">120</span>,</span>
+<span>                  multithreading<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## Simulation on  [0, 20]</span></span></code></pre></div>
 </div>
-<div id="death-and-exposure-table" class="section level2" number="8.2">
-<h2 class="hasAnchor">
-<a href="#death-and-exposure-table" class="anchor"></a><span class="header-section-number">8.2</span> Death and exposure table</h2>
+<div class="section level3" number="8.2">
+<h3 id="death-and-exposure-table">
+<span class="header-section-number">8.2</span> Death and exposure table<a class="anchor" aria-label="anchor" href="#death-and-exposure-table"></a>
+</h3>
 <p>The number of death for given age groups, time periods and for each cause of death can be computed with <code><a href="../reference/death_table.html">?death_table</a></code>.
 Example below: number of males death of age between <span class="math inline">\([70,90]\)</span> (single year of age groups) over the 5-year period <span class="math inline">\([15,20]\)</span>, for each cause.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit">
-<span class="va">Dx_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">sim_out_CoD</span><span class="op">$</span><span class="va">population</span>, <span class="va">CoD</span><span class="op">==</span><span class="fl">1</span> <span class="op">&amp;</span> <span class="va">male</span><span class="op">==</span><span class="cn">T</span><span class="op">)</span>,ages <span class="op">=</span> <span class="fl">70</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span>
-<span class="va">Dx_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">sim_out_CoD</span><span class="op">$</span><span class="va">population</span>, <span class="va">CoD</span><span class="op">==</span><span class="fl">2</span> <span class="op">&amp;</span> <span class="va">male</span><span class="op">==</span><span class="cn">T</span><span class="op">)</span>,ages <span class="op">=</span> <span class="fl">70</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb42"><pre class="downlit">
-<span class="co"># Central exposure to risk:</span>
-<span class="va">Ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">sim_out_CoD</span><span class="op">$</span><span class="va">population</span>, <span class="va">male</span><span class="op">==</span><span class="cn">T</span><span class="op">)</span>,ages <span class="op">=</span> <span class="fl">70</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span>
-<span class="co"># Males central death rates by for Cause 1:</span>
-<span class="va">mx_1</span> <span class="op">&lt;-</span> <span class="va">Dx_1</span><span class="op">/</span><span class="va">Ex</span>
-<span class="co"># Males central death rates by for Cause 2:</span>
-<span class="va">mx_2</span> <span class="op">&lt;-</span> <span class="va">Dx_2</span><span class="op">/</span><span class="va">Ex</span></pre></div>
-<p><img src="hp_death_rate_1-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Dx_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">sim_out_CoD</span><span class="op">$</span><span class="va">population</span>, <span class="va">CoD</span><span class="op">==</span><span class="fl">1</span> <span class="op">&amp;</span> <span class="va">male</span><span class="op">==</span><span class="cn">T</span><span class="op">)</span>,ages <span class="op">=</span> <span class="fl">70</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">Dx_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">sim_out_CoD</span><span class="op">$</span><span class="va">population</span>, <span class="va">CoD</span><span class="op">==</span><span class="fl">2</span> <span class="op">&amp;</span> <span class="va">male</span><span class="op">==</span><span class="cn">T</span><span class="op">)</span>,ages <span class="op">=</span> <span class="fl">70</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Central exposure to risk:</span></span>
+<span><span class="va">Ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">sim_out_CoD</span><span class="op">$</span><span class="va">population</span>, <span class="va">male</span><span class="op">==</span><span class="cn">T</span><span class="op">)</span>,ages <span class="op">=</span> <span class="fl">70</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Males central death rates by for Cause 1:</span></span>
+<span><span class="va">mx_1</span> <span class="op">&lt;-</span> <span class="va">Dx_1</span><span class="op">/</span><span class="va">Ex</span></span>
+<span><span class="co"># Males central death rates by for Cause 2:</span></span>
+<span><span class="va">mx_2</span> <span class="op">&lt;-</span> <span class="va">Dx_2</span><span class="op">/</span><span class="va">Ex</span></span></code></pre></div>
+<p><img src="hp_death_rate_1-1.png" width="1050" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>
@@ -502,11 +505,13 @@ Example below: number of males death of age between <span class="math inline">\(
 
 
       <footer><div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
+  <p></p>
+<p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -514,6 +519,8 @@ Example below: number of males death of age between <span class="math inline">\(
 
   
 
+
+  
 
   </body>
 </html>

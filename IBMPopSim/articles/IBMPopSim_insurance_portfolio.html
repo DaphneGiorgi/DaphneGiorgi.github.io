@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">IBMPopSim</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
       </span>
     </div>
 
@@ -39,7 +41,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -53,7 +55,7 @@
   <a href="../articles/IBMPopSim_cpp.html">C++ essentials</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
      
     <span class="caret"></span>
@@ -79,8 +81,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/DaphneGiorgi/IBMPopSim/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/DaphneGiorgi/IBMPopSim/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -94,14 +96,14 @@
 
       
 
-      </header><script src="IBMPopSim_insurance_portfolio_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Insurance portfolio</h1>
-                        <h4 class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
+                        <h4 data-toc-skip class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/master/vignettes/IBMPopSim_insurance_portfolio.Rmd"><code>vignettes/IBMPopSim_insurance_portfolio.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/HEAD/vignettes/IBMPopSim_insurance_portfolio.Rmd" class="external-link"><code>vignettes/IBMPopSim_insurance_portfolio.Rmd</code></a></small>
       <div class="hidden name"><code>IBMPopSim_insurance_portfolio.Rmd</code></div>
 
     </div>
@@ -110,296 +112,286 @@
     
 <p>This vignette provides an example of usage of the package IBMPopSim, for simulating an heterogeneous life insurance portfolio.</p>
 <p>See <code><a href="../articles/IBMPopSim.html">vignette('IBMPopSim')</a></code> for a detailed presentation of the package.</p>
-<div id="example-description" class="section level1" number="1">
-<h1 class="hasAnchor">
-<a href="#example-description" class="anchor"></a><span class="header-section-number">1</span> Example description</h1>
+<div class="section level2" number="1">
+<h2 id="example-description">
+<span class="header-section-number">1</span> Example description<a class="anchor" aria-label="anchor" href="#example-description"></a>
+</h2>
 <p>We consider a insurance portfolio composed of males policyholders, characterized by their age and risk class (for instance smokers vs non smokers).</p>
 <p>Entries to the portfolio are modeled by Poissonian events, and individuals can die or exit the portfolio with an intensity depending on their age and risk class.</p>
 </div>
-<div id="population-creation" class="section level1" number="2">
-<h1 class="hasAnchor">
-<a href="#population-creation" class="anchor"></a><span class="header-section-number">2</span> Population creation</h1>
+<div class="section level2" number="2">
+<h2 id="population-creation">
+<span class="header-section-number">2</span> Population creation<a class="anchor" aria-label="anchor" href="#population-creation"></a>
+</h2>
 <p>We start with an initial population of 10 000 males of age 65, distributed uniformly in each risk class.</p>
 <p>The population data frame has thus the two (mandatory) columns:
 - <code>birth</code> : Date of birth of the policyholders (here the initial time is <span class="math inline">\(t_0=0\)</span>).
 - <code>death</code>: Date of death (<code>NA</code> if alive).</p>
 <p>and the column <code>risk_cls</code> corresponding to the policyholders risk class.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">30000</span>
-<span class="va">pop_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"birth"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="op">-</span><span class="fl">65</span>,<span class="va">N</span><span class="op">)</span>,<span class="st">"death"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="va">N</span><span class="op">)</span>,<span class="st">"risk_cls"</span><span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,each<span class="op">=</span> <span class="va">N</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">30000</span></span>
+<span><span class="va">pop_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"birth"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="op">-</span><span class="fl">65</span>,<span class="va">N</span><span class="op">)</span>,<span class="st">"death"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="va">N</span><span class="op">)</span>,<span class="st">"risk_cls"</span><span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,each<span class="op">=</span> <span class="va">N</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="model-parameters" class="section level1" number="3">
-<h1 class="hasAnchor">
-<a href="#model-parameters" class="anchor"></a><span class="header-section-number">3</span> Model parameters</h1>
-<div id="death-intensity" class="section level2" number="3.1">
-<h2 class="hasAnchor">
-<a href="#death-intensity" class="anchor"></a><span class="header-section-number">3.1</span> Death intensity</h2>
+<div class="section level2" number="3">
+<h2 id="model-parameters">
+<span class="header-section-number">3</span> Model parameters<a class="anchor" aria-label="anchor" href="#model-parameters"></a>
+</h2>
+<div class="section level3" number="3.1">
+<h3 id="death-intensity">
+<span class="header-section-number">3.1</span> Death intensity<a class="anchor" aria-label="anchor" href="#death-intensity"></a>
+</h3>
 <p>Death intensities are calibrated on England and Wales (EW) males mortality data (source: Human Mortality Database), and forecasted over t=30 years by a Lee-Carter model with the package <code>StMoMo</code>.
 Individuals in the risk class 1 are assumed to have mortality rates 20% higher that the forecasted mortality rates and individuals in the risk class 2 are assumed to have mortality rates 20% lower than the forecasted rates. The death intensity of a individual in risk class <span class="math inline">\(i=1,2\)</span> is thus the function</p>
 <p><span class="math display" id="eq:deathrates">\[\begin{equation}
 \tag{3.1} d^i(t,a)= \alpha_i \sum_{k=0}^{29}\mathbf{1}_{\{k\leq t &lt; k+1\}} d_k(a), \quad \alpha_1 = 1.2, \quad \alpha_2 = 0.8,
 \end{equation}\]</span></p>
 <p>and where <span class="math inline">\(d_k(a)\)</span> is the point estimate of the mortality rate for age <span class="math inline">\(a\)</span> and year <span class="math inline">\(2017 + k\)</span>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">EWStMoMoMale</span> <span class="op">&lt;-</span> <span class="fu">StMoMoData</span><span class="op">(</span><span class="va">EWdata_hmd</span>, series <span class="op">=</span> <span class="st">"male"</span><span class="op">)</span>
-
-<span class="co">#Fitting</span>
-<span class="va">LC</span> <span class="op">&lt;-</span> <span class="fu">lc</span><span class="op">(</span><span class="op">)</span>
-<span class="va">ages.fit</span> <span class="op">&lt;-</span> <span class="fl">65</span><span class="op">:</span><span class="fl">100</span>
-<span class="va">years.fit</span> <span class="op">&lt;-</span> <span class="fl">1950</span><span class="op">:</span><span class="fl">2016</span>
-<span class="va">LCfitMale</span> <span class="op">&lt;-</span> <span class="fu">fit</span><span class="op">(</span><span class="va">LC</span>, data <span class="op">=</span> <span class="va">EWStMoMoMale</span>, ages.fit <span class="op">=</span> <span class="va">ages.fit</span>, years.fit <span class="op">=</span> <span class="va">years.fit</span><span class="op">)</span>
-<span class="co">## StMoMo: Start fitting with gnm</span>
-<span class="co">## Initialising</span>
-<span class="co">## Running start-up iterations..</span>
-<span class="co">## Running main iterations.....</span>
-<span class="co">## Done</span>
-<span class="co">## StMoMo: Finish fitting with gnm</span></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">t</span> <span class="op">&lt;-</span> <span class="fl">30</span>
-<span class="va">LCforecastMale</span> <span class="op">&lt;-</span> <span class="fu">forecast</span><span class="op">(</span><span class="va">LCfitMale</span>, h <span class="op">=</span> <span class="va">t</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">LCforecastMale</span><span class="op">)</span></pre></div>
-<p><img src="insur_forecast-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">EWStMoMoMale</span> <span class="op">&lt;-</span> <span class="fu">StMoMoData</span><span class="op">(</span><span class="va">EWdata_hmd</span>, series <span class="op">=</span> <span class="st">"male"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Fitting</span></span>
+<span><span class="va">LC</span> <span class="op">&lt;-</span> <span class="fu">lc</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">ages.fit</span> <span class="op">&lt;-</span> <span class="fl">65</span><span class="op">:</span><span class="fl">100</span></span>
+<span><span class="va">years.fit</span> <span class="op">&lt;-</span> <span class="fl">1950</span><span class="op">:</span><span class="fl">2016</span></span>
+<span><span class="va">LCfitMale</span> <span class="op">&lt;-</span> <span class="fu">fit</span><span class="op">(</span><span class="va">LC</span>, data <span class="op">=</span> <span class="va">EWStMoMoMale</span>, ages.fit <span class="op">=</span> <span class="va">ages.fit</span>, years.fit <span class="op">=</span> <span class="va">years.fit</span><span class="op">)</span></span>
+<span><span class="co">## StMoMo: Start fitting with gnm</span></span>
+<span><span class="co">## Initialising</span></span>
+<span><span class="co">## Running start-up iterations..</span></span>
+<span><span class="co">## Running main iterations.....</span></span>
+<span><span class="co">## Done</span></span>
+<span><span class="co">## StMoMo: Finish fitting with gnm</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fl">30</span></span>
+<span><span class="va">LCforecastMale</span> <span class="op">&lt;-</span> <span class="fu">forecast</span><span class="op">(</span><span class="va">LCfitMale</span>, h <span class="op">=</span> <span class="va">t</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">LCforecastMale</span><span class="op">)</span></span></code></pre></div>
+<p><img src="insur_forecast-1.png" width="1050" style="display: block; margin: auto;"></p>
 <p>Age and time dependent function can be created with the package function <code><a href="../reference/piecewise_xy.html">?piecewise_xy</a></code>, with allows to define age-specific mortality rates, piecewise constant in time, such as <span class="math inline">\(d^i\)</span> in <a href="#eq:deathrates">(3.1)</a>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">d_k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">LCforecastMale</span><span class="op">$</span><span class="va">rates</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span><span class="fl">66</span><span class="op">:</span><span class="fl">100</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span>
-<span class="va">breaks</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">29</span>
-<span class="va">death_male</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_xy.html">piecewise_xy</a></span><span class="op">(</span><span class="va">breaks</span>,<span class="va">d_k</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu">death_male</span><span class="op">(</span><span class="fl">10</span>,<span class="fl">65</span><span class="op">)</span> <span class="co"># Death rate at time t=10 (years 2027) and age 60.</span>
-<span class="co">## [1] 0.009082013</span></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"death_male"</span> <span class="op">=</span> <span class="va">death_male</span>, <span class="st">"alpha"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.3</span>,<span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d_k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">LCforecastMale</span><span class="op">$</span><span class="va">rates</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span><span class="fl">66</span><span class="op">:</span><span class="fl">100</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">breaks</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">29</span></span>
+<span><span class="va">death_male</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_xy.html">piecewise_xy</a></span><span class="op">(</span><span class="va">breaks</span>,<span class="va">d_k</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">death_male</span><span class="op">(</span><span class="fl">10</span>,<span class="fl">65</span><span class="op">)</span> <span class="co"># Death rate at time t=10 (years 2027) and age 60.</span></span>
+<span><span class="co">## [1] 0.009082013</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"death_male"</span> <span class="op">=</span> <span class="va">death_male</span>, <span class="st">"alpha"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.3</span>,<span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="exit-events" class="section level2" number="3.2">
-<h2 class="hasAnchor">
-<a href="#exit-events" class="anchor"></a><span class="header-section-number">3.2</span> Exit events</h2>
+<div class="section level3" number="3.2">
+<h3 id="exit-events">
+<span class="header-section-number">3.2</span> Exit events<a class="anchor" aria-label="anchor" href="#exit-events"></a>
+</h3>
 <p>Individuals exit the portfolio at a rate <span class="math inline">\(\mu^{i}\)</span>, <span class="math inline">\(i=1,2\)</span> depending on their risk class.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">params</span><span class="op">$</span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.001</span>,<span class="fl">0.06</span><span class="op">)</span> <span class="co"># Exit event rate</span></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span><span class="op">$</span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.001</span>,<span class="fl">0.06</span><span class="op">)</span> <span class="co"># Exit event rate</span></span></code></pre></div>
 </div>
-<div id="entry-events" class="section level2" number="3.3">
-<h2 class="hasAnchor">
-<a href="#entry-events" class="anchor"></a><span class="header-section-number">3.3</span> Entry events</h2>
+<div class="section level3" number="3.3">
+<h3 id="entry-events">
+<span class="header-section-number">3.3</span> Entry events<a class="anchor" aria-label="anchor" href="#entry-events"></a>
+</h3>
 <p>Entry events occur at a Poissonian (constant) rate <span class="math inline">\(\lambda\)</span> (in average <span class="math inline">\(\lambda\)</span> individuals enter the population each year).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">params</span><span class="op">$</span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">30000</span> <span class="co"># Entry events</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span><span class="op">$</span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">30000</span> <span class="co"># Entry events</span></span></code></pre></div>
 </div>
 </div>
-<div id="events-creation" class="section level1" number="4">
-<h1 class="hasAnchor">
-<a href="#events-creation" class="anchor"></a><span class="header-section-number">4</span> Events creation</h1>
-<div id="death-events-creation" class="section level2" number="4.1">
-<h2 class="hasAnchor">
-<a href="#death-events-creation" class="anchor"></a><span class="header-section-number">4.1</span> Death events creation</h2>
+<div class="section level2" number="4">
+<h2 id="events-creation">
+<span class="header-section-number">4</span> Events creation<a class="anchor" aria-label="anchor" href="#events-creation"></a>
+</h2>
+<div class="section level3" number="4.1">
+<h3 id="death-events-creation">
+<span class="header-section-number">4.1</span> Death events creation<a class="anchor" aria-label="anchor" href="#death-events-creation"></a>
+</h3>
 <p>The vector parameter <code>alpha</code> will be transformed into a C++ vector (with index starting at 0) during the model creation, and <code>death_male</code> into a C++ function.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>
-    type <span class="op">=</span> <span class="st">"death"</span>,
-    intensity_code <span class="op">=</span> <span class="st">"result = alpha[I.risk_cls-1] * death_male(t,age(I, t));"</span>
-<span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span></span>
+<span>    type <span class="op">=</span> <span class="st">"death"</span>,</span>
+<span>    intensity_code <span class="op">=</span> <span class="st">"result = alpha[I.risk_cls-1] * death_male(t,age(I, t));"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="exit-events-creation" class="section level2" number="4.2">
-<h2 class="hasAnchor">
-<a href="#exit-events-creation" class="anchor"></a><span class="header-section-number">4.2</span> Exit events creation</h2>
+<div class="section level3" number="4.2">
+<h3 id="exit-events-creation">
+<span class="header-section-number">4.2</span> Exit events creation<a class="anchor" aria-label="anchor" href="#exit-events-creation"></a>
+</h3>
 <p>Each individual in the portfolio can exit the portfolio at a constant (individual) rate <span class="math inline">\(\mu^i\)</span> depending on their risk class.</p>
 <p>In the presence of events of type <code>exit</code> in the population, a characteristic named <code>out</code> is automatically added to the individuals characteristics, set to <code>FALSE</code> by default.
 When an individual leaves the population, his characteristic <code>out</code> is set to <code>TRUE</code> and the date at which he exited the population is recorded in the column <code>death</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">exit_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>
-    type <span class="op">=</span> <span class="st">"exit"</span>,
-    intensity <span class="op">=</span> <span class="st">"result = mu[I.risk_cls-1]; "</span>
-<span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">exit_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span></span>
+<span>    type <span class="op">=</span> <span class="st">"exit"</span>,</span>
+<span>    intensity <span class="op">=</span> <span class="st">"result = mu[I.risk_cls-1]; "</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="entry-event-creation" class="section level2" number="4.3">
-<h2 class="hasAnchor">
-<a href="#entry-event-creation" class="anchor"></a><span class="header-section-number">4.3</span> Entry event creation</h2>
+<div class="section level3" number="4.3">
+<h3 id="entry-event-creation">
+<span class="header-section-number">4.3</span> Entry event creation<a class="anchor" aria-label="anchor" href="#entry-event-creation"></a>
+</h3>
 <p>New policyholders enter the population at a constant rate <span class="math inline">\(\lambda\)</span> (on average, <span class="math inline">\(\lambda\)</span> individuals enter the portfolio each year). A new individual entering the population at age <span class="math inline">\(a\)</span> given by a uniform variable on <span class="math inline">\([65,70]\)</span>, and is in risk class 1 with probability <span class="math inline">\(p\)</span>.</p>
 <p>In the presence of events of type <code>entry</code> in the population, a characteristic named <code>entry</code> is automatically added to the individuals characteristics, set to <code>NA</code> by default.
 When an individual leaves the population, his characteristic <code>entry</code> is set to the date <span class="math inline">\(t\)</span> at which he enters the population.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">params</span><span class="op">$</span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="va">entry_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_poisson.html">mk_event_poisson</a></span><span class="op">(</span>
-    type <span class="op">=</span> <span class="st">"entry"</span>,
-    intensity <span class="op">=</span> <span class="st">"lambda"</span>,
-    kernel_code <span class="op">=</span> <span class="st">"if (CUnif()&lt;p)
-                        newI.risk_cls =1;
-                   else
-                        newI.risk_cls= 2;
-                   double a = CUnif(65,70);
-                   newI.set_age(a,t);"</span>
-<span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span><span class="op">$</span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">entry_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_poisson.html">mk_event_poisson</a></span><span class="op">(</span></span>
+<span>    type <span class="op">=</span> <span class="st">"entry"</span>,</span>
+<span>    intensity <span class="op">=</span> <span class="st">"lambda"</span>,</span>
+<span>    kernel_code <span class="op">=</span> <span class="st">"if (CUnif()&lt;p)</span></span>
+<span><span class="st">                        newI.risk_cls =1;</span></span>
+<span><span class="st">                   else</span></span>
+<span><span class="st">                        newI.risk_cls= 2;</span></span>
+<span><span class="st">                   double a = CUnif(65,70);</span></span>
+<span><span class="st">                   newI.set_age(a,t);</span></span>
+<span><span class="st">                   newI.out = false;"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <!--```{remark}-->
 <p>Note that entries can also occur at a rate <span class="math inline">\(\lambda(t)\)</span> depending on time. For more details, see documentation of <code>?mk_event_poisson_inhomogeneous</code>.
 <!--```--></p>
 </div>
 </div>
-<div id="model-creation" class="section level1" number="5">
-<h1 class="hasAnchor">
-<a href="#model-creation" class="anchor"></a><span class="header-section-number">5</span> Model creation</h1>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>
-    characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop_df</span><span class="op">)</span>,<span class="co"># Characteristics names ant type</span>
-    events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">death_event</span>,<span class="va">entry_event</span>, <span class="va">exit_event</span><span class="op">)</span>, <span class="co"># Events list</span>
-    parameters <span class="op">=</span> <span class="va">params</span> <span class="co"># Model parameters</span>
-<span class="op">)</span>
-<span class="co">## [1] "entry event: add 'entry' as individual attributes"</span>
-<span class="co">## [1] "exit event: add 'out' as individual attributes"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">## Events:</span>
-<span class="co">## #1: individual event of type death</span>
-<span class="co">## #2: poisson event of type entry</span>
-<span class="co">## #3: individual event of type exit</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## Individual description:</span>
-<span class="co">## names:  birth death risk_cls entry out </span>
-<span class="co">## R types:  double double integer double logical </span>
-<span class="co">## C types:  double double int double bool</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## R parameters available in C++ code:</span>
-<span class="co">## names:  death_male alpha mu lambda p </span>
-<span class="co">## R types:  closure vector vector double double </span>
-<span class="co">## C types:  function_xy arma::vec arma::vec double double</span></pre></div>
+<div class="section level2" number="5">
+<h2 id="model-creation">
+<span class="header-section-number">5</span> Model creation<a class="anchor" aria-label="anchor" href="#model-creation"></a>
+</h2>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span></span>
+<span>    characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop_df</span><span class="op">)</span>,<span class="co"># Characteristics names ant type</span></span>
+<span>    events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">death_event</span>,<span class="va">entry_event</span>, <span class="va">exit_event</span><span class="op">)</span>, <span class="co"># Events list</span></span>
+<span>    parameters <span class="op">=</span> <span class="va">params</span> <span class="co"># Model parameters</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">## [1] "entry event: add 'entry' as individual attributes"</span></span>
+<span><span class="co">## [1] "exit event: add 'out' as individual attributes"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">## Events:</span></span>
+<span><span class="co">## #1: individual event of type death</span></span>
+<span><span class="co">## #2: poisson event of type entry</span></span>
+<span><span class="co">## #3: individual event of type exit</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## Individual description:</span></span>
+<span><span class="co">## names:  birth death risk_cls entry out </span></span>
+<span><span class="co">## R types:  double double integer double logical </span></span>
+<span><span class="co">## C types:  double double int double bool</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## R parameters available in C++ code:</span></span>
+<span><span class="co">## names:  death_male alpha mu lambda p </span></span>
+<span><span class="co">## R types:  closure vector vector double double </span></span>
+<span><span class="co">## C types:  function_xy arma::vec arma::vec double double</span></span></code></pre></div>
 </div>
-<div id="simulation" class="section level1" number="6">
-<h1 class="hasAnchor">
-<a href="#simulation" class="anchor"></a><span class="header-section-number">6</span> Simulation</h1>
-<div id="computation-of-event-intensity-bounds" class="section level2" number="6.1">
-<h2 class="hasAnchor">
-<a href="#computation-of-event-intensity-bounds" class="anchor"></a><span class="header-section-number">6.1</span> Computation of event intensity bounds</h2>
+<div class="section level2" number="6">
+<h2 id="simulation">
+<span class="header-section-number">6</span> Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
+</h2>
+<div class="section level3" number="6.1">
+<h3 id="computation-of-event-intensity-bounds">
+<span class="header-section-number">6.1</span> Computation of event intensity bounds<a class="anchor" aria-label="anchor" href="#computation-of-event-intensity-bounds"></a>
+</h3>
 <p>For events with Poisson (constant) intensity, the bound is simply the intensity.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="va">death_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">d_k</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">death_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">d_k</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="simulation-1" class="section level2" number="6.2">
-<h2 class="hasAnchor">
-<a href="#simulation-1" class="anchor"></a><span class="header-section-number">6.2</span> Simulation</h2>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,
-    population <span class="op">=</span><span class="va">pop_df</span>,
-    events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'death'</span> <span class="op">=</span> <span class="va">death_max</span>, <span class="st">"entry"</span><span class="op">=</span><span class="va">params</span><span class="op">$</span><span class="va">lambda</span>, <span class="st">"exit"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">mu</span><span class="op">)</span><span class="op">)</span>,
-    parameters <span class="op">=</span> <span class="va">params</span>,
-    time <span class="op">=</span> <span class="va">t</span>,
-    age_max <span class="op">=</span> <span class="fl">110</span>,
-    multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">## Warning in popsim(model = model, population = pop_df, events_bounds = c(death =</span>
-<span class="co">## death_max, : Add 'entry' attributes to the population.</span>
-<span class="co">## Warning in popsim(model = model, population = pop_df, events_bounds = c(death =</span>
-<span class="co">## death_max, : Add 'out' attributes to the population.</span>
-<span class="co">## Simulation on  [0, 30]</span></pre></div>
+<div class="section level3" number="6.2">
+<h3 id="simulation-1">
+<span class="header-section-number">6.2</span> Simulation<a class="anchor" aria-label="anchor" href="#simulation-1"></a>
+</h3>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span>,</span>
+<span>    population <span class="op">=</span><span class="va">pop_df</span>,</span>
+<span>    events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'death'</span> <span class="op">=</span> <span class="va">death_max</span>, <span class="st">"entry"</span><span class="op">=</span><span class="va">params</span><span class="op">$</span><span class="va">lambda</span>, <span class="st">"exit"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">mu</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    parameters <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    time <span class="op">=</span> <span class="va">t</span>,</span>
+<span>    age_max <span class="op">=</span> <span class="fl">110</span>,</span>
+<span>    multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## Warning in popsim(model = model, population = pop_df, events_bounds = c(death = death_max, : Add 'entry' attributes</span></span>
+<span><span class="co">## to the population.</span></span>
+<span><span class="co">## Warning in popsim(model = model, population = pop_df, events_bounds = c(death = death_max, : Add 'out' attributes</span></span>
+<span><span class="co">## to the population.</span></span>
+<span><span class="co">## Simulation on  [0, 30]</span></span></code></pre></div>
 <p><strong>Ratio of accepted events</strong></p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[[</span><span class="st">"effective_events"</span><span class="op">]</span><span class="op">]</span> <span class="op">/</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[[</span><span class="st">"proposed_events"</span><span class="op">]</span><span class="op">]</span>
-<span class="co">## [1] 0.2511387</span></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[[</span><span class="st">"effective_events"</span><span class="op">]</span><span class="op">]</span> <span class="op">/</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[[</span><span class="st">"proposed_events"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">## [1] 0.2510979</span></span></code></pre></div>
 </div>
 </div>
-<div id="outputs" class="section level1" number="7">
-<h1 class="hasAnchor">
-<a href="#outputs" class="anchor"></a><span class="header-section-number">7</span> Outputs</h1>
+<div class="section level2" number="7">
+<h2 id="outputs">
+<span class="header-section-number">7</span> Outputs<a class="anchor" aria-label="anchor" href="#outputs"></a>
+</h2>
 <p>Data frame <code>sim_out$population</code> is composed of all individuals present in the portfolio over the period <span class="math inline">\([0, t]\)</span> (individuals in the initial population and who entered the portfolio). Each line corresponds to an individual, with his date of birth, date of death (<code>NA</code> if still alive at the end of the simulation), risk class, and the characteristic <code>out</code>.
 The characteristics <code>out</code> is set to <code>TRUE</code> for individuals who left the portfolio due to an exit event.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">)</span>
-<span class="co">## 'data.frame':    930799 obs. of  5 variables:</span>
-<span class="co">##  $ birth   : num  -65 -65 -65 -65 -65 -65 -65 -65 -65 -65 ...</span>
-<span class="co">##  $ death   : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">##  $ risk_cls: int  1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="co">##  $ entry   : num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">##  $ out     : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">)</span></span>
+<span><span class="co">## 'data.frame':    930085 obs. of  5 variables:</span></span>
+<span><span class="co">##  $ birth   : num  -65 -65 -65 -65 -65 -65 -65 -65 -65 -65 ...</span></span>
+<span><span class="co">##  $ death   : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##  $ risk_cls: int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ entry   : num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##  $ out     : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span></code></pre></div>
 <p>The function <code><a href="../reference/age_pyramid.html">?age_pyramid</a></code>computes the age pyramid of a population data frame at a given time.</p>
-<div id="age-pyramids" class="section level2" number="7.1">
-<h2 class="hasAnchor">
-<a href="#age-pyramids" class="anchor"></a><span class="header-section-number">7.1</span> Age pyramids</h2>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="va">age_grp</span> <span class="op">&lt;-</span> <span class="fl">65</span><span class="op">:</span><span class="fl">98</span>
-<span class="va">pyr</span> <span class="op">=</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, time <span class="op">=</span> <span class="fl">30</span>, ages<span class="op">=</span><span class="va">age_grp</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span>, age_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
-<p><img src="insur_pyramid-1.png" style="display: block; margin: auto;"></p>
+<div class="section level3" number="7.1">
+<h3 id="age-pyramids">
+<span class="header-section-number">7.1</span> Age pyramids<a class="anchor" aria-label="anchor" href="#age-pyramids"></a>
+</h3>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">age_grp</span> <span class="op">&lt;-</span> <span class="fl">65</span><span class="op">:</span><span class="fl">98</span></span>
+<span><span class="va">pyr</span> <span class="op">=</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, time <span class="op">=</span> <span class="fl">30</span>, ages<span class="op">=</span><span class="va">age_grp</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span>, age_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="insur_pyramid-1.png" width="1050" style="display: block; margin: auto;"></p>
 <p>In order to visualize both risk classes on the same age pyramid with <code><a href="../reference/plot_pyramid.html">?plot_pyramid</a></code> a column <code>group_name</code> containing the individuals risk classes must be added to the age pyramid, and the colors representing each subgroup have to be specified.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">&lt;-</span> <span class="st">"group_name"</span>
-<span class="va">pyr</span><span class="op">$</span><span class="va">group_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">$</span><span class="va">group_name</span><span class="op">)</span>
-<span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span><span class="op">=</span><span class="st">"#00AFBB"</span>,<span class="st">"2"</span><span class="op">=</span><span class="st">"#FC4E07"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span>,<span class="va">colors</span>,age_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
-<p><img src="insur_pyr_group-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">&lt;-</span> <span class="st">"group_name"</span></span>
+<span><span class="va">pyr</span><span class="op">$</span><span class="va">group_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">$</span><span class="va">group_name</span><span class="op">)</span></span>
+<span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1"</span><span class="op">=</span><span class="st">"#00AFBB"</span>,<span class="st">"2"</span><span class="op">=</span><span class="st">"#FC4E07"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span>,<span class="va">colors</span>,age_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="insur_pyr_group-1.png" width="1050" style="display: block; margin: auto;"></p>
 </div>
-<div id="life-tables" class="section level2" number="7.2">
-<h2 class="hasAnchor">
-<a href="#life-tables" class="anchor"></a><span class="header-section-number">7.2</span> Life tables</h2>
+<div class="section level3" number="7.2">
+<h3 id="life-tables">
+<span class="header-section-number">7.2</span> Life tables<a class="anchor" aria-label="anchor" href="#life-tables"></a>
+</h3>
 <p>Death and exposure tables can be computed from the simulation, taking into account the censoring due to exit events.
 Note that when individuals enter the population at different ages, the package functions <code><a href="../reference/death_table.html">?death_table</a></code> and <code><a href="../reference/exposure_table.html">?exposure_table</a></code>do not take into account this right censoring.</p>
-<div id="risk-class-1" class="section level3" number="7.2.1">
-<h3 class="hasAnchor">
-<a href="#risk-class-1" class="anchor"></a><span class="header-section-number">7.2.1</span> Risk class 1</h3>
+<div class="section level4" number="7.2.1">
+<h4 id="risk-class-1">
+<span class="header-section-number">7.2.1</span> Risk class 1<a class="anchor" aria-label="anchor" href="#risk-class-1"></a>
+</h4>
 <p>Death and exposure data can be computed from the simulated portfolio. Below is an example with individuals in risk class 1. A Lee-Carter model is reestimated from the simulated data, and compare with the initial forecast.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="va">age_grp</span> <span class="op">&lt;-</span> <span class="fl">65</span><span class="op">:</span><span class="fl">95</span></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="va">Dx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">[</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">$</span><span class="va">risk_cls</span><span class="op">==</span><span class="fl">1</span>,<span class="op">]</span>,
-                  ages <span class="op">=</span> <span class="va">age_grp</span>, period <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>
-<span class="va">Ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">[</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">$</span><span class="va">risk_cls</span><span class="op">==</span><span class="fl">1</span>,<span class="op">]</span>,
-                     ages <span class="op">=</span> <span class="va">age_grp</span>, period <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="va">LC</span> <span class="op">&lt;-</span> <span class="fu">lc</span><span class="op">(</span><span class="op">)</span>
-<span class="va">LCfitSim1</span> <span class="op">&lt;-</span> <span class="fu">fit</span><span class="op">(</span><span class="va">LC</span>, Dxt <span class="op">=</span> <span class="va">Dx</span> , Ext <span class="op">=</span> <span class="va">Ex</span>,ages<span class="op">=</span><span class="va">age_grp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="va">time</span> <span class="op">&lt;-</span> <span class="fl">30</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">]</span>,
-     <span class="va">LCfitSim1</span><span class="op">$</span><span class="va">ax</span> <span class="op">+</span> <span class="va">LCfitSim1</span><span class="op">$</span><span class="va">bx</span><span class="op">*</span><span class="va">LCfitSim1</span><span class="op">$</span><span class="va">kt</span><span class="op">[</span><span class="va">t</span><span class="op">]</span>,
-     col<span class="op">=</span><span class="st">"red"</span>, main <span class="op">=</span><span class="st">"Log mortality rates in risk class 1 at t=30"</span>,
-     xlab <span class="op">=</span> <span class="st">"age"</span>, ylab<span class="op">=</span><span class="st">"log mortality rates"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">]</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">1.3</span><span class="op">*</span><span class="va">LCforecastMale</span><span class="op">$</span><span class="va">rates</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="va">t</span><span class="op">]</span><span class="op">)</span>,
-      col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"bottomrigh"</span>, legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Estimated mortality rates"</span>, <span class="st">"Point forecast"</span><span class="op">)</span>,
-       col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>,lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">1</span><span class="op">)</span>,pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="cn">NA</span><span class="op">)</span><span class="op">)</span></pre></div>
-<p><img src="insur_LeeCarter_risk1-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">age_grp</span> <span class="op">&lt;-</span> <span class="fl">65</span><span class="op">:</span><span class="fl">95</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Dx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">[</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">$</span><span class="va">risk_cls</span><span class="op">==</span><span class="fl">1</span>,<span class="op">]</span>,</span>
+<span>                  ages <span class="op">=</span> <span class="va">age_grp</span>, period <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span>
+<span><span class="va">Ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">[</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">$</span><span class="va">risk_cls</span><span class="op">==</span><span class="fl">1</span>,<span class="op">]</span>,</span>
+<span>                     ages <span class="op">=</span> <span class="va">age_grp</span>, period <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">LC</span> <span class="op">&lt;-</span> <span class="fu">lc</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">LCfitSim1</span> <span class="op">&lt;-</span> <span class="fu">fit</span><span class="op">(</span><span class="va">LC</span>, Dxt <span class="op">=</span> <span class="va">Dx</span> , Ext <span class="op">=</span> <span class="va">Ex</span>,ages<span class="op">=</span><span class="va">age_grp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p><img src="insur_LeeCarter_risk1-1.png" width="1050" style="display: block; margin: auto;"></p>
 </div>
-<div id="global-portfolio" class="section level3" number="7.2.2">
-<h3 class="hasAnchor">
-<a href="#global-portfolio" class="anchor"></a><span class="header-section-number">7.2.2</span> Global portfolio</h3>
+<div class="section level4" number="7.2.2">
+<h4 id="global-portfolio">
+<span class="header-section-number">7.2.2</span> Global portfolio<a class="anchor" aria-label="anchor" href="#global-portfolio"></a>
+</h4>
 <p>Due to the mortality differential between risk class 1 and 2, there should be more individuals in risk class 2 at higher ages.
 However, due to exit events, more individuals in risk class 1 one exit the portfolio over time, leading to a higher proportion of individuals in risk class 1 at higher ages than expected when there are no exit events. Thus, mortality rates are closer to mortality rates in risk class 1 at higher ages.</p>
 <p><strong>Computation of central mortality rates</strong></p>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="va">Dx_pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, ages <span class="op">=</span> <span class="va">age_grp</span>, period <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>
-<span class="va">Ex_pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, ages <span class="op">=</span> <span class="va">age_grp</span>, period <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>
-<span class="va">mx_pop</span> <span class="op">&lt;-</span> <span class="va">Dx_pop</span><span class="op">/</span><span class="va">Ex_pop</span></pre></div>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="va">time</span> <span class="op">&lt;-</span> <span class="fl">30</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="op">(</span><span class="va">Dx_pop</span><span class="op">/</span><span class="va">Ex_pop</span><span class="op">)</span><span class="op">[</span>,<span class="va">time</span><span class="op">]</span><span class="op">)</span>,
-     main <span class="op">=</span> <span class="st">"Portfolio log mortality rates at t=30"</span>,
-     xlab <span class="op">=</span> <span class="st">"age"</span>, ylab <span class="op">=</span> <span class="st">"log mortality rates"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">]</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">1.3</span><span class="op">*</span><span class="va">LCforecastMale</span><span class="op">$</span><span class="va">rates</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="va">time</span><span class="op">]</span><span class="op">)</span>,
-      col <span class="op">=</span> <span class="st">"#00AFBB"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">]</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">*</span><span class="va">LCforecastMale</span><span class="op">$</span><span class="va">rates</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="va">time</span><span class="op">]</span><span class="op">)</span>,
-      col <span class="op">=</span> <span class="st">"#FC4E07"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"bottomrigh"</span>, legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Portfolio"</span>, <span class="st">"Risk class 1"</span>,<span class="st">"Risk class 2"</span><span class="op">)</span>,
-       col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>,<span class="st">"#00AFBB"</span>,<span class="st">"#FC4E07"</span><span class="op">)</span>, lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span><span class="op">)</span></pre></div>
-<p><img src="insur_mortality_rates-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Dx_pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, ages <span class="op">=</span> <span class="va">age_grp</span>, period <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span>
+<span><span class="va">Ex_pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, ages <span class="op">=</span> <span class="va">age_grp</span>, period <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span>
+<span><span class="va">mx_pop</span> <span class="op">&lt;-</span> <span class="va">Dx_pop</span><span class="op">/</span><span class="va">Ex_pop</span></span></code></pre></div>
+<p><img src="insur_mortality_rates-1.png" width="1050" style="display: block; margin: auto;"></p>
 <p><strong>Evolution of portfolio mortality rates over time</strong></p>
 <p>The decrease in mortality rates is slower in the portfolio than in the global population due to composition changes.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html">matplot</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">mx_pop</span><span class="op">)</span>,
-        type<span class="op">=</span><span class="st">'l'</span>, xlab <span class="op">=</span> <span class="st">"age"</span>, ylab <span class="op">=</span> <span class="st">"log mortality rates"</span><span class="op">)</span></pre></div>
-<p><img src="insur_evol_mortality-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">age_grp</span><span class="op">)</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">mx_pop</span><span class="op">)</span>,</span>
+<span>        type<span class="op">=</span><span class="st">'l'</span>, xlab <span class="op">=</span> <span class="st">"age"</span>, ylab <span class="op">=</span> <span class="st">"log mortality rates"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="insur_evol_mortality-1.png" width="1050" style="display: block; margin: auto;"></p>
 <p><strong>Cohort mortality rates</strong></p>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fl">65</span><span class="op">:</span><span class="fl">94</span>,<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu">extractCohort</span><span class="op">(</span><span class="va">mx_pop</span>, age<span class="op">=</span> <span class="fl">65</span>, period <span class="op">=</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fl">65</span><span class="op">:</span><span class="fl">89</span>,<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu">extractCohort</span><span class="op">(</span><span class="va">mx_pop</span>, age<span class="op">=</span> <span class="fl">65</span>, period <span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"#00AFBB"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fl">65</span><span class="op">:</span><span class="fl">84</span>,<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu">extractCohort</span><span class="op">(</span><span class="va">mx_pop</span>, age<span class="op">=</span> <span class="fl">65</span>, period <span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>, col<span class="op">=</span><span class="st">"#FC4E07"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"bottomrigh"</span>,
-       legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Initial cohort"</span>, <span class="st">"Age 65 at t=5"</span>,<span class="st">"Age 65 at t=10"</span><span class="op">)</span>,
-       col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>,<span class="st">"#00AFBB"</span>,<span class="st">"#FC4E07"</span><span class="op">)</span>, lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></pre></div>
-<p><img src="insur_cohort-1.png" style="display: block; margin: auto;"></p>
+<p><img src="insur_cohort-1.png" width="1050" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
-<div id="different-simulations-with-the-same-model" class="section level1" number="8">
-<h1 class="hasAnchor">
-<a href="#different-simulations-with-the-same-model" class="anchor"></a><span class="header-section-number">8</span> Different simulations with the same model</h1>
+<div class="section level2" number="8">
+<h2 id="different-simulations-with-the-same-model">
+<span class="header-section-number">8</span> Different simulations with the same model<a class="anchor" aria-label="anchor" href="#different-simulations-with-the-same-model"></a>
+</h2>
 <p>The initial population and model parameters can be modified without have to recompile the model, in order to simulate the population model with different input. The event bounds must be modified accordingly before running again the simulation.</p>
 <p>A event can also be deactivated by setting the event bound to 0.</p>
 <p>See <code><a href="../articles/IBMPopSim_human_pop.html">vignette('IBMPopSim_human_pop')</a></code> for several examples.</p>
@@ -417,11 +409,13 @@ However, due to exit events, more individuals in risk class 1 one exit the portf
 
 
       <footer><div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
+  <p></p>
+<p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -429,6 +423,8 @@ However, due to exit events, more individuals in risk class 1 one exit the portf
 
   
 
+
+  
 
   </body>
 </html>

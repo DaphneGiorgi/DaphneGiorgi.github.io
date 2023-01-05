@@ -1,5 +1,5 @@
-pandoc: 2.10.1
-pkgdown: 1.6.1
+pandoc: 2.19.2
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   IBMPopSim: IBMPopSim.html
@@ -8,5 +8,5 @@ articles:
   IBMPopSim_human_pop_IMD: IBMPopSim_human_pop_IMD.html
   IBMPopSim_insurance_portfolio: IBMPopSim_insurance_portfolio.html
   IBMPopSim_interaction: IBMPopSim_interaction.html
-last_built: 2020-11-10T14:27Z
+last_built: 2023-01-05T13:04Z
 

@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">IBMPopSim</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
       </span>
     </div>
 
@@ -39,7 +41,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -53,7 +55,7 @@
   <a href="../articles/IBMPopSim_cpp.html">C++ essentials</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
      
     <span class="caret"></span>
@@ -79,8 +81,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/DaphneGiorgi/IBMPopSim/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/DaphneGiorgi/IBMPopSim/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -94,14 +96,14 @@
 
       
 
-      </header><script src="IBMPopSim_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>IBMPopSim package description</h1>
-                        <h4 class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
+                        <h4 data-toc-skip class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/master/vignettes/IBMPopSim.Rmd"><code>vignettes/IBMPopSim.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/HEAD/vignettes/IBMPopSim.Rmd" class="external-link"><code>vignettes/IBMPopSim.Rmd</code></a></small>
       <div class="hidden name"><code>IBMPopSim.Rmd</code></div>
 
     </div>
@@ -112,17 +114,20 @@
 <p>The package IBMPopSim allows the efficient simulation of a wide class IBMs where individuals are marked by their date of birth and a set of (discrete or continuous) characteristics. The scope of applications includes population models in actuarial science, biology, demography, ecology, epidemiology or economy.</p>
 <p>An IBM is summarized by the different types events occurring in the population at random dates. These events include the birth/arrival or death/exit of an individual in the population, and individuals changing of characteristics.
 Once the events modifying the population have been defined, the last step before simulating the population evolution is to specify the so-called events intensities, describing the frequency at which the different types of events occur in the population.</p>
-<div id="general-features-and-package-installation" class="section level1" number="1">
-<h1 class="hasAnchor">
-<a href="#general-features-and-package-installation" class="anchor"></a><span class="header-section-number">1</span> General features and package installation</h1>
-<div id="brief-overview-of-individual-based-models-ibms" class="section level2" number="1.1">
-<h2 class="hasAnchor">
-<a href="#brief-overview-of-individual-based-models-ibms" class="anchor"></a><span class="header-section-number">1.1</span> Brief overview of Individual-Based-Models (IBMs)</h2>
+<div class="section level2" number="1">
+<h2 id="general-features-and-package-installation">
+<span class="header-section-number">1</span> General features and package installation<a class="anchor" aria-label="anchor" href="#general-features-and-package-installation"></a>
+</h2>
+<div class="section level3" number="1.1">
+<h3 id="brief-overview-of-individual-based-models-ibms">
+<span class="header-section-number">1.1</span> Brief overview of Individual-Based-Models (IBMs)<a class="anchor" aria-label="anchor" href="#brief-overview-of-individual-based-models-ibms"></a>
+</h3>
 <p>Stochastic IBMs can be defined as a general class of population dynamics models, where different types of events can occur to individuals at random dates, depending on their age (or equivalently their date of birth) and characteristics (gender, location, size, socioeconomic class…), and interactions with others.</p>
 <p>An IBM can be summarized by the different types events that can occur to individuals and modify the population composition, and how frequently they happen. Let us start by recalling briefly these features before going into detailed on how they can be defined in IBMPopSim.</p>
-<div id="eventsTh" class="section level3" number="1.1.1">
-<h3 class="hasAnchor">
-<a href="#eventsTh" class="anchor"></a><span class="header-section-number">1.1.1</span> Events type and associated kernel</h3>
+<div class="section level4" number="1.1.1">
+<h4 id="eventsTh">
+<span class="header-section-number">1.1.1</span> Events type and associated kernel<a class="anchor" aria-label="anchor" href="#eventsTh"></a>
+</h4>
 <p>In IBMPopSim, the population can evolve according to six main types of events:</p>
 <ul>
 <li>
@@ -141,9 +146,10 @@ Once the events modifying the population have been defined, the last step before
 <p>With each event type is associated an <strong>event kernel</strong>, describing how the population is modified following the occurrence of the event. For instance, if an individual <span class="math inline">\(I\)</span> dies or exit a time <span class="math inline">\(t\)</span>, the individual is removed from the population.</p>
 <p>For other types of events, the event kernel has to be specified. Indeed, if an new individual enters the population (entry event), the rule for choosing the age and characteristics of this new individual has to be defined. For instance, the characteristics of a new individual in the population can be chosen uniformly in the space of all characteristics, or can depends on the distribution of his parents or those of the other individuals composing the population.</p>
 </div>
-<div id="Eventintensityth" class="section level3" number="1.1.2">
-<h3 class="hasAnchor">
-<a href="#Eventintensityth" class="anchor"></a><span class="header-section-number">1.1.2</span> Events intensities</h3>
+<div class="section level4" number="1.1.2">
+<h4 id="Eventintensityth">
+<span class="header-section-number">1.1.2</span> Events intensities<a class="anchor" aria-label="anchor" href="#Eventintensityth"></a>
+</h4>
 <p>Once the different types or events and their action have been defined, it remains to define how frequently they can occur to define properly an IBM.</p>
 <p>An event intensity is a function <span class="math inline">\(\lambda^e(I,t)\)</span> describing the frequency at which an event <span class="math inline">\(e\)</span> can occur to <em>an individual</em> <span class="math inline">\(I\)</span> in the population at a time <span class="math inline">\(t\)</span>. Informally, given an history of the population <span class="math inline">\((\mathcal{F}_t)\)</span>, the probability of event <span class="math inline">\(e\)</span> occurring to individual <span class="math inline">\(I\)</span> during a small interval of time <span class="math inline">\((t,t+dt]\)</span> is proportional to <span class="math inline">\(\lambda^e(I,t)\)</span>:
 <span class="math display">\[\begin{equation}
@@ -168,9 +174,10 @@ Otherwise, the intensity function is said to be the class of <strong>interaction
 \mathbb{P}(\text{event } e \text{ occurring in the population during } (t,t+dt] | \mathcal{F}_t) = \Lambda^e_t dt.
 \end{equation}\]</span></p>
 </div>
-<div id="algo" class="section level3" number="1.1.3">
-<h3 class="hasAnchor">
-<a href="#algo" class="anchor"></a><span class="header-section-number">1.1.3</span> Simulation algorithm</h3>
+<div class="section level4" number="1.1.3">
+<h4 id="algo">
+<span class="header-section-number">1.1.3</span> Simulation algorithm<a class="anchor" aria-label="anchor" href="#algo"></a>
+</h4>
 <p>The IBM simulation algorithm is based on an acceptance-rejection method for simulating random times called <strong>thinning</strong>, generalizing the algorithm proposed by <span class="citation">(Fournier and Méléard 2004)</span> (see also <span class="citation">(Ferrière and Tran 2009)</span>, <span class="citation">(Boumezoued 2016)</span>).
 The main idea of the algorithm is to use candidate event times with <em>constant</em> intensity <span class="math inline">\(\bar \lambda\)</span> (which corresponds to exponential variables with parameter <span class="math inline">\(\bar \lambda\)</span>). The constant <span class="math inline">\(\bar \lambda\)</span> must be greater than the true event intensity <span class="math inline">\(\lambda^e(I,t)\)</span> for all individuals <span class="math inline">\(I\)</span>:</p>
 <p><span class="math display">\[\begin{equation}
@@ -189,59 +196,63 @@ The main idea of the algorithm is to use candidate event times with <em>constant
 We introduce in IBMPopSim a “randomized” algorithm, in which this computation is by picking randomly another individual in the population and computing its interaction function with the given individual. In this case the algorithm presented above is simply modified as follows: two individuals are picked, the intensity function <span class="math inline">\(\lambda^e\)</span> in the algorithm is replaced by the interaction function <span class="math inline">\(U^e\)</span>, and <span class="math inline">\(\bar \lambda\)</span> by a bound of <span class="math inline">\(U^e\)</span>.</p>
 </div>
 </div>
-<div id="overview-of-package-structure" class="section level2" number="1.2">
-<h2 class="hasAnchor">
-<a href="#overview-of-package-structure" class="anchor"></a><span class="header-section-number">1.2</span> Overview of package structure</h2>
+<div class="section level3" number="1.2">
+<h3 id="overview-of-package-structure">
+<span class="header-section-number">1.2</span> Overview of package structure<a class="anchor" aria-label="anchor" href="#overview-of-package-structure"></a>
+</h3>
 <p>Emphasis is placed on code efficiency (speed of execution) and ease of implementation, while trying to be as general as possible.</p>
 <p>The implementation of an IBM model is based on a few building blocks, easy to manipulate. For code efficiency, we have chosen to let the user write a few lines of C++ code in R interface to define events intensity and action kernel. The user’s code is concatenated with internal code in the package. Compilation is done via the <code>sourceCpp</code> call of the <code>Rcpp</code> package. The code produced is usually very fast and can be multithreaded.</p>
 <p>Thanks to model parameters and predefined functions, the C++ code to be written is simple and does not require a great knowledge of C++: it is enough to respect the rules of syntax, to do arithmetic operations and tests. Furthermore, various inputs of the model can be modified without having to recompile the code.</p>
 </div>
-<div id="installation" class="section level2" number="1.3">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a><span class="header-section-number">1.3</span> Installation</h2>
+<div class="section level3" number="1.3">
+<h3 id="installation">
+<span class="header-section-number">1.3</span> Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
 <p>The latest stable version can be installed from CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'IBMPopSim'</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'IBMPopSim'</span><span class="op">)</span></span></code></pre></div>
 <p>The latest development version can be installed from github:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">'DaphneGiorgi/IBMPopSim'</span><span class="op">)</span></pre></div>
-<div id="first-example-to-check-installation" class="section level3" number="1.3.1">
-<h3 class="hasAnchor">
-<a href="#first-example-to-check-installation" class="anchor"></a><span class="header-section-number">1.3.1</span> First example to check installation</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'DaphneGiorgi/IBMPopSim'</span><span class="op">)</span></span></code></pre></div>
+<div class="section level4" number="1.3.1">
+<h4 id="first-example-to-check-installation">
+<span class="header-section-number">1.3.1</span> First example to check installation<a class="anchor" aria-label="anchor" href="#first-example-to-check-installation"></a>
+</h4>
 <p>To illustrate the use of the package and to check the installation, a simple model with Poisson arrivals and exits is implemented.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DaphneGiorgi/IBMPopSim">IBMPopSim</a></span><span class="op">)</span>
-
-<span class="va">init_size</span> <span class="op">&lt;-</span> <span class="fl">100000</span>
-<span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>birth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">init_size</span><span class="op">)</span>, death <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>
-
-<span class="va">birth</span> <span class="op">=</span> <span class="fu"><a href="../reference/mk_event_poisson.html">mk_event_poisson</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">'birth'</span>, intensity <span class="op">=</span> <span class="st">'lambda'</span><span class="op">)</span>
-<span class="va">death</span> <span class="op">=</span> <span class="fu"><a href="../reference/mk_event_poisson.html">mk_event_poisson</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">'death'</span>, intensity <span class="op">=</span> <span class="st">'mu'</span><span class="op">)</span>
-<span class="va">params</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">'lambda'</span> <span class="op">=</span> <span class="fl">100</span>, <span class="st">'mu'</span> <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-
-<span class="co"># mk_model compiles C++ code using sourceCpp from Rcpp</span>
-<span class="va">birth_death</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">birth</span>, <span class="va">death</span><span class="op">)</span>,
-                        parameters <span class="op">=</span> <span class="va">params</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DaphneGiorgi/IBMPopSim" class="external-link">IBMPopSim</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">init_size</span> <span class="op">&lt;-</span> <span class="fl">100000</span></span>
+<span><span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>birth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">init_size</span><span class="op">)</span>, death <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">birth</span> <span class="op">=</span> <span class="fu"><a href="../reference/mk_event_poisson.html">mk_event_poisson</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">'birth'</span>, intensity <span class="op">=</span> <span class="st">'lambda'</span><span class="op">)</span></span>
+<span><span class="va">death</span> <span class="op">=</span> <span class="fu"><a href="../reference/mk_event_poisson.html">mk_event_poisson</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">'death'</span>, intensity <span class="op">=</span> <span class="st">'mu'</span><span class="op">)</span></span>
+<span><span class="va">params</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">'lambda'</span> <span class="op">=</span> <span class="fl">100</span>, <span class="st">'mu'</span> <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># mk_model compiles C++ code using sourceCpp from Rcpp</span></span>
+<span><span class="va">birth_death</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">birth</span>, <span class="va">death</span><span class="op">)</span>,</span>
+<span>                        parameters <span class="op">=</span> <span class="va">params</span><span class="op">)</span></span></code></pre></div>
 <p>If there are no errors then the C++ built environment is compatible with the package. The model is created and a C++ code has been compiled. The simulation is done using the <code>popsim</code> function.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">birth_death</span>, 
-                  population <span class="op">=</span> <span class="va">pop</span>, 
-                  events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">lambda</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">mu</span><span class="op">)</span>,
-                  parameters <span class="op">=</span> <span class="va">params</span>, 
-                  time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-<span class="co">## Simulation on  [0, 10]</span>
-
-<span class="va">num_births</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">$</span><span class="va">birth</span><span class="op">)</span> <span class="op">-</span> <span class="va">init_size</span>
-<span class="va">num_deaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">$</span><span class="va">death</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"births"</span> <span class="op">=</span> <span class="va">num_births</span>, <span class="st">"deaths"</span> <span class="op">=</span> <span class="va">num_deaths</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## births deaths </span>
-<span class="co">##    965    988</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">birth_death</span>, </span>
+<span>                  population <span class="op">=</span> <span class="va">pop</span>, </span>
+<span>                  events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'birth'</span> <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">lambda</span>, <span class="st">'death'</span> <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">mu</span><span class="op">)</span>,</span>
+<span>                  parameters <span class="op">=</span> <span class="va">params</span>, </span>
+<span>                  time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">## Simulation on  [0, 10]</span></span>
+<span></span>
+<span><span class="va">num_births</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">$</span><span class="va">birth</span><span class="op">)</span> <span class="op">-</span> <span class="va">init_size</span></span>
+<span><span class="va">num_deaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">$</span><span class="va">death</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"births"</span> <span class="op">=</span> <span class="va">num_births</span>, <span class="st">"deaths"</span> <span class="op">=</span> <span class="va">num_deaths</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## births deaths </span></span>
+<span><span class="co">##    999    995</span></span></code></pre></div>
 </div>
 </div>
-<div id="quick-model-creation-and-simulation" class="section level2" number="1.4">
-<h2 class="hasAnchor">
-<a href="#quick-model-creation-and-simulation" class="anchor"></a><span class="header-section-number">1.4</span> Quick model creation and simulation</h2>
+<div class="section level3" number="1.4">
+<h3 id="quick-model-creation-and-simulation">
+<span class="header-section-number">1.4</span> Quick model creation and simulation<a class="anchor" aria-label="anchor" href="#quick-model-creation-and-simulation"></a>
+</h3>
 <p>Before going into details on the different steps for defining an IBM in IBMPopSim, let us first go quickly through an example of model creation and simulation.
 In order to define a model, the user must specify three building blocks:</p>
 <ul>
@@ -253,87 +264,89 @@ In order to define a model, the user must specify three building blocks:</p>
 <ul>
 <li>We take here an initial population, stored in a data frame, composed of <span class="math inline">\(100\,000\)</span> individuals marked by their gender (encoded by a Boolean characteristic):</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">pop</span> <span class="op">&lt;-</span> <span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pop</span> <span class="op">&lt;-</span> <span class="va">EW_pop_14</span><span class="op">$</span><span class="va">sample</span></span></code></pre></div>
 <ul>
 <li>The second step is to define the model parameters’ list:</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"alpha"</span> <span class="op">=</span> <span class="fl">0.008</span>, <span class="st">"beta"</span> <span class="op">=</span> <span class="fl">0.02</span>, <span class="st">"p_male"</span> <span class="op">=</span> <span class="fl">0.51</span>,
-               <span class="st">"birth_rate"</span> <span class="op">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">40</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"alpha"</span> <span class="op">=</span> <span class="fl">0.008</span>, <span class="st">"beta"</span> <span class="op">=</span> <span class="fl">0.02</span>, <span class="st">"p_male"</span> <span class="op">=</span> <span class="fl">0.51</span>,</span>
+<span>               <span class="st">"birth_rate"</span> <span class="op">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">40</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>The last step is to defined the events that can occur in the population, here birth and death events:</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"death"</span>,
-                  intensity_code <span class="op">=</span> <span class="st">"result = alpha * exp(beta * age(I, t));"</span><span class="op">)</span>
-
-<span class="va">birth_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"birth"</span>, 
-                  intensity_code <span class="op">=</span> <span class="st">"result = birth_rate(age(I,t));"</span>,
-                  kernel_code <span class="op">=</span> <span class="st">"newI.male = CUnif(0, 1) &lt; p_male;"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"death"</span>,</span>
+<span>                  intensity_code <span class="op">=</span> <span class="st">"result = alpha * exp(beta * age(I, t));"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">birth_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"birth"</span>, </span>
+<span>                  intensity_code <span class="op">=</span> <span class="st">"result = birth_rate(age(I,t));"</span>,</span>
+<span>                  kernel_code <span class="op">=</span> <span class="st">"newI.male = CUnif(0, 1) &lt; p_male;"</span><span class="op">)</span></span></code></pre></div>
 <p>Note that these events contain some C++ statements that depend (implicitly) on the previously declared parameters in variable <code>params</code>.</p>
 <ul>
 <li>Finally, the model is created by calling the function <code>mk_model</code>. A C++ source code is obtained from the events and parameters, then compiled using the <code>sourceCpp</code> function of the <code>Rcpp</code> package.</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,
-                  events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">death_event</span>, <span class="va">birth_event</span><span class="op">)</span>,
-                  parameters <span class="op">=</span> <span class="va">params</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,</span>
+<span>                  events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">death_event</span>, <span class="va">birth_event</span><span class="op">)</span>,</span>
+<span>                  parameters <span class="op">=</span> <span class="va">params</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>In order to simulate a random trajectory of the population until a given time <code>T</code> bounds on the events intensities have to be specified:</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">a_max</span> <span class="op">&lt;-</span> <span class="fl">115</span>
-<span class="va">events_bounds</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"death"</span> <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">alpha</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">beta</span> <span class="op">*</span> <span class="va">a_max</span><span class="op">)</span>,
-                  <span class="st">"birth"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">birth_rate</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a_max</span> <span class="op">&lt;-</span> <span class="fl">115</span></span>
+<span><span class="va">events_bounds</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"death"</span> <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">alpha</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">beta</span> <span class="op">*</span> <span class="va">a_max</span><span class="op">)</span>,</span>
+<span>                  <span class="st">"birth"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">birth_rate</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Then, the function <code>popsim</code> can be called:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>, <span class="va">events_bounds</span>, <span class="va">params</span>,
-                  age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
-<span class="co">## Simulation on  [0, 30]</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>, <span class="va">events_bounds</span>, <span class="va">params</span>,</span>
+<span>                  age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span><span class="co">## Simulation on  [0, 30]</span></span></code></pre></div>
 <ul>
 <li>The data frame <code>sim_out$population</code> contains the information (date of birth, date of death, gender) on individuals who lived in the population over the period <span class="math inline">\([0,30]\)</span>. Functions of the package allows to provide aggregated information on the population.</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">pop_out</span> <span class="op">&lt;-</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pop_out</span><span class="op">)</span>
-<span class="co">##       birth death  male</span>
-<span class="co">## 1 -84.96353    NA FALSE</span>
-<span class="co">## 2 -84.95439    NA  TRUE</span>
-<span class="co">## 3 -84.95336    NA FALSE</span>
-<span class="co">## 4 -84.91533    NA  TRUE</span>
-<span class="co">## 5 -84.89949    NA FALSE</span>
-<span class="co">## 6 -84.89676    NA  TRUE</span>
-<span class="va">female_pop</span> <span class="op">&lt;-</span> <span class="va">pop_out</span><span class="op">[</span><span class="va">pop_out</span><span class="op">$</span><span class="va">male</span><span class="op">==</span><span class="cn">FALSE</span>, <span class="op">]</span>
-<span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">female_pop</span>, ages <span class="op">=</span> <span class="fl">85</span><span class="op">:</span><span class="fl">90</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
-<span class="co">##       age  male value</span>
-<span class="co">## 1 85 - 86 FALSE   238</span>
-<span class="co">## 2 86 - 87 FALSE   228</span>
-<span class="co">## 3 87 - 88 FALSE   200</span>
-<span class="co">## 4 88 - 89 FALSE   192</span>
-<span class="co">## 5 89 - 90 FALSE   202</span>
-<span class="va">Dxt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="va">female_pop</span>, ages <span class="op">=</span> <span class="fl">85</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fl">20</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>
-<span class="va">Ext</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span><span class="op">(</span><span class="va">female_pop</span>, ages <span class="op">=</span> <span class="fl">85</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fl">20</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pop_out</span> <span class="op">&lt;-</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">population</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pop_out</span><span class="op">)</span></span>
+<span><span class="co">##       birth death  male</span></span>
+<span><span class="co">## 1 -84.97524    NA FALSE</span></span>
+<span><span class="co">## 2 -84.96228    NA  TRUE</span></span>
+<span><span class="co">## 3 -84.96043    NA FALSE</span></span>
+<span><span class="co">## 4 -84.95083    NA FALSE</span></span>
+<span><span class="co">## 5 -84.91351    NA  TRUE</span></span>
+<span><span class="co">## 6 -84.91099    NA FALSE</span></span>
+<span><span class="va">female_pop</span> <span class="op">&lt;-</span> <span class="va">pop_out</span><span class="op">[</span><span class="va">pop_out</span><span class="op">$</span><span class="va">male</span><span class="op">==</span><span class="cn">FALSE</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">female_pop</span>, ages <span class="op">=</span> <span class="fl">85</span><span class="op">:</span><span class="fl">90</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span><span class="co">##       age  male value</span></span>
+<span><span class="co">## 1 85 - 86 FALSE   230</span></span>
+<span><span class="co">## 2 86 - 87 FALSE   235</span></span>
+<span><span class="co">## 3 87 - 88 FALSE   218</span></span>
+<span><span class="co">## 4 88 - 89 FALSE   175</span></span>
+<span><span class="co">## 5 89 - 90 FALSE   200</span></span>
+<span><span class="va">Dxt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="va">female_pop</span>, ages <span class="op">=</span> <span class="fl">85</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fl">20</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span>
+<span><span class="va">Ext</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span><span class="op">(</span><span class="va">female_pop</span>, ages <span class="op">=</span> <span class="fl">85</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fl">20</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>Note that parameters of the model can be changed without recompiling the model.</li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="va">params</span><span class="op">$</span><span class="va">beta</span> <span class="op">&lt;-</span> <span class="fl">0.01</span>
-
-<span class="co"># Update death event bound:</span>
-<span class="va">events_bounds</span><span class="op">[</span><span class="st">"death"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">params</span><span class="op">$</span><span class="va">alpha</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">beta</span> <span class="op">*</span> <span class="va">a_max</span><span class="op">)</span>
-
-<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>, <span class="va">events_bounds</span>, <span class="va">params</span>,
-                  age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span><span class="op">$</span><span class="va">beta</span> <span class="op">&lt;-</span> <span class="fl">0.01</span></span>
+<span></span>
+<span><span class="co"># Update death event bound:</span></span>
+<span><span class="va">events_bounds</span><span class="op">[</span><span class="st">"death"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">params</span><span class="op">$</span><span class="va">alpha</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">beta</span> <span class="op">*</span> <span class="va">a_max</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>, <span class="va">events_bounds</span>, <span class="va">params</span>,</span>
+<span>                  age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="package-description" class="section level1" number="2">
-<h1 class="hasAnchor">
-<a href="#package-description" class="anchor"></a><span class="header-section-number">2</span> Package description</h1>
+<div class="section level2" number="2">
+<h2 id="package-description">
+<span class="header-section-number">2</span> Package description<a class="anchor" aria-label="anchor" href="#package-description"></a>
+</h2>
 <p>The first step to define a model in IBMPopSim is to define the population structure.</p>
-<div id="population" class="section level2" number="2.1">
-<h2 class="hasAnchor">
-<a href="#population" class="anchor"></a><span class="header-section-number">2.1</span> Population, individuals, characteristics</h2>
+<div class="section level3" number="2.1">
+<h3 id="population">
+<span class="header-section-number">2.1</span> Population, individuals, characteristics<a class="anchor" aria-label="anchor" href="#population"></a>
+</h3>
 <p>A population is a data frame in which each row corresponds to an individual, and which has at least two columns:</p>
 <ul>
 <li>A column <code>birth</code> containing the birth dates of individuals in the population.</li>
@@ -341,15 +354,15 @@ In order to define a model, the user must specify three building blocks:</p>
 </ul>
 <p>The data frame can contain more than two columns if individuals are described by additional characteristics such as gender, size, spatial location…
 In the example below, individuals are described by their birth and death dates, as well a Boolean characteristics called <code>male</code>. For instance, the first individual is a female whose age at <span class="math inline">\(t_0=0\)</span> is <span class="math inline">\(t_0 - (-106.9055) = 106.9055\)</span>.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>
-<span class="co">##       birth death  male</span>
-<span class="co">## 1 -106.9055    NA FALSE</span>
-<span class="co">## 2 -106.8303    NA FALSE</span>
-<span class="co">## 3 -104.5097    NA  TRUE</span>
-<span class="co">## 4 -104.2218    NA FALSE</span>
-<span class="co">## 5 -103.5225    NA FALSE</span>
-<span class="co">## 6 -103.3644    NA FALSE</span></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span></span>
+<span><span class="co">##       birth death  male</span></span>
+<span><span class="co">## 1 -106.9055    NA FALSE</span></span>
+<span><span class="co">## 2 -106.8303    NA FALSE</span></span>
+<span><span class="co">## 3 -104.5097    NA  TRUE</span></span>
+<span><span class="co">## 4 -104.2218    NA FALSE</span></span>
+<span><span class="co">## 5 -103.5225    NA FALSE</span></span>
+<span><span class="co">## 6 -103.3644    NA FALSE</span></span></code></pre></div>
 <ul>
 <li><p><strong>Type of a characteristic</strong>.
 A characteristic must be of atomic type: logical (<code>bool</code> in C++), integer (<code>int</code>), double or character (<code>char</code>). The function <code>?get_characteristic</code> allows to easily get characteristics names and their types (in R and C++) from a population data frame. See also section <a href="#cppcharacteristics">3.3</a>.</p></li>
@@ -371,7 +384,7 @@ We draw the attention to the fact that some names for characteristics are forbid
 <li>
 <code>time</code>, <code>I</code>, <code>J</code>, <code>pop</code>, <code>newI</code>, <code>t</code> and <code>k</code> : forbidden as characteristics or variable name,</li>
 <li>C++ reserved words: forbidden as characteristics or variable name. Note that <code>char</code>
-is a reserved word. See <a href="https://en.cppreference.com/w/cpp/keyword">here</a> for a comprehensive list of C++ reserved words.</li>
+is a reserved word. See <a href="https://en.cppreference.com/w/cpp/keyword" class="external-link">here</a> for a comprehensive list of C++ reserved words.</li>
 </ul>
 </li>
 <li>
@@ -407,9 +420,10 @@ During the model creation, a population of individuals is automatically created 
 </li>
 </ul>
 </div>
-<div id="params" class="section level2" number="2.2">
-<h2 class="hasAnchor">
-<a href="#params" class="anchor"></a><span class="header-section-number">2.2</span> Model parameters</h2>
+<div class="section level3" number="2.2">
+<h3 id="params">
+<span class="header-section-number">2.2</span> Model parameters<a class="anchor" aria-label="anchor" href="#params"></a>
+</h3>
 <p>A list of model parameters can be defined to simplify the events creation (see also section <a href="#cppcharacteristics">3.3</a> for more details). These parameters can be of various types:</p>
 <ul>
 <li>
@@ -424,15 +438,16 @@ During the model creation, a population of individuals is automatically created 
 <strong>List of predefined functions</strong>: of same C++ type, either <code>function_x</code> or <code>function_xy</code>.</li>
 </ul>
 <p>For example,</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"coeff"</span> <span class="op">=</span> <span class="fl">1.1</span>,
-               <span class="st">"death_function"</span> <span class="op">=</span> <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.005</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"coeff"</span> <span class="op">=</span> <span class="fl">1.1</span>,</span>
+<span>               <span class="st">"death_function"</span> <span class="op">=</span> <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.005</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>creates a numeric parameter <code>coeff</code> and a Gompertz function <code>death_function</code> which can be used when creating the events of the model.</p>
-<p><strong>Predefined IBMPopSim functions</strong> are classes of functions predefined in the package to simplify models creation. For instance, <code><a href="../reference/gompertz.html">gompertz(a,b)</a></code> returns the function <span class="math inline">\(g(x) = a \exp(bx)\)</span> and <code>stepfun</code> is the usual R function for the creation of step functions. Another example is <code>piecewise_xy</code> which allow the creation of age and time functions. See Section <a href="#cppIBMfunctions">3.3.3</a> for a description of all IBMPopSim functions, and Section <a href="#cpparmadillo">3.3.2</a> for more details of Armadillo objects.</p>
+<p><strong>Predefined IBMPopSim functions</strong> are classes of functions predefined in the package to simplify models creation. For instance, <code>gompertz(a,b)</code> returns the function <span class="math inline">\(g(x) = a \exp(bx)\)</span> and <code>stepfun</code> is the usual R function for the creation of step functions. Another example is <code>piecewise_xy</code> which allow the creation of age and time functions. See Section <a href="#cppIBMfunctions">3.3.3</a> for a description of all IBMPopSim functions, and Section <a href="#cpparmadillo">3.3.2</a> for more details of Armadillo objects.</p>
 </div>
-<div id="events" class="section level2" number="2.3">
-<h2 class="hasAnchor">
-<a href="#events" class="anchor"></a><span class="header-section-number">2.3</span> Events creations</h2>
+<div class="section level3" number="2.3">
+<h3 id="events">
+<span class="header-section-number">2.3</span> Events creations<a class="anchor" aria-label="anchor" href="#events"></a>
+</h3>
 <p>The last and most important step of the model creation is the events creation. The call to the function creating an event is of form,</p>
 <p><code>mk_event_CLASS(type = "TYPE", name ="NAME", kernel_code = "KERNEL_CODE", ...)</code></p>
 <p>where <code>CLASS</code> is replaced by the class of the event intensity, <code>type</code> is the event type and <code>kernel_code</code> the event kernel.</p>
@@ -497,20 +512,19 @@ During the model creation, a population of individuals is automatically created 
 </table>
 <p>The intensity function and kernel of an event are defined through arguments of the function <code>mk_event_CLASS</code>. These arguments are strings composed of few lines of code defining an event frequency and its action of the event on individuals. Since the model is compiled using Rcpp, the code should be written in C++. However, thanks to the model parameters and functions/variables of the package, even the non-experienced C++ user can define a model quite easily. Several examples are given in the several vignettes of this package, and basic C++ tools are presented in Section <a href="#cppessentials">3</a>.</p>
 <p>The optional argument <code>name</code> gives a name to the event. If not specified, the name of the event is its type, for instance <code>death</code>. However, a name must be specified if the model is composed of several events with the same type.</p>
-<div id="event-kernel-code" class="section level3" number="2.3.1">
-<h3 class="hasAnchor">
-<a href="#event-kernel-code" class="anchor"></a><span class="header-section-number">2.3.1</span> Event kernel code</h3>
+<div class="section level4" number="2.3.1">
+<h4 id="event-kernel-code">
+<span class="header-section-number">2.3.1</span> Event kernel code<a class="anchor" aria-label="anchor" href="#event-kernel-code"></a>
+</h4>
 <p>The argument <code>kernel_code</code> is <code>NULL</code> by default and doesn’t have to be specified for death and exit events. For those types of events, the event kernel is automatically generated during the model creation.</p>
 <ol style="list-style-type: decimal">
 <li><strong>Death event</strong></li>
 </ol>
-<p>If the user defines a <strong>death event</strong>, the C++ code generated is</p>
-<p><code>pop.kill(k, t);</code></p>
-<p>which removes the individual number <code>k</code> from the population <code>pop</code> if he dies. No kernel has to be specified by the user.</p>
+<p>If the user defines a <strong>death event</strong>, the death date of the current individual <code>I</code> is set to the current time <code>t</code>. No kernel has to be specified by the user.</p>
 <ol start="2" style="list-style-type: decimal">
 <li><strong>Exit event</strong></li>
 </ol>
-<p>If an <strong>exit event</strong> is defined, a characteristic <code>out</code> is automatically added to individuals in the population. When an individual <code>I</code> exit the population, <code>I.out</code> is set <code>TRUE</code> and his exit time is recorded as a “death” date.</p>
+<p>If an <strong>exit event</strong> is defined, a characteristic <code>out</code> is automatically added to individuals in the population. When an individual <code>I</code> exits the population, <code>I.out</code> is set to <code>TRUE</code> and his exit time is recorded as a “death” date.</p>
 <ol start="3" style="list-style-type: decimal">
 <li><strong>Birth event</strong></li>
 </ol>
@@ -524,18 +538,18 @@ newI.birth_date = t;
 _KERNEL_CODE_
 pop.add(newI);</code></pre>
 <p>where <code>_KERNEL_CODE_</code> is replaced by the content of the <code>kernel_code</code> argument. For instance, in a population where individuals are characterized by their gender, the kernel code</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="va">birth_kernel_code</span> <span class="op">&lt;-</span> <span class="st">"newI.male = (CUnif(0, 1) &lt; p_male);"</span></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">birth_kernel_code</span> <span class="op">&lt;-</span> <span class="st">"newI.male = (CUnif(0, 1) &lt; p_male);"</span></span></code></pre></div>
 <p>creates new individuals which are males with probability <code>p_male</code>, or females otherwise. Here, <code>p_male</code> should be included in the list of model parameters.</p>
 <ol start="4" style="list-style-type: decimal">
 <li><strong>Entry event</strong></li>
 </ol>
 <p>If an <strong>entry event</strong> is defined, a characteristic <code>entry</code> is automatically added to individuals in the population. When an individual <code>I</code> enters the population, <code>I.entry</code> is set as the date at which the individual enters the population.
 When an entry occurs the individual entering the population is not of age <span class="math inline">\(0\)</span>. In this case, the user must specify the <code>kernel_code</code> argument indicating how the age and characteristics of the new individual are chosen. For instance, with</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="va">entry_kernel_code</span> <span class="op">&lt;-</span> <span class="st">"double a = CUnif(20,40);
-                      newI.set_age(a,t);
-                      newI.male = (CUnif(0, 1) &lt; p_male);"</span></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">entry_kernel_code</span> <span class="op">&lt;-</span> <span class="st">"double a = CUnif(20,40);</span></span>
+<span><span class="st">                      newI.set_age(a,t);</span></span>
+<span><span class="st">                      newI.male = (CUnif(0, 1) &lt; p_male);"</span></span></code></pre></div>
 <p>An individual who enters the population has an age <code>a</code> taken uniformly in <span class="math inline">\([20,40]\)</span>, and is a male with probability <code>p_male</code>. His characteristic <code>I.entry</code> is equal to <code>t</code>.</p>
 <p>The available variables for the birth and entry events C++ kernel codes are:</p>
 <table class="table">
@@ -601,14 +615,15 @@ When an entry occurs the individual entering the population is not of age <span 
 </table>
 <p>We can now describe the different intensity classes.</p>
 </div>
-<div id="event-creation-with-individual-intensity" class="section level3" number="2.3.2">
-<h3 class="hasAnchor">
-<a href="#event-creation-with-individual-intensity" class="anchor"></a><span class="header-section-number">2.3.2</span> Event creation with individual intensity</h3>
+<div class="section level4" number="2.3.2">
+<h4 id="event-creation-with-individual-intensity">
+<span class="header-section-number">2.3.2</span> Event creation with individual intensity<a class="anchor" aria-label="anchor" href="#event-creation-with-individual-intensity"></a>
+</h4>
 <p>As explained in <a href="#Eventintensityth">1.1.2</a>, events with intensities in the class <code>individual</code> are intensity functions <span class="math inline">\(\lambda^e(I,t)\)</span> which depend only on a individual’s age and characteristics, and on time.
 They are created using the function</p>
-<pre><code><a href="../reference/mk_event_individual.html">mk_event_individual(type = "TYPE", name ="name",
-                    intensity_code = "INTENSITY",
-                    kernel_code = "KERNEL_CODE")</a></code></pre>
+<pre><code><span><span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"TYPE"</span>, name <span class="op">=</span><span class="st">"name"</span>,</span>
+<span>                    intensity_code <span class="op">=</span> <span class="st">"INTENSITY"</span>,</span>
+<span>                    kernel_code <span class="op">=</span> <span class="st">"KERNEL_CODE"</span><span class="op">)</span></span></code></pre>
 <p>The <code>intensity_code</code> argument is a character string containing few lines C++ code describing the intensity function. The available variables for the intensity code are given in the following Table <!--\@ref(tab:varInd) :--></p>
 <table class="table">
 <caption>C++ variables available for individual intensities</caption>
@@ -636,11 +651,11 @@ They are created using the function</p>
 <ol style="list-style-type: decimal">
 <li>The intensity code below</li>
 </ol>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="va">death_intensity</span><span class="op">&lt;-</span> <span class="st">"if (I.male)
-                       result = alpha_1*exp(beta_1*age(I, t));
-                   else
-                       result = alpha_2*exp(beta_2*age(I,t));"</span></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">death_intensity</span><span class="op">&lt;-</span> <span class="st">"if (I.male)</span></span>
+<span><span class="st">                       result = alpha_1*exp(beta_1*age(I, t));</span></span>
+<span><span class="st">                   else</span></span>
+<span><span class="st">                       result = alpha_2*exp(beta_2*age(I,t));"</span></span></code></pre></div>
 <p>corresponds to a death intensity equal to <span class="math inline">\(d_1(a) = \alpha_1 \exp(\beta_1 a)\)</span> for males and <span class="math inline">\(d_2(a) = \alpha_2 \exp(\beta_2 a)\)</span> for females. In this case, the intensity function depends on the individuals’ age, gender, and on the model parameters <span class="math inline">\(\alpha = (\alpha_1, \alpha_2)\)</span> and <span class="math inline">\(\beta = (\beta_1, \beta_2)\)</span>.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>This example creates a death event with intensity depending on age and time, equal to
@@ -650,31 +665,32 @@ d(t,a) = 0.1\exp(0.005a) 1_{\{0\leq t &lt;5\}} + 0.08\exp(0.005a) 1_{\{5\leq t\}
 </li>
 </ol>
 <p>This is done by creating the death function <span class="math inline">\(d\)</span> using the predefined package functions <code><a href="../reference/piecewise_xy.html">?piecewise_xy</a></code> and <code><a href="../reference/gompertz.html">?gompertz</a></code>. The function is then recorded as a model parameter and used in the argument <code>intensity_code</code> of <code><a href="../reference/mk_event_individual.html">?mk_event_individual</a></code>.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="va">time_dep_function</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_xy.html">piecewise_xy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>,
-                                  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.1</span>,<span class="fl">0.005</span><span class="op">)</span>,
-                                       <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.08</span>,<span class="fl">0.005</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">time_dep_function</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">65</span><span class="op">)</span> <span class="co"># death intensity at time 0 and age 65.</span>
-<span class="co">## [1] 0.1384031</span>
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"death_function"</span><span class="op">=</span> <span class="va">time_dep_function</span><span class="op">)</span>
-
-<span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"death"</span>,
-                    intensity_code <span class="op">=</span> <span class="st">"result=time_dep_intensity(t,age(I,t));"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">time_dep_function</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_xy.html">piecewise_xy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>,</span>
+<span>                                  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.1</span>,<span class="fl">0.005</span><span class="op">)</span>,</span>
+<span>                                       <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.08</span>,<span class="fl">0.005</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">time_dep_function</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">65</span><span class="op">)</span> <span class="co"># death intensity at time 0 and age 65.</span></span>
+<span><span class="co">## [1] 0.1384031</span></span>
+<span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"death_function"</span><span class="op">=</span> <span class="va">time_dep_function</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"death"</span>,</span>
+<span>                    intensity_code <span class="op">=</span> <span class="st">"result=time_dep_intensity(t,age(I,t));"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="event-creation-with-interaction-intensity" class="section level3" number="2.3.3">
-<h3 class="hasAnchor">
-<a href="#event-creation-with-interaction-intensity" class="anchor"></a><span class="header-section-number">2.3.3</span> Event creation with interaction intensity</h3>
+<div class="section level4" number="2.3.3">
+<h4 id="event-creation-with-interaction-intensity">
+<span class="header-section-number">2.3.3</span> Event creation with interaction intensity<a class="anchor" aria-label="anchor" href="#event-creation-with-interaction-intensity"></a>
+</h4>
 <p>Events with intensities in the class <code>interaction</code> are events which occur to an individual at a frequency which is the result of interactions with other members of the population (see <a href="#Eventintensityth">1.1.2</a>), and which can be written as</p>
 <p><span class="math display">\[\begin{equation*}
 \lambda^e(I,t) = \sum_{J \in pop} U(I,J,t),
 \end{equation*}\]</span></p>
 <p>where <span class="math inline">\(U(I,J,t)\)</span> is the intensity of the interaction between individual <span class="math inline">\(I\)</span> and <span class="math inline">\(J\)</span>.</p>
 <p>An event with intensity in the class <code>interaction</code> is created by calling the function</p>
-<pre><code><a href="../reference/mk_event_interaction.html">mk_event_interaction(type = "TYPE",
-                     name = "NAME",
-                     interaction_code = "INTERACTION_CODE",
-                     kernel_code = "KERNEL_CODE",
-                     interaction_type="random")</a></code></pre>
+<pre><code><span><span class="fu"><a href="../reference/mk_event_interaction.html">mk_event_interaction</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"TYPE"</span>,</span>
+<span>                     name <span class="op">=</span> <span class="st">"NAME"</span>,</span>
+<span>                     interaction_code <span class="op">=</span> <span class="st">"INTERACTION_CODE"</span>,</span>
+<span>                     kernel_code <span class="op">=</span> <span class="st">"KERNEL_CODE"</span>,</span>
+<span>                     interaction_type<span class="op">=</span><span class="st">"random"</span><span class="op">)</span></span></code></pre>
 <p>The <code>interaction_code</code> argument contains few lines of C++ code describing the interaction function <span class="math inline">\(U\)</span>. The interaction function value has to be stored in a variable called <code>result</code>. The available variables for the intensity code are given in the following Table:
 <!-- \@ref(tab:varInt):--></p>
 <table class="table">
@@ -703,8 +719,8 @@ d(t,a) = 0.1\exp(0.005a) 1_{\{0\leq t &lt;5\}} + 0.08\exp(0.005a) 1_{\{5\leq t\}
 </tbody>
 </table>
 <p><strong>Example</strong></p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="va">death_interaction_code</span><span class="op">&lt;-</span> <span class="st">" result = max(J.size -I.size,0);"</span></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">death_interaction_code</span><span class="op">&lt;-</span> <span class="st">" result = max(J.size -I.size,0);"</span></span></code></pre></div>
 <p>In the example above, the death intensity of an individual <code>I</code> is the result of competition between individuals, depending on a characteristic named <code>size</code>:</p>
 <p><span class="math display">\[U(I,J,t) = (J.size - I.size)^+.\]</span></p>
 <p>If <code>I</code> meets randomly an individual <code>J</code> of size bigger than <code>I.size</code>, he can die at the intensity <code>J.size-I.size</code>. The bigger is <code>I.size</code>, the lower is the death intensity of individual <code>I</code>.</p>
@@ -712,94 +728,97 @@ d(t,a) = 0.1\exp(0.005a) 1_{\{0\leq t &lt;5\}} + 0.08\exp(0.005a) 1_{\{5\leq t\}
 When <code>interaction_type=full</code>, the intensity of an individual is computed making the sum over all the individuals in the population of the interactions with the given individual. In IBMPopSim, we introduced a “randomized” algorithm, in which the intensity of an individual is computed by picking randomly another individual in the population and computing its interaction function with the given individual. In most cases, the <code>random</code> algorithm is much faster than the <code>full</code> algorithm.</p>
 <p>Note that events with individual intensities are also much faster to simulate since they only require to observe <em>one</em> individual to be computed.</p>
 </div>
-<div id="events-creation-with-poisson-and-inhomogeneous-poisson-intensity" class="section level3" number="2.3.4">
-<h3 class="hasAnchor">
-<a href="#events-creation-with-poisson-and-inhomogeneous-poisson-intensity" class="anchor"></a><span class="header-section-number">2.3.4</span> Events creation with Poisson and Inhomogeneous Poisson intensity</h3>
+<div class="section level4" number="2.3.4">
+<h4 id="events-creation-with-poisson-and-inhomogeneous-poisson-intensity">
+<span class="header-section-number">2.3.4</span> Events creation with Poisson and Inhomogeneous Poisson intensity<a class="anchor" aria-label="anchor" href="#events-creation-with-poisson-and-inhomogeneous-poisson-intensity"></a>
+</h4>
 <p>When a event occur in the population with an intensity which does not depend on the population, the event intensity is of (inhomogeneous) Poisson class.</p>
 <p><strong>Poisson intensity</strong> When the event intensity is simply a constant, the class is called Poisson in reference to events occurring at jumps time of a Poisson process. Such events are created with the function</p>
-<pre><code><a href="../reference/mk_event_poisson.html">mk_event_poisson(type="TYPE",
-                 name="NAME",
-                 intensity="CONSTANT",
-                 kernel_code = "KERNEL_CODE")</a></code></pre>
+<pre><code><span><span class="fu"><a href="../reference/mk_event_poisson.html">mk_event_poisson</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">"TYPE"</span>,</span>
+<span>                 name<span class="op">=</span><span class="st">"NAME"</span>,</span>
+<span>                 intensity<span class="op">=</span><span class="st">"CONSTANT"</span>,</span>
+<span>                 kernel_code <span class="op">=</span> <span class="st">"KERNEL_CODE"</span><span class="op">)</span></span></code></pre>
 <p>For instance,</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="fu"><a href="../reference/mk_event_poisson.html">mk_event_poisson</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"entry"</span>, intensity <span class="op">=</span> <span class="st">"lambda"</span>,
-                 kernel_code <span class="op">=</span> <span class="st">"double a_I= max(CNorm(20,2),0);
-                                newI.set_age(a_I,t);"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/mk_event_poisson.html">mk_event_poisson</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"entry"</span>, intensity <span class="op">=</span> <span class="st">"lambda"</span>,</span>
+<span>                 kernel_code <span class="op">=</span> <span class="st">"double a_I= max(CNorm(20,2),0);</span></span>
+<span><span class="st">                                newI.set_age(a_I,t);"</span><span class="op">)</span></span></code></pre></div>
 <p>creates an event of type Entry, where individuals enter the population at a constant intensity <code>lambda</code> (which has to be in the list of model parameters). When an individual <code>newI</code> enters the population at time <code>t</code>, his age is chosen as a normally distributed random variable, with mean 20 and variance 4, using the function <code>CNorm()</code> (see Section <a href="#randomvar">3.4</a>).</p>
 <p><strong>Inhomogeneous Poisson intensity</strong> When the intensity depends on time (but not on the population), the event can be created similarly by using the function</p>
 <pre><code>mk_event_inhomogeneous_poisson(type= "TYPE", name="NAME"
                                intensity_code = "INTENSITY",
                                kernel_code = "KERNEL_CODE")</code></pre>
 <p>For instance,</p>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="fu"><a href="../reference/mk_event_inhomogeneous_poisson.html">mk_event_inhomogeneous_poisson</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"entry"</span>,
-                               intensity <span class="op">=</span> <span class="st">"result = lambda*(1+ cos(t));"</span>,
-                               kernel_code <span class="op">=</span> <span class="st">"double a_I= CNorm(20,2);
-                                              newI.set_age(a_I,t);"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/mk_event_inhomogeneous_poisson.html">mk_event_inhomogeneous_poisson</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"entry"</span>,</span>
+<span>                               intensity <span class="op">=</span> <span class="st">"result = lambda*(1+ cos(t));"</span>,</span>
+<span>                               kernel_code <span class="op">=</span> <span class="st">"double a_I= CNorm(20,2);</span></span>
+<span><span class="st">                                              newI.set_age(a_I,t);"</span><span class="op">)</span></span></code></pre></div>
 <p>creates the same event than before, but now individuals enter the population at the rate <span class="math inline">\(\lambda(1+ \cos(t))\)</span> depending on the current time <code>t</code>.</p>
 </div>
 </div>
-<div id="Modelcreation" class="section level2" number="2.4">
-<h2 class="hasAnchor">
-<a href="#Modelcreation" class="anchor"></a><span class="header-section-number">2.4</span> Model creation</h2>
+<div class="section level3" number="2.4">
+<h3 id="Modelcreation">
+<span class="header-section-number">2.4</span> Model creation<a class="anchor" aria-label="anchor" href="#Modelcreation"></a>
+</h3>
 <p>Finally, the IBM model is created using the function <code><a href="../reference/mk_model.html">?mk_model</a></code>. The model is composed of:</p>
 <ul>
 <li>The characteristics names and types, which can be obtained from a population data frame with the function <code><a href="../reference/get_characteristics.html">?get_characteristics</a></code>,</li>
 <li>The events list,</li>
 <li>The model parameters.</li>
 </ul>
-<div class="sourceCode" id="cb28"><pre class="downlit">
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,
-                  event <span class="op">=</span> <span class="va">events_list</span>,
-                  parameters <span class="op">=</span> <span class="va">model_params</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,</span>
+<span>                  event <span class="op">=</span> <span class="va">events_list</span>,</span>
+<span>                  parameters <span class="op">=</span> <span class="va">model_params</span><span class="op">)</span></span></code></pre></div>
 <p>During this step which can take a few seconds, the model is created and compiled using the Rcpp package.
 One of the advantages of the model structure in IBMPopSim is that the model depends only on the population characteristics’ and parameters names and types, rather than their values.
 This means that once the model has been created, various simulations can be done with different initial populations and parameters values. Thus, only one model has to be created to simulation a class of IBMs with varying parameters (see Section <a href="#Simulation1">2.5.2</a> for an example).</p>
 <p><strong>Example</strong> Here is an example of model with a population structured by age and gender, with birth and death events. The death intensity of an individual of age <span class="math inline">\(a\)</span> is
 <span class="math display">\[d(a) = 0.008 \exp(0.02a),\]</span>
 and females between 15 and 40 can give birth with birth intensity 0.05. The newborn is a male with probability <span class="math inline">\(p_{male}= 0.51\)</span>.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit">
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"p_male"</span><span class="op">=</span> <span class="fl">0.51</span>,
-               <span class="st">"birth_rate"</span> <span class="op">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">40</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>,
-               <span class="st">"death_rate"</span> <span class="op">=</span> <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.008</span>,<span class="fl">0.02</span><span class="op">)</span><span class="op">)</span>
-
-
-<span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"death"</span>, name<span class="op">=</span> <span class="st">"my_death_event"</span>,
-                  intensity_code <span class="op">=</span> <span class="st">"result = death_rate(age(I,t));"</span><span class="op">)</span>
-
-<span class="va">birth_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span> type <span class="op">=</span> <span class="st">"birth"</span>,
-                  intensity_code <span class="op">=</span> <span class="st">"if (I.male)
-                                        result = 0;
-                                    else
-                                        result=birth_rate(age(I,t));"</span>,
-                  kernel_code <span class="op">=</span> <span class="st">"newI.male = CUnif(0, 1) &lt; p_male;"</span><span class="op">)</span>
-
-
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,
-                  events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">death_event</span>,<span class="va">birth_event</span><span class="op">)</span>,
-                  parameters <span class="op">=</span> <span class="va">params</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">## Events:</span>
-<span class="co">## #1: individual event of type death</span>
-<span class="co">## #2: individual event of type birth</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## Individual description:</span>
-<span class="co">## names:  birth death male </span>
-<span class="co">## R types:  double double logical </span>
-<span class="co">## C types:  double double bool</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## R parameters available in C++ code:</span>
-<span class="co">## names:  p_male birth_rate death_rate </span>
-<span class="co">## R types:  double closure closure </span>
-<span class="co">## C types:  double function_x function_x</span></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"p_male"</span><span class="op">=</span> <span class="fl">0.51</span>,</span>
+<span>               <span class="st">"birth_rate"</span> <span class="op">=</span> <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">40</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.05</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>               <span class="st">"death_rate"</span> <span class="op">=</span> <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.008</span>,<span class="fl">0.02</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">death_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"death"</span>, name<span class="op">=</span> <span class="st">"my_death_event"</span>,</span>
+<span>                  intensity_code <span class="op">=</span> <span class="st">"result = death_rate(age(I,t));"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">birth_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span> type <span class="op">=</span> <span class="st">"birth"</span>,</span>
+<span>                  intensity_code <span class="op">=</span> <span class="st">"if (I.male)</span></span>
+<span><span class="st">                                        result = 0;</span></span>
+<span><span class="st">                                    else</span></span>
+<span><span class="st">                                        result=birth_rate(age(I,t));"</span>,</span>
+<span>                  kernel_code <span class="op">=</span> <span class="st">"newI.male = CUnif(0, 1) &lt; p_male;"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,</span>
+<span>                  events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">death_event</span>,<span class="va">birth_event</span><span class="op">)</span>,</span>
+<span>                  parameters <span class="op">=</span> <span class="va">params</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">## Events:</span></span>
+<span><span class="co">## #1: individual event of type death</span></span>
+<span><span class="co">## #2: individual event of type birth</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## Individual description:</span></span>
+<span><span class="co">## names:  birth death male </span></span>
+<span><span class="co">## R types:  double double logical </span></span>
+<span><span class="co">## C types:  double double bool</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## R parameters available in C++ code:</span></span>
+<span><span class="co">## names:  p_male birth_rate death_rate </span></span>
+<span><span class="co">## R types:  double closure closure </span></span>
+<span><span class="co">## C types:  double function_x function_x</span></span></code></pre></div>
 </div>
-<div id="simulation" class="section level2" number="2.5">
-<h2 class="hasAnchor">
-<a href="#simulation" class="anchor"></a><span class="header-section-number">2.5</span> Simulation and outputs</h2>
+<div class="section level3" number="2.5">
+<h3 id="simulation">
+<span class="header-section-number">2.5</span> Simulation and outputs<a class="anchor" aria-label="anchor" href="#simulation"></a>
+</h3>
 <p>Once the model has been created, the random evolution of the population can be simulated over a period of time <span class="math inline">\([0,T]\)</span> by calling the function</p>
-<pre class="text"><code><a href="../reference/popsim.html">popsim(model,population, events_bounds, parameters, age_max=Inf, time,...)</a></code></pre>
+<pre class="text"><code><span><span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>,<span class="va">population</span>, <span class="va">events_bounds</span>, <span class="va">parameters</span>, age_max<span class="op">=</span><span class="cn">Inf</span>, <span class="va">time</span>,<span class="va">...</span><span class="op">)</span></span></code></pre>
 <p>Where:</p>
 <ul>
 <li>
@@ -815,9 +834,10 @@ and females between 15 and 40 can give birth with birth intensity 0.05. The newb
 <li>
 <code>events_bounds</code> is a named vector of <strong>bounds</strong> for the intensity or interaction function of each event.</li>
 </ul>
-<div id="events-bounds" class="section level3" number="2.5.1">
-<h3 class="hasAnchor">
-<a href="#events-bounds" class="anchor"></a><span class="header-section-number">2.5.1</span> Events bounds</h3>
+<div class="section level4" number="2.5.1">
+<h4 id="events-bounds">
+<span class="header-section-number">2.5.1</span> Events bounds<a class="anchor" aria-label="anchor" href="#events-bounds"></a>
+</h4>
 <p>Since the IBM simulation algorithm is based on an acceptance-rejection method for simulating random times (see <a href="#algo">1.1.3</a>), the user has to specify bounds for the intensity (or interaction) function of each event before simulating a random path of the population evolution. Let us consider the model with a birth and death built in the previous section.</p>
 <p>In the model example, the birth intensity of an individual of age <span class="math inline">\(a\)</span> is <span class="math inline">\(0\)</span> if he is a male, and
 <span class="math display">\[ b(a) = 0.005  \mathbf{1}_{[15,40]},\]</span>
@@ -826,25 +846,26 @@ if the individual is a female. Thus, the intensity bound for birth events is</p>
 <p>Since the death intensity function is not bounded, the user will have to specify a maximum age <span class="math inline">\(a_{max}\)</span> in <code>popsim</code> (all individuals above <span class="math inline">\(a_{max}\)</span> die automatically). Then, the bound for death events is</p>
 <p><span class="math display">\[ \bar \lambda_d = 0.008\exp(0.02 a_{max}).\]</span></p>
 <p>The events bounds are defined as a <em>named</em> R vector, with components names corresponding to the events names. In our example, the death event has been named <code>"my_death_event"</code>. No name has been specified for the birth event which thus has the default name <code>"birth"</code>. Then,</p>
-<div class="sourceCode" id="cb31"><pre class="downlit">
-<span class="va">a_max</span> <span class="op">&lt;-</span> <span class="fl">120</span> <span class="co"># maximum age</span>
-<span class="va">events_bounds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"my_death_event"</span> <span class="op">=</span> <span class="fl">0.008</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">0.02</span><span class="op">*</span><span class="va">a_max</span><span class="op">)</span>,
-                  <span class="st">"birth"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">birth_rate</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">events_bounds</span>
-<span class="co">## my_death_event          birth </span>
-<span class="co">##     0.08818541     0.05000000</span></pre></div>
-<p>Note that the <code><a href="https://rdrr.io/r/base/Extremes.html">?max</a></code> operator has been overloaded for some predefined functions of the package such as <code><a href="../reference/stepfun.html">?stepfun</a></code>.</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a_max</span> <span class="op">&lt;-</span> <span class="fl">120</span> <span class="co"># maximum age</span></span>
+<span><span class="va">events_bounds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"my_death_event"</span> <span class="op">=</span> <span class="fl">0.008</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fl">0.02</span><span class="op">*</span><span class="va">a_max</span><span class="op">)</span>,</span>
+<span>                  <span class="st">"birth"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">birth_rate</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">events_bounds</span></span>
+<span><span class="co">## my_death_event          birth </span></span>
+<span><span class="co">##     0.08818541     0.05000000</span></span></code></pre></div>
+<p>Note that the <code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">?max</a></code> operator has been overloaded for some predefined functions of the package such as <code><a href="../reference/stepfun.html">?stepfun</a></code>.</p>
 </div>
-<div id="Simulation1" class="section level3" number="2.5.2">
-<h3 class="hasAnchor">
-<a href="#Simulation1" class="anchor"></a><span class="header-section-number">2.5.2</span> Simulation without swap events</h3>
+<div class="section level4" number="2.5.2">
+<h4 id="Simulation1">
+<span class="header-section-number">2.5.2</span> Simulation without swap events<a class="anchor" aria-label="anchor" href="#Simulation1"></a>
+</h4>
 <p>Once the model and events bounds have been defined, a random trajectory of the population can be simulated by calling</p>
-<div class="sourceCode" id="cb32"><pre class="downlit">
-<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>, <span class="va">events_bounds</span>, <span class="va">params</span>,
-                  age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
-<span class="co">## Simulation on  [0, 30]</span>
-<span class="co">#str(sim_out)</span></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>, <span class="va">events_bounds</span>, <span class="va">params</span>,</span>
+<span>                  age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span><span class="co">## Simulation on  [0, 30]</span></span>
+<span><span class="co">#str(sim_out)</span></span></code></pre></div>
 <p><code>sim_out</code> is a list composed of</p>
 <ul>
 <li>A list <code>arguments</code> of the simulation inputs, including the initial population, parameters and event bounds.</li>
@@ -853,12 +874,12 @@ if the individual is a female. Thus, the intensity bound for birth events is</p>
 </ul>
 <p>When there are no swap events (individuals don’t change of characteristics), the evolution of the population over the period <span class="math inline">\([0,30]\)</span> is recorded in a single data frame <code>sim_out$population</code>.
 Each line of <code>sim_out$population</code> contains the information of an individual who lived in the population over the period <span class="math inline">\([0,30]\)</span>. This includes individuals who were initially in <code>pop</code>, as well as individuals who were born or entered the population.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">)</span>
-<span class="co">## 'data.frame':    118198 obs. of  3 variables:</span>
-<span class="co">##  $ birth: num  -90 -90 -89.9 -89.8 -89.8 ...</span>
-<span class="co">##  $ death: num  NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">##  $ male : logi  TRUE FALSE FALSE FALSE FALSE FALSE ...</span></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">)</span></span>
+<span><span class="co">## 'data.frame':    117963 obs. of  3 variables:</span></span>
+<span><span class="co">##  $ birth: num  -90 -89.9 -89.9 -89.9 -89.9 ...</span></span>
+<span><span class="co">##  $ death: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##  $ male : logi  TRUE TRUE FALSE FALSE TRUE FALSE ...</span></span></code></pre></div>
 <p>The following Table <!--\@ref(tab:logs)--> describes the elements of the vector <code>sim_out$logs</code>containing information on simulation algorithm:</p>
 <table class="table">
 <caption>Logs parameters</caption>
@@ -890,169 +911,176 @@ Each line of <code>sim_out$population</code> contains the information of an indi
 </tbody>
 </table>
 <p>For instance, the acceptance rate in the toy model is</p>
-<div class="sourceCode" id="cb34"><pre class="downlit">
-<span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">'effective_events'</span><span class="op">]</span><span class="op">/</span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">'proposed_events'</span><span class="op">]</span>
-<span class="co">## effective_events </span>
-<span class="co">##        0.2190619</span></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">'effective_events'</span><span class="op">]</span><span class="op">/</span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">'proposed_events'</span><span class="op">]</span></span>
+<span><span class="co">## effective_events </span></span>
+<span><span class="co">##        0.2177633</span></span></code></pre></div>
 <p>and the simulation time is</p>
-<div class="sourceCode" id="cb35"><pre class="downlit">
-<span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">'duration_main_algorithm'</span><span class="op">]</span>
-<span class="co">## duration_main_algorithm </span>
-<span class="co">##                0.050844</span></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">'duration_main_algorithm'</span><span class="op">]</span></span>
+<span><span class="co">## duration_main_algorithm </span></span>
+<span><span class="co">##                95215907</span></span></code></pre></div>
 <p><strong>Parameters modification and event removal</strong></p>
 <p>As explained in Section <a href="#Modelcreation">2.4</a> the structure of the compiled model allows the parameters’ values to be changed without recompiling the model. For instance, the parameter of the Gompertz death function can be modified to study the impact of an increase in mortality.
 Before running the simulation, the events bounds should be updated accordingly accordingly.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit">
-<span class="va">params</span><span class="op">$</span><span class="va">death_rate</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fl">0.02</span><span class="op">)</span> <span class="co"># New death rate</span>
-
-<span class="va">events_bounds</span><span class="op">[</span><span class="st">"my_death_event"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.01</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">0.02</span><span class="op">*</span><span class="va">a_max</span><span class="op">)</span> <span class="co"># Death event bound update</span>
-
-<span class="va">new_sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>, <span class="va">events_bounds</span>,
-                      <span class="va">params</span>, age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span> <span class="co"># Population simulation</span></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span><span class="op">$</span><span class="va">death_rate</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fl">0.02</span><span class="op">)</span> <span class="co"># New death rate</span></span>
+<span></span>
+<span><span class="va">events_bounds</span><span class="op">[</span><span class="st">"my_death_event"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.01</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fl">0.02</span><span class="op">*</span><span class="va">a_max</span><span class="op">)</span> <span class="co"># Death event bound update</span></span>
+<span></span>
+<span><span class="va">new_sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>, <span class="va">events_bounds</span>,</span>
+<span>                      <span class="va">params</span>, age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span> <span class="co"># Population simulation</span></span></code></pre></div>
 <p>An event can also be remove by setting the event bound to 0:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit">
-<span class="va">sim_out_no_birth</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>,
-    events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"birth"</span> <span class="op">=</span> <span class="fl">0</span>, <span class="st">"my_death_event"</span> <span class="op">=</span> <span class="fl">0.01</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">0.02</span><span class="op">*</span><span class="va">a_max</span><span class="op">)</span><span class="op">)</span>,
-    <span class="va">params</span>, age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
-<span class="co">## [1] "event birth is deactivated"</span>
-<span class="co">## Simulation on  [0, 30]</span></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out_no_birth</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>,</span>
+<span>    events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"birth"</span> <span class="op">=</span> <span class="fl">0</span>, <span class="st">"my_death_event"</span> <span class="op">=</span> <span class="fl">0.01</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fl">0.02</span><span class="op">*</span><span class="va">a_max</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="va">params</span>, age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span><span class="co">## [1] "event birth is deactivated"</span></span>
+<span><span class="co">## Simulation on  [0, 30]</span></span></code></pre></div>
 </div>
-<div id="outputs" class="section level3" number="2.5.3">
-<h3 class="hasAnchor">
-<a href="#outputs" class="anchor"></a><span class="header-section-number">2.5.3</span> Outputs</h3>
+<div class="section level4" number="2.5.3">
+<h4 id="outputs">
+<span class="header-section-number">2.5.3</span> Outputs<a class="anchor" aria-label="anchor" href="#outputs"></a>
+</h4>
 <p>The R data frame format for the output of the simulation allows all data manipulation functionalities of tidyverse or data.table packages to be used for analyzing the population. We also provide base functions to study the simulation outputs.</p>
 <p>For instance, the population age pyramid can computed at a give time (resp. at multiple dates) with the function <code><a href="../reference/age_pyramid.html">?age_pyramid</a></code> (resp. <code><a href="../reference/age_pyramids.html">?age_pyramids</a></code>). We refer to the other vignettes for more details on age pyramids computation and visualization.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit">
-<span class="va">pop_out</span> <span class="op">&lt;-</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>
-
-<span class="co"># Population age-pyramid at time 30:</span>
-<span class="va">pyr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">pop_out</span>, ages <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">)</span></pre></div>
-<p><img src="main_plot_30-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pop_out</span> <span class="op">&lt;-</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">population</span></span>
+<span></span>
+<span><span class="co"># Population age-pyramid at time 30:</span></span>
+<span><span class="va">pyr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">pop_out</span>, ages <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot_pyramid.html">plot_pyramid</a></span><span class="op">(</span><span class="va">pyr</span><span class="op">)</span></span></code></pre></div>
+<p><img src="main_plot_30-1.png" width="1050" style="display: block; margin: auto;"></p>
 <p>Mortality tables with compatibles with packages such as StMoMo can also be computed by with the functions <code><a href="../reference/death_table.html">?death_table</a></code> and <code><a href="../reference/exposure_table.html">?exposure_table</a></code>.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit">
-<span class="va">female_pop</span> <span class="op">&lt;-</span> <span class="va">pop_out</span><span class="op">[</span><span class="va">pop_out</span><span class="op">$</span><span class="va">male</span><span class="op">==</span><span class="cn">FALSE</span>, <span class="op">]</span>
-<span class="va">Dxt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="va">female_pop</span>, ages <span class="op">=</span> <span class="fl">85</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fl">20</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>    <span class="co"># Death table</span>
-<span class="va">Ext</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span><span class="op">(</span><span class="va">female_pop</span>, ages <span class="op">=</span> <span class="fl">85</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fl">20</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">female_pop</span> <span class="op">&lt;-</span> <span class="va">pop_out</span><span class="op">[</span><span class="va">pop_out</span><span class="op">$</span><span class="va">male</span><span class="op">==</span><span class="cn">FALSE</span>, <span class="op">]</span></span>
+<span><span class="va">Dxt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/death_table.html">death_table</a></span><span class="op">(</span><span class="va">female_pop</span>, ages <span class="op">=</span> <span class="fl">85</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fl">20</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>    <span class="co"># Death table</span></span>
+<span><span class="va">Ext</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exposure_table.html">exposure_table</a></span><span class="op">(</span><span class="va">female_pop</span>, ages <span class="op">=</span> <span class="fl">85</span><span class="op">:</span><span class="fl">90</span>, period <span class="op">=</span> <span class="fl">20</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="simple-multithreading" class="section level3" number="2.5.4">
-<h3 class="hasAnchor">
-<a href="#simple-multithreading" class="anchor"></a><span class="header-section-number">2.5.4</span> Simple multithreading</h3>
+<div class="section level4" number="2.5.4">
+<h4 id="simple-multithreading">
+<span class="header-section-number">2.5.4</span> Simple multithreading<a class="anchor" aria-label="anchor" href="#simple-multithreading"></a>
+</h4>
 <p>If there are <strong>no interactions</strong> between individuals, i.e. if there are no events with intensity of class <code>interaction</code>, then the simulation can be parallelized easily by setting the optional parameter <code>multithreading</code> (<code>FALSE</code> by default) to <code>TRUE</code>:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit">
-<span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>, <span class="va">events_bounds</span>, <span class="va">params</span>,
-                  age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span>, multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
-<pre><code>## duration_main_algorithm 
-##                0.009004</code></pre>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pop</span>, <span class="va">events_bounds</span>, <span class="va">params</span>,</span>
+<span>                  age_max <span class="op">=</span> <span class="va">a_max</span>, time <span class="op">=</span> <span class="fl">30</span>, multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## duration_main_algorithm </span></span>
+<span><span class="co">##                18101526</span></span></code></pre>
 <p>By default, the number of threads is the number of concurrent threads supported by the available hardware implementation. The number of thread can be set manually with the optional argument <code>num_threads</code> of <code><a href="../reference/popsim.html">?popsim</a></code>.</p>
 </div>
 </div>
-<div id="simulationswap" class="section level2" number="2.6">
-<h2 class="hasAnchor">
-<a href="#simulationswap" class="anchor"></a><span class="header-section-number">2.6</span> Simulation with swap events</h2>
+<div class="section level3" number="2.6">
+<h3 id="simulationswap">
+<span class="header-section-number">2.6</span> Simulation with swap events<a class="anchor" aria-label="anchor" href="#simulationswap"></a>
+</h3>
 <p>When there are swap events (individuals can change of characteristics), the dates of swap events and the changes of characteristics following each swap event should be recorded for each individual in the population, which is a memory intensive and computationally costly process.
 To maintain efficient simulations in the presence of swap events, we propose the following solution.</p>
-<div id="vector-of-times-in-popsim-" class="section level3" number="2.6.1">
-<h3 class="hasAnchor">
-<a href="#vector-of-times-in-popsim-" class="anchor"></a><span class="header-section-number">2.6.1</span> Vector of times in <code>?popsim</code>.</h3>
+<div class="section level4" number="2.6.1">
+<h4 id="vector-of-times-in-popsim-">
+<span class="header-section-number">2.6.1</span> Vector of times in <code>?popsim</code>.<a class="anchor" aria-label="anchor" href="#vector-of-times-in-popsim-"></a>
+</h4>
 <p>In the presence of swap events, the argument <code>time</code> of <code><a href="../reference/popsim.html">?popsim</a></code> should a vector of dates <span class="math inline">\((t_0,\dots, t_n)\)</span>. In this case, <code>popsim</code> returns in the object <code>population</code> a list of <span class="math inline">\(n\)</span> population data frames representing the population at time <span class="math inline">\(t_1,\dots t_n\)</span>, simulated from the initial time <span class="math inline">\(t_0\)</span>.
 For <span class="math inline">\(i=1\dots n\)</span>, the <span class="math inline">\(i\)</span>th data frame describes individuals who lived in the population during the period <span class="math inline">\([t_0,t_i]\)</span>, with their characteristics at time <span class="math inline">\(t_i\)</span>.</p>
 <p><strong>Examples</strong> A population 100 thousand individuals (or particles) is generated, all born at time 0 and divided into two subgroups. Individuals can swap from subgroup 1 (resp. 2) to subgroup 2 (resp. 1) at rate 0.1 (resp. 0.3).</p>
-<div class="sourceCode" id="cb42"><pre class="downlit">
-<span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"birth"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1e5</span><span class="op">)</span>, <span class="st">"death"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">1e5</span><span class="op">)</span>,
-                  <span class="st">"sub_grp"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1e5</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> k12 <span class="op">=</span> <span class="fl">0.1</span>, k21<span class="op">=</span><span class="fl">0.3</span><span class="op">)</span>
-<span class="co">#Only swap events occur in the population</span>
-<span class="va">swap_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"swap"</span>,
-                  intensity_code <span class="op">=</span> <span class="st">"if (I.sub_grp == 1) result = k12;
-                                    else result = k21;"</span>,
-                  kernel_code <span class="op">=</span> <span class="st">"I.sub_grp = 3 - I.sub_grp;"</span><span class="op">)</span>
-
-<span class="va">model_swap</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,
-                       events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">swap_event</span><span class="op">)</span>,
-                       parameters <span class="op">=</span> <span class="va">rates</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"birth"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1e5</span><span class="op">)</span>, <span class="st">"death"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">1e5</span><span class="op">)</span>,</span>
+<span>                  <span class="st">"sub_grp"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1e5</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> k12 <span class="op">=</span> <span class="fl">0.1</span>, k21<span class="op">=</span><span class="fl">0.3</span><span class="op">)</span></span>
+<span><span class="co">#Only swap events occur in the population</span></span>
+<span><span class="va">swap_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"swap"</span>,</span>
+<span>                  intensity_code <span class="op">=</span> <span class="st">"if (I.sub_grp == 1) result = k12;</span></span>
+<span><span class="st">                                    else result = k21;"</span>,</span>
+<span>                  kernel_code <span class="op">=</span> <span class="st">"I.sub_grp = 3 - I.sub_grp;"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model_swap</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span> <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,</span>
+<span>                       events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">swap_event</span><span class="op">)</span>,</span>
+<span>                       parameters <span class="op">=</span> <span class="va">rates</span><span class="op">)</span></span></code></pre></div>
 <p>Then, the population is simulated from <span class="math inline">\(t_0=0\)</span> to <span class="math inline">\(t_n =20\)</span>, and <code>popsim</code> returns a list of 20 data frames composed of the population at times <span class="math inline">\(t=1\dots 20\)</span>.</p>
-<div class="sourceCode" id="cb43"><pre class="downlit">
-<span class="va">time_vec</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">20</span>
-<span class="va">sim_out</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model_swap</span>, population <span class="op">=</span> <span class="va">pop</span>,
-                 events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"swap"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">rates</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                 parameters <span class="op">=</span>  <span class="va">rates</span>,
-                 time <span class="op">=</span> <span class="va">time_vec</span>,
-                 multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">time_vec</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">20</span></span>
+<span><span class="va">sim_out</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model_swap</span>, population <span class="op">=</span> <span class="va">pop</span>,</span>
+<span>                 events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"swap"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">rates</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                 parameters <span class="op">=</span>  <span class="va">rates</span>,</span>
+<span>                 time <span class="op">=</span> <span class="va">time_vec</span>,</span>
+<span>                 multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The model is an ergodic two states continuous time Markov chain with stationary distribution <span class="math inline">\((p_1,p_2)=(0,75,0.25)\)</span>. The figure below illustrates the convergence of the probability to be in subgroup 1 to <span class="math inline">\(p_1\)</span></p>
-<div class="sourceCode" id="cb44"><pre class="downlit">
-<span class="va">pop_size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>
-<span class="co"># Mean number of individuals in subgroup 1 at each time:</span>
-<span class="va">p_1_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, <span class="kw">function</span><span class="op">(</span><span class="va">pop_df</span><span class="op">)</span><span class="op">{</span>
-                      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">pop_df</span>, <span class="va">sub_grp</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">pop_size</span><span class="op">)</span>
-                <span class="op">}</span><span class="op">)</span></pre></div>
-<p><img src="main_prob_subgroup1-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pop_size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span></span>
+<span><span class="co"># Mean number of individuals in subgroup 1 at each time:</span></span>
+<span><span class="va">p_1_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, <span class="kw">function</span><span class="op">(</span><span class="va">pop_df</span><span class="op">)</span><span class="op">{</span></span>
+<span>                      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">pop_df</span>, <span class="va">sub_grp</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">pop_size</span><span class="op">)</span></span>
+<span>                <span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<p><img src="main_prob_subgroup1-1.png" width="1050" style="display: block; margin: auto;"></p>
 <!--```{remark}-->
 <p>This example shows that IBMPopSIm can also be used to simulated continuous time Markov Chain with finite state space.
 <!--```--></p>
 </div>
-<div id="individual-life-courses" class="section level3" number="2.6.2">
-<h3 class="hasAnchor">
-<a href="#individual-life-courses" class="anchor"></a><span class="header-section-number">2.6.2</span> Individual life courses</h3>
+<div class="section level4" number="2.6.2">
+<h4 id="individual-life-courses">
+<span class="header-section-number">2.6.2</span> Individual life courses<a class="anchor" aria-label="anchor" href="#individual-life-courses"></a>
+</h4>
 <p>It is possible to isolate the individuals’ life course, by setting the optional argument <code>with_id</code> of <code><a href="../reference/mk_model.html">?mk_model</a></code> to <code>TRUE</code>. In this case, a new characteristic called <code>id</code> is automatically added to the population (if not already defined), identifying each individual with a unique integer.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit">
-<span class="va">model_swap_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span>  <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,
-                          events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">swap_event</span><span class="op">)</span>,
-                          parameters <span class="op">=</span> <span class="va">rates</span>,
-                          with_id <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">## [1] "add 'id' as individual attributes"</span></pre></div>
-<div class="sourceCode" id="cb46"><pre class="downlit">
-<span class="va">sim_out_id</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model_swap_id</span>,
-                    population <span class="op">=</span> <span class="va">pop</span>,
-                    parameters <span class="op">=</span> <span class="va">rates</span>,
-                    events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"swap"</span><span class="op">=</span><span class="fl">0.3</span><span class="op">)</span>,
-                    time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">5</span>, by<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,
-                    multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">## [1] "Add 'id' attributes to the population."</span>
-<span class="co">## Simulation on  [0, 1]  [1, 2]  [2, 3]  [3, 4]  [4, 5]</span></pre></div>
-<div class="sourceCode" id="cb47"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sim_out_id</span><span class="op">$</span><span class="va">population</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
-<span class="co">##   id birth death sub_grp</span>
-<span class="co">## 1  1     0    NA       2</span>
-<span class="co">## 2  9     0    NA       2</span>
-<span class="co">## 3 17     0    NA       2</span>
-<span class="co">## 4 25     0    NA       1</span>
-<span class="co">## 5 33     0    NA       1</span>
-<span class="co">## 6 41     0    NA       2</span></pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model_swap_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span>characteristics <span class="op">=</span>  <span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,</span>
+<span>                          events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">swap_event</span><span class="op">)</span>,</span>
+<span>                          parameters <span class="op">=</span> <span class="va">rates</span>,</span>
+<span>                          with_id <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## [1] "add 'id' as individual attributes"</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_out_id</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model_swap_id</span>,</span>
+<span>                    population <span class="op">=</span> <span class="va">pop</span>,</span>
+<span>                    parameters <span class="op">=</span> <span class="va">rates</span>,</span>
+<span>                    events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"swap"</span><span class="op">=</span><span class="fl">0.3</span><span class="op">)</span>,</span>
+<span>                    time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">5</span>, by<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>                    multithreading <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## [1] "Add 'id' attributes to the population."</span></span>
+<span><span class="co">## Simulation on  [0, 1]  [1, 2]  [2, 3]  [3, 4]  [4, 5]</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim_out_id</span><span class="op">$</span><span class="va">population</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">##   id birth death sub_grp</span></span>
+<span><span class="co">## 1  1     0    NA       1</span></span>
+<span><span class="co">## 2  9     0    NA       2</span></span>
+<span><span class="co">## 3 17     0    NA       1</span></span>
+<span><span class="co">## 4 25     0    NA       2</span></span>
+<span><span class="co">## 5 33     0    NA       2</span></span>
+<span><span class="co">## 6 41     0    NA       1</span></span></code></pre></div>
 <p>These data frames can be merged into a single data frame summarizing the life course of each individual, by calling the function <code>merge_pop_withid</code>.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit">
-<span class="va">pop_list</span> <span class="op">&lt;-</span> <span class="va">sim_out_id</span><span class="op">$</span><span class="va">population</span>
-<span class="va">pop_merge</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/merge_pop_withid.html">merge_pop_withid</a></span><span class="op">(</span><span class="va">pop_list</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pop_merge</span><span class="op">)</span>
-<span class="co">##   id birth death sub_grp_1 sub_grp_2 sub_grp_3 sub_grp_4 sub_grp_5</span>
-<span class="co">## 1  1     0    NA         2         2         2         2         1</span>
-<span class="co">## 2  9     0    NA         2         2         2         1         2</span>
-<span class="co">## 3 17     0    NA         2         2         2         2         2</span>
-<span class="co">## 4 25     0    NA         1         1         1         1         1</span>
-<span class="co">## 5 33     0    NA         1         1         1         1         1</span>
-<span class="co">## 6 41     0    NA         2         2         2         2         2</span></pre></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pop_list</span> <span class="op">&lt;-</span> <span class="va">sim_out_id</span><span class="op">$</span><span class="va">population</span></span>
+<span><span class="va">pop_merge</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/merge_pop_withid.html">merge_pop_withid</a></span><span class="op">(</span><span class="va">pop_list</span>, chars_tracked<span class="op">=</span><span class="st">'sub_grp'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pop_merge</span><span class="op">)</span></span>
+<span><span class="co">##      id birth death sub_grp_1 sub_grp_2 sub_grp_3 sub_grp_4 sub_grp_5</span></span>
+<span><span class="co">## 1     1     0    NA         1         1         1         1         1</span></span>
+<span><span class="co">## 2 32769     0    NA         2         1         2         2         2</span></span>
+<span><span class="co">## 3 65537     0    NA         1         1         1         2         2</span></span>
+<span><span class="co">## 4 98305     0    NA         2         1         1         2         1</span></span>
+<span><span class="co">## 5 31074     0    NA         2         2         2         1         1</span></span>
+<span><span class="co">## 6 63842     0    NA         1         1         1         1         1</span></span></code></pre></div>
 <p>Each line of <code>pop_merge</code> corresponds to the life course of one individual. However, the population is only represented at time <span class="math inline">\(t=0,1..,5\)</span>, and this data frame doesn’t account for exact swap event times or multiple swap events that occurred between between two time steps.</p>
 </div>
 </div>
 </div>
-<div id="cppessentials" class="section level1" number="3">
-<h1 class="hasAnchor">
-<a href="#cppessentials" class="anchor"></a><span class="header-section-number">3</span> C++ essentials</h1>
+<div class="section level2" number="3">
+<h2 id="cppessentials">
+<span class="header-section-number">3</span> C++ essentials<a class="anchor" aria-label="anchor" href="#cppessentials"></a>
+</h2>
 <p>The arguments <code>intensity_code</code>, <code>interaction_code</code> and <code>kernel_code</code> of the events functions must contain some C++ code given by the user. You don’t need to be a C++ guru to write the few instructions needed. These functions should use very little C++ syntax. They are essentially arithmetic or logical operations, tests and calls to predefined functions, which we give an overview below.</p>
 <p>For code efficiency, you should not allocate memory in these functions (no <code>new</code>) or use type containers (<code>std::vector</code>, <code>std::list</code>, …). If you think you need to allocate memory, consider as parameter an R vector that will be mapped via <code>arma::vector</code> (see below), or declare the variable as <code>static</code>.
 Also, it should not be necessary to make a loop. Keep in mind that these functions should be fast.</p>
 <p>There are no C++ language restrictions so you can use all the functions of the standard C++11 library. However we detail in this section some functions that should be sufficient. For more details on C++ and Rcpp we recommend:</p>
 <ul>
-<li><a href="https://www.cplusplus.com/doc/tutorial/">C++ tutorial</a></li>
+<li><a href="https://www.cplusplus.com/doc/tutorial/" class="external-link">C++ tutorial</a></li>
 <li>
-<a href="http://dirk.eddelbuettel.com/code/rcpp.html">Rcpp</a> and <a href="http://dirk.eddelbuettel.com/code/rcpp.armadillo.html">RcppArmadillo</a>
+<a href="http://dirk.eddelbuettel.com/code/rcpp.html" class="external-link">Rcpp</a> and <a href="http://dirk.eddelbuettel.com/code/rcpp.armadillo.html" class="external-link">RcppArmadillo</a>
 </li>
-<li><a href="https://teuder.github.io/rcpp4everyone_en/">Rcpp for everyone</a></li>
+<li><a href="https://teuder.github.io/rcpp4everyone_en/" class="external-link">Rcpp for everyone</a></li>
 </ul>
-<div id="c-syntax" class="section level2" number="3.1">
-<h2 class="hasAnchor">
-<a href="#c-syntax" class="anchor"></a><span class="header-section-number">3.1</span> C++ syntax</h2>
+<div class="section level3" number="3.1">
+<h3 id="c-syntax">
+<span class="header-section-number">3.1</span> C++ syntax<a class="anchor" aria-label="anchor" href="#c-syntax"></a>
+</h3>
 <ul>
 <li>Each statement must be ended by a semicolon.</li>
 <li>Single-line comments start with two forward slashes <code>//</code>.</li>
@@ -1081,9 +1109,9 @@ bool myBoolean = true;       // Boolean (true or false)</code></pre>
 </li>
 </ul>
 </li>
-<li>The logical operators are: <code><a href="https://rdrr.io/r/base/Logic.html">!</a></code>, <code><a href="https://rdrr.io/r/base/Logic.html">&amp;&amp;</a></code>, <code><a href="https://rdrr.io/r/base/Logic.html">||</a></code>
+<li>The logical operators are: <code>!</code>, <code>&amp;&amp;</code>, <code>||</code>
 </li>
-<li>The arithmetic operators are: <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code>, <code>%</code>
+<li>The arithmetic operators are: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>
 </li>
 <li>Compound assignment: <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code>
 </li>
@@ -1120,7 +1148,7 @@ The conditional operator evaluates an expression, returning one value if that ex
   default:
      default-group-of-statements
 }</code></pre>
-<p>It works in the following way: switch evaluates expression and checks if it is equivalent to <code>constant1</code>; if it is, it executes <code>group-of-statements-1</code> until it finds the <code>break</code> statement. When it finds this break statement, the program jumps to the end of the entire switch statement (the closing brace).</p>
+<p>It works in the following way: switch evaluates expression and checks if it is equivalent to <code>constant1</code>; if it is, it executes <code>group-of-statements-1</code> until it finds the <code><a href="https://rdrr.io/r/base/Control.html" class="external-link">break</a></code> statement. When it finds this break statement, the program jumps to the end of the entire switch statement (the closing brace).</p>
 <ul>
 <li>When you know exactly how many times you want to loop through a block of code, use the <code>for</code> loop.</li>
 </ul>
@@ -1133,35 +1161,37 @@ The conditional operator evaluates an expression, returning one value if that ex
 <pre><code>while (condition) {
   // code block to be executed
 }</code></pre>
-<p>For more details we recommend a few pages of <a href="https://www.cplusplus.com/">www.cplusplus.com</a> about:</p>
+<p>For more details we recommend a few pages of <a href="https://www.cplusplus.com/" class="external-link">www.cplusplus.com</a> about:</p>
 <ul>
-<li><a href="https://www.cplusplus.com/doc/tutorial/variables/">Variables</a></li>
-<li><a href="https://www.cplusplus.com/doc/tutorial/operators/">Operators</a></li>
-<li><a href="https://www.cplusplus.com/doc/tutorial/control/">Statements</a></li>
+<li><a href="https://www.cplusplus.com/doc/tutorial/variables/" class="external-link">Variables</a></li>
+<li><a href="https://www.cplusplus.com/doc/tutorial/operators/" class="external-link">Operators</a></li>
+<li><a href="https://www.cplusplus.com/doc/tutorial/control/" class="external-link">Statements</a></li>
 </ul>
 </div>
-<div id="usual-numeric-functions" class="section level2" number="3.2">
-<h2 class="hasAnchor">
-<a href="#usual-numeric-functions" class="anchor"></a><span class="header-section-number">3.2</span> Usual numeric functions</h2>
+<div class="section level3" number="3.2">
+<h3 id="usual-numeric-functions">
+<span class="header-section-number">3.2</span> Usual numeric functions<a class="anchor" aria-label="anchor" href="#usual-numeric-functions"></a>
+</h3>
 <p>The most popular functions of the <code>cmath</code> library, which is included in the package, are the following:</p>
 <ul>
-<li>Exponential and logarithm functions: <code><a href="https://rdrr.io/r/base/Log.html">exp(x)</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log(x)</a></code> (natural logarithm)</li>
-<li>Trigonometric functions: <code><a href="https://rdrr.io/r/base/Trig.html">cos(x)</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html">sin(x)</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html">tan(x)</a></code>
+<li>Exponential and logarithm functions: <code>exp(x)</code>, <code>log(x)</code> (natural logarithm)</li>
+<li>Trigonometric functions: <code>cos(x)</code>, <code>sin(x)</code>, <code>tan(x)</code>
 </li>
-<li>Power functions: <code>pow(x, a)</code> meaning <span class="math inline">\(x^a\)</span> and <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(x)</a></code> meaning <span class="math inline">\(\sqrt{x}\)</span>
+<li>Power functions: <code>pow(x, a)</code> meaning <span class="math inline">\(x^a\)</span> and <code>sqrt(x)</code> meaning <span class="math inline">\(\sqrt{x}\)</span>
 </li>
-<li>Absolute value: <code><a href="https://rdrr.io/r/base/MathFun.html">abs(x)</a></code>
+<li>Absolute value: <code>abs(x)</code>
 </li>
-<li>Truncation functions: <code>ceil(x)</code> meaning <span class="math inline">\(\lceil x \rceil\)</span> and <code><a href="https://rdrr.io/r/base/Round.html">floor(x)</a></code> meaning <span class="math inline">\(\lfloor x \rfloor\)</span>
+<li>Truncation functions: <code>ceil(x)</code> meaning <span class="math inline">\(\lceil x \rceil\)</span> and <code>floor(x)</code> meaning <span class="math inline">\(\lfloor x \rfloor\)</span>
 </li>
-<li>Bivariate functions: <code><a href="https://rdrr.io/r/base/Extremes.html">max(x, y)</a></code> and <code><a href="https://rdrr.io/r/base/Extremes.html">min(x,y)</a></code>
+<li>Bivariate functions: <code>max(x, y)</code> and <code>min(x,y)</code>
 </li>
 </ul>
-<p>Note that these functions are not vectorial, the arguments <code>x</code> and <code>y</code> must be scalar. If the user wants to call some other functions of <code>cmath</code> not listed in the table, this is possible by adding the prefix <code>std::</code> to the name of the function (scope resolution operator <code><a href="https://rdrr.io/r/base/ns-dblcolon.html">::</a></code> to access to functions declared in namespace standard <code>std</code>).</p>
+<p>Note that these functions are not vectorial, the arguments <code>x</code> and <code>y</code> must be scalar. If the user wants to call some other functions of <code>cmath</code> not listed in the table, this is possible by adding the prefix <code>std::</code> to the name of the function (scope resolution operator <code>::</code> to access to functions declared in namespace standard <code>std</code>).</p>
 </div>
-<div id="cppcharacteristics" class="section level2" number="3.3">
-<h2 class="hasAnchor">
-<a href="#cppcharacteristics" class="anchor"></a><span class="header-section-number">3.3</span> Individuals characteristics and model parameters: link between R and C++</h2>
+<div class="section level3" number="3.3">
+<h3 id="cppcharacteristics">
+<span class="header-section-number">3.3</span> Individuals characteristics and model parameters: link between R and C++<a class="anchor" aria-label="anchor" href="#cppcharacteristics"></a>
+</h3>
 <p>To facilitate the model creation, the individuals’ characteristics and a list model parameters can be declared in the R environment and used in the C++ code.</p>
 <p>The data shared between the R environment and the C++ code are:</p>
 <ul>
@@ -1174,9 +1204,10 @@ The conditional operator evaluates an expression, returning one value if that ex
 </ul>
 </li>
 </ul>
-<div id="atomic-types-characteristics-and-parameters" class="section level3" number="3.3.1">
-<h3 class="hasAnchor">
-<a href="#atomic-types-characteristics-and-parameters" class="anchor"></a><span class="header-section-number">3.3.1</span> Atomic types (characteristics and parameters)</h3>
+<div class="section level4" number="3.3.1">
+<h4 id="atomic-types-characteristics-and-parameters">
+<span class="header-section-number">3.3.1</span> Atomic types (characteristics and parameters)<a class="anchor" aria-label="anchor" href="#atomic-types-characteristics-and-parameters"></a>
+</h4>
 <p>Here is the conversion table used between the atomic types of R and C++.</p>
 <center>
 <table class="table">
@@ -1206,40 +1237,41 @@ The conditional operator evaluates an expression, returning one value if that ex
 </center>
 <p><strong>Individuals characteristics</strong></p>
 <p>The characteristics of an individual are defined by a named character vector containing the name of the characteristic and the associated C++ type. The function <code><a href="../reference/get_characteristics.html">?get_characteristics</a></code> provides a way to extract the characteristics from a population data frame.</p>
-<div class="sourceCode" id="cb55"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DaphneGiorgi/IBMPopSim">IBMPopSim</a></span><span class="op">)</span>
-<span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu">IBMPopSim</span><span class="fu">::</span><span class="va"><a href="../reference/EW_popIMD_14.html">EW_popIMD_14</a></span><span class="op">$</span><span class="va">sample</span>
-<span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>
-<span class="co">##   male    IMD </span>
-<span class="co">## "bool"  "int"</span></pre></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DaphneGiorgi/IBMPopSim" class="external-link">IBMPopSim</a></span><span class="op">)</span></span>
+<span><span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu">IBMPopSim</span><span class="fu">::</span><span class="va"><a href="../reference/EW_popIMD_14.html">EW_popIMD_14</a></span><span class="op">$</span><span class="va">sample</span></span>
+<span><span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span></span>
+<span><span class="co">##   male    IMD </span></span>
+<span><span class="co">## "bool"  "int"</span></span></code></pre></div>
 <p>The requires <code>birth</code> and <code>death</code> characteristics are of type <code>double</code>.</p>
 <p><strong>Atomic model parameters</strong></p>
-<p>The model parameters are given by a named list of R objects. We recall that the type of an R object can be determined by calling the <code><a href="https://rdrr.io/r/base/typeof.html">?typeof</a></code> function. Atomic objects declared as model parameters can be directly used in the C++ code.<br>
+<p>The model parameters are given by a named list of R objects. We recall that the type of an R object can be determined by calling the <code><a href="https://rdrr.io/r/base/typeof.html" class="external-link">?typeof</a></code> function. Atomic objects declared as model parameters can be directly used in the C++ code.<br>
 In the example below, the variable <code>code</code> contains simple C++ instructions depending on the parameters defined in <code>params</code>. The <code>summary</code> of the model <code>mod</code> gives useful information on the types of characteristics and parameters used in C++ code.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit">
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"lambda"</span> <span class="op">=</span> <span class="fl">0.02</span>, <span class="st">"alpha"</span> <span class="op">=</span> <span class="fl">0.4</span>, <span class="st">"mu"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="va">code</span> <span class="op">&lt;-</span> <span class="st">"result = lambda + alpha * (age(I, t) + mu);"</span>
-<span class="va">event_birth</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span><span class="st">"birth"</span>, intensity_code <span class="op">=</span> <span class="va">code</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"birth"</span> <span class="op">=</span> <span class="va">event_birth</span><span class="op">)</span>, 
-                parameters <span class="op">=</span> <span class="va">params</span>, with_compilation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
-<span class="co">## Events:</span>
-<span class="co">## #1: individual event of type birth</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## Individual description:</span>
-<span class="co">## names:  birth death male IMD </span>
-<span class="co">## R types:  double double logical integer </span>
-<span class="co">## C types:  double double bool int</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## R parameters available in C++ code:</span>
-<span class="co">## names:  lambda alpha mu </span>
-<span class="co">## R types:  double double integer </span>
-<span class="co">## C types:  double double int</span></pre></div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"lambda"</span> <span class="op">=</span> <span class="fl">0.02</span>, <span class="st">"alpha"</span> <span class="op">=</span> <span class="fl">0.4</span>, <span class="st">"mu"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">code</span> <span class="op">&lt;-</span> <span class="st">"result = lambda + alpha * (age(I, t) + mu);"</span></span>
+<span><span class="va">event_birth</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span><span class="st">"birth"</span>, intensity_code <span class="op">=</span> <span class="va">code</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"birth"</span> <span class="op">=</span> <span class="va">event_birth</span><span class="op">)</span>, </span>
+<span>                parameters <span class="op">=</span> <span class="va">params</span>, with_compilation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="co">## Events:</span></span>
+<span><span class="co">## #1: individual event of type birth</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## Individual description:</span></span>
+<span><span class="co">## names:  birth death male IMD </span></span>
+<span><span class="co">## R types:  double double logical integer </span></span>
+<span><span class="co">## C types:  double double bool int</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## R parameters available in C++ code:</span></span>
+<span><span class="co">## names:  lambda alpha mu </span></span>
+<span><span class="co">## R types:  double double integer </span></span>
+<span><span class="co">## C types:  double double int</span></span></code></pre></div>
 </div>
-<div id="cpparmadillo" class="section level3" number="3.3.2">
-<h3 class="hasAnchor">
-<a href="#cpparmadillo" class="anchor"></a><span class="header-section-number">3.3.2</span> Vectors and matrices (model parameters)</h3>
-<p>Two of the possible model parameters types given in the argument <code>parameters</code> of the <code><a href="../reference/mk_model.html">?mk_model</a></code> function are R vectors and R matrices. We call R vector a <code>numeric</code> of length at least 2. These types are converted, using the <a href="http://dirk.eddelbuettel.com/code/rcpp.armadillo.html">RcppArmadillo library</a>, in C++ <a href="http://arma.sourceforge.net/">Armadillo</a> types, <code>arma::vec</code> and <code>arma::matrix</code> respectively.</p>
+<div class="section level4" number="3.3.2">
+<h4 id="cpparmadillo">
+<span class="header-section-number">3.3.2</span> Vectors and matrices (model parameters)<a class="anchor" aria-label="anchor" href="#cpparmadillo"></a>
+</h4>
+<p>Two of the possible model parameters types given in the argument <code>parameters</code> of the <code><a href="../reference/mk_model.html">?mk_model</a></code> function are R vectors and R matrices. We call R vector a <code>numeric</code> of length at least 2. These types are converted, using the <a href="http://dirk.eddelbuettel.com/code/rcpp.armadillo.html" class="external-link">RcppArmadillo library</a>, in C++ <a href="http://arma.sourceforge.net/" class="external-link">Armadillo</a> types, <code>arma::vec</code> and <code>arma::matrix</code> respectively.</p>
 <p>The classes <code>arma::vec</code> and <code>arma::matrix</code> are rich and easy-to-use implementations of one-dimensional and two-dimensional arrays. To access to individual elements of an array, use the operator <code>()</code> (or <code>[]</code> in dimension 1).</p>
 <ul>
 <li>
@@ -1248,7 +1280,7 @@ In the example below, the variable <code>code</code> contains simple C++ instruc
 <code>(i,j)</code> for <code>arma::matrix</code>, access the element stored at the <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column.</li>
 </ul>
 <p><strong>Warning:</strong> The first element of the array is indexed by subscript of 0 (in each dimension).</p>
-<p>Another standard way (in C++) to access elements is to used iterators. An iterator is an object that, pointing to some element in a range of elements, has the ability to iterate through the elements of that range using a set of operators (see <a href="https://teuder.github.io/rcpp4everyone_en/290_iterator.html">more details on iterators</a>).</p>
+<p>Another standard way (in C++) to access elements is to used iterators. An iterator is an object that, pointing to some element in a range of elements, has the ability to iterate through the elements of that range using a set of operators (see <a href="https://teuder.github.io/rcpp4everyone_en/290_iterator.html" class="external-link">more details on iterators</a>).</p>
 <p>Let <code>v</code> be a an object of type <code>arma::vec</code> and A be a an object of type <code>arma::matrix</code>. Here we show how to get the begin and the end iterators of these objects.</p>
 <ul>
 <li>
@@ -1271,13 +1303,15 @@ In the example below, the variable <code>code</code> contains simple C++ instruc
 </li>
 </ul>
 </div>
-<div id="cppIBMfunctions" class="section level3" number="3.3.3">
-<h3 class="hasAnchor">
-<a href="#cppIBMfunctions" class="anchor"></a><span class="header-section-number">3.3.3</span> Predefined functions (model parameters)</h3>
+<div class="section level4" number="3.3.3">
+<h4 id="cppIBMfunctions">
+<span class="header-section-number">3.3.3</span> Predefined functions (model parameters)<a class="anchor" aria-label="anchor" href="#cppIBMfunctions"></a>
+</h4>
 <p>To facilitate the implementation of intensity functions and kernel code, R functions have been predefined in <code>IBMPopSim</code>, which can be defined as model parameters and then called in the C++ code. The goal is to make their use as transparent as possible.</p>
-<div id="real-functions-of-one-variable" class="section level4" number="3.3.3.1">
-<h4 class="hasAnchor">
-<a href="#real-functions-of-one-variable" class="anchor"></a><span class="header-section-number">3.3.3.1</span> Real functions of one variable</h4>
+<div class="section level5" number="3.3.3.1">
+<h5 id="real-functions-of-one-variable">
+<span class="header-section-number">3.3.3.1</span> Real functions of one variable<a class="anchor" aria-label="anchor" href="#real-functions-of-one-variable"></a>
+</h5>
 <p>Here is a list of such functions that can be defined as a R object and called from R and C++.</p>
 <ul>
 <li>
@@ -1297,63 +1331,66 @@ Once the model is created, these predefined functions are transformed into C++ f
 <ol style="list-style-type: decimal">
 <li>We define <code>dr</code> a <code>stepfun</code> depending on some values in <code>EW_pop_14$rates</code>. Note that this function applies to an age <code>a</code>.</li>
 </ol>
-<div class="sourceCode" id="cb57"><pre class="downlit">
-<span class="va">dr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">rates</span>,
-           <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">death_male</span><span class="op">[</span>,<span class="st">"age"</span><span class="op">]</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">death_male</span><span class="op">[</span>,<span class="st">"value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dr</span>, xlab<span class="op">=</span><span class="st">"age"</span>, ylab<span class="op">=</span><span class="st">"dr"</span>, main<span class="op">=</span><span class="st">"Example of step function"</span><span class="op">)</span></pre></div>
-<p><img src="plot_stepfun-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">EW_pop_14</span><span class="op">$</span><span class="va">rates</span>,</span>
+<span>           <span class="fu"><a href="../reference/stepfun.html">stepfun</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">death_male</span><span class="op">[</span>,<span class="st">"age"</span><span class="op">]</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">death_male</span><span class="op">[</span>,<span class="st">"value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dr</span>, xlab<span class="op">=</span><span class="st">"age"</span>, ylab<span class="op">=</span><span class="st">"dr"</span>, main<span class="op">=</span><span class="st">"Example of step function"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="plot_stepfun-1.png" width="1050" style="display: block; margin: auto;"></p>
 <p>We can also initialize a piecewise real function <code>f</code> defined by the function <code>dr</code> before age 80, and by a Gompertz-Makeham intensity function for ages after 80.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit">
-<span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_x.html">piecewise_x</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">dr</span>, <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.00006</span>, <span class="fl">0.085</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">110</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">"age"</span>, ylab<span class="op">=</span><span class="st">"f"</span>, main<span class="op">=</span><span class="st">"Example of piecewise function"</span><span class="op">)</span></pre></div>
-<p><img src="plot_piecewise-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/piecewise_x.html">piecewise_x</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">dr</span>, <span class="fu"><a href="../reference/gompertz.html">gompertz</a></span><span class="op">(</span><span class="fl">0.00006</span>, <span class="fl">0.085</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">110</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">f</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">"age"</span>, ylab<span class="op">=</span><span class="st">"f"</span>, main<span class="op">=</span><span class="st">"Example of piecewise function"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="plot_piecewise-1.png" width="1050" style="display: block; margin: auto;"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Once a function has been created and defined as model parameter, a model depending on the function can be defined. For example we use in the model below the <code>stepfun</code> <code>dr</code> as a model parameter named <code>rate</code>. The function is used to defined the intensity of death events in the model.
 s</li>
 </ol>
-<div class="sourceCode" id="cb59"><pre class="downlit">
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"rate"</span> <span class="op">=</span> <span class="va">dr</span><span class="op">)</span>
-<span class="va">event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span><span class="st">"death"</span>, intensity_code <span class="op">=</span> <span class="st">"result = rate(age(I, t));"</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"death"</span> <span class="op">=</span> <span class="va">event</span><span class="op">)</span>, 
-                parameters <span class="op">=</span> <span class="va">params</span>, with_compilation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
-<span class="co">## Events:</span>
-<span class="co">## #1: individual event of type death</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## Individual description:</span>
-<span class="co">## names:  birth death male IMD </span>
-<span class="co">## R types:  double double logical integer </span>
-<span class="co">## C types:  double double bool int</span>
-<span class="co">## --------------------------------------- </span>
-<span class="co">## R parameters available in C++ code:</span>
-<span class="co">## names:  rate </span>
-<span class="co">## R types:  closure </span>
-<span class="co">## C types:  function_x</span></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"rate"</span> <span class="op">=</span> <span class="va">dr</span><span class="op">)</span></span>
+<span><span class="va">event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_event_individual.html">mk_event_individual</a></span><span class="op">(</span><span class="st">"death"</span>, intensity_code <span class="op">=</span> <span class="st">"result = rate(age(I, t));"</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mk_model.html">mk_model</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_characteristics.html">get_characteristics</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"death"</span> <span class="op">=</span> <span class="va">event</span><span class="op">)</span>, </span>
+<span>                parameters <span class="op">=</span> <span class="va">params</span>, with_compilation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="co">## Events:</span></span>
+<span><span class="co">## #1: individual event of type death</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## Individual description:</span></span>
+<span><span class="co">## names:  birth death male IMD </span></span>
+<span><span class="co">## R types:  double double logical integer </span></span>
+<span><span class="co">## C types:  double double bool int</span></span>
+<span><span class="co">## --------------------------------------- </span></span>
+<span><span class="co">## R parameters available in C++ code:</span></span>
+<span><span class="co">## names:  rate </span></span>
+<span><span class="co">## R types:  closure </span></span>
+<span><span class="co">## C types:  function_x</span></span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>After compilation, the parameter <code>rate</code> can actually be replaced by any function of type <code>function_x</code>. For example you can call</li>
 </ol>
-<pre><code><a href="../reference/popsim.html">popsim(mod, pop, params = list("rate" = dr), age_max = 120, 
-       events_bounds = c("death" = dr(age_max)), time = 10)</a></code></pre>
+<pre><code><span><span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">pop</span>, params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"rate"</span> <span class="op">=</span> <span class="va">dr</span><span class="op">)</span>, age_max <span class="op">=</span> <span class="fl">120</span>, </span>
+<span>       events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"death"</span> <span class="op">=</span> <span class="fu">dr</span><span class="op">(</span><span class="va">age_max</span><span class="op">)</span><span class="op">)</span>, time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre>
 <p>as well as</p>
-<pre><code><a href="../reference/popsim.html">popsim(mod, pop, params = list("rate" = f), age_max = 120, 
-       events_bounds = c("death" = f(age_max)), time = 10)</a></code></pre>
+<pre><code><span><span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">pop</span>, params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"rate"</span> <span class="op">=</span> <span class="va">f</span><span class="op">)</span>, age_max <span class="op">=</span> <span class="fl">120</span>, </span>
+<span>       events_bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"death"</span> <span class="op">=</span> <span class="fu">f</span><span class="op">(</span><span class="va">age_max</span><span class="op">)</span><span class="op">)</span>, time <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre>
 </div>
-<div id="piecewise-real-functions-of-two-variables" class="section level4" number="3.3.3.2">
-<h4 class="hasAnchor">
-<a href="#piecewise-real-functions-of-two-variables" class="anchor"></a><span class="header-section-number">3.3.3.2</span> Piecewise real functions of two variables</h4>
+<div class="section level5" number="3.3.3.2">
+<h5 id="piecewise-real-functions-of-two-variables">
+<span class="header-section-number">3.3.3.2</span> Piecewise real functions of two variables<a class="anchor" aria-label="anchor" href="#piecewise-real-functions-of-two-variables"></a>
+</h5>
 <p>In the C++ code these R functions declared with <code><a href="../reference/piecewise_xy.html">?piecewise_xy</a></code> are identified as <code>function_xy</code> functions. See <code><a href="../reference/piecewise_xy.html">?piecewise_xy</a></code> for mathematical definition. This function allows to easily define a step function that depend on age and time.</p>
 </div>
-<div id="list-of-functions" class="section level4" number="3.3.3.3">
-<h4 class="hasAnchor">
-<a href="#list-of-functions" class="anchor"></a><span class="header-section-number">3.3.3.3</span> List of functions</h4>
+<div class="section level5" number="3.3.3.3">
+<h5 id="list-of-functions">
+<span class="header-section-number">3.3.3.3</span> List of functions<a class="anchor" aria-label="anchor" href="#list-of-functions"></a>
+</h5>
 <p>As parameter you can use a list of functions. All R functions in the list must be of the same C++ type: either <code>function_x</code> or <code>function_xy</code>. In C++ code the list of functions is replaced by a <code>std::vector</code> of <code>function_x</code> or <code>function_xy</code> (with first element indexed by 0).</p>
 </div>
 </div>
 </div>
-<div id="randomvar" class="section level2" number="3.4">
-<h2 class="hasAnchor">
-<a href="#randomvar" class="anchor"></a><span class="header-section-number">3.4</span> Random variables</h2>
+<div class="section level3" number="3.4">
+<h3 id="randomvar">
+<span class="header-section-number">3.4</span> Random variables<a class="anchor" aria-label="anchor" href="#randomvar"></a>
+</h3>
 <p>We use the following notations to describe the available C++ random distributions, which can be used in the C++ intensity and kernel codes.</p>
 <ul>
 <li><p><span class="math inline">\(\mathcal{U}(a,b)\)</span> : Uniform distribution on <span class="math inline">\([a, b]\)</span> with <span class="math inline">\(a &lt; b\)</span></p></li>
@@ -1367,64 +1404,69 @@ s</li>
 <li><p><span class="math inline">\(\mathcal{B}(n, p)\)</span>: Binomial distribution <span class="math inline">\(n \ge 1\)</span>, <span class="math inline">\(p \in (0,1)\)</span></p></li>
 <li><p><span class="math inline">\(\mathcal{D}_n\)</span> : Discrete distribution with values in <span class="math inline">\(\{ 0, \dots, n-1 \}\)</span> and with probabilities <span class="math inline">\(\{p_0, \dots, p_{n-1}\}\)</span>.</p></li>
 </ul>
-<p>In the table below we show how to call them, which means how to make independent realizations of these random variables, and we give the reference to the C++ corresponding function of the <a href="http://www.cplusplus.com/reference/random/">random library</a> hidden in this call.</p>
+<p>In the table below we show how to call them, which means how to make independent realizations of these random variables, and we give the reference to the C++ corresponding function of the <a href="http://www.cplusplus.com/reference/random/" class="external-link">random library</a> hidden in this call.</p>
 <center>
 <table class="table">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Function call</th>
 <th align="left">Meaning</th>
-<th align="left">C++ <a href="http://www.cplusplus.com/reference/random/"><code>random</code></a> internal function</th>
+<th align="left">C++ <a href="http://www.cplusplus.com/reference/random/" class="external-link"><code>random</code></a> internal function</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">CUnif(<span class="math inline">\(a=0, b=1\)</span>)</td>
 <td align="left"><span class="math inline">\(\mathcal{U}(a,b)\)</span></td>
-<td align="left"><a href="http://www.cplusplus.com/reference/random/uniform_real_distribution/"><code>uniform_real_distribution&lt;double&gt;</code></a></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/uniform_real_distribution/" class="external-link"><code>uniform_real_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="even">
 <td align="left">CExp(<span class="math inline">\(\lambda=1\)</span>)</td>
 <td align="left"><span class="math inline">\(\mathcal{E}(\lambda)\)</span></td>
-<td align="left"><a href="http://www.cplusplus.com/reference/random/exponential_distribution/"><code>exponential_distribution&lt;double&gt;</code></a></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/exponential_distribution/" class="external-link"><code>exponential_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="odd">
 <td align="left">CNorm(<span class="math inline">\(\mu=0, \sigma=1\)</span>)</td>
 <td align="left"><span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span></td>
-<td align="left"><a href="http://www.cplusplus.com/reference/random/normal_distribution/"><code>normal_distribution&lt;double&gt;</code></a></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/normal_distribution/" class="external-link"><code>normal_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="even">
 <td align="left">CPoisson(<span class="math inline">\(\lambda=1\)</span>)</td>
 <td align="left"><span class="math inline">\(\mathrm{Pois}(\lambda)\)</span></td>
-<td align="left"><a href="http://www.cplusplus.com/reference/random/poisson_distribution/"><code>poisson_distribution&lt;unsigned&gt;</code></a></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/poisson_distribution/" class="external-link"><code>poisson_distribution&lt;unsigned&gt;</code></a></td>
 </tr>
 <tr class="odd">
 <td align="left">CGamma(<span class="math inline">\(\alpha=1, \beta=1\)</span>)</td>
 <td align="left"><span class="math inline">\(\Gamma(\alpha,\beta)\)</span></td>
-<td align="left"><a href="http://www.cplusplus.com/reference/random/gamma_distribution/"><code>gamma_distribution&lt;double&gt;</code></a></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/gamma_distribution/" class="external-link"><code>gamma_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="even">
 <td align="left">CWeibull(<span class="math inline">\(a=1\)</span>, <span class="math inline">\(b=1\)</span>)</td>
 <td align="left"><span class="math inline">\(\mathrm{Weib}(a,b)\)</span></td>
-<td align="left"><a href="http://www.cplusplus.com/reference/random/weibull_distribution/"><code>weibull_distribution&lt;double&gt;</code></a></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/weibull_distribution/" class="external-link"><code>weibull_distribution&lt;double&gt;</code></a></td>
 </tr>
 <tr class="odd">
 <td align="left">CUnifInt(<span class="math inline">\(a=0, b=2^{31}-1\)</span>)</td>
 <td align="left"><span class="math inline">\(\mathcal{U}\{a,b\}\)</span></td>
-<td align="left"><a href="http://www.cplusplus.com/reference/random/uniform_int_distribution/"><code>uniform_int_distribution&lt;int&gt;</code></a></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/uniform_int_distribution/" class="external-link"><code>uniform_int_distribution&lt;int&gt;</code></a></td>
 </tr>
 <tr class="even">
 <td align="left">CBern(<span class="math inline">\(p=0.5\)</span>)</td>
 <td align="left"><span class="math inline">\(\mathcal{B}(p)\)</span></td>
-<td align="left"><a href="http://www.cplusplus.com/reference/random/bernoulli_distribution/"><code>bernoulli_distribution</code></a></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/bernoulli_distribution/" class="external-link"><code>bernoulli_distribution</code></a></td>
 </tr>
 <tr class="odd">
 <td align="left">CBinom(<span class="math inline">\(n=1, p=0.5\)</span>)</td>
 <td align="left"><span class="math inline">\(\mathcal{B}(n,p)\)</span></td>
-<td align="left"><a href="http://www.cplusplus.com/reference/random/binomial_distribution/"><code>binomial_distribution&lt;int&gt;</code></a></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/binomial_distribution/" class="external-link"><code>binomial_distribution&lt;int&gt;</code></a></td>
 </tr>
 <tr class="even">
 <td align="left">CDiscrete(<code>p_begin</code>, <code>p_end</code>)</td>
 <td align="left"><span class="math inline">\(\mathcal{D}_n\)</span></td>
-<td align="left"><a href="http://www.cplusplus.com/reference/random/discrete_distribution/"><code>discrete_distribution&lt;int&gt;</code></a></td>
+<td align="left"><a href="http://www.cplusplus.com/reference/random/discrete_distribution/" class="external-link"><code>discrete_distribution&lt;int&gt;</code></a></td>
 </tr>
 </tbody>
 </table>
@@ -1432,18 +1474,19 @@ s</li>
 <p>In the discrete distribution call <code>CDiscrete(p_begin, p_end)</code>, the arguments <code>p_begin</code> and <code>p_end</code> represent the iterators to the begin and to the end of an array which contains <span class="math inline">\(\{p_0, \dots, p_{n-1}\}\)</span>. Note that the use of iterators is a convenient and fast way to access a column or row of a matrix <code>arma::mat</code>.</p>
 </div>
 </div>
-<div id="references" class="section level1" number="4">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a><span class="header-section-number">4</span> References</h1>
-<div id="refs" class="references hanging-indent">
-<div id="ref-boumezoued2016">
-<p>Boumezoued, Alexandre. 2016. “Approches Micro-Macro Des Dynamiques de Populations Hétérogènes Structurées Par âge. Application Aux Processus Auto-Excitants et à La démographie.”</p>
+<div class="section level2" number="4">
+<h2 id="references">
+<span class="header-section-number">4</span> References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-boumezoued2016" class="csl-entry">
+Boumezoued, Alexandre. 2016. <span>“Approches Micro-Macro Des Dynamiques de Populations h<span>é</span>t<span>é</span>rog<span>è</span>nes Structur<span>é</span>es Par <span class="nocase">â</span>ge. Application Aux Processus Auto-Excitants Et <span class="nocase">à</span> La d<span>é</span>mographie.”</span>
 </div>
-<div id="ref-MR2562651">
-<p>Ferrière, Régis, and Viet Chi Tran. 2009. “Stochastic and Deterministic Models for Age-Structured Populations with Genetically Variable Traits.” <em>ESAIM Proc. CANUM 2008</em> 27 (4): 289–310.</p>
+<div id="ref-MR2562651" class="csl-entry">
+Ferrière, Régis, and Viet Chi Tran. 2009. <span>“Stochastic and Deterministic Models for Age-Structured Populations with Genetically Variable Traits.”</span> <em>ESAIM Proc. C<span>ANUM</span> 2008</em> 27 (4): 289–310.
 </div>
-<div id="ref-MELEARD2004">
-<p>Fournier, Nicolas, and Sylvie Méléard. 2004. “A microscopic probabilistic description of a locally regulated population and macroscopic approximations.” <em>Annals of Applied Probability</em> 14 (4): 1880–1919.</p>
+<div id="ref-MELEARD2004" class="csl-entry">
+Fournier, Nicolas, and Sylvie Méléard. 2004. <span>“<span class="nocase">A microscopic probabilistic description of a locally regulated population and macroscopic approximations</span>.”</span> <em>Annals of Applied Probability</em> 14 (4): 1880–1919.
 </div>
 </div>
 </div>
@@ -1460,11 +1503,13 @@ s</li>
 
 
       <footer><div class="copyright">
-  <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
+  <p></p>
+<p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -1472,6 +1517,8 @@ s</li>
 
   
 
+
+  
 
   </body>
 </html>
