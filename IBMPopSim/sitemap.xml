@@ -52,13 +52,28 @@
     <loc>/reference/EWdata_hmd.html</loc>
   </url>
   <url>
+    <loc>/reference/add_characteristic.html</loc>
+  </url>
+  <url>
+    <loc>/reference/add_characteristic.population.html</loc>
+  </url>
+  <url>
     <loc>/reference/age_pyramid.html</loc>
+  </url>
+  <url>
+    <loc>/reference/age_pyramid.population.html</loc>
   </url>
   <url>
     <loc>/reference/age_pyramids.html</loc>
   </url>
   <url>
+    <loc>/reference/age_pyramids.population.html</loc>
+  </url>
+  <url>
     <loc>/reference/assertCharacteristics.html</loc>
+  </url>
+  <url>
+    <loc>/reference/assertEvents.html</loc>
   </url>
   <url>
     <loc>/reference/assertParameters.html</loc>
@@ -80,6 +95,18 @@
   </url>
   <url>
     <loc>/reference/check_kernel_code.html</loc>
+  </url>
+  <url>
+    <loc>/reference/compatibility_chars_events.html</loc>
+  </url>
+  <url>
+    <loc>/reference/compatibility_pop_model.html</loc>
+  </url>
+  <url>
+    <loc>/reference/cpp_death_table.html</loc>
+  </url>
+  <url>
+    <loc>/reference/cpp_exposure_table.html</loc>
   </url>
   <url>
     <loc>/reference/death_table.html</loc>
@@ -110,6 +137,9 @@
   </url>
   <url>
     <loc>/reference/get_characteristics.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_characteristics.population.html</loc>
   </url>
   <url>
     <loc>/reference/gompertz.html</loc>
@@ -181,7 +211,16 @@
     <loc>/reference/piecewise_xy.html</loc>
   </url>
   <url>
+    <loc>/reference/plot.population.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot.pyramid.html</loc>
+  </url>
+  <url>
     <loc>/reference/plot_population.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_population.population.html</loc>
   </url>
   <url>
     <loc>/reference/plot_pyramid.html</loc>
@@ -190,10 +229,31 @@
     <loc>/reference/popsample.html</loc>
   </url>
   <url>
+    <loc>/reference/popsample.pyramid.html</loc>
+  </url>
+  <url>
     <loc>/reference/popsim.html</loc>
   </url>
   <url>
+    <loc>/reference/population.html</loc>
+  </url>
+  <url>
     <loc>/reference/population_alive.html</loc>
+  </url>
+  <url>
+    <loc>/reference/population_alive.population.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.event.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.model.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.population.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pyramid.html</loc>
   </url>
   <url>
     <loc>/reference/stepfun.html</loc>
@@ -202,7 +262,16 @@
     <loc>/reference/summary.event.html</loc>
   </url>
   <url>
+    <loc>/reference/summary.logs.html</loc>
+  </url>
+  <url>
     <loc>/reference/summary.model.html</loc>
+  </url>
+  <url>
+    <loc>/reference/summary.population.html</loc>
+  </url>
+  <url>
+    <loc>/reference/summary.simulation_output.html</loc>
   </url>
   <url>
     <loc>/reference/toy_params.html</loc>
