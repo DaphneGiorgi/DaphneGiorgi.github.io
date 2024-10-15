@@ -1,282 +1,93 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/IBMPopSim.html</loc>
-  </url>
-  <url>
-    <loc>/articles/IBMPopSim_cpp.html</loc>
-  </url>
-  <url>
-    <loc>/articles/IBMPopSim_human_pop.html</loc>
-  </url>
-  <url>
-    <loc>/articles/IBMPopSim_human_pop_IMD.html</loc>
-  </url>
-  <url>
-    <loc>/articles/IBMPopSim_insurance_portfolio.html</loc>
-  </url>
-  <url>
-    <loc>/articles/IBMPopSim_interaction.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/EW_popIMD_14.html</loc>
-  </url>
-  <url>
-    <loc>/reference/EW_pop_14.html</loc>
-  </url>
-  <url>
-    <loc>/reference/EW_pop_out.html</loc>
-  </url>
-  <url>
-    <loc>/reference/EWdata_hmd.html</loc>
-  </url>
-  <url>
-    <loc>/reference/add_characteristic.html</loc>
-  </url>
-  <url>
-    <loc>/reference/add_characteristic.population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/age_pyramid.html</loc>
-  </url>
-  <url>
-    <loc>/reference/age_pyramid.population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/age_pyramids.html</loc>
-  </url>
-  <url>
-    <loc>/reference/age_pyramids.population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/assertCharacteristics.html</loc>
-  </url>
-  <url>
-    <loc>/reference/assertEvents.html</loc>
-  </url>
-  <url>
-    <loc>/reference/assertParameters.html</loc>
-  </url>
-  <url>
-    <loc>/reference/assertPopulation.html</loc>
-  </url>
-  <url>
-    <loc>/reference/assertPyramid.html</loc>
-  </url>
-  <url>
-    <loc>/reference/capitalize.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check_intensity_code.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check_interaction_code.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check_kernel_code.html</loc>
-  </url>
-  <url>
-    <loc>/reference/compatibility_chars_events.html</loc>
-  </url>
-  <url>
-    <loc>/reference/compatibility_pop_model.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cpp_death_table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cpp_exposure_table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/death_table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/details_cpp.html</loc>
-  </url>
-  <url>
-    <loc>/reference/details_intensity_code.html</loc>
-  </url>
-  <url>
-    <loc>/reference/details_interaction_code.html</loc>
-  </url>
-  <url>
-    <loc>/reference/details_kernel_code.html</loc>
-  </url>
-  <url>
-    <loc>/reference/details_type_event.html</loc>
-  </url>
-  <url>
-    <loc>/reference/exposure_table.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_Ctype.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_Rtype.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_characteristics.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_characteristics.population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gompertz.html</loc>
-  </url>
-  <url>
-    <loc>/reference/has_event_type.html</loc>
-  </url>
-  <url>
-    <loc>/reference/id_complete.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/linfun.html</loc>
-  </url>
-  <url>
-    <loc>/reference/max.stepfun.html</loc>
-  </url>
-  <url>
-    <loc>/reference/merge_pop_withid.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mk_event_individual.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mk_event_inhomogeneous_poisson.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mk_event_interaction.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mk_event_poisson.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mk_individual_type.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mk_model.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mk_parameters_types.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mkcpp_declaration_individual.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mkcpp_definition_events.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mkcpp_event.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mkcpp_initialisation_population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mkcpp_output_population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mkcpp_parameters.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mkcpp_popsim.html</loc>
-  </url>
-  <url>
-    <loc>/reference/piecewise_x.html</loc>
-  </url>
-  <url>
-    <loc>/reference/piecewise_xy.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.pyramid.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_population.population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_pyramid.html</loc>
-  </url>
-  <url>
-    <loc>/reference/popsample.html</loc>
-  </url>
-  <url>
-    <loc>/reference/popsample.pyramid.html</loc>
-  </url>
-  <url>
-    <loc>/reference/popsim.html</loc>
-  </url>
-  <url>
-    <loc>/reference/population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/population_alive.html</loc>
-  </url>
-  <url>
-    <loc>/reference/population_alive.population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.event.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.model.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pyramid.html</loc>
-  </url>
-  <url>
-    <loc>/reference/stepfun.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.event.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.logs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.model.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.simulation_output.html</loc>
-  </url>
-  <url>
-    <loc>/reference/toy_params.html</loc>
-  </url>
-  <url>
-    <loc>/reference/weibull.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/404.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/LICENSE-text.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/LICENSE.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/articles/IBMPopSim.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/articles/IBMPopSim_cpp.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/articles/IBMPopSim_human_pop.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/articles/IBMPopSim_human_pop_IMD.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/articles/IBMPopSim_insurance_portfolio.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/articles/IBMPopSim_interaction.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/articles/index.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/authors.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/index.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/news/index.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/EW_popIMD_14.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/EW_pop_14.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/EW_pop_out.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/EWdata_hmd.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/IBMPopSim-package.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/add_characteristic.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/add_characteristic.population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/age_pyramid.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/age_pyramid.population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/age_pyramids.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/age_pyramids.population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/assertCharacteristics.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/assertEvents.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/assertParameters.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/assertPopulation.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/assertPyramid.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/capitalize.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/check_intensity_code.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/check_interaction_code.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/check_kernel_code.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/compatibility_chars_events.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/compatibility_pop_model.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/death_table.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/details_cpp.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/details_intensity_code.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/details_interaction_code.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/details_kernel_code.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/details_type_event.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/exposure_table.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/get_Ctype.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/get_Rtype.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/get_characteristics.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/get_characteristics.population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/gompertz.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/has_event_type.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/id_complete.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/index.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/linfun.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/max.stepfun.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/merge_pop_withid.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mk_event_individual.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mk_event_inhomogeneous_poisson.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mk_event_interaction.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mk_event_poisson.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mk_individual_type.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mk_model.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mk_parameters_types.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mkcpp_declaration_individual.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mkcpp_definition_events.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mkcpp_event.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mkcpp_initialisation_population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mkcpp_output_population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mkcpp_parameters.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/mkcpp_popsim.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/piecewise_x.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/piecewise_xy.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/plot.population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/plot.pyramid.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/plot_pyramid.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/popsample.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/popsample.pyramid.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/popsim.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/population_alive.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/population_alive.population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/print.event.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/print.model.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/print.population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/pyramid.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/stepfun.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/summary.event.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/summary.logs.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/summary.model.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/summary.population.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/summary.simulation_output.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/toy_params.html</loc></url>
+<url><loc>https://daphnegiorgi.github.io/IBMPopSim/reference/weibull.html</loc></url>
 </urlset>
+

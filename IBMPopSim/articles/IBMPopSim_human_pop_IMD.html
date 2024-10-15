@@ -4,92 +4,107 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="IBMPopSim">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Human population with swap • IBMPopSim</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Human population with swap">
-<meta property="og:description" content="IBMPopSim">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Human population with swap">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
-    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
+<body data-spy="scroll" data-target="#toc">
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
-    <a class="navbar-brand me-2" href="../index.html">IBMPopSim</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <div class="container template-article">
+      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">IBMPopSim</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+      </span>
+    </div>
 
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
 
-    <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
   </a>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../articles/IBMPopSim.html">Get started</a>
+<li>
+  <a href="../articles/IBMPopSim.html">Package description</a>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../articles/IBMPopSim_cpp.html">C++ essentials</a>
+<li>
+  <a href="../articles/IBMPopSim_cpp.html">C++ essentials</a>
 </li>
-<li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-vignettes">Vignettes</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-vignettes">
-    <a class="dropdown-item" href="../articles/IBMPopSim_human_pop.html">Human population</a>
-    <a class="dropdown-item" href="../articles/IBMPopSim_human_pop_IMD.html">Human population with swap</a>
-    <a class="dropdown-item" href="../articles/IBMPopSim_insurance_portfolio.html">Insurance portfolio</a>
-    <a class="dropdown-item" href="../articles/IBMPopSim_interaction.html">Population with genetically variable traits</a>
-  </div>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Vignettes
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/IBMPopSim_human_pop.html">Human population</a>
+    </li>
+    <li>
+      <a href="../articles/IBMPopSim_human_pop_IMD.html">Human population with swap</a>
+    </li>
+    <li>
+      <a href="../articles/IBMPopSim_insurance_portfolio.html">Insurance portfolio</a>
+    </li>
+    <li>
+      <a href="../articles/IBMPopSim_interaction.html">Population with genetically variable traits</a>
+    </li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/daphnegiorgi/IBMPopSim/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
 
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/DaphneGiorgi/IBMPopSim/">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
   </a>
 </li>
       </ul>
 </div>
-
-    
+<!--/.nav-collapse -->
   </div>
-</nav><div class="container template-article">
+<!--/.container -->
+</div>
+<!--/.navbar -->
 
 
-<div class="row">
-  <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Human population with swap</h1>
+
+      </header><div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header toc-ignore">
+      <h1 data-toc-skip>Human population with swap</h1>
                         <h4 data-toc-skip class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/HEAD/vignettes/IBMPopSim_human_pop_IMD.Rmd" class="external-link"><code>vignettes/IBMPopSim_human_pop_IMD.Rmd</code></a></small>
-      <div class="d-none name"><code>IBMPopSim_human_pop_IMD.Rmd</code></div>
+      <div class="hidden name"><code>IBMPopSim_human_pop_IMD.Rmd</code></div>
+
     </div>
 
     
@@ -427,7 +442,7 @@ The vectors of discrete probabilities determining the action of the event when a
 <p>The first component of the variable <code>t_sim</code> below is the initial time. The simulation returns <code>n-1</code> populations representing the population at <span class="math inline">\(t\_sim[1],..,t\_sim[n]\)</span>. The population corresponding to time <span class="math inline">\(t\_sim[i]\)</span> is composed of all individuals who lived in the population before <span class="math inline">\(t\_sim[i]\)</span>, with their characteristics at time <span class="math inline">\(t\_sim[i]\)</span>.</p>
 <p>The <code>events_bounds</code> names must correspond to the events names.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">t_sim</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">10</span></span>
+<code class="sourceCode R"><span><span class="va">t_sim</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">50</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">t_sim</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/popsim.html">popsim</a></span><span class="op">(</span><span class="va">model</span>,</span>
@@ -457,10 +472,8 @@ The vectors of discrete probabilities determining the action of the event when a
 <code class="sourceCode R"><span><span class="va">pops_out</span> <span class="op">&lt;-</span> <span class="va">sim_out</span><span class="op">$</span><span class="va">population</span></span></code></pre></div>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pyr_IMD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">pops_out</span><span class="op">[[</span><span class="fl">50</span><span class="op">]</span><span class="op">]</span>, time <span class="op">=</span> <span class="fl">50</span>,ages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">100</span>,<span class="fl">130</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## Error in pops_out[[50]]: subscript out of bounds</span></span>
 <span><span class="va">pyr_IMD</span><span class="op">$</span><span class="va">group_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">pyr_IMD</span>, <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">male</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'Males - IMD'</span>, <span class="va">IMD</span><span class="op">)</span>,</span>
-<span>                        <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'Females - IMD'</span>, <span class="va">IMD</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## Error in eval(expr, envir, enclos): object 'pyr_IMD' not found</span></span></code></pre></div>
+<span>                        <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'Females - IMD'</span>, <span class="va">IMD</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/hcl_palettes.html" class="external-link">sequential_hcl</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">5</span>, palette <span class="op">=</span> <span class="st">"Magenta"</span><span class="op">)</span>,</span>
 <span>            <span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/hcl_palettes.html" class="external-link">sequential_hcl</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">5</span>, palette <span class="op">=</span> <span class="st">"Teal"</span><span class="op">)</span><span class="op">)</span></span>
@@ -472,8 +485,10 @@ The vectors of discrete probabilities determining the action of the event when a
 <p><img src="hpIMD_pyramids-1.png" width="70%" style="display: block; margin: auto;"></p>
 </div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pyr_IMD</span>,<span class="va">colors</span><span class="op">)</span></span>
-<span><span class="co">## Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'pyr_IMD' not found</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pyr_IMD</span>,<span class="va">colors</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<p><img src="hpIMD_pyramids-2.png" width="70%" style="display: block; margin: auto;"></p>
+</div>
 <!--```{remark}-->
 <p>The high number of individuals aged over 100 is due to the fact that mortality rates are assumed to be constant at ages over 90, which is of course not realistic for human populations (see <code><a href="../articles/IBMPopSim_human_pop.html">vignette('IBMPopSim_human_pop')</a></code> for another choice of mortality rates).
 <!--```--></p>
@@ -554,44 +569,72 @@ The vectors of discrete probabilities determining the action of the event when a
 <p><code>pop_id</code> is a <code>population</code> in which each line corresponds to an individual and include his id, birth date, death date, gender and IMD subgroup at each discretization time (components of <span class="math inline">\(t_{sim}\)</span>).</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pop_id</span><span class="op">)</span></span>
-<span><span class="co">##       id        birth death  male IMD_1 IMD_2 IMD_3 IMD_4 IMD_5 IMD_6 IMD_7 IMD_8</span></span>
-<span><span class="co">## 1      1  -0.09170591    NA FALSE     5     5     5     5     5     5     5     5</span></span>
-<span><span class="co">## 2  10345  -8.31301627    NA FALSE     5     1     1     5     5     1     5     4</span></span>
-<span><span class="co">## 3  65439 -50.42255333    NA FALSE     4     2     2     5     5     5     1     3</span></span>
-<span><span class="co">## 4 106891   5.89122809    NA FALSE    NA    NA    NA    NA    NA     3     5     1</span></span>
-<span><span class="co">## 5  11967  -9.08197493    NA FALSE     5     5     5     1     2     3     3     1</span></span>
-<span><span class="co">## 6  26582 -22.47365716    NA  TRUE     3     5     4     4     1     2     2     3</span></span>
-<span><span class="co">##   IMD_9 IMD_10</span></span>
-<span><span class="co">## 1     5      5</span></span>
-<span><span class="co">## 2     3      3</span></span>
-<span><span class="co">## 3     2      2</span></span>
-<span><span class="co">## 4     4      5</span></span>
-<span><span class="co">## 5     5      2</span></span>
-<span><span class="co">## 6     1      2</span></span></code></pre></div>
+<span><span class="co">##       id        birth death  male IMD_1 IMD_2 IMD_3 IMD_4 IMD_5 IMD_6 IMD_7 IMD_8 IMD_9</span></span>
+<span><span class="co">## 1      1  -0.09170591    NA FALSE     5     5     5     5     5     5     5     5     5</span></span>
+<span><span class="co">## 2 110564   7.39519548    NA FALSE    NA    NA    NA    NA    NA    NA    NA     1     2</span></span>
+<span><span class="co">## 3  41150 -32.68554807    NA  TRUE     5     4     1     5     5     4     1     4     4</span></span>
+<span><span class="co">## 4 156038  45.42923701    NA  TRUE    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span><span class="co">## 5 118304  14.50780381    NA  TRUE    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span><span class="co">## 6   6482  -5.61821716    NA  TRUE     4     2     5     5     4     1     4     2     5</span></span>
+<span><span class="co">##   IMD_10 IMD_11 IMD_12 IMD_13 IMD_14 IMD_15 IMD_16 IMD_17 IMD_18 IMD_19 IMD_20 IMD_21</span></span>
+<span><span class="co">## 1      5      5      5      5      5      5      5      5      5      5      5      5</span></span>
+<span><span class="co">## 2      4      1      1      2      3      3      4      3      5      4      5      2</span></span>
+<span><span class="co">## 3      1      1      3      1      1      5      3      1      3      2      1      3</span></span>
+<span><span class="co">## 4     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA</span></span>
+<span><span class="co">## 5     NA     NA     NA     NA     NA      2      2      5      2      1      2      4</span></span>
+<span><span class="co">## 6      4      5      2      5      3      2      3      3      1      3      4      1</span></span>
+<span><span class="co">##   IMD_22 IMD_23 IMD_24 IMD_25 IMD_26 IMD_27 IMD_28 IMD_29 IMD_30 IMD_31 IMD_32 IMD_33</span></span>
+<span><span class="co">## 1      5      5      5      5      5      5      5      5      5      5      5      5</span></span>
+<span><span class="co">## 2      3      5      1      4      3      5      2      1      2      4      4      2</span></span>
+<span><span class="co">## 3      3      1      4      1      1      5      4      2      1      5      4      4</span></span>
+<span><span class="co">## 4     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA</span></span>
+<span><span class="co">## 5      3      3      3      5      4      5      2      3      5      4      5      2</span></span>
+<span><span class="co">## 6      5      2      1      5      3      1      2      3      5      5      2      1</span></span>
+<span><span class="co">##   IMD_34 IMD_35 IMD_36 IMD_37 IMD_38 IMD_39 IMD_40 IMD_41 IMD_42 IMD_43 IMD_44 IMD_45</span></span>
+<span><span class="co">## 1      5      5      5      5      5      5      5      5      5      5      5      5</span></span>
+<span><span class="co">## 2      1      1      3      4      1      3      2      1      1      2      2      5</span></span>
+<span><span class="co">## 3      2      3      1      3      2      1      2      5      4      1      1      5</span></span>
+<span><span class="co">## 4     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA</span></span>
+<span><span class="co">## 5      1      1      5      1      2      4      2      3      5      5      4      5</span></span>
+<span><span class="co">## 6      3      1      1      5      4      2      2      3      4      5      1      1</span></span>
+<span><span class="co">##   IMD_46 IMD_47 IMD_48 IMD_49 IMD_50</span></span>
+<span><span class="co">## 1      5      5      5      5      5</span></span>
+<span><span class="co">## 2      4      1      1      1      1</span></span>
+<span><span class="co">## 3      1      4      5      1      1</span></span>
+<span><span class="co">## 4      3      4      1      4      3</span></span>
+<span><span class="co">## 5      4      3      2      1      3</span></span>
+<span><span class="co">## 6      1      5      1      3      2</span></span></code></pre></div>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside>
+  </div>
+
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
+
 </div>
 
 
 
-    <footer><div class="pkgdown-footer-left">
+      <footer><div class="copyright">
   <p></p>
 <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
-<div class="pkgdown-footer-right">
+<div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
-    </footer>
+      </footer>
 </div>
 
-  
 
-  
+
+
+
 
   </body>
 </html>

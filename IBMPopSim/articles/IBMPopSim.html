@@ -4,92 +4,107 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="IBMPopSim">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IBMPopSim package description • IBMPopSim</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="IBMPopSim package description">
-<meta property="og:description" content="IBMPopSim">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="IBMPopSim package description">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
-    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
+<body data-spy="scroll" data-target="#toc">
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
-    <a class="navbar-brand me-2" href="../index.html">IBMPopSim</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <div class="container template-article">
+      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">IBMPopSim</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+      </span>
+    </div>
 
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
 
-    <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
   </a>
 </li>
-<li class="active nav-item">
-  <a class="nav-link" href="../articles/IBMPopSim.html">Get started</a>
+<li>
+  <a href="../articles/IBMPopSim.html">Package description</a>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../articles/IBMPopSim_cpp.html">C++ essentials</a>
+<li>
+  <a href="../articles/IBMPopSim_cpp.html">C++ essentials</a>
 </li>
-<li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-vignettes">Vignettes</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-vignettes">
-    <a class="dropdown-item" href="../articles/IBMPopSim_human_pop.html">Human population</a>
-    <a class="dropdown-item" href="../articles/IBMPopSim_human_pop_IMD.html">Human population with swap</a>
-    <a class="dropdown-item" href="../articles/IBMPopSim_insurance_portfolio.html">Insurance portfolio</a>
-    <a class="dropdown-item" href="../articles/IBMPopSim_interaction.html">Population with genetically variable traits</a>
-  </div>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Vignettes
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/IBMPopSim_human_pop.html">Human population</a>
+    </li>
+    <li>
+      <a href="../articles/IBMPopSim_human_pop_IMD.html">Human population with swap</a>
+    </li>
+    <li>
+      <a href="../articles/IBMPopSim_insurance_portfolio.html">Insurance portfolio</a>
+    </li>
+    <li>
+      <a href="../articles/IBMPopSim_interaction.html">Population with genetically variable traits</a>
+    </li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/daphnegiorgi/IBMPopSim/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
 
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/DaphneGiorgi/IBMPopSim/">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
   </a>
 </li>
       </ul>
 </div>
-
-    
+<!--/.nav-collapse -->
   </div>
-</nav><div class="container template-article">
+<!--/.container -->
+</div>
+<!--/.navbar -->
 
 
-<div class="row">
-  <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>IBMPopSim package description</h1>
+
+      </header><div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header toc-ignore">
+      <h1 data-toc-skip>IBMPopSim package description</h1>
                         <h4 data-toc-skip class="author">Daphné Giorgi, Sarah Kaakai, Vincent Lemaire</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/DaphneGiorgi/IBMPopSim/blob/HEAD/vignettes/IBMPopSim.Rmd" class="external-link"><code>vignettes/IBMPopSim.Rmd</code></a></small>
-      <div class="d-none name"><code>IBMPopSim.Rmd</code></div>
+      <div class="hidden name"><code>IBMPopSim.Rmd</code></div>
+
     </div>
 
     
@@ -215,7 +230,7 @@ The implementation of an IBM model is based on a few building blocks, easy to ma
 <p><strong><em>First example to check installation</em></strong></p>
 <p>To illustrate the use of the package and to check the installation, a simple model with Poisson arrivals and exits is implemented. Starting from an initial population <code>pop</code>, we define two events <code>birth</code> and <code>death</code> with intensity of Poisson type, we create the model <code>birth_death</code> and simulate the population evolution over 10 years.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DaphneGiorgi/IBMPopSim" class="external-link">IBMPopSim</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daphnegiorgi/IBMPopSim" class="external-link">IBMPopSim</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">init_size</span> <span class="op">&lt;-</span> <span class="fl">100000</span></span>
 <span><span class="va">pop_init</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/population.html">population</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>birth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">init_size</span><span class="op">)</span>, death <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
@@ -239,7 +254,7 @@ The implementation of an IBM model is based on a few building blocks, easy to ma
 <span><span class="va">num_deaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span><span class="op">$</span><span class="va">death</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"births"</span> <span class="op">=</span> <span class="va">num_births</span>, <span class="st">"deaths"</span> <span class="op">=</span> <span class="va">num_deaths</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## births deaths </span></span>
-<span><span class="co">##    948    998</span></span></code></pre></div>
+<span><span class="co">##    967   1064</span></span></code></pre></div>
 <p>Let’s now take a closer look at each component of a model in <code>IBMPopSim</code>, starting from the population.</p>
 </div>
 <div class="section level3" number="2.2">
@@ -658,7 +673,7 @@ Each line of <code>sim_out$population</code> contains the information of an indi
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">'effective_events'</span><span class="op">]</span><span class="op">/</span><span class="va">sim_out</span><span class="op">$</span><span class="va">logs</span><span class="op">[</span><span class="st">'proposed_events'</span><span class="op">]</span></span>
 <span><span class="co">## effective_events </span></span>
-<span><span class="co">##        0.2173681</span></span></code></pre></div>
+<span><span class="co">##        0.2183868</span></span></code></pre></div>
 <p><strong>Optional parameters</strong> If there are <strong>no interactions</strong> between individuals, i.e. if there
 are no events with intensity of class <code>interaction</code>, then the
 simulation can be parallelized easily by setting the optional parameter
@@ -741,7 +756,7 @@ For <span class="math inline">\(i=1\dots n\)</span>, the <span class="math inlin
 <span><span class="co"># Mean number of individuals in subgroup 1 at each time:</span></span>
 <span><span class="va">p_1_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">sim_out</span><span class="op">$</span><span class="va">population</span>, <span class="kw">function</span><span class="op">(</span><span class="va">pop_df</span><span class="op">)</span><span class="op">{</span></span>
 <span>                      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">pop_df</span>, <span class="va">sub_grp</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">pop_size</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error: &lt;text&gt;:2:0: unexpected end of input</span></span>
+<pre><code><span><span class="co">## Error in parse(text = input): &lt;text&gt;:2:0: unexpected end of input</span></span>
 <span><span class="co">## 1: ggplot()+geom_line(aes(x=time_vec[-1],y=p_1_t)+xlab("Time")+ylab("Probability of subgroup 1")</span></span>
 <span><span class="co">##    ^</span></span></code></pre>
 <p>This example shows that IBMPopSim can also be used to simulated continuous time Markov Chain with finite state space.</p>
@@ -767,8 +782,8 @@ For <span class="math inline">\(i=1\dots n\)</span>, the <span class="math inlin
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim_out_id</span><span class="op">$</span><span class="va">population</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">##   id birth death sub_grp</span></span>
 <span><span class="co">## 1  1     0    NA       1</span></span>
-<span><span class="co">## 2  9     0    NA       1</span></span>
-<span><span class="co">## 3 17     0    NA       1</span></span>
+<span><span class="co">## 2  9     0    NA       2</span></span>
+<span><span class="co">## 3 17     0    NA       2</span></span>
 <span><span class="co">## 4 25     0    NA       2</span></span>
 <span><span class="co">## 5 33     0    NA       1</span></span>
 <span><span class="co">## 6 41     0    NA       1</span></span></code></pre></div>
@@ -779,11 +794,11 @@ For <span class="math inline">\(i=1\dots n\)</span>, the <span class="math inlin
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pop_merge</span><span class="op">)</span></span>
 <span><span class="co">##      id birth death sub_grp_1 sub_grp_2 sub_grp_3 sub_grp_4 sub_grp_5</span></span>
 <span><span class="co">## 1     1     0    NA         1         1         1         1         1</span></span>
-<span><span class="co">## 2 32769     0    NA         1         1         1         1         1</span></span>
-<span><span class="co">## 3 65537     0    NA         1         2         1         1         1</span></span>
-<span><span class="co">## 4 98305     0    NA         2         2         1         1         1</span></span>
-<span><span class="co">## 5 31074     0    NA         1         1         2         1         1</span></span>
-<span><span class="co">## 6 63842     0    NA         1         2         2         1         2</span></span></code></pre></div>
+<span><span class="co">## 2 32769     0    NA         2         1         1         1         1</span></span>
+<span><span class="co">## 3 65537     0    NA         2         2         2         2         2</span></span>
+<span><span class="co">## 4 98305     0    NA         2         1         2         2         1</span></span>
+<span><span class="co">## 5 31074     0    NA         1         1         1         1         1</span></span>
+<span><span class="co">## 6 63842     0    NA         1         1         1         1         2</span></span></code></pre></div>
 <p>Each line of <code>pop_merge</code> corresponds to the life course of one individual. However, the population is only represented at time <span class="math inline">\(t=0,1..,5\)</span>, and this data frame doesn’t account for exact swap event times or multiple swap events that occurred between between two time steps.</p>
 </div>
 </div>
@@ -807,28 +822,35 @@ Giorgi, Daphné, Sarah Kaakai, and Vincent Lemaire. 2023. <span>“Efficient Sim
 </div>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside>
+  </div>
+
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
+
 </div>
 
 
 
-    <footer><div class="pkgdown-footer-left">
+      <footer><div class="copyright">
   <p></p>
 <p>Developed by Daphné Giorgi, Sarah Kaakai, Vincent Lemaire.</p>
 </div>
 
-<div class="pkgdown-footer-right">
+<div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
-    </footer>
+      </footer>
 </div>
 
-  
 
-  
+
+
+
 
   </body>
 </html>
