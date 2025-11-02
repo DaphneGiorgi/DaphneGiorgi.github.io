@@ -1,0 +1,162 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MU5MAI04",
+    "section": "",
+    "text": "Description\nCe cours concerne les étudiants IMPA et IMPC du Master Mathématiques et Applications.\nEmplois du temps : EdT IMPA et EdT IMPC.\nMoodle :\nOrganisation : Chaque séance mélangera cours et travaux pratiques.\nPrérequis : Fondamentaux de C++ par V. Lemaire.",
+    "crumbs": [
+      "Description"
+    ]
+  },
+  {
+    "objectID": "index.html#objectifs",
+    "href": "index.html#objectifs",
+    "title": "MU5MAI04",
+    "section": "Objectifs",
+    "text": "Objectifs\nSavoir développer un projet en C++ en utilisant les outils pour le développement tels que\n\ngestion de version\ndebug\ntest\nintégration continue\nnotebook",
+    "crumbs": [
+      "Description"
+    ]
+  },
+  {
+    "objectID": "index.html#evaluation",
+    "href": "index.html#evaluation",
+    "title": "MU5MAI04",
+    "section": "Evaluation",
+    "text": "Evaluation\nLa note finale sera donnée sur la base d’un travail à effectuer en binôme (deux personnes), au cours du S1, pendant les séances du cours.\nOn rappelle les règles de fonctionnement des binômes :\n\npas de binôme mixte (apprenti - non apprenti)\npas plus de trois projets au cours de l’année avec la même personne.\n\nChaque binôme devra rendre un lien vers un dépôt git contenant l’historique des commit du projet (et donc aussi la version finale du code). On ne vous demande pas de rapport. Une discussion d’environ trente minutes aura lieu pour m’aider à juger ce que vous avez fait. La date de rendu du dépôt git sera une semaine avant la soutenance.",
+    "crumbs": [
+      "Description"
+    ]
+  },
+  {
+    "objectID": "01-git.html",
+    "href": "01-git.html",
+    "title": "GIT ET GITHUB",
+    "section": "",
+    "text": "Objectifs\nSommaire :\n1  Description  2  Concepts de base  3  Les remote  4  Install et configuration  5  Initialiser un projet  6  Travail en local  7  Travail avec remote  8  Travail en équipe  9  Workflow  10  .gitignore",
+    "crumbs": [
+      "GIT ET GITHUB"
+    ]
+  },
+  {
+    "objectID": "01-git.html#objectifs",
+    "href": "01-git.html#objectifs",
+    "title": "GIT ET GITHUB",
+    "section": "",
+    "text": "Gérer un projet C++ avec Git\nTravailler en équipe avec GitHub\nUtiliser les branches, PR et git hooks",
+    "crumbs": [
+      "GIT ET GITHUB"
+    ]
+  },
+  {
+    "objectID": "ch-git/git-description.html",
+    "href": "ch-git/git-description.html",
+    "title": "1  Description",
+    "section": "",
+    "text": "git est un système de contrôle de version distribué, libre, conçu pour être rapide et efficace.\n\n\n\n\n\n\n\n\n\nCentralisé\n\n\n\n\n\n\n\nDistribué\n\n\n\n\n\nIl est utilisé pour\n\ntracer les modifications dans un projet,\nidentifier par qui ont été faites ces modifications,\ncoder en équipe.",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Description</span>"
+    ]
+  },
+  {
+    "objectID": "ch-git/git-bases.html",
+    "href": "ch-git/git-bases.html",
+    "title": "2  Concepts de base",
+    "section": "",
+    "text": "Espaces de travail\nWorkspace/dossier de travail : Le dossier courant, ce que je vois lorsque j’ouvre un fichier et je travaille dessus.\nRepository/Dépôt : Un dossier dans lequel Git enregistre le projet et son historique.\n\nLocal repository/dépôt local : Endroit sur mon ordianteur où git stocke l’information sur l’historique des fichiers contenus dans le projet.\nRemote repository/dépôt distant : Endroit où est centralisé l’historique de mon projet, souvent sur un cloud de type GitHub/GitLab/…, et où tout les collaborateur.ice.s peuvent contribuer.\n\nStaging area/index : Espace de stockage temporaire de l’historique git, endroit de pre-commit.\n\n\nCommandes\nNavettes qui permettent de se deplacer entre les espaces.\n\n\n\nRépertoires locaux et distants\n\n\nclone/Cloner : Copie d’un dépôt distant sur votre ordinateur.\nstage/Index : Indiquer à Git les modifications que vous souhaitez enregistrer ensuite.\ncommit : Sauvegarde des modifications effectuées, ajout d’une ligne dans l’historique du projet.\nbranch/Branche : Travail sur différentes versions ou fonctionnalités en même temps.\nmerge/Fusionner : Combiner des modifications provenant de différentes branches.\npull/Récupérer : Obtenir les dernières modifications d’un dépôt distant.\npush/Pousser : Envoyer vos modifications à un dépôt distant.",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Concepts de base</span>"
+    ]
+  },
+  {
+    "objectID": "ch-git/git-remote.html",
+    "href": "ch-git/git-remote.html",
+    "title": "3  Les remote",
+    "section": "",
+    "text": "GitHub n’est pas la même chose que git.\nGitHub, tout comme GitLab, Bitbucket, ou autres, est un hébergeur de répertoires git.\n\n\n\n\n\n\nExercice\n\n\n\nCréation d’un compte sur GitHub.",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Les remote</span>"
+    ]
+  },
+  {
+    "objectID": "ch-git/git-install.html",
+    "href": "ch-git/git-install.html",
+    "title": "4  Install et configuration",
+    "section": "",
+    "text": "Install de git\nVous pouvez télécharger Git gratuitement à partir de git-scm.com.\n\nWindows : Téléchargez et exécutez le programme d’installation.\nCliquez sur « Suivant » pour accepter les paramètres recommandés.\nCela installera Git et Git Bash.\nmacOS : Si vous utilisez Homebrew, ouvrez Terminal et tapez\n\nbrew install git\n\nOu téléchargez le fichier .dmg et glissez Git dans votre dossier Applications.\nLinux : Ouvrez votre terminal et utilisez votre gestionnaire de paquets.\nPar exemple, sur Ubuntu :\n\nsudo apt-get install git\n\n\n\n\nConfiguration\nLa toute première fois, il est nécessaire de configurer git pour lui indiquer qui nous sommes.\nCette configuration peut être changé à tout moment et affecte seulement le nom et le mail qui apparaissent dans le commits.\nUser name\nTapez la commande\n\ngit config –global user.name “Prénom Nom”\n\nemail\nTapez la commande\n\ngit config –global user.email “monadresse@exemple.com”\n\nRaccourcis\nParfois, taper les commandes git peut paraître long pour une utilisation régulière.\nIl est possible de configurer des raccourcis, par exemple, en tapant\n\ngit config –global alias.ci commit\n\nla commande git ci sera équivalente à git commit.\nPour ouvrir le ficher de config en mode édition on peut également taper\n\ngit config –global –edit\n\n\n\n\n\n\n\nExercice\n\n\n\nInstallation et configuration de git en local.",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Install et configuration</span>"
+    ]
+  },
+  {
+    "objectID": "ch-git/git-init.html",
+    "href": "ch-git/git-init.html",
+    "title": "5  Initialiser un projet",
+    "section": "",
+    "text": "On peut démarrer un dépôt git de deux manières :\n\ntransformer un répertoire existant en dépôt git,\ncloner un répertoire distant.\n\nDans les deux cas, un répertoire local sur lequel travailler sera présent sur votre machine, on le reconnaît par la présence, à sa racine, d’un sous-répertoire .git.\n\nInitialisation d’un répertoire\nPartons la structure de code suivante :\nCalculatorProject/\n├── src/\n│   └── Calculator.cpp\n├── include/\n│   └── Calculator.h\n└── README.md\navec\ninclude/Calculator.h\n#ifndef CALCULATOR_H\n#define CALCULATOR_H\n\nclass Calculator {\npublic:\n    double add(double a, double b);\n    double subtract(double a, double b);\n    double multiply(double a, double b);\n    double divide(double a, double b);\n};\n\n#endif\nsrc/Calculator.cpp\n#include \"Calculator.h\"\n#include &lt;stdexcept&gt;\n\ndouble Calculator::add(double a, double b) {\n    return a + b;\n}\n\ndouble Calculator::subtract(double a, double b) {\n    return a - b;\n}\n\ndouble Calculator::multiply(double a, double b) {\n    return a * b;\n}\n\ndouble Calculator::divide(double a, double b) {\n    if (b == 0) throw std::invalid_argument(\"Division by zero\");\n    return a / b;\n}\nPour initialiser ce projet, pour commencer à le versionner avec git, il suffit de taper :\ncd CalculatorProject\ngit init\n\n\nClone d’un projet distant\ngit clone https://github.com/ton-org/ton-projet.git\ncd ton-projet\ngit checkout -b develop\n\n\n\n\n\n\nExercice\n\n\n\n\nCréation d’un projet.\nclone d’un projet.",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Initialiser un projet</span>"
+    ]
+  },
+  {
+    "objectID": "ch-git/git-tutorial-local.html",
+    "href": "ch-git/git-tutorial-local.html",
+    "title": "6  Travail en local",
+    "section": "",
+    "text": "Exercice\n\n\n\n\nInitialiser un projet\nCommande status :\n\navant et après création ou édition d’un fichier\navant et après ajout d’un fichier à l’index ou à l’historique\n\nVérification des différences entre les changements locaux et l’historique : commande diff (--staged)\nCommande add\nCommande commit\nCommande log",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Travail en local</span>"
+    ]
+  },
+  {
+    "objectID": "ch-git/git-tutorial-remote.html",
+    "href": "ch-git/git-tutorial-remote.html",
+    "title": "7  Travail avec remote",
+    "section": "",
+    "text": "Exercice\n\n\n\n\nCréation d’un projet sur GitHub\nCommande remote\nMise en ligne\nCommande push",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Travail avec remote</span>"
+    ]
+  },
+  {
+    "objectID": "ch-git/git-tutorial-team.html",
+    "href": "ch-git/git-tutorial-team.html",
+    "title": "8  Travail en équipe",
+    "section": "",
+    "text": "Exercice\n\n\n\nTravail en binôme.\n\nRécupération du travail d’un collègue\nCommande clone\nCommande pull : fetch+ merge\nGestion d’un conflit",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Travail en équipe</span>"
+    ]
+  },
+  {
+    "objectID": "ch-git/git-tutorial-workflow.html",
+    "href": "ch-git/git-tutorial-workflow.html",
+    "title": "9  Workflow",
+    "section": "",
+    "text": "Exercice\n\n\n\nTravail en binôme.\n\nCommande branch\nCommande switch\nCommande checkout",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Workflow</span>"
+    ]
+  },
+  {
+    "objectID": "ch-git/git-gitignore.html",
+    "href": "ch-git/git-gitignore.html",
+    "title": "10  .gitignore",
+    "section": "",
+    "text": "Le fichier .gitignore est un simple fichier texte placé dans le répertoire racine de votre dépôt Git. Il contient une liste de fichiers et de répertoires à ignorer, comme les fichiers temporaires, les fichiers générés par le système, les fichiers de configuration, ou ceux liés à un build.\nIl permet de garder un historique propre et de ne pas intégrer dans le projet les fichiers superflus.\n\n##### Build files\nbuild/\n\n##### Log Files\n*.log\n\n##### C++\n# Prerequisites\n*.d\n\n# Compiled Object files\n*.slo\n*.lo\n*.o\n*.obj\n\n# Precompiled Headers\n*.gch\n*.pch\n\n# Compiled Dynamic libraries\n*.so\n*.dylib\n*.dll\n\n# Fortran module files\n*.mod\n*.smod\n\n# Compiled Static libraries\n*.lai\n*.la\n*.a\n*.lib\n\n# Executables\n*.exe\n*.out\n*.app\n\n##### VisualStudioCode\n.vscode/*\n!.vscode/settings.json\n!.vscode/tasks.json\n!.vscode/launch.json\n!.vscode/extensions.json\n*.code-workspace\n\n# Local History for Visual Studio Code\n.history/\n\n\n\n\n\n\nExercice\n\n\n\nLien vers les exos",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>.gitignore</span>"
+    ]
+  }
+]
