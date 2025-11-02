@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "MU5MAI04",
     "section": "",
-    "text": "Description\nCe cours concerne les étudiants IMPA et IMPC du Master Mathématiques et Applications.\nEmplois du temps : EdT IMPA et EdT IMPC.\nMoodle :\nOrganisation : Chaque séance mélangera cours et travaux pratiques.\nPrérequis : Fondamentaux de C++ par V. Lemaire.",
+    "text": "Description\nCe cours concerne les étudiants IMPA et IMPC du Master Mathématiques et Applications.\nEmplois du temps : EdT IMPA et EdT IMPC.\nMoodle : MU5MAI04\nOrganisation : Chaque séance mélangera cours et travaux pratiques.\nPrérequis : Fondamentaux de C++ par V. Lemaire.",
     "crumbs": [
       "Description"
     ]
@@ -153,7 +153,7 @@
     "href": "ch-git/git-gitignore.html",
     "title": "10  .gitignore",
     "section": "",
-    "text": "Le fichier .gitignore est un simple fichier texte placé dans le répertoire racine de votre dépôt Git. Il contient une liste de fichiers et de répertoires à ignorer, comme les fichiers temporaires, les fichiers générés par le système, les fichiers de configuration, ou ceux liés à un build.\nIl permet de garder un historique propre et de ne pas intégrer dans le projet les fichiers superflus.\n\n##### Build files\nbuild/\n\n##### Log Files\n*.log\n\n##### C++\n# Prerequisites\n*.d\n\n# Compiled Object files\n*.slo\n*.lo\n*.o\n*.obj\n\n# Precompiled Headers\n*.gch\n*.pch\n\n# Compiled Dynamic libraries\n*.so\n*.dylib\n*.dll\n\n# Fortran module files\n*.mod\n*.smod\n\n# Compiled Static libraries\n*.lai\n*.la\n*.a\n*.lib\n\n# Executables\n*.exe\n*.out\n*.app\n\n##### VisualStudioCode\n.vscode/*\n!.vscode/settings.json\n!.vscode/tasks.json\n!.vscode/launch.json\n!.vscode/extensions.json\n*.code-workspace\n\n# Local History for Visual Studio Code\n.history/\n\n\n\n\n\n\nExercice\n\n\n\nLien vers les exos",
+    "text": "Le fichier .gitignore est un simple fichier texte placé dans le répertoire racine de votre dépôt Git. Il contient une liste de fichiers et de répertoires à ignorer, comme les fichiers temporaires, les fichiers générés par le système, les fichiers de configuration, ou ceux liés à un build.\nIl permet de garder un historique propre et de ne pas intégrer dans le projet les fichiers superflus.\n\n##### Build files\nbuild/\n\n##### Log Files\n*.log\n\n##### C++\n# Prerequisites\n*.d\n\n# Compiled Object files\n*.slo\n*.lo\n*.o\n*.obj\n\n# Precompiled Headers\n*.gch\n*.pch\n\n# Compiled Dynamic libraries\n*.so\n*.dylib\n*.dll\n\n# Fortran module files\n*.mod\n*.smod\n\n# Compiled Static libraries\n*.lai\n*.la\n*.a\n*.lib\n\n# Executables\n*.exe\n*.out\n*.app\n\n##### VisualStudioCode\n.vscode/*\n!.vscode/settings.json\n!.vscode/tasks.json\n!.vscode/launch.json\n!.vscode/extensions.json\n*.code-workspace\n\n# Local History for Visual Studio Code\n.history/",
     "crumbs": [
       "GIT ET GITHUB",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>.gitignore</span>"
