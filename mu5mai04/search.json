@@ -158,5 +158,16 @@
       "GIT ET GITHUB",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>.gitignore</span>"
     ]
+  },
+  {
+    "objectID": "ch-git/git-eval.html",
+    "href": "ch-git/git-eval.html",
+    "title": "11  Evaluation",
+    "section": "",
+    "text": "Les critères suivants seront évalués :\n\nLe code a été rendu via un dépôt git\nLes commits sont unitaires\nLes noms des commits sont explicites\nLe nombre de commits est équilibré entre les membres de l’équipe",
+    "crumbs": [
+      "GIT ET GITHUB",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
   }
 ]
