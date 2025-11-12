@@ -342,11 +342,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">hello:</span> hello.o main.o</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CC</span><span class="va">)</span> <span class="at">-o</span> hello hello.o main.o <span class="va">$(</span><span class="ex">LDFLAGS</span><span class="va">)</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">hello.o:</span> hello.c</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CC</span><span class="va">)</span> <span class="at">-o</span> hello.o <span class="at">-c</span> hello.c <span class="va">$(</span><span class="ex">CFLAGS</span><span class="va">)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">hello.o:</span> hello.cpp</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CC</span><span class="va">)</span> <span class="at">-o</span> hello.o <span class="at">-c</span> hello.cpp <span class="va">$(</span><span class="ex">CFLAGS</span><span class="va">)</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">main.o:</span> main.c hello.h</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CC</span><span class="va">)</span> <span class="at">-o</span> main.o <span class="at">-c</span> main.c <span class="va">$(</span><span class="ex">CFLAGS</span><span class="va">)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">main.o:</span> main.cpp hello.h</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CC</span><span class="va">)</span> <span class="at">-o</span> main.o <span class="at">-c</span> main.cpp <span class="va">$(</span><span class="ex">CFLAGS</span><span class="va">)</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">clean:</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span> <span class="at">-rf</span> <span class="pp">*</span>.o</span>
@@ -403,10 +403,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">hello:</span> hello.o main.o</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CXX</span><span class="va">)</span> <span class="at">-o</span> <span class="va">$@</span> $^ <span class="va">$(</span><span class="ex">LDFLAGS</span><span class="va">)</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">hello.o:</span> hello.c</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">hello.o:</span> hello.cpp</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CXX</span><span class="va">)</span> <span class="at">-o</span> <span class="va">$@</span> <span class="at">-c</span> $<span class="op">&lt;</span> <span class="va">$(</span><span class="ex">CXXFLAGS</span><span class="va">)</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ex">main.o:</span> main.c hello.h</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ex">main.o:</span> main.cpp hello.h</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">$(</span><span class="ex">CXX</span><span class="va">)</span> <span class="at">-o</span> <span class="va">$@</span> <span class="at">-c</span> $<span class="op">&lt;</span> <span class="va">$(</span><span class="ex">CXXFLAGS</span><span class="va">)</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">clean:</span></span>
