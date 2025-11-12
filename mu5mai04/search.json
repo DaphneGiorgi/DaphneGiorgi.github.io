@@ -244,5 +244,47 @@
       "MAKEFILE",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Cmake</span>"
     ]
+  },
+  {
+    "objectID": "03-doxygen.html",
+    "href": "03-doxygen.html",
+    "title": "DOXYGEN",
+    "section": "",
+    "text": "Objectifs\nSommaire :\n17  Doxygen  18  Fichier de configuration",
+    "crumbs": [
+      "DOXYGEN"
+    ]
+  },
+  {
+    "objectID": "03-doxygen.html#objectifs",
+    "href": "03-doxygen.html#objectifs",
+    "title": "DOXYGEN",
+    "section": "",
+    "text": "Commenter le code",
+    "crumbs": [
+      "DOXYGEN"
+    ]
+  },
+  {
+    "objectID": "ch-doxygen/doxygen.html",
+    "href": "ch-doxygen/doxygen.html",
+    "title": "17  Doxygen",
+    "section": "",
+    "text": "Doxygen permet de créer des documentations techniques pour le C et le C++ (entre autres), grâce à l’utilisation de balises spéciales.\n\nBalises standard\n\nLes blocs\nLes balises suivantes sont équivalentes :\n/**\n * ... Documentation ...\n */\n/*!\n * ... Documentation ...\n */\n///\n/// ... Documentation ...\n///\n//!\n//! ... Documentation ...\n//!\n\n\nInformations d’entête\n/**\n * \\file main.c\n * \\brief Programme de tests\n * \\author P. Nom\n * \\version 0.1\n * \\date 12/11/2025\n *\n * Programme de test pour apprendre à utiliser doxygen.\n *\n */\n\n\nDocumentation d’une fonction/méthode\n/**\n * \\fn bool add(std::string strSong);\n * \\brief Ajout d'un morceau.\n * \n * Methode qui permet d'ajouter un morceau a liste de lecture\n *\n * \\param strSong Le morceau a ajouter\n * \\return true si morceau deja present dans la liste, false sinon\n */\n\n\nDocumentation d’une classe/structure\nDéclaration de la classe ou structure\n/** \n* \\class CPlayer\n* \\brief classe representant le lecteur\n*\n*  La classe gere la lecture d'une liste de morceaux\n*/\n\\struct s’il s’agit d’une structure.\nDocumentation des membres de la classe\nstd::list&lt;string&gt; m_listSongs; /*!&lt; Liste des morceaux*/\nstd::list&lt;string&gt;::iterator m_currentSong; /*!&lt; Morceau courant */\nPour aller plus loin : Manual doxygen",
+    "crumbs": [
+      "DOXYGEN",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Doxygen</span>"
+    ]
+  },
+  {
+    "objectID": "ch-doxygen/doxygen-config.html",
+    "href": "ch-doxygen/doxygen-config.html",
+    "title": "18  Fichier de configuration",
+    "section": "",
+    "text": "Création du fichier de configuration\n\ndoxygen -g doxygenfile\n\nDéfinir le répertoire qui contient la documentation\nOUTPUT_DIRECTORY       = doc\nCréer la documentation\n\ndoxygen doxygenfile",
+    "crumbs": [
+      "DOXYGEN",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Fichier de configuration</span>"
+    ]
   }
 ]
