@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MU5MAI04 - 9&nbsp; Workflow</title>
+<title>MU5MAI04 - 13&nbsp; Makefile</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../ch-git/git-gitignore.html" rel="next">
-<link href="../ch-git/git-tutorial-team.html" rel="prev">
+<link href="../ch-makefile/makefile-enrichi.html" rel="next">
+<link href="../ch-makefile/makefile-description.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01-git.html">GIT ET GITHUB</a></li><li class="breadcrumb-item"><a href="../ch-git/git-tutorial-workflow.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflow</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02-makefile.html">MAKEFILE</a></li><li class="breadcrumb-item"><a href="../ch-makefile/makefile.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Makefile</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -171,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ch-git/git-tutorial-workflow.html" class="sidebar-item-text sidebar-link active">
+  <a href="../ch-git/git-tutorial-workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflow</span></span></a>
   </div>
 </li>
@@ -206,7 +240,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ch-makefile/makefile.html" class="sidebar-item-text sidebar-link">
+  <a href="../ch-makefile/makefile.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Makefile</span></span></a>
   </div>
 </li>
@@ -236,14 +270,21 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#la-syntaxe" id="toc-la-syntaxe" class="nav-link active" data-scroll-target="#la-syntaxe">La syntaxe</a></li>
+  <li><a href="#un-projet-hello-world" id="toc-un-projet-hello-world" class="nav-link" data-scroll-target="#un-projet-hello-world">Un projet “hello world”</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01-git.html">GIT ET GITHUB</a></li><li class="breadcrumb-item"><a href="../ch-git/git-tutorial-workflow.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflow</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02-makefile.html">MAKEFILE</a></li><li class="breadcrumb-item"><a href="../ch-makefile/makefile.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Makefile</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-git-tutorial-workflow" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflow</span></span></h1>
+<h1 class="title"><span id="sec-makefile" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Makefile</span></span></h1>
 </div>
 
 
@@ -260,7 +301,87 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-tip callout-titled">
+<p>Le plus simple des <code>Makefile</code> : copier dans un fichier <code>Makefile</code> le texte suivant</p>
+<pre><code>hello:
+    echo "Hello, World"</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Attention
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un fichier Makefile doit être indenté avec des TAB et pas des espaces, sinon la commande make ne marchera pas.</p>
+</div>
+</div>
+<p>et dans un terminal lancer la commande <code>make</code>.</p>
+<section id="la-syntaxe" class="level3">
+<h3 class="anchored" data-anchor-id="la-syntaxe">La syntaxe</h3>
+<p>Un makefile est constitué d’un ensemble de <em>règles</em>. Une régle s’écrit de la façon suivante :</p>
+<pre><code>cible: dependance
+    commandes</code></pre>
+<p>où chaque commande est précédée par une tabulation.</p>
+<p>L’évaluation d’une règle se fait en plusieurs étapes :</p>
+<ul>
+<li>Les dépendances sont analysées, si une dépendance est la cible d’une autre règle du Makefile, cette règle est à son tour évaluée.</li>
+<li>Lorsque l’ensemble des dépendances est analysé et si la cible ne correspond pas à un fichier existant ou si un fichier dépendance est plus récent que la règle, les différentes commandes sont exécutées.</li>
+</ul>
+</section>
+<section id="un-projet-hello-world" class="level3">
+<h3 class="anchored" data-anchor-id="un-projet-hello-world">Un projet “hello world”</h3>
+<p>Nous allons utiliser un projet classique “Hello world” découpé en trois fichiers :</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>hello.h</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="hello.h"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef H_HELLO</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define H_HELLO</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Hello<span class="op">(</span><span class="dt">void</span><span class="op">);</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>hello.cpp</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="hello.cpp"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Hello<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">"Hello world!"</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>main.cpp</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="main.cpp"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"hello.h"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    Hello<span class="op">();</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Le Makefile minimal du projet est</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Makefile</strong></pre>
+</div>
+<div class="sourceCode" id="cb6" data-filename="Makefile"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hello:</span> hello.o main.o</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">g++</span> <span class="at">-o</span> hello hello.o main.o</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hello.o:</span> hello.cpp</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">g++</span> <span class="at">-o</span> hello.o <span class="at">-c</span> hello.cpp <span class="at">-W</span> <span class="at">-Wall</span> <span class="at">-ansi</span> <span class="at">-pedantic</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">main.o:</span> main.cpp hello.h</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">g++</span> <span class="at">-o</span> main.o <span class="at">-c</span> main.cpp <span class="at">-W</span> <span class="at">-Wall</span> <span class="at">-ansi</span> <span class="at">-pedantic</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -270,16 +391,13 @@ Exercice
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Travail en binôme.</p>
-<ul>
-<li>Commande <code>branch</code></li>
-<li>Commande <code>switch</code></li>
-<li>Commande <code>checkout</code></li>
-</ul>
+<p>Construire le projet minimal et commenter.</p>
 </div>
 </div>
+<p>Les fichiers objets qui dépendent de fichiers sources qui n’ont pas été modifiés ne sont pas recompilés (à condition que l’on ait bien défini la liste de dépendances).</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -744,13 +862,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../ch-git/git-tutorial-team.html" class="pagination-link" aria-label="Travail en équipe">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Travail en équipe</span></span>
+      <a href="../ch-makefile/makefile-description.html" class="pagination-link" aria-label="Compilation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Compilation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../ch-git/git-gitignore.html" class="pagination-link" aria-label=".gitignore">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">.gitignore</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../ch-makefile/makefile-enrichi.html" class="pagination-link" aria-label="Makefile enrichi">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Makefile enrichi</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
