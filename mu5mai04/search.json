@@ -206,7 +206,7 @@
     "href": "ch-makefile/makefile.html",
     "title": "13  Makefile",
     "section": "",
-    "text": "Le plus simple des Makefile : copier dans un fichier Makefile le texte suivant\nhello:\n    echo \"Hello, World\"\n\n\n\n\n\n\nAttention\n\n\n\nUn fichier Makefile doit être indenté avec des TAB et pas des espaces, sinon la commande make ne marchera pas.\n\n\net dans un terminal lancer la commande make.\n\nLa syntaxe\nUn makefile est constitué d’un ensemble de règles. Une régle s’écrit de la façon suivante :\ncible: dependance\n    commandes\noù chaque commande est précédée par une tabulation.\nL’évaluation d’une règle se fait en plusieurs étapes :\n\nLes dépendances sont analysées, si une dépendance est la cible d’une autre règle du Makefile, cette règle est à son tour évaluée.\nLorsque l’ensemble des dépendances est analysé et si la cible ne correspond pas à un fichier existant ou si un fichier dépendance est plus récent que la règle, les différentes commandes sont exécutées.\n\n\n\nUn projet “hello world”\nNous allons utiliser un projet classique “Hello world” découpé en trois fichiers :\n\n\nhello.h\n\n#ifndef H_HELLO\n#define H_HELLO\n\nvoid Hello(void);\n\n#endif\n\n\n\nhello.cpp\n\n#include &lt;iostream&gt;\n\nvoid Hello(void)\n{\n    std::cout &lt;&lt; \"Hello world!\" &lt;&lt; std::endl;\n}\n\n\n\nmain.cpp\n\n#include \"hello.h\"\n\nint main(void)\n{\n    Hello();\n    return 0;\n}\n\nLe Makefile minimal du projet est\n\n\nMakefile\n\nhello: hello.o main.o\n    g++ -o hello hello.o main.o\n\nhello.o: hello.cpp\n    g++ -o hello.o -c hello.cpp -W -Wall -ansi -pedantic\n\nmain.o: main.cpp hello.h\n    g++ -o main.o -c main.cpp -W -Wall -ansi -pedantic\n\n\n\n\n\n\n\nExercice\n\n\n\nConstruire le projet minimal et commenter.\n\n\nLes fichiers objets qui dépendent de fichiers sources qui n’ont pas été modifiés ne sont pas recompilés (à condition que l’on ait bien défini la liste de dépendances).",
+    "text": "Le plus simple des Makefile : copier dans un fichier Makefile le texte suivant\nhello:\n    echo \"Hello, World\"\n\n\n\n\n\n\nAttention\n\n\n\nUn fichier Makefile doit être indenté avec des TAB et pas des espaces, sinon la commande make ne marchera pas.\n\n\net dans un terminal lancer la commande make.\n\nLa syntaxe\nUn makefile est constitué d’un ensemble de règles. Une régle s’écrit de la façon suivante :\ncible: dependances\n    commandes\noù chaque commande est précédée par une tabulation.\nL’évaluation d’une règle se fait en plusieurs étapes :\n\nLes dépendances sont analysées, si une dépendance est la cible d’une autre règle du Makefile, cette règle est à son tour évaluée.\nLorsque l’ensemble des dépendances est analysé et si la cible ne correspond pas à un fichier existant ou si un fichier dépendance est plus récent que la règle, les différentes commandes sont exécutées.\n\n\n\nUn projet “hello world”\nNous allons utiliser un projet classique “Hello world” découpé en trois fichiers :\n\n\nhello.h\n\n#ifndef H_HELLO\n#define H_HELLO\n\nvoid Hello(void);\n\n#endif\n\n\n\nhello.cpp\n\n#include &lt;iostream&gt;\n\nvoid Hello(void)\n{\n    std::cout &lt;&lt; \"Hello world!\" &lt;&lt; std::endl;\n}\n\n\n\nmain.cpp\n\n#include \"hello.h\"\n\nint main(void)\n{\n    Hello();\n    return 0;\n}\n\nLe Makefile minimal du projet est\n\n\nMakefile\n\nhello: hello.o main.o\n    g++ -o hello hello.o main.o\n\nhello.o: hello.cpp\n    g++ -o hello.o -c hello.cpp -W -Wall -ansi -pedantic\n\nmain.o: main.cpp hello.h\n    g++ -o main.o -c main.cpp -W -Wall -ansi -pedantic\n\n\n\n\n\n\n\nExercice\n\n\n\nConstruire le projet minimal et commenter.\n\n\nLes fichiers objets qui dépendent de fichiers sources qui n’ont pas été modifiés ne sont pas recompilés (à condition que l’on ait bien défini la liste de dépendances).",
     "crumbs": [
       "MAKEFILE",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Makefile</span>"
@@ -239,7 +239,7 @@
     "href": "ch-makefile/makefile-cmake.html",
     "title": "16  Cmake",
     "section": "",
-    "text": "CMake est un outil qui permet de générer un Makefile, compiler un projet pour différentes plateformes, faire des tests et créer des packages pour dfférents systèmes.\n\nAutre\nLes projets CMake se reconnaissent grâce à la présence du fichier CMakeLists.txt (généralement à la racine du projet).\nLe CMakeLists.txt doit décrire votre projet. Pour cela, il faudra lui indiquer les éléments suivants :\n\nla version minimale pour lire le fichier CMakeLists.txt (cmake_minimum_required()) ;\nle nom du projet (project()) ;\nles dépendances à ajouter (target_include_directories()/target_link_libraries()) ;\nle binaire à produire (add_executable()/add_library()).\n\nCMakeLists.txt\ncmake_minimum_required(VERSION 3.10)\nproject(CalculatorProject)\n\nset(CMAKE_CXX_STANDARD 17)\n\ninclude_directories(include)\nadd_library(calculator src/Calculator.cpp)\nPour compiler et éxécuter le code\nmkdir build\ncd build\ncmake ..\nmake\n./test_calculator",
+    "text": "CMake est un outil qui permet de générer un Makefile, compiler un projet pour différentes plateformes, faire des tests et créer des packages pour différents systèmes.\n\nAutre\nLes projets CMake se reconnaissent grâce à la présence du fichier CMakeLists.txt (généralement à la racine du projet).\nLe CMakeLists.txt doit décrire votre projet. Pour cela, il faudra lui indiquer les éléments suivants :\n\nla version minimale pour lire le fichier CMakeLists.txt (cmake_minimum_required()) ;\nle nom du projet (project()) ;\nles dépendances à ajouter (target_include_directories()/target_link_libraries()) ;\nle binaire à produire (add_executable()/add_library()).\n\nCMakeLists.txt\ncmake_minimum_required(VERSION 3.10)\nproject(CalculatorProject)\n\nset(CMAKE_CXX_STANDARD 17)\n\ninclude_directories(include)\nadd_library(calculator src/Calculator.cpp)\nPour compiler et éxécuter le code\nmkdir build\ncd build\ncmake ..\nmake\n./test_calculator",
     "crumbs": [
       "MAKEFILE",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Cmake</span>"
@@ -260,7 +260,7 @@
     "href": "03-doxygen.html#objectifs",
     "title": "DOXYGEN",
     "section": "",
-    "text": "Commenter le code",
+    "text": "Documenter le code",
     "crumbs": [
       "DOXYGEN"
     ]
@@ -285,6 +285,59 @@
     "crumbs": [
       "DOXYGEN",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Fichier de configuration</span>"
+    ]
+  },
+  {
+    "objectID": "04-tests.html",
+    "href": "04-tests.html",
+    "title": "CI ET TESTS",
+    "section": "",
+    "text": "Objectifs\nSommaire :\n19  Catch2  20  Structure de project  21  Intégration continue (CI)",
+    "crumbs": [
+      "CI ET TESTS"
+    ]
+  },
+  {
+    "objectID": "04-tests.html#objectifs",
+    "href": "04-tests.html#objectifs",
+    "title": "CI ET TESTS",
+    "section": "",
+    "text": "Comprendre les bases des tests unitaires avec Catch2",
+    "crumbs": [
+      "CI ET TESTS"
+    ]
+  },
+  {
+    "objectID": "ch-tests/tests-catch.html",
+    "href": "ch-tests/tests-catch.html",
+    "title": "19  Catch2",
+    "section": "",
+    "text": "Catch2 est un outil de test C++ puissant et moderne, qui met l’accent sur la simplicité et la facilité d’utilisation.\n\nInstall\nPour installer la dernière version (v3) de Catch2 :\n$ git clone https://github.com/catchorg/Catch2.git\n$ cd Catch2\n$ cmake -B build -DCMAKE_INSTALL_PREFIX=~/local/install_catch2\n$ cmake --build build --target install\n\n\nTest\nTester la libraire avec l’exemple suivant\n// test.cpp\n#include &lt;catch2/catch_test_macros.hpp&gt;\n\nstatic int Factorial( int number ) {\n   return number &lt;= 1 ? number : Factorial( number - 1 ) * number;  // fail\n //return number &lt;= 1 ? 1      : Factorial( number - 1 ) * number;  // pass\n}\n\n\nTEST_CASE( \"Factorial of 0 is 1 (fail)\", \"[single-file]\" ) {\n    REQUIRE( Factorial(0) == 1 );\n}\n\nTEST_CASE( \"Factorials of 1 and higher are computed (pass)\", \"[single-file]\" ) {\n    REQUIRE( Factorial(1) == 1 );\n    REQUIRE( Factorial(2) == 2 );\n    REQUIRE( Factorial(3) == 6 );\n    REQUIRE( Factorial(10) == 3628800 );\n}\nà compiler en utilisant CMake :\n// CMakeLists.txt\ncmake_minimum_required(VERSION 3.16)\nproject(Catch2Examples LANGUAGES CXX)\n\nlist(APPEND CMAKE_PREFIX_PATH \"~/local/install_catch2\")\nfind_package(Catch2 3 REQUIRED)\n\nadd_executable(test test.cpp)\ntarget_link_libraries(test PRIVATE Catch2::Catch2WithMain)",
+    "crumbs": [
+      "CI ET TESTS",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Catch2</span>"
+    ]
+  },
+  {
+    "objectID": "ch-tests/tests-catch-structure.html",
+    "href": "ch-tests/tests-catch-structure.html",
+    "title": "20  Structure de project",
+    "section": "",
+    "text": "L’arborescence d’un projet avec tests intégrés est typiquement :\nCalculatorProject/\n├── src/\n│   └── Calculator.cpp\n├── include/\n│   └── Calculator.h\n├── tests/\n│   └── test_calculator.cpp\n├── CMakeLists.txt\n└── README.md\nEn reprenant l’exemple du Calculator, le contenu du fichier de test ressemblera au suivant :\ntests/test_calculator.cpp\n#include &lt;catch2/catch_test_macros.hpp&gt;\n#include \"../include/Calculator.h\"\n\nTEST_CASE(\"Addition\") {\n    Calculator calc;\n    REQUIRE(calc.add(2, 3) == 5);\n    REQUIRE(calc.add(-1, 1) == 0);\n}\n\nTEST_CASE(\"Subtraction\") {\n    Calculator calc;\n    REQUIRE(calc.subtract(5, 3) == 2);\n}\n\nTEST_CASE(\"Multiplication\") {\n    Calculator calc;\n    REQUIRE(calc.multiply(4, 3) == 12);\n}\n\nTEST_CASE(\"Division\") {\n    Calculator calc;\n    REQUIRE(calc.divide(10, 2) == 5);\n    REQUIRE_THROWS_AS(calc.divide(10, 0), std::invalid_argument);\n}\nIl faudra également adapter le CMakeLists.txt pour intégrer la compilation et création des tests.\ncmake_minimum_required(VERSION 3.10)\nproject(CalculatorProject)\n\nset(CMAKE_CXX_STANDARD 17)\n\nlist(APPEND CMAKE_PREFIX_PATH \"~/Projects/test/install_catch2\")\nfind_package(Catch2 3 REQUIRED)\n\ninclude_directories(include)\nadd_library(calculator src/Calculator.cpp)\n\nadd_executable(test_calculator tests/test_calculator.cpp)\ntarget_link_libraries(test_calculator calculator Catch2::Catch2WithMain)",
+    "crumbs": [
+      "CI ET TESTS",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Structure de project</span>"
+    ]
+  },
+  {
+    "objectID": "ch-tests/tests-ci.html",
+    "href": "ch-tests/tests-ci.html",
+    "title": "21  Intégration continue (CI)",
+    "section": "",
+    "text": "L’intégration continue, ou CI, est la pratique qui consiste à intégrer toutes les modifications de votre code dans une branche d’un dépôt de code source partagé, en testant automatiquement toutes les modifications lorsque vous les validez ou les fusionnez, et en lançant automatiquement une compilation.\nL’objectif principal de la CI est de garantir le bon fonctionnement du code à chaque nouveau ajout.\nLes deux recommandations à suivre pour bien commencer sont :\n\nLivrer le code par petites itérations. Pousser ses mises à jour dans la branche principale un peu à la fois, ne pas intégrer de gros changements tout en une fois, de sorte à éviter les conflicts de code.\nConfigurer des tests automatisés. La CI permet de déclancher des tests unitaires (bon fonctionnement de chaque bout) et des tests d’intégration (bonne intégration des nouveaux bouts avec le reste du projet) au moment de l’intégration de nouveaux bouts de code.",
+    "crumbs": [
+      "CI ET TESTS",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Intégration continue (CI)</span>"
     ]
   }
 ]

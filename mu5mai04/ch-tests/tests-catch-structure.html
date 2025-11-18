@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MU5MAI04 - 16&nbsp; Cmake</title>
+<title>MU5MAI04 - 20&nbsp; Structure de project</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../03-doxygen.html" rel="next">
-<link href="../ch-makefile/makefile-variables.html" rel="prev">
+<link href="../ch-tests/tests-ci.html" rel="next">
+<link href="../ch-tests/tests-catch.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02-makefile.html">MAKEFILE</a></li><li class="breadcrumb-item"><a href="../ch-makefile/makefile-cmake.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cmake</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../04-tests.html">CI ET TESTS</a></li><li class="breadcrumb-item"><a href="../ch-tests/tests-catch-structure.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Structure de project</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ch-makefile/makefile-cmake.html" class="sidebar-item-text sidebar-link active">
+  <a href="../ch-makefile/makefile-cmake.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cmake</span></span></a>
   </div>
 </li>
@@ -304,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ch-tests/tests-catch-structure.html" class="sidebar-item-text sidebar-link">
+  <a href="../ch-tests/tests-catch-structure.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Structure de project</span></span></a>
   </div>
 </li>
@@ -322,20 +322,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#autre" id="toc-autre" class="nav-link active" data-scroll-target="#autre">Autre</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02-makefile.html">MAKEFILE</a></li><li class="breadcrumb-item"><a href="../ch-makefile/makefile-cmake.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cmake</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../04-tests.html">CI ET TESTS</a></li><li class="breadcrumb-item"><a href="../ch-tests/tests-catch-structure.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Structure de project</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-makefile-cmake" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cmake</span></span></h1>
+<h1 class="title"><span id="sec-catch2-structure" class="quarto-section-identifier"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Structure de project</span></span></h1>
 </div>
 
 
@@ -352,34 +346,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>CMake est un outil qui permet de générer un Makefile, compiler un projet pour différentes plateformes, faire des tests et créer des packages pour différents systèmes.</p>
-<section id="autre" class="level3">
-<h3 class="anchored" data-anchor-id="autre">Autre</h3>
-<p>Les projets CMake se reconnaissent grâce à la présence du fichier <code>CMakeLists.txt</code> (généralement à la racine du projet).</p>
-<p>Le <code>CMakeLists.txt</code> doit décrire votre projet. Pour cela, il faudra lui indiquer les éléments suivants :</p>
-<ul>
-<li>la version minimale pour lire le fichier CMakeLists.txt (<code>cmake_minimum_required()</code>) ;</li>
-<li>le nom du projet (<code>project()</code>) ;</li>
-<li>les dépendances à ajouter (<code>target_include_directories()/target_link_libraries()</code>) ;</li>
-<li>le binaire à produire (<code>add_executable()/add_library()</code>).</li>
-</ul>
-<p><code>CMakeLists.txt</code></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cmake_minimum_required</span><span class="er">(</span><span class="ex">VERSION</span> 3.10<span class="kw">)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">project</span><span class="er">(</span><span class="ex">CalculatorProject</span><span class="kw">)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span><span class="er">(</span><span class="ex">CMAKE_CXX_STANDARD</span> 17<span class="kw">)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">include_directories</span><span class="er">(</span><span class="ex">include</span><span class="kw">)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">add_library</span><span class="er">(</span><span class="ex">calculator</span> src/Calculator.cpp<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Pour compiler et éxécuter le code</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> ..</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./test_calculator</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>L’arborescence d’un projet avec tests intégrés est typiquement :</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">CalculatorProject/</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> src/</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── Calculator.cpp</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> include/</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── Calculator.h</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> tests/</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── test_calculator.cpp</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> CMakeLists.txt</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> README.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En reprenant l’exemple du <code>Calculator</code>, le contenu du fichier de test ressemblera au suivant :</p>
+<p><code>tests/test_calculator.cpp</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;catch2/catch_test_macros.hpp&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"../include/Calculator.h"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>TEST_CASE<span class="op">(</span><span class="st">"Addition"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    Calculator calc<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    REQUIRE<span class="op">(</span>calc<span class="op">.</span>add<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span> <span class="op">==</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    REQUIRE<span class="op">(</span>calc<span class="op">.</span>add<span class="op">(-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="op">)</span> <span class="op">==</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>TEST_CASE<span class="op">(</span><span class="st">"Subtraction"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    Calculator calc<span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    REQUIRE<span class="op">(</span>calc<span class="op">.</span>subtract<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span> <span class="op">==</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>TEST_CASE<span class="op">(</span><span class="st">"Multiplication"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    Calculator calc<span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    REQUIRE<span class="op">(</span>calc<span class="op">.</span>multiply<span class="op">(</span><span class="dv">4</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span> <span class="op">==</span> <span class="dv">12</span><span class="op">);</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>TEST_CASE<span class="op">(</span><span class="st">"Division"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    Calculator calc<span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    REQUIRE<span class="op">(</span>calc<span class="op">.</span>divide<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">2</span><span class="op">)</span> <span class="op">==</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    REQUIRE_THROWS_AS<span class="op">(</span>calc<span class="op">.</span>divide<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">0</span><span class="op">),</span> <span class="bu">std::</span>invalid_argument<span class="op">);</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Il faudra également adapter le <code>CMakeLists.txt</code> pour intégrer la compilation et création des tests.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cmake_minimum_required</span><span class="er">(</span><span class="ex">VERSION</span> 3.10<span class="kw">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">project</span><span class="er">(</span><span class="ex">CalculatorProject</span><span class="kw">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span><span class="er">(</span><span class="ex">CMAKE_CXX_STANDARD</span> 17<span class="kw">)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">list</span><span class="er">(</span><span class="ex">APPEND</span> CMAKE_PREFIX_PATH <span class="st">"~/Projects/test/install_catch2"</span><span class="kw">)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">find_package</span><span class="er">(</span><span class="ex">Catch2</span> 3 REQUIRED<span class="kw">)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ex">include_directories</span><span class="er">(</span><span class="ex">include</span><span class="kw">)</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">add_library</span><span class="er">(</span><span class="ex">calculator</span> src/Calculator.cpp<span class="kw">)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ex">add_executable</span><span class="er">(</span><span class="ex">test_calculator</span> tests/test_calculator.cpp<span class="kw">)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">target_link_libraries</span><span class="er">(</span><span class="ex">test_calculator</span> calculator Catch2::Catch2WithMain<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -844,13 +862,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../ch-makefile/makefile-variables.html" class="pagination-link" aria-label="Variables">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Variables</span></span>
+      <a href="../ch-tests/tests-catch.html" class="pagination-link" aria-label="Catch2">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Catch2</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../03-doxygen.html" class="pagination-link" aria-label="DOXYGEN">
-        <span class="nav-page-text">DOXYGEN</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../ch-tests/tests-ci.html" class="pagination-link" aria-label="Intégration continue (CI)">
+        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Intégration continue (CI)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

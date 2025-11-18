@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MU5MAI04 - 16&nbsp; Cmake</title>
+<title>MU5MAI04 - 19&nbsp; Catch2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../03-doxygen.html" rel="next">
-<link href="../ch-makefile/makefile-variables.html" rel="prev">
+<link href="../ch-tests/tests-catch-structure.html" rel="next">
+<link href="../04-tests.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02-makefile.html">MAKEFILE</a></li><li class="breadcrumb-item"><a href="../ch-makefile/makefile-cmake.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cmake</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../04-tests.html">CI ET TESTS</a></li><li class="breadcrumb-item"><a href="../ch-tests/tests-catch.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Catch2</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ch-makefile/makefile-cmake.html" class="sidebar-item-text sidebar-link active">
+  <a href="../ch-makefile/makefile-cmake.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cmake</span></span></a>
   </div>
 </li>
@@ -298,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ch-tests/tests-catch.html" class="sidebar-item-text sidebar-link">
+  <a href="../ch-tests/tests-catch.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Catch2</span></span></a>
   </div>
 </li>
@@ -326,16 +326,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#autre" id="toc-autre" class="nav-link active" data-scroll-target="#autre">Autre</a></li>
+  <li><a href="#install" id="toc-install" class="nav-link active" data-scroll-target="#install">Install</a></li>
+  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test">Test</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02-makefile.html">MAKEFILE</a></li><li class="breadcrumb-item"><a href="../ch-makefile/makefile-cmake.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cmake</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../04-tests.html">CI ET TESTS</a></li><li class="breadcrumb-item"><a href="../ch-tests/tests-catch.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Catch2</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-makefile-cmake" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Cmake</span></span></h1>
+<h1 class="title"><span id="sec-catch2" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Catch2</span></span></h1>
 </div>
 
 
@@ -352,31 +353,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>CMake est un outil qui permet de générer un Makefile, compiler un projet pour différentes plateformes, faire des tests et créer des packages pour différents systèmes.</p>
-<section id="autre" class="level3">
-<h3 class="anchored" data-anchor-id="autre">Autre</h3>
-<p>Les projets CMake se reconnaissent grâce à la présence du fichier <code>CMakeLists.txt</code> (généralement à la racine du projet).</p>
-<p>Le <code>CMakeLists.txt</code> doit décrire votre projet. Pour cela, il faudra lui indiquer les éléments suivants :</p>
-<ul>
-<li>la version minimale pour lire le fichier CMakeLists.txt (<code>cmake_minimum_required()</code>) ;</li>
-<li>le nom du projet (<code>project()</code>) ;</li>
-<li>les dépendances à ajouter (<code>target_include_directories()/target_link_libraries()</code>) ;</li>
-<li>le binaire à produire (<code>add_executable()/add_library()</code>).</li>
-</ul>
-<p><code>CMakeLists.txt</code></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cmake_minimum_required</span><span class="er">(</span><span class="ex">VERSION</span> 3.10<span class="kw">)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">project</span><span class="er">(</span><span class="ex">CalculatorProject</span><span class="kw">)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span><span class="er">(</span><span class="ex">CMAKE_CXX_STANDARD</span> 17<span class="kw">)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">include_directories</span><span class="er">(</span><span class="ex">include</span><span class="kw">)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">add_library</span><span class="er">(</span><span class="ex">calculator</span> src/Calculator.cpp<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Pour compiler et éxécuter le code</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> ..</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./test_calculator</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Catch2 est un outil de test C++ puissant et moderne, qui met l’accent sur la simplicité et la facilité d’utilisation.</p>
+<section id="install" class="level3">
+<h3 class="anchored" data-anchor-id="install">Install</h3>
+<p>Pour installer la dernière version (v3) de <a href="https://github.com/catchorg/Catch2/blob/devel/docs/cmake-integration.md#installing-catch2-from-git-repository">Catch2</a> :</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone https://github.com/catchorg/Catch2.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd Catch2</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cmake <span class="at">-B</span> build <span class="at">-DCMAKE_INSTALL_PREFIX</span><span class="op">=</span>~/local/install_catch2</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cmake <span class="at">--build</span> build <span class="at">--target</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="test" class="level3">
+<h3 class="anchored" data-anchor-id="test">Test</h3>
+<p>Tester la libraire avec l’exemple suivant</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// test.cpp</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;catch2/catch_test_macros.hpp&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="dt">int</span> Factorial<span class="op">(</span> <span class="dt">int</span> number <span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> number <span class="op">&lt;=</span> <span class="dv">1</span> <span class="op">?</span> number <span class="op">:</span> Factorial<span class="op">(</span> number <span class="op">-</span> <span class="dv">1</span> <span class="op">)</span> <span class="op">*</span> number<span class="op">;</span>  <span class="co">// fail</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a> <span class="co">//return number &lt;= 1 ? 1      : Factorial( number - 1 ) * number;  // pass</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>TEST_CASE<span class="op">(</span> <span class="st">"Factorial of 0 is 1 (fail)"</span><span class="op">,</span> <span class="st">"[single-file]"</span> <span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    REQUIRE<span class="op">(</span> Factorial<span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">==</span> <span class="dv">1</span> <span class="op">);</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>TEST_CASE<span class="op">(</span> <span class="st">"Factorials of 1 and higher are computed (pass)"</span><span class="op">,</span> <span class="st">"[single-file]"</span> <span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    REQUIRE<span class="op">(</span> Factorial<span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">==</span> <span class="dv">1</span> <span class="op">);</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    REQUIRE<span class="op">(</span> Factorial<span class="op">(</span><span class="dv">2</span><span class="op">)</span> <span class="op">==</span> <span class="dv">2</span> <span class="op">);</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    REQUIRE<span class="op">(</span> Factorial<span class="op">(</span><span class="dv">3</span><span class="op">)</span> <span class="op">==</span> <span class="dv">6</span> <span class="op">);</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    REQUIRE<span class="op">(</span> Factorial<span class="op">(</span><span class="dv">10</span><span class="op">)</span> <span class="op">==</span> <span class="dv">3628800</span> <span class="op">);</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>à compiler en utilisant <code>CMake</code> :</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// CMakeLists.txt</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cmake_minimum_required<span class="op">(</span>VERSION <span class="fl">3.16</span><span class="op">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>project<span class="op">(</span>Catch2Examples LANGUAGES CXX<span class="op">)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>list<span class="op">(</span>APPEND CMAKE_PREFIX_PATH <span class="st">"~/local/install_catch2"</span><span class="op">)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>find_package<span class="op">(</span>Catch2 <span class="dv">3</span> REQUIRED<span class="op">)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>add_executable<span class="op">(</span>test test<span class="op">.</span>cpp<span class="op">)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>target_link_libraries<span class="op">(</span>test PRIVATE Catch2<span class="op">::</span>Catch2WithMain<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -844,13 +861,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../ch-makefile/makefile-variables.html" class="pagination-link" aria-label="Variables">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Variables</span></span>
+      <a href="../04-tests.html" class="pagination-link" aria-label="CI ET TESTS">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">CI ET TESTS</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../03-doxygen.html" class="pagination-link" aria-label="DOXYGEN">
-        <span class="nav-page-text">DOXYGEN</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../ch-tests/tests-catch-structure.html" class="pagination-link" aria-label="Structure de project">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Structure de project</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
