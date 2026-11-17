@@ -169,5 +169,80 @@
       "GIT ET GITHUB",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Evaluation</span>"
     ]
+  },
+  {
+    "objectID": "01-structure.html",
+    "href": "01-structure.html",
+    "title": "STRUCTURE",
+    "section": "",
+    "text": "Objectifs\nSommaire :\n12  Arborescence d’un projet C++  13  README.md – Le guide de démarrage  14  Fichiers d’entête  15  Fichiers source  16  Compilation",
+    "crumbs": [
+      "STRUCTURE"
+    ]
+  },
+  {
+    "objectID": "01-structure.html#objectifs",
+    "href": "01-structure.html#objectifs",
+    "title": "STRUCTURE",
+    "section": "",
+    "text": "Arborescence d’un projet C++\nSéparer le répertoire src du répertoire include\nRédiger le README.md\nPlacer le Makefile ou CMakeLists.txt au bon endroit\nIdentifier le répertoire build",
+    "crumbs": [
+      "STRUCTURE"
+    ]
+  },
+  {
+    "objectID": "ch-cpp-structure/cpp-structure.html",
+    "href": "ch-cpp-structure/cpp-structure.html",
+    "title": "12  Arborescence d’un projet C++",
+    "section": "",
+    "text": "Une arborescence typique d’un projet en C++ va être la suivante :\nMyProject/\n│\n├─ README.md                ← guide d’utilisation\n├─ Makefile                 ← (ou CMakeLists.txt)\n│\n├─ include/                 ← entêtes publiques\n│   ├─ myproject.h\n│   └─ myproject/\n│        └─ utils.h\n│\n├─ src/                     ← sources\n│   ├─ main.cpp\n│   ├─ foobar.cpp\n│   └─ utils/\n│        └─ string_utils.cpp\n│\n├─ obj/                     ← objets générés (Makefile)\n└─ bin/                     ← exécutable (Makefile)",
+    "crumbs": [
+      "STRUCTURE",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Arborescence d'un projet C++</span>"
+    ]
+  },
+  {
+    "objectID": "ch-cpp-structure/cpp-readme.html",
+    "href": "ch-cpp-structure/cpp-readme.html",
+    "title": "13  README.md – Le guide de démarrage",
+    "section": "",
+    "text": "Un fichier README.md est le premier document que les visiteurs lisent pour comprendre l’utilité d’un code, comment l’installer et comment l’utiliser.\nC’est la page d’accueil d’un projet hébergé sur GitHub.\nIl est écrit en Markdown.\n\n\n\n\n\n\n\n\nÉlément\nÀ quoi ça sert\nComment le rédiger (exemple court)\n\n\n\n\nTitre du projet\nIdentifie immédiatement le dépôt.\n# MyProject\n\n\nDescription brève\nDonne le contexte d’utilisation et la finalité.\nUne application C++ qui calcule le nombre de fibonacci en parallèle.\n\n\nPrérequis\nListe les versions de compilateur, bibliothèques, outils nécessaires.\n- g++ ≥ 9.0- make ≥ 4.0 (ou CMake ≥ 3.15)\n\n\nInstallation / Pré‑build\nIndique comment préparer l’environnement (ex. installation de dépendances).\nsudo apt‑get install build-essential cmake\n\n\nCompilation\nCommandes exactes pour construire le projet (Make, CMake, etc.).\nmake  cmake -S . -B build && cmake --build build\n\n\nExécution\nComment lancer le binaire produit.\n./bin/myproject\n\n\nStructure du projet\nVue d’ensemble des répertoires/fichiers clés.\ntext&lt;br&gt;MyProject/&lt;br&gt;│&lt;br&gt;├─ README.md&lt;br&gt;├─ Makefile&lt;br&gt;├─ include/&lt;br&gt;│   └─ myproject.h&lt;br&gt;├─ src/&lt;br&gt;│   ├─ main.cpp&lt;br&gt;│   └─ utils/…&lt;br&gt;└─ bin/\n\n\nUtilisation\nExemple d’appel, paramètres, sortie attendue.\n./bin/myproject 1000   # calcule Fib(1000)\n\n\nLicence\nMention légale du logiciel.\nMIT License\n\n\nContact\nCoordonnées du·de la mainteneur·rice ou du forum.\nmailto:contact@example.com\n\n\nChangelog (optionnel)\nHistorique des versions majeures.\nv1.0 – première release\n\n\n\n\n\nBonnes pratiques pour la rédaction du README\n\n\n\n\n\n\n\n\nPratique\nPourquoi\nComment la mettre en œuvre\n\n\n\n\nClarté & concision\nUn README doit être lisible en quelques secondes.\nUtilisez des phrases courtes, des listes à puces, et évitez le jargon inutile.\n\n\nStructure hiérarchisée\nFacilite la navigation (titres, sous‑titres).\nCommencez par # (titre principal), puis ## pour les sections majeures, ### pour les sous‑sections.\n\n\nExemples concrets\nMontre immédiatement comment utiliser le projet.\nIncluez des blocs de code ou des commandes avec des retours d’affichage (\\ bash `\\``). | | **Mise en forme Markdown** | Rendu propre sur GitHub, GitLab, etc. | - Titres avec `#` &lt;br&gt;- Listes avec `-` ou `1.` &lt;br&gt;- Bloc de code aveclang - Tableaux pour les comparaisons.\n\n\nLien vers la documentation\nSi le projet possède une doc plus détaillée, indiquez‑la.\nDocumentation complète : docs/index.html\n\n\nContact\nPermet aux utilisateurs de poser des questions.\nEmail, Discord, issue tracker, etc.\n\n\n\n\n\n\nExemple complet\n# MyProject\n\nUne application C++ qui calcule les nombres de fibonacci en parallèle.\n\n## Prérequis\n- g++ ≥ 9.0\n- make ≥ 4.0 (ou CMake ≥ 3.15)\n\n## Installation\n```bash\nsudo apt-get install build-essential cmake\n```\n\n## Compilation\n```bash\nmake                     # utilise le Makefile fourni\n# ou, avec CMake :\nmkdir -p build && cd build\ncmake .. && cmake --build .\n```\n\n## Exécution\n```bash\n./bin/monprojet 10000   # calcule Fib(10000)\n```\n\n## Structure du projet\n```text\nMyProject/\n├─ README.md\n├─ Makefile\n├─ include/\n│  └─ myproject.h\n├─ src/\n│  ├─ main.cpp\n│  └─ utils/\n│     └─ string_utils.cpp\n└─ bin/\n```\n\n## Utilisation\n```bash\n./bin/monprojet 5000    # Affiche le résultat et le temps d'exécution\n```\n\n## Licence\nMIT License \n\n## Contact\nmailto:contact@example.com",
+    "crumbs": [
+      "STRUCTURE",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>README.md – Le guide de démarrage</span>"
+    ]
+  },
+  {
+    "objectID": "ch-cpp-structure/cpp-include.html",
+    "href": "ch-cpp-structure/cpp-include.html",
+    "title": "14  Fichiers d’entête",
+    "section": "",
+    "text": "Un fichier d’en-tête (header file en anglais), portant généralement l’extension .h ou .hpp, sert de table des matières ou de mode d’emploi pour un code C++.\nIl contient uniquement les déclarations (les signatures des fonctions, les classes, les constantes), tandis que le fichier source (.cpp) contient les définitions (le code réel qui exécute les actions).\n\nPourquoi sépare-t-on le .h du .cpp ?\n\nPartager le code : Pour utiliser une fonction dans plusieurs fichiers .cpp, il suffit d’inclure son fichier d’entête (`#include “fibonacci.h”).\nAccélérer la compilation : Si on modifie le code interne dans un .cpp, le compilateur n’a besoin de recompiler que ce fichier-là, pas tout le projet.\nCacher la complexité : Celui qui lit le .h voit immédiatement ce que fait le code sans avoir à lire les centaines de lignes d’algorithmes.\n\n\n\nEviter que le compilateur n’importe deux fois le même fichier\n\n#ifndef\nfibonacci.h\n#ifndef FIBONACCI_H   // Si FIBONACCI_H n'est pas encore défini...\n#define FIBONACCI_H   // ... alors on le définit maintenant\n\n// Déclaration : on annonce que cette fonction existe et ce qu'elle prend/renvoie\nunsigned long long calculerFibonacci(int n);\n\n#endif                // Fin de la condition\n\nFonctionnement : Le préprocesseur lit tout le fichier. S’il rencontre ce fichier une seconde fois, il voit que FIBONACCI_H existe déjà et ignore tout ce qui se trouve avant #endif.\nAvantage : Fonctionne partout, sur les compilateurs anciens et modernes.\nInconvénient : Plus verbeux (3 lignes à écrire) et risque de collision de noms (si deux fichiers différents utilisent par erreur le même nom de macro, l’un des deux sera ignoré).\n\n\n\n#pragma once\nfibonacci.h\n#pragma once // Inclut ce fichier une seule fois\n\n// Déclaration : on annonce que cette fonction existe et ce qu'elle prend/renvoie\nunsigned long long calculerFibonacci(int n);\n\nFonctionnement : Le compilateur identifie physiquement le fichier sur le disque (chemin, date, contenu) et l’ignore immédiatement s’il l’a déjà traité.\nAvantage : Simple (1 seule ligne), propre, aucun risque de conflit de noms de macros, et compilation légèrement plus rapide (le compilateur n’a pas besoin de rouvrir ni de relire le fichier).\nInconvénient : Ce n’est pas dans la norme officielle C++ (bien qu’il soit supporté par la quasi-totalité des compilateurs modernes : GCC, Clang, MSVC). Peut poser de rares problèmes si un même fichier est copié à deux endroits différents du projet ou lié via des liens symboliques complexes.\n\n\n\n\nLes #include les plus courants\n\nLes chevrons &lt; &gt; : pour les bibliothèques standards ou externes\n\n\n\n\n\n\n\nBibliothèque\nUtilité principale\n\n\n\n\n&lt;iostream&gt;\nAfficher du texte (std::cout) et lire les entrées clavier (std::cin).\n\n\n&lt;vector&gt;\nUtiliser des tableaux dynamiques (std::vector), beaucoup plus souples que les tableaux classiques.\n\n\n&lt;string&gt;\nManipuler des chaînes de caractères (std::string).\n\n\n&lt;thread&gt; / &lt;future&gt;\nGérer le parallélisme et le multi-threading.\n\n\n&lt;chrono&gt;\nMesurer le temps d’exécution de ton programme.\n\n\n&lt;cmath&gt;\nAccéder aux fonctions mathématiques (sqrt, pow, abs, etc.).\n\n\n&lt;algorithm&gt;\nTrier, rechercher ou transformer des données (std::sort, std::find, std::max, etc.).\n\n\n&lt;numeric&gt;\nEffectuer des opérations numériques sur des séries (std::accumulate, std::reduce, std::gcd, etc.).\n\n\n\nConsulter https://cppreference.com/ ou https://cplusplus.com/reference/ pour une vision de la librarie standard (STL).\n\n\nLes guillemets \" \" : pour les fichiers propres au projet\n#include \"utils/calculs.hpp\"",
+    "crumbs": [
+      "STRUCTURE",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Fichiers d'entête</span>"
+    ]
+  },
+  {
+    "objectID": "ch-cpp-structure/cpp-source.html",
+    "href": "ch-cpp-structure/cpp-source.html",
+    "title": "15  Fichiers source",
+    "section": "",
+    "text": "Un fichier source en C++ porte généralement l’extension .cpp (ou parfois .cc ou .cxx) et est le fichier où est écrit le code réel et la logique du programme.\n\nCe que contient un fichier source (.cpp)\n\nLes directives #include : Tout en haut, pour importer les bibliothèques nécessaires (&lt;iostream&gt;, etc.) ainsi que les fichiers d’en-tête du projet (\"fibonacci.h\").\nLes définitions de fonctions : Le détail étape par étape des algorithmes (boucles, conditions, calculs mathématiques).\nL’implémentation des méthodes de classes : Le code interne des objets qui ont été déclarés dans le .h.\n\n\nExemple\nfibonacci.cpp\n#include \"fibonacci.h\"\n\n// Définition : on écrit le vrai code de la fonction\nunsigned long long calculerFibonacci(int n) {\n    if (n &lt;= 1) return n;\n    return calculerFibonacci(n - 1) + calculerFibonacci(n - 2);\n}\n\n\n\nUn fichier source à part : main.cpp\nUn projet possède toujours au moins un fichier source principal (souvent nommé main.cpp) qui contient la fonction int main().\nLa fonction int main() est le point de démarrage du programme lors de son exécution.\n\nExemple\nmain.cpp\n#include &lt;iostream&gt;\n#include \"fibonacci.h\" // On importe juste le \"mode d'emploi\"\n\nint main() {\n    std::cout &lt;&lt; calculerFibonacci(10) &lt;&lt; std::endl;\n    return 0;\n}",
+    "crumbs": [
+      "STRUCTURE",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Fichiers source</span>"
+    ]
+  },
+  {
+    "objectID": "ch-cpp-structure/cpp-compilation.html",
+    "href": "ch-cpp-structure/cpp-compilation.html",
+    "title": "16  Compilation",
+    "section": "",
+    "text": "Pour connaître la version de votre compilateur tapez :\n\ng++ –version\n\nPour compiler le projet de test il faut lancer la commande\n\ng++ main.cpp fibonacci.cpp -o myproject\n\nCette commande exécute 4 étapes :\n\n1 Preprocessing\n\nAction : Il traite toutes les lignes qui commencent par # (#include, #define, #pragma once). Il supprime les commentaires et copie-colle littéralement le contenu des fichiers .h à l’intérieur des fichiers .cpp.\nRésultat : Un fichier texte C++ pur, très long, prêt à être analysé.\n\n\n\n2 Compilation\n\nAction : Le compilateur vérifie la syntaxe et les types (c’est ici qu’il affiche les erreurs de code) et traduit le code C++ en langage assembleur spécifique au processeur (x86, ARM, etc.).\nRésultat : Des fichiers en langage assembleur (.s).\n\n\n\n3 L’assemblage\n\nAction : L’assembleur traduit les instructions assembleur en code machine binaire (des 0 et des 1 compréhensibles par le processeur).\nRésultat : Un fichier objet (.o sous Linux, .obj sous Windows) pour chaque fichier .cpp. À ce stade, les fichiers ne se connaissent pas encore entre eux. (Note : C’est à cette étape qu’on peut regrouper plusieurs .o pour fabriquer une bibliothèque).s\n\n### 4 L’édition de liens (Linking)\n\nAction : L’éditeur de liens (linker) rassemble tous les fichiers objets (.o) ainsi que les bibliothèques externes (comme la bibliothèque standard C++ ou pthread pour le multi-threading). Il relie les appels de fonctions d’un fichier vers leur définition dans un autre, et vérifie la présence d’un unique main().\nRésultat : Le fichier exécutable final prêt à être lancé.\n\n\n\nExemple\nSi nous avons l’arborescence de projet suivante :\nFibonacci/\n│\n├─ README.md                ← guide d’utilisation\n│\n├─ include/                 ← entêtes\n│   └─ fibonacci.h\n│\n└─  src/                     ← sources\n    ├─ main.cpp\n    └─ fibonacci.cpps\n\nCréer directement l’exécutable\n\n\ng++ -Iinclude src/main.cpp src/fibonacci.cpp -pthread -o myproject\n\n\n-Iinclude : indique à g++ de chercher les fichiers .h dans le dossier include/.\n-pthread : active le support du multi-threading (&lt;thread&gt;, &lt;future&gt;).\n-o myproject : nomme l’exécutable final myproject.\n\n\nCréer une bibliothèque statique (.a) et l’utiliser\n\n\nÉtape A : Compiler le code de la lib en fichier objet (.o)\n\n\ng++ -Iinclude -c src/fibonacci.cpp -o fibonacci.o\n\n\nÉtape B : Empaqueter le .o dans une archive statique (.a)\n\n\nar rcs libfibonacci.a fibonacci.o\n\nLe nom du fichier doit commencer par lib et finir par .a.\n\nÉtape C : Compiler l’exécutable en le liant à la bibliothèque\n\n\ng++ -Iinclude src/main.cpp -L. -lfibonacci -pthread -o myproject\n\n\n-L.: indique au linker de chercher des bibliothèques dans le dossier actuel (.).\n-lfibonacci : lie le fichier libfibonacci.a (on retire le préfixe lib et l’extension .a).\n\n\nCréer une bibliothèque dynamique (.so) et l’utiliser\n\nLa bibliothèque dynamique (Shared Object) reste un fichier séparé chargé au lancement du programme.\n\nÉtape A : Compiler en fichier objet avec code indépendant de la position (-fPIC)\n\n\ng++ -Iinclude -fPIC -c src/fibonacci.cpp -o fibonacci.o\n\n\nÉtape B : Transformer le .o en bibliothèque partagée (.so)\n\n\ng++ -shared fibonacci.o -o libfibonacci.so\n\n\nÉtape C : Compiler l’exécutable avec la bibliothèque dynamique\n\n\ng++ -Iinclude src/main.cpp -L. -lfibonacci -pthread -o myproject\n\n\nÉtape D : Exécuter le programme\n\nSous Linux, le système cherche les .so dans `/usr/libì par défaut. Pour qu’il trouve la bilbiothèque à peine créée dans le dossier courant, il faut lancer la commande :\n\nLD_LIBRARY_PATH=. ./myproject",
+    "crumbs": [
+      "STRUCTURE",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Compilation</span>"
+    ]
   }
 ]
